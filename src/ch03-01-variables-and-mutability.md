@@ -1,22 +1,25 @@
-## Variables and Mutability
+## Zmienne i ich Modyfikowalność
 
-As mentioned in Chapter 2, by default variables are immutable. This is one of
-many nudges Rust gives you to write your code in a way that takes advantage of
-the safety and easy concurrency that Rust offers. However, you still have the
-option to make your variables mutable. Let’s explore how and why Rust
-encourages you to favor immutability and why sometimes you might want to opt
-out.
+Tak jak wspomniano w Rozdziale 2, zmienne są domyślnie niemodyfikowalne
+(*immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do
+tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty
+współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
+uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego
+Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu
+czasem możesz chcieć zrezygnować z tej własciwości.
 
-When a variable is immutable, once a value is bound to a name, you can’t change
-that value. To illustrate this, let’s generate a new project called *variables*
-in your *projects* directory by using `cargo new variables`.
+Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy,
+nie możesz później zmienić tej wartości. Aby to zobrazować, utwórzmy nowy
+projekt o nazwie *variables* w folderze *projects* korzystając z komendy
+`cargo new --bin variables`.
 
-Then, in your new *variables* directory, open *src/main.rs* and replace its
-code with the following code that won’t compile just yet:
+Następnie w nowo utworzonym folderze *variables*, odnajdź i otwórz *src/main.rs*,
+zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się
+poprawnie:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,ignore
 fn main() {
     let x = 5;
     println!("The value of x is: {}", x);
@@ -25,51 +28,56 @@ fn main() {
 }
 ```
 
-Save and run the program using `cargo run`. You should receive an error
-message, as shown in this output:
+Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś otrzymać
+następujący komunikat o błędzie:
 
 ```text
 error[E0384]: cannot assign twice to immutable variable `x`
  --> src/main.rs:4:5
   |
 2 |     let x = 5;
-  |         - first assignment to `x`
+  |         — first assignment to `x`
 3 |     println!("The value of x is: {}", x);
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
 ```
 
-This example shows how the compiler helps you find errors in your programs.
-Even though compiler errors can be frustrating, they only mean your program
-isn’t safely doing what you want it to do yet; they do *not* mean that you’re
-not a good programmer! Experienced Rustaceans still get compiler errors.
+Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich
+programach. Mimo że błędy zwracane przez kompilator mogą być denerwujące,
+świadczą jedynie o tym, że twój program jeszcze nie działa prawidłowo — nie
+wykonuje w bezpieczny sposób tego, co chcesz, by robił; *nie* oznaczają,
+że nie jesteś dobrym programistą! Nawet doświadczeni Rustowcy nadal napotykają
+błędy podczas kompilacji.
 
-The error message indicates that the cause of the error is that you `cannot
-assign twice to immutable variable x`, because you tried to assign a second
-value to the immutable `x` variable.
+Powyższy komunikat informuje cię, że przyczyną zaistniałego błędu jest to,
+że `nie możesz dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej x`,
+ponieważ próbowałeś po raz kolejny przypisać wartość do niemodyfikowalnej
+zmiennej `x`.
 
-It’s important that we get compile-time errors when we attempt to change a
-value that we previously designated as immutable because this very situation
-can lead to bugs. If one part of our code operates on the assumption that a
-value will never change and another part of our code changes that value, it’s
-possible that the first part of the code won’t do what it was designed to do.
-The cause of this kind of bug can be difficult to track down after the fact,
-especially when the second piece of code changes the value only *sometimes*.
+To ważne, że napotykamy błędy w trakcie kompilacji, gdy próbujemy zmienić
+wartość, którą wcześniej określiliśmy jako niemodyfikowalną, gdyż takie
+działanie może prowadzić do podatności i błędów w programie. Jeżeli pierwsza
+część kodu opiera się na założeniu, że dana wartość nigdy nie ulegnie zmianie,
+a inna część kodu zmienia tę wartość, pierwsza część kodu może przestać
+wykonywać swoje zadanie poprawnie. Przyczyna tego rodzaju błędów może być
+trudna do zidentyfikowania po wystąpieniu, szczególnie gdy druga część kodu
+zmienia daną wartość tylko *czasami*.
 
-In Rust, the compiler guarantees that when you state that a value won’t change,
-it really won’t change. That means that when you’re reading and writing code,
-you don’t have to keep track of how and where a value might change. Your code
-is thus easier to reason through.
+W Ruście, kompilator gwarantuje, że jeżeli ustawimy wartość na niemodyfikowalną,
+to naprawdę nigdy nie ulegnie zmianie. Oznacza to, że czytając i pisząc kod,
+nie musisz ciągle sprawdzać gdzie i jak wartość może się zmienić. W związku
+z tym tworzony przez ciebie kod staje się łatwiejszy do zrozumienia.
 
-But mutability can be very useful. Variables are immutable only by default; as
-you did in Chapter 2, you can make them mutable by adding `mut` in front of the
-variable name. In addition to allowing this value to change, `mut` conveys
-intent to future readers of the code by indicating that other parts of the code
-will be changing this variable value.
+Jednak modyfikowalność może być też bardzo użyteczna. Zmienne są tylko
+domyślnie niemodyfikowalne; tak jak zrobiłeś to w Rozdziale 2, możesz uczynić
+je modyfikowalnymi, dodając `mut` przed nazwą zmiennej. Poza tym, że dzięki
+dodaniu `mut` możliwa jest modyfikacja wartości zmiennej, jest ono też wyraźnym
+sygnałem dla osób, które będą czytały kod w przyszłości — informuje, że inne
+części kodu będą modyfikować wartość danej zmiennej.
 
-For example, let’s change *src/main.rs* to the following:
+Na przykład, zmieńmy kod w *src/main.rs* na poniższy:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -80,7 +88,7 @@ fn main() {
 }
 ```
 
-When we run the program now, we get this:
+Gdy teraz uruchomimy program, otrzymamy:
 
 ```text
 $ cargo run
@@ -91,73 +99,75 @@ The value of x is: 5
 The value of x is: 6
 ```
 
-We’re allowed to change the value that `x` binds to from `5` to `6` when `mut`
-is used. In some cases, you’ll want to make a variable mutable because it makes
-the code more convenient to write than if it had only immutable variables.
+Możemy zmienić wartość, do której odwołuje się `x` z `5` na `6`, dzięki
+wykorzystaniu `mut`. W niektórych przypadkach będziesz chciał uczynić zmienną
+modyfikowalną, ponieważ sprawi to, że pisanie kodu stanie się wygodniejsze niż
+gdyby tworzono go tylko z użyciem niemodyfikowalnych zmiennych.
 
-There are multiple trade-offs to consider in addition to the prevention of
-bugs. For example, in cases where you’re using large data structures, mutating
-an instance in place may be faster than copying and returning newly allocated
-instances. With smaller data structures, creating new instances and writing in
-a more functional programming style may be easier to think through, so lower
-performance might be a worthwhile penalty for gaining that clarity.
+Oprócz zapobiegania błędom należy też rozważyć wiele innych kwestii i
+wynikających z nich kompromisów. Przykładowo, gdy wykorzystujesz ogromne
+struktury danych, modyfikacja instancji może okazać się szybsza niż kopiowanie
+i zwracanie nowo utworzonych instancji. W przypadku mniejszych struktur danych,
+tworzenie nowych instancji i zapisywanie ich bardziej w stylu programowania
+funkcyjnego może pomóc w łatwiejszym zrozumieniu działania kodu, które z kolei
+może okazać się satysfakcjonującą rekompensatą za zmniejszenie wydajności.
 
-### Differences Between Variables and Constants
+### Różnice między Zmiennymi i Stałymi
 
-Being unable to change the value of a variable might have reminded you of
-another programming concept that most other languages have: *constants*. Like
-immutable variables, constants are values that are bound to a name and are not
-allowed to change, but there are a few differences between constants and
-variables.
+Brak możliwości modyfikacji wartości zmiennej może przypominać ci inne
+rozwiązanie programistyczne, które wykorzystuje wiele języków programowania:
+stałe (*constants*). Podobnie jak zmienne niemodyfikowalne, stałe to wartości,
+których nie można zmienić, przypisane do nazw, ale występuje też kilka
+różnic między stałymi i zmiennymi.
 
-First, you aren’t allowed to use `mut` with constants. Constants aren’t just
-immutable by default—they’re always immutable.
+Po pierwsze, nie możesz używać `mut` do stałych. Stałe są nie tylko domyślnie
+niemodyfikowalne — są zawsze niemodyfikowalne.
 
-You declare constants using the `const` keyword instead of the `let` keyword,
-and the type of the value *must* be annotated. We’re about to cover types and
-type annotations in the next section, [“Data Types,”][data-types]<!-- ignore
---> so don’t worry about the details right now. Just know that you must always
-annotate the type.
+Do deklaracji stałej wykorzystujesz słowo kluczowe `const` zamiast `let`
+i *zawsze* musisz określić typ wartości. Typy danych i ich adnotacje omówimy
+już niedługo, w następnym podrozdziale "Typy Danych", więc nie przejmuj się
+na razie szczegółami. Po prostu zapamiętaj, że zawsze musisz nadać stałej
+typ danych.
 
-Constants can be declared in any scope, including the global scope, which makes
-them useful for values that many parts of code need to know about.
+Stałe mogą być deklarowane w każdym zakresie, włączając w to zakres globalny,
+dzięki czemu są bardzo użyteczne w przypadku wartości, z których korzysta
+wiele części kodu.
 
-The last difference is that constants may be set only to a constant expression,
-not the result of a function call or any other value that could only be
-computed at runtime.
+Ostatnia różnica to, że stałymi mogą być tylko wyrażenia stałe, a nie wartości
+zwracane przez funkcje lub też inne wartości wytworzone podczas działania
+programu.
 
-Here’s an example of a constant declaration where the constant’s name is
-`MAX_POINTS` and its value is set to 100,000. (Rust’s naming convention for
-constants is to use all uppercase with underscores between words, and
-underscores can be inserted in numeric literals to improve readability):
+Oto przykład deklaracji stałej, nazwa stałej to `MAX_POINTS`, a jej wartość
+została ustawiona na 100,000. (Konwencja nazewnicza Rusta dla stałych
+zobowiązuje do wykorzystywanie tylko dużych liter z podkreśleniami między
+słowami):
 
 ```rust
 const MAX_POINTS: u32 = 100_000;
 ```
 
-Constants are valid for the entire time a program runs, within the scope they
-were declared in, making them a useful choice for values in your application
-domain that multiple parts of the program might need to know about, such as the
-maximum number of points any player of a game is allowed to earn or the speed
-of light.
+Stałe są dostępne przez cały okres działania programu w zakresie, w którym
+zostały zadeklarowane, stają się tym samym dobrym wyborem dla wartości w twojej
+domenie aplikacji, które mogą być wykorzystywane przez różne elementy programu,
+takich jak maksymalna liczba punktów, które może uzyskać gracz, czy też prędkość
+światła.
 
-Naming hardcoded values used throughout your program as constants is useful in
-conveying the meaning of that value to future maintainers of the code. It also
-helps to have only one place in your code you would need to change if the
-hardcoded value needed to be updated in the future.
+Nazywanie predefiniowanych wartości używanych przez twój program stałymi jest
+użyteczne w przekazywaniu znaczenia wykorzystywanych wartości dla przyszłych
+współtwórców kodu. Pomaga to w utrzymaniu predefiniowanych wartości w jednym
+miejscu i ułatwia ich późniejsze uaktualnianie.
 
-### Shadowing
+### Przesłanianie
 
-As you saw in the guessing game tutorial in the [“Comparing the Guess to the
-Secret Number”][comparing-the-guess-to-the-secret-number]<!-- ignore -->
-section in Chapter 2, you can declare a new variable with the same name as a
-previous variable, and the new variable shadows the previous variable.
-Rustaceans say that the first variable is *shadowed* by the second, which means
-that the second variable’s value is what appears when the variable is used. We
-can shadow a variable by using the same variable’s name and repeating the use
-of the `let` keyword as follows:
+Tak jak już pewnie zauważyłeś/aś w poradniku do gry zgadywanki w sekcji
+"Porównywanie odpowiedzi gracza z sekretnym numerem" w Rozdziale 2, mogłeś/aś
+zadeklarować nową zmienną o takiej samej nazwie, jak dawna zmienna, a nowa
+zmienna przesłania dawną zmienną. Rustowcy powiedzą, że pierwsza zmienna jest
+*przesłoniona* przez drugą, co oznacza, że przy wywołaniu zmiennej otrzymujemy
+wartość drugiej zmiennej. Możemy przesłonić zmienną poprzez wykorzystanie tej
+samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -171,11 +181,12 @@ fn main() {
 }
 ```
 
-This program first binds `x` to a value of `5`. Then it shadows `x` by
-repeating `let x =`, taking the original value and adding `1` so the value of
-`x` is then `6`. The third `let` statement also shadows `x`, multiplying the
-previous value by `2` to give `x` a final value of `12`. When we run this
-program, it will output the following:
+Ten program najpierw przypisuje zmiennej `x` wartość `5`. Następnie
+przesłania `x` powtarzając `let x =`, pobiera oryginalną wartość zmiennej
+i dodaje do niej `1` w wyniku czego wartość `x` to obecnie `6`. Użycie
+deklaracji `let` po raz trzeci również przesłania `x`, poprzednia wartość
+`x` zostaje pomnożona razy `2` aby finalnie nadać `x` wartość `12`. Gdy
+uruchomimy ten program, otrzymamy:
 
 ```text
 $ cargo run
@@ -185,36 +196,36 @@ $ cargo run
 The value of x is: 12
 ```
 
-Shadowing is different than marking a variable as `mut`, because we’ll get a
-compile-time error if we accidentally try to reassign to this variable without
-using the `let` keyword. By using `let`, we can perform a few transformations
-on a value but have the variable be immutable after those transformations have
-been completed.
+To nie to samo, co nadanie `mut` zmiennej, gdyż jeżeli przypadkowo spróbujemy
+ponownie przypisać wartość do zmiennej, nie wykorzystując słowa kluczowego
+`let` otrzymamy błąd kompilacji. Dzięki użyciu `let`, możemy przeprowadzić
+kilka transformacji na wartości, pozostawiając przy tym zmienną niemodyfikowalną.
 
-The other difference between `mut` and shadowing is that because we’re
-effectively creating a new variable when we use the `let` keyword again, we can
-change the type of the value but reuse the same name. For example, say our
-program asks a user to show how many spaces they want between some text by
-inputting space characters, but we really want to store that input as a number:
+Inna różnica między `mut` i przesłanianiem to, że za każdym razem, gdy używamy
+słowa kluczowego `let`, tworzymy nową zmienną, co oznacza, że możemy wybrać
+inny typ danych, ale ponownie użyć tej samej nazwy zmiennej. Na przykład,
+powiedzmy, że nasz program prosi użytkownika o pokazanie ilości spacji, jaka
+ma zostać umieszczona między jakimś tekstem, poprzez wpisanie tych spacji,
+ale my tak naprawdę chcemy przechowywać tę wartość jako liczbę:
 
 ```rust
 let spaces = "   ";
 let spaces = spaces.len();
 ```
 
-This construct is allowed because the first `spaces` variable is a string type
-and the second `spaces` variable, which is a brand-new variable that happens to
-have the same name as the first one, is a number type. Shadowing thus spares us
-from having to come up with different names, such as `spaces_str` and
-`spaces_num`; instead, we can reuse the simpler `spaces` name. However, if we
-try to use `mut` for this, as shown here, we’ll get a compile-time error:
+Powyższa konstrukcja jest dozwolona, gdyż pierwsza zmienna `spaces` typu
+string, to zupełnie inna zmienna niż druga zmienna `spaces` typu numerycznym,
+posiadająca tylko tę samą nazwę. Dzięki przesłanianiu nie musimy wykorzystywać
+dwóch różnych nazw np. `spaces_str` i `spaces_num`; zamiast tego, ponownie
+korzystamy z prostszej nazwy `spaces`. Jednak, jeżeli spróbowalibyśmy użyć
+`mut` dla tej zmiennej otrzymalibyśmy błąd kompilacji:
 
-```rust,ignore,does_not_compile
+```rust,ignore
 let mut spaces = "   ";
 spaces = spaces.len();
 ```
 
-The error says we’re not allowed to mutate a variable’s type:
+Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 
 ```text
 error[E0308]: mismatched types
@@ -227,9 +238,5 @@ error[E0308]: mismatched types
              found type `usize`
 ```
 
-Now that we’ve explored how variables work, let’s look at more data types they
-can have.
-
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[data-types]: ch03-02-data-types.html#data-types
+Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom
+danych, jakich mogą być zmienne.

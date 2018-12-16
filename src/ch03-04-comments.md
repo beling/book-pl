@@ -1,47 +1,48 @@
-## Comments
+## Komentarze
 
-All programmers strive to make their code easy to understand, but sometimes
-extra explanation is warranted. In these cases, programmers leave notes, or
-*comments*, in their source code that the compiler will ignore but people
-reading the source code may find useful.
+Wszyscy programiści starają się tworzyć czytelny i zrozumiały kod,
+jednak czasem potrzebne jest dodatkowe wyjaśnienie. W takich wypadkach
+programiści umieszczają w kodzie notki lub *komentarze*, które mimo że
+są ignorowane przez kompilator, mogą okazać się przydatne dla osób
+czytających kod.
 
-Here’s a simple comment:
-
-```rust
-// hello, world
-```
-
-In Rust, comments must start with two slashes and continue until the end of the
-line. For comments that extend beyond a single line, you’ll need to include
-`//` on each line, like this:
+Oto prosty komentarz:
 
 ```rust
-// So we’re doing something complicated here, long enough that we need
-// multiple lines of comments to do it! Whew! Hopefully, this comment will
-// explain what’s going on.
+// Hello, world
 ```
 
-Comments can also be placed at the end of lines containing code:
+W Ruście, komentarze muszą rozpoczynać się dwoma ukośnikami i ciągną się
+do końca linii. W przypadku komentarzy, których długość przekracza jedną
+linię, musisz wstawić `//` na początku każdej linii, tak jak poniżej:
 
-<span class="filename">Filename: src/main.rs</span>
+```rust
+// A więc opisujemy tu coś skomplikowanego, wystarczająco długo,
+// że potrzebujemy wieloliniowych komentarzy, aby to zrobić!
+// Fiu! Fiu! Na szczęście ten komentarz wyjaśni, o co chodzi.
+```
+
+Komentarze mogą być też umieszczone na końcu linii zawierającej kod:
+
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
-    let lucky_number = 7; // I’m feeling lucky today
+    let lucky_number = 7; // Czuję, że sprzyja mi dziś szczęście
 }
 ```
 
-But you’ll more often see them used in this format, with the comment on a
-separate line above the code it’s annotating:
+Jednak częściej spotkasz się z zapisem, w którym komentarz znajduje się
+w oddzielnej linii nad kodem, który jest przez niego opisywany:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
-    // I’m feeling lucky today
+    // Czuję, że sprzyja mi dziś szczęście
     let lucky_number = 7;
 }
 ```
 
-Rust also has another kind of comment, documentation comments, which we’ll
-discuss in Chapter 14.
+Rust posiada też wbudowany inny typ komentarzy, komentarze dokumentacji,
+które omówimy w rozdziale 14.

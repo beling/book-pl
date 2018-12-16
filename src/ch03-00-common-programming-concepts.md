@@ -1,55 +1,23 @@
-# Common Programming Concepts
+# Powszechne koncepcje programistyczne
 
-This chapter covers concepts that appear in almost every programming language
-and how they work in Rust. Many programming languages have much in common at
-their core. None of the concepts presented in this chapter are unique to Rust,
-but we’ll discuss them in the context of Rust and explain the conventions
-around using these concepts.
+W tym rozdziale zostaną omówione pojęcia i rozwiązania, które pojawiają się
+niemal w każdym języku programowania oraz ich zastosowanie w Ruście. Wiele
+języków programowania ma dużo wspólnych cech. Żadna z koncepcji zaprezentowanych
+w tym rozdziale nie jest unikalna dla Rusta, ale omówimy je w kontekście Rusta
+i wytłumaczymy zasady ich używania.
 
-Specifically, you’ll learn about variables, basic types, functions, comments,
-and control flow. These foundations will be in every Rust program, and learning
-them early will give you a strong core to start from.
+W szczególności dowiesz się czym są oraz jak wykorzystywać: zmienne, podstawowe
+typy danych, funkcje, komentarze i przepływ sterowania. Te fundamentalne elementy
+pojawią się w każdym programie napisanym w Rust, a poznanie ich wcześnie zapewni
+ci silne podstawy do dalszej nauki.
 
-## Keywords
-
-The Rust language has a set of *keywords* that are reserved for use by
-the language only, much as in other languages. Keep in mind that you cannot
-use these words as names of variables or functions. Most of the keywords have
-special meanings, and you’ll be using them to do various tasks in your Rust
-programs; a few have no current functionality associated with them but have
-been reserved for functionality that might be added to Rust in the future. You
-can find a list of the keywords in Appendix A.
-
-## Identifiers
-
-We’re going to be explaining a bunch of concepts in this book: variables,
-functions, structs, lots of things. All of these things need names. A name
-in Rust is called an “identifier,” and can be made up of any nonempty ASCII
-string, with some restrictions:
-
-Either:
-
-* The first character is a letter.
-* The remaining characters are alphanumeric or _.
-
-or:
-
-* The first character is _.
-* The identifier is more than one character. _ alone is not an identifier.
-* The remaining characters are alphanumeric or _.
-
-### Raw identifiers
-
-Sometimes, you may need to use a name that’s a keyword for another purpose.
-Maybe you need to call a function named *match* that is coming from a C
-library, where ‘match’ is not a keyword. To do this, you can use a “raw identifier.”
-Raw identifiers start with `r#`:
-
-```rust,ignore
-let r#fn = "this variable is named 'fn' even though that's a keyword";
-
-// call a function named 'match'
-r#match();
-```
-
-You won’t need raw identifiers often, but when you do, you *really* need them.
+> ### Słowa kluczowe
+>
+> Rust, podobnie jak w inne języki programowania, posiada grupę *słów kluczowych*,
+> które są zarezerwowane wyłącznie do użytku w kontekście językowym. Zapamiętaj,
+> że nie możesz wykorzystywać tych słów jako nazw zmiennych, ani funkcji.
+> Większość słów kluczowych ma specjalne znaczenie i będziesz ich używał do
+> wykonywania różnych operacji w swoich programach; niektóre nie mają obecnie
+> jeszcze żadnego zastosowania, lecz zostały zarezerwowane dla funkcjonalności,
+> które mogą zostać dodane w przyszłości do Rusta. Listę słów kluczowych
+> znajdziesz w Dodatku A.
