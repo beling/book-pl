@@ -1,6 +1,6 @@
 # Język Programowania Rust
 
-[Foreword](foreword.md)
+[Przedmowa](foreword.md)
 [Wstęp](ch00-00-introduction.md)
 
 ## Na początek
@@ -122,11 +122,11 @@
     - [Turning our Single Threaded Server into a Multithreaded Server](ch20-02-multithreaded.md)
     - [Graceful Shutdown and Cleanup](ch20-03-graceful-shutdown-and-cleanup.md)
 
-- [Appendix](appendix-00.md)
+- [Dodatki](appendix-00.md)
     - [A - Keywords](appendix-01-keywords.md)
     - [B - Operators and Symbols](appendix-02-operators.md)
     - [C - Derivable Traits](appendix-03-derivable-traits.md)
     - [D - Useful Development Tools](appendix-04-useful-development-tools.md)
     - [E - Editions](appendix-05-editions.md)
-    - [F - Translations](appendix-06-translation.md)
+    - [F - Tłumaczenia](appendix-06-translation.md)
     - [G - How Rust is Made and “Nightly Rust”](appendix-07-nightly-rust.md)

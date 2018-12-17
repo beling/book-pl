@@ -18,8 +18,8 @@ na problemy, które tradycyjnie takiej możliwości towarzyszyły.
 
 ## Dla kogo jest Rust
 
-Rust z wielu powodów okazuje się idealnym wyborem dla wielu grup ludzi.
-Przyjrzyjmy się kilku najważniejszym z nich.
+Rust jest idealnym wyborem dla wielu ludzi z wielu różnych powodów. Przyjrzyjmy
+się kilku najważniejszym grupom.
 
 ### Zespoły deweloperów
 
@@ -30,7 +30,7 @@ większości innych języków programowania da się wyłapać jedynie poprzez ro
 testy i ostrożne sprawdzanie kodu przez doświadczonych programistów. W Ruście
 kompilator pełni rolę bramkarza, który nie dopuszcza do skompilowania kodu
 zawiarającego tego typu błędy. Dotyczy to również błędów w programach
-współbieżnych (*wielowątkowych*). Współpraca z kompilatorem, pozwala zespołowi
+współbieżnych (*wielowątkowych*). Współpraca z kompilatorem pozwala zespołowi
 spędzić więcej czasu na dopracowywaniu logiki programu niż na polowaniu na bugi.
 
 Rust jednocześnie wnosi do świata programowania systemowego nowoczesne narzędzia
@@ -41,7 +41,7 @@ deweloperskie:
   procesem w obrębie ekosystemu Rusta.
 * Rustfmt zapewnia spójny styl kodu wśród deweloperów.
 * Serwer języka Rust zapewnia w konkretnych Zintegrowanych Środowiskach
-  Programistycznych (*IDE*) auto-uzupełnianie oraz ostrzeżenia inline o błędach.
+  Programistycznych (IDE) auto-uzupełnianie oraz ostrzeżenia inline o błędach.
 
 Korzystając z tych oraz innych narzędzi w ekosystemie Rusta, deweloperzy mogą
 pozostać produktywni również podczas pisania kodu niskopoziomowego.
@@ -136,11 +136,11 @@ W Rozdziale 7 dowiadujemy się o systemie modułów w Ruście oraz o zasadach
 prywatności przy organizacji kodu oraz jego publicznego Interfejsu Programowania
 Aplikacji (API). Rozdział 8 omawia niektóre popularne struktury danych kolekcji
 dostarczone przez bibliotekę standardową, takie jak wektory, ciągi znaków
-(*stringi*) i tablice mieszające (*hash mapy*). Rozdział 9 odkrywa filozofię
-oraz techniki obsługi błędów w Ruście.
+(*string*) i tablice mieszające (*hash map*). Rozdział 9 odkrywa filozofię oraz
+techniki obsługi błędów w Ruście.
 
 Rozdział 10 wchodzi w temat typów ogólnych, cech (*traits*) oraz trwałości
-(*lifetimes*), które dają ci możliwość definiowania kodu, który odnosi się do
+(*lifetimes*), które dają ci możliwość definiowania kodu, odnoszącego się do
 wielu typów danych. Rozdział 11 jest w całości poświęcony testowaniu, które mimo
 gwarancji bezpieczeństwa Rusta nadal jest konieczne, by zapewnić prawidłową
 logikę wykonywania programów. W Rozdziale 12 budujemy natomiast własną
@@ -170,11 +170,14 @@ niskopoziomowy serwer sieciowy!
 Na zakończenie, kilka dodatków zawiera przydatne informacje o języku w formacie
 przypominajacym książkę referencyjną. Dodatek A obejmuje słowa kluczowe Rusta,
 Dodatek B operatory i symbole, Dodatek C omawia dostarczone przez bibliotekę
-standardową cechy wyprowadzane, natomiast Dodatek D - makra.
+standardową cechy wyprowadzane, natomiast Dodatek D - kilka przydatnych narzędzi
+deweloperskich, a Dodatek E wyjaśnia koncepcję edycji Rusta.
 
 Nie ma złego sposobu na czytanie tej ksiażki - jeśli masz ochotę skakać w przód,
 proszę bardzo! Powrót do wcześniejszych rozdziałów może okazać się konieczny,
 jeżeli doświadczysz uczucia zagubienia. Rób wszystko, co ci pomaga.
+
+<span id="ferris"></span>
 
 Ważną częścią procesu poznawania Rusta jest uczenie się odczytywania komunikatów
 błędów wyświetlanych przez kompilator: będą cię one nakierowywać na uzyskanie
@@ -182,13 +185,22 @@ działającego kodu. Dlatego też zaprezentujemy wiele przykładów kodu, który
 nie kompiluje, wraz z komunikatami błędów zwracanych w każdym przypadku przez
 kompilator. Miej świadomość, że wybrany przez ciebie na chybił-trafił przykład
 może się nie skompilować. Koniecznie przeczytaj okalający go tekst aby
-sprawdzić, czy dany kod przy próbie kompilacji powinien zwrócić błąd. W
-większości przypadków pokierujemy cię do uzykania prawidłowej wersji kodu, który
-pierwotnie się nie kompiluje.
+sprawdzić, czy dany kod przy próbie kompilacji powinien zwrócić błąd. Również
+Ferris pomoże ci rozpoznać kod, który nie powinien zadziałać:
+
+| Ferris                                                                 | Znaczenie                                 |
+|------------------------------------------------------------------------|-------------------------------------------|
+| <img src="img/ferris/does_not_compile.svg" class="ferris-explain"/>    | Ten kod się nie kompiluje!                |
+| <img src="img/ferris/panics.svg" class="ferris-explain"/>              | Ten kod panikuje!                         |
+| <img src="img/ferris/unsafe.svg" class="ferris-explain"/>              | Ten blok kodu zawiera blok niebezpieczny. |
+| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain"/>| Ten kod nie wywołuje zamierzonego efektu. |
+
+W większości przypadków pokierujemy cię do uzykania prawidłowej wersji kodu,
+który pierwotnie się nie kompiluje.
 
 ## Kod źródłowy
 
 Pliki źródłowe, z których wygenerowana została niniejsza książka, można znaleźć
 na [GitHubie][book].
 
-[book]: https://github.com/paytchoo/book-pl/tree/master/second-edition/src
+[book]: https://github.com/paytchoo/book-pl/tree/master/src
