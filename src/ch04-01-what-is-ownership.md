@@ -43,14 +43,9 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > danych nosi nazwę *odkładania na stos* (*pushing onto the stack*), a usuwanie
 > ich nazywane jest *zdejmowaniem ze stosu* (*popping off the stack*).
 >
-> Stos zawdzięcza swoją szybkość metodzie dostępu do danych: nigdy nie trzeba
-> szukać miejsca na dodanie danych, ani miejsca, z którego dane należy pobrać,
-> ponieważ to miejsce znajduje się zawsze na szczycie stosu. Kolejną
-> właściwością, która odpowiada za szybkość stosu jest to, że każda dana na nim
-> umieszczona musi mieć znany, ustalony z góry rozmiar.
->
+> Każda dana umieszczona na stosie musi mieć znany, ustalony z góry rozmiar.
 > Dane, których rozmiar jest nieznany na etapie kompilacji lub ulega zmianie,
-> mogą być przechowywane na stercie. Sterta jest mniej zorganizowana: kiedy coś
+> muszą być przechowywane na stercie. Sterta jest mniej zorganizowana: kiedy coś
 > się na niej umieszcza, należy poprosić o przydzielenie pewnego jej obszaru.
 > System operacyjny znajduje na stercie wolne, wystarczająco duże miejsce,
 > oznacza je jako będące w użyciu i zwraca *wskaźnik*, zawierający adres
@@ -64,6 +59,13 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > w swojej grupie, a pracownik znajduje pusty stolik, przy którym wszyscy się
 > pomieszczą i prowadzi ich na miejsce. Jeśli ktoś z twojej grupy sie spóźni,
 > aby was znaleźć, może zapytać, gdzie was posadzono.
+>
+> Odkładanie na stosie jest szybsze od alokacji na stercie, ponieważ nigdy nie
+> trzeba szukać miejsca na dodanie nowych danych; to miejsce znajduje się zawsze
+> na szczycie stosu. Alokacja na stercie natomiast wymaga więcej pracy, ponieważ
+> system operacyjny musi w pierwszej kolejności znaleźć wystarczająco dużo
+> miejsca, aby dane się zmieściły. a następnie przeprowadzić niezbędne operacje,
+> by przygotować się na następną alokację.
 >
 > Dostęp do danych na stercie jest wolniejszy od dostępu do danych na stosie,
 > ponieważ należy je zlokalizować korzystając ze wskaźnika. Nowoczesne procesory
@@ -120,7 +122,7 @@ element zachowuje ważność. Powiedzmy, że mamy zmienną, która wygląda tak:
 let s = "hello";
 ```
 
-Zmienna `s` odnosi się do literału znakowego, którego wartość jest ustalana w
+Zmienna `s` odnosi się do literału znakowego, którego wartość jest ustalona w
 samym kodzie programu. Zmienna zachowuje ważność od miejsca, w którym ją
 zadeklarowano, do końca bieżącego *zasięgu*. Listing 4-1 zawiera komentarze
 wyjaśniające, gdzie zmienna `s` zachowuje ważność:
@@ -148,23 +150,23 @@ nowy typ danych: `String` (*łańcuch znaków*).
 ### Typ `String`
 
 Aby zilustrować zasady systemu własności, potrzebujemy typu danych, który jest
-bardziej złożony od tych, które omawiane były w Rozdziale 3. Wszystkie typy
-opisane w sekcji „Typy danych” przechowywane są na stosie i są z niego
-zdejmowane, kiedy skończy się ich zasięg. Potrzebny jest nam natomiast typ
-przechowujący zawarte w nim dane na stercie . Dowiemy się wówczas, skąd Rust
-wie, kiedy te dane usunąć.
+bardziej złożony od tych, które omawiane były w sekcji
+[„Typy danych”][data-types]<!-- ignore --> w Rozdziale 3. Wszystkie opisane tam
+typy przechowywane są na stosie i są z niego zdejmowane, kiedy skończy się ich
+zasięg. Potrzebny jest nam natomiast typ przechowujący zawarte w nim dane na
+stercie . Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
 
 W przykładzie użyjemy typu `String`, koncentrując się na tych jego elementach,
-które odnoszą sie do systemu własności. Te same elementy mają znaczenie dla
+które odnoszą się do systemu własności. Te same elementy mają znaczenie dla
 innych złożonych typów, które dostarcza biblioteka standardowa oraz tych, które
 stworzysz sam. Typ `String` omawiany będzie dogłębnie w Rozdziale 8.
 
 Widzieliśmy już literały znakowe, których dane na stałe umieszczone są w treści
 programu. Takie zmienne są wygodne w użyciu, ale nieprzydatne w wielu
 sytuacjach, w których używa się danych tekstowych. Jednym z powodów jest to, że
-są one niemodyfikowalne. Innym, że nie każdy łańcuch tekstowy jest znany podczas
-pisania programu. Na przykład: co zrobić, jeśli chcemy pobrać dane od
-użytkownika i je przechować? Dla takich sytuacji Rust przewiduje drugi typ
+są one niemodyfikowalne. Innym, że nie każda zawartość łańcucha tekstowego jest
+znana podczas pisania programu. Na przykład: co zrobić, jeśli chcemy pobrać dane
+od użytkownika i je przechować? Dla takich sytuacji Rust przewiduje drugi typ
 znakowy: `String`. Typ ten alokowany jest na stercie i z tego względu może
 przechowywać dane, których ilość jest nieznana podczas kompilacji. Można
 przekształcić niemodyfikowalny literał znakowy w zmienną typu `String` za pomocą
@@ -177,8 +179,10 @@ let s = String::from("hello");
 Podwójny dwukropek (`::`) jest operatorem umożliwiającym wykorzystanie funkcji
 `from` z przestrzeni nazw typu `String`, zamiast konieczności utworzenia
 ogólnej funkcji o przykładowej nazwie `string_from`. Ten rodzaj składni będzie
-szerzej omawiany w sekcji „Składnia metod” w Rozdziale 5 oraz podczas rozważań
-o przestrzeniach nazw modułów w sekcji „Definicje modułów” w Rozdziale 7.
+szerzej omawiany w sekcji [„Składnia metod”][method-syntax]<!-- ignore --> w
+Rozdziale 5 oraz podczas rozważań o przestrzeniach nazw modułów w sekcji
+[„Ścieżki odnoszenia się do elementów w hierarchii modułów”][paths-module-tree]<!-- ignore -->
+w Rozdziale 7.
 
 Ten rodzaj łańcucha znaków *można* modyfikować:
 
@@ -217,14 +221,14 @@ zasadzie uniwersalne dla wielu języków programowania.
 
 Druga część znacznie się za to różni. W językach wyposażonych w systemy
 odśmiecania (*garbage collector - GC*), GC śledzi i zwalnia pamięć, która nie
-jest już używana, a my - programiści nie musimy już o tym myśleć. W językach
-pozbawionych GC, naszą odpowiedzialnością jest identyfikowanie nieużywanej już
-pamięci i wywoływanie bezpośrednio kodu, który tę pamięć zwalnia. Tak samo, jak
-kodu, który ją alokuje. Poprawne wykonanie tej operacji stanowiło historycznie
-trudny, programistyczny problem. Jeśli zapomnimy, marnujemy pamięć. Jeśli
-zrobimy to za wcześnie, zostaniemy z nieważną zmienną. Zrobimy to dwukrotnie -
-to też błąd. Musimy połączyć w pary dokładnie jedną alokację z dokładnie jednym
-zwolnieniem.
+jest już używana, a my nie musimy już o tym myśleć. W językach pozbawionych GC,
+naszą odpowiedzialnością jest identyfikowanie nieużywanej już pamięci i
+wywoływanie bezpośrednio kodu, który tę pamięć zwalnia - tak samo, jak kodu,
+który ją alokuje. Poprawne wykonanie tej operacji stanowiło historycznie trudny,
+programistyczny problem. Jeśli zapomnimy, marnujemy pamięć. Jeśli zrobimy to za
+wcześnie, zostaniemy z nieważną zmienną. Zrobimy to dwukrotnie - to też błąd.
+Musimy połączyć w pary dokładnie jedną `alokację` z dokładnie jednym
+`zwolnieniem`.
 
 Rust prezentuje inne podejście: pamięć jest automatycznie zwracana do systemu,
 kiedy skończy się zasięg zmiennej, będącej jej właścicielem. Oto wersja naszego
@@ -256,9 +260,9 @@ wydawać się to proste, ale program może zachować się niespodziewanie w bard
 złożonych przypadkach, kiedy chcemy, aby kilka zmiennych używało tej samej
 danej, alokowanej na stercie. Zbadajmy teraz kilka takich sytuacji.
 
-#### Metody interakcji między zmiennymi a danymi: Move
+#### Metody interakcji między zmiennymi a danymi: przeniesienie
 
-Wiele zmiennych może w Ruście odnosić się do tej samej danej na różne sposoby.
+Kilka zmiennych może w Ruście odnosić się do tej samej danej na różne sposoby.
 Spójrzmy na przykład w Listingu 4-2, z wykorzystaniem liczby całkowitej:
 
 ```rust
@@ -269,11 +273,11 @@ let y = x;
 <span class="caption">Listing 4-2: Przypisanie całkowitej wartości zmiennej `x`
 do zmiennej `y`</span>
 
-Z całą pewnością możemy odgadnąć, co ten kod robi: „Przypisz wartość `5` do `x`,
-a następnie zrób kopię wartości przechowywanej w `x` i przypisz ją do `y`.”.
-Mamy teraz dwie zmienne: `x` i `y`, obie o wartości `5`. Dzieje się dokładnie
-tak, ponieważ zmienne dla liczb całkowitych są prostymi elementami o znanym,
-ustalonym rozmiarze, więc obie wartości `5` zostają odłożone na stos.
+Z całą pewnością możemy odgadnąć, co ten kod robi: „Przypisuje wartość `5` do
+`x`, a następnie robi kopię wartości przechowywanej w `x` i przypisuje ją do
+`y`.”. Mamy teraz dwie zmienne: `x` i `y`, obie o wartości `5`. Dzieje się
+dokładnie tak, ponieważ zmienne dla liczb całkowitych są prostymi elementami o
+znanym, ustalonym rozmiarze, więc obie wartości `5` zostają odłożone na stos.
 
 Teraz przyjrzyjmy się wersji z typem `String`:
 

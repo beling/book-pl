@@ -15,17 +15,18 @@ o wiele łatwiejsze do zrobienia.
 
 Jako że przeważająca większość projektów w Ruście używa Cargo, w dalszym ciągu
 książki założymy, że ty również go używasz. Jeśli korzystałeś z oficjalnych
-instalatorów, zgodnie z opisem w sekcji „Instalacja”, Cargo zainstalował się
-razem z Rustem. Jeżeli instalowałeś Rusta w inny sposób, możesz sprawdzić, czy
-Cargo jest zainstalowany, przez wprowadzenie w terminalu następującej komendy:
+instalatorów, zgodnie z opisem w sekcji
+[„Instalacja”][installation]<!-- ignore -->, Cargo zainstalował się razem z
+Rustem. Jeżeli instalowałeś Rusta w inny sposób, możesz sprawdzić, czy Cargo
+jest zainstalowany, przez wprowadzenie w terminalu następującej komendy:
 
 ```text
 $ cargo --version
 ```
 
-Jeżeli widzisz numer wersji, to świetnie! Jeśli natomiast pojawia się błąd
-z rodzaju `komendy nie znaleziono`, powinieneś zajrzeć do dokumentacji swojej
-metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
+Jeżeli widzisz numer wersji, Cargo jest zainstalowane! Jeśli natomiast pojawia
+się błąd z rodzaju `komendy nie znaleziono`, powinieneś zajrzeć do dokumentacji
+swojej metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
 
 ### Tworzenie projektu z Cargo
 
@@ -35,25 +36,23 @@ katalogu *projects* (lub innego, w którym zdecydowałeś się trzymać swój ko
 bez względu na posiadany system operacyjny wprowadź polecenie:
 
 ```text
-$ cargo new hello_cargo --bin
+$ cargo new hello_cargo
 $ cd hello_cargo
 ```
 
-Tworzy to katalog o nazwie `hello_cargo` z kodem pod binarny plik wykonywalny.
-Argument `--bin` przekazany do `cargo new` powoduje utworzenie aplikacji
-wykonywalnej (często po prostu nazywanej *binarką*), w przeciwieństwie do
-biblioteki. Nadaliśmy naszemu projektowi nazwę `hello_cargo`, więc Cargo tworzy
-jego pliki źródłowe w katalogu o tej samej nazwie.
+Tworzy to nowy katalog o nazwie `hello_cargo`. Ponieważ nadaliśmy naszemu
+projektowi nazwę `hello_cargo`, Cargo tworzy jego pliki źródłowe w katalogu o
+tej samej nazwie.
 
 Wejdź do katalogu *hello_cargo* i wyświetl listę plików. Powinieneś zobaczyć, że
 Cargo utworzył dla nas dwa pliki i jeden podkatalog: plik *Cargo.toml* oraz
 katalog *src* z plikiem *main.rs* wewnątrz. Zainicjował również nowe
-repozytorium gita, w komplecie z plikiem *.gitignore*.
+repozytorium Gita, w komplecie z plikiem *.gitignore*.
 
 > Uwaga: Git jest często stosowanym systemem kontroli wersji. Możesz zlecić
 > `cargo new` zastosowanie innego systemu kontroli wersji lub też nie stosowanie
-> żadnego, za pomocą flagi `--vcs` z odpowiednim argumentem. Uruchom
-> `cargo new --help`, żeby zobaczyć dostępne opcje.
+> żadnego, za pomocą flagi `--vcs`. Uruchom `cargo new --help`, żeby zobaczyć
+> dostępne opcje.
 
 Otwórz plik *Cargo.toml* w wybranym przez siebie edytorze tekstu. Zawartość
 powinna wyglądać podobnie do kodu z Listingu 1-2:
@@ -65,6 +64,7 @@ powinna wyglądać podobnie do kodu z Listingu 1-2:
 name = "hello_cargo"
 version = "0.1.0"
 authors = ["Your Name <you@example.com>"]
+edition = "2018"
 
 [dependencies]
 ```
@@ -79,13 +79,14 @@ Cargo używa do konfiguracji.
 [toml]: https://github.com/toml-lang/toml
 
 Pierwsza linia, `[package]`, jest nagłówkiem sekcji, której kolejne wyrażenia
-konfigurują paczkę. W miarę dodawania informacji do pliku, dodamy też inne
+konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też inne
 sekcje.
 
-Następne trzy linie ustalają informacje konfiguracyjne, których Cargo potrzebuje
-do kompilacji twojego programu: nazwę, wersję i dane o autorze. Cargo pobiera
-twoje imię i adres email z twojego środowiska, więc jeśli nie są one prawidłowe,
-popraw je śmiało i zapisz plik.
+Następne cztery  linie ustalają informacje konfiguracyjne, których Cargo
+potrzebuje do kompilacji twojego programu: nazwę, wersję i dane o autorze. Cargo
+pobiera twoje imię i adres email z twojego środowiska, więc jeśli nie są one
+prawidłowe, popraw je śmiało i zapisz plik. O kluczu `edition` będzie mowa
+w Dodatku E.
 
 Ostatnia linia, `[dependencies]`, rozpoczyna sekcję, gdzie wyszczególnia się
 wszystkie zależności twojego projektu. W Ruście paczki z kodem źródłowym
@@ -111,9 +112,9 @@ konfiguracyjny *Cargo.toml*.
 
 Cargo zakłada, że kod źródłowy znajduje się w podkatalogu *src*, dzięki czemu
 katalog główny wykorzystany jest tylko na pliki README, informacje o licencjach,
-pliki konfiguracyjne i wszystko inne, co nie jest kodem. W ten sposób używanie
-Cargo pomaga utrzymać ci własne projekty w należytym porządku. Na wszystko jest
-miejsce i wszystko jest na swoim miejscu.
+pliki konfiguracyjne i wszystko inne, co nie jest kodem. Używanie Cargo pomaga
+utrzymać ci własne projekty w należytym porządku. Na wszystko jest miejsce i
+wszystko jest na swoim miejscu.
 
 Jeżeli zacząłeś jakiś projekt bez użycia Cargo, taki jak nasz poprzedni z
 katalogu *hello_world*, możesz przekonwertować go na wersję kompatybilną z
@@ -124,7 +125,7 @@ plik *Cargo.toml*.
 
 Przyjrzyjmy się teraz, jakie są różnice w budowaniu i uruchamianiu programu
 Hello World poprzez Cargo. Aby Zbudować swój projekt, z poziomu głównego
-katalogu projektu wprowadź polecenie:
+katalogu *hello_cargo* wprowadź polecenie:
 
 ```text
 $ cargo build
@@ -133,7 +134,7 @@ $ cargo build
 ```
 
 Spowoduje to utworzenie pliku wykonywalnego *target/debug/hello_cargo*
-(lub *target\\debug\\hello_cargo.exe* pod Windowsem), który możesz uruchomić
+(lub *target\debug\hello_cargo.exe* pod Windowsem), który możesz uruchomić
 następującym poleceniem:
 
 ```text
@@ -189,7 +190,7 @@ wiele szybsze od `cargo build`, ponieważ cały krok generowania pliku
 wykonywalnego jest pomijany. Jeśli masz zwyczaj sprawdzać swoją pracę w trakcie
 pisania kodu, użycie `cargo check` przyspieszy proces! Wielu Rustowców okresowo
 uruchamia `cargo check`, żeby sprawdzić, czy wszystko się kompiluje, a
-`cargo build`, kiedy zdecydują się na właściwą komplację.
+`cargo build` dopiero, kiedy zdecydują się na uruchomienie binarki.
 
 Podsumujmy, co do tej pory nauczyliśmy się o Cargo:
 
@@ -256,3 +257,5 @@ czytania i pisania kodu w Ruście. W następnym rozdziale zbudujemy program
 grający w zgadywankę. Jeśli jednak chcesz zacząć naukę o działaniu powszechnych
 pojęć programistycznych w Ruście, przejdź do rozdziału 3, a następnie wróć do
 rozdziału 2.
+
+[installation]: ch01-01-installation.html#instalacja

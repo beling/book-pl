@@ -23,7 +23,7 @@ przechowywanie tam wszystkich swoich programów.
 Otwórz terminal i wprowadź następujące polecenia, aby utworzyć katalog
 *projects*, w którym umieścimy kolejny, pod projekt „Hello, world!”:
 
-Pod Linuksem lub macOS, wpisz to:
+Pod Linuksem, macOS, lub w PowerShell pod Windowsem, wpisz to:
 
 ```text
 $ mkdir ~/projects
@@ -37,15 +37,6 @@ W Windows CMD, wpisz to:
 ```cmd
 > mkdir %USERPROFILE%\projects
 > cd /d %USERPROFILE%\projects
-> mkdir hello_world
-> cd hello_world
-```
-
-W Windows PowerShell, wpisz to:
-
-```powershell
-> mkdir $env:USERPROFILE\projects
-> cd $env:USERPROFILE\projects
 > mkdir hello_world
 > cd hello_world
 ```
@@ -89,8 +80,8 @@ Hello, world!
 
 Bez względu na posiadany system operacyjny, powinieneś zobaczyć w oknie
 terminala wyświetlony tekst `Hello, world!`. Jeśli nic takiego nie widzisz,
-zajrzyj do wcześniejszej sekcji „Rozwiązywanie problemów” po sposoby na
-otrzymanie pomocy.
+zajrzyj do sekcji [„Rozwiązywanie problemów”][troubleshooting]<!-- ignore --> w
+rozdziale poświęconym instalacji, po sposoby na otrzymanie pomocy.
 
 Jeśli widzisz tekst `Hello, world!`, to gratulacje! Właśnie oficjalnie napisałeś
 program w Ruście, a to czyni z ciebie programistę Rusta - Witaj!
@@ -107,7 +98,7 @@ fn main() {
 ```
 
 Powyższe linie definiują w Ruście funkcję. Funkcja `main` jest szczególna: to
-pierwsza rzecz, która wykonuje się w każdym skompilowanym pliku Rusta. Pierwsza
+pierwsza rzecz, która wykonuje się w każdym wykonywalnym pliku Rusta. Pierwsza
 linia deklaruje funkcję o nazwie `main`, która nie przyjmuje argumentów oraz
 niczego nie zwraca. Gdyby funkcja przyjmowała jakieś argumenty, ich nazwy
 umieszczone byłyby w nawiasach, `()`.
@@ -122,8 +113,8 @@ W czasie, kiedy powstaje ten tekst, rozwijany jest automatyczny formater,
 Rustowych projektach, narzędzie `rustfmt` umożliwia formatowanie kodu do
 konkretnego stylu. W przyszłości planowane jest umieszczenie programu w
 standardowej dystrybucji Rusta, tak jak `rustc`, więc kiedy czytasz ten
-rozdział, `rustfmt` może być już zainstalowany! Więcej szczegółów znajdziesz
-w dokumentacji online.
+rozdział, `rustfmt` może być już zainstalowany na twoim komputerze! Więcej
+szczegółów znajdziesz w dokumentacji online.
 
 Wewnątrz funkcji `main` mamy następujący kod:
 
@@ -137,7 +128,7 @@ tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
 
 Po drugie, tekst `println!` wywołuje w Ruście makro. Gdyby wywoływana była
 funkcja, wpisana byłaby jako `println` (bez `!`). Makra będą szerzej opisane w
-Dodatku D. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
+Rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
 makro zamiast zwykłej funkcji.
 
 Po trzecie, w programie widzimy łańcuch znaków (*string*) `"Hello, world!"`.
@@ -151,7 +142,7 @@ kończy się znakiem średnika.
 ### Kompilacja i uruchomienie to oddzielne kroki
 
 Przed momentem uruchomiliśmy nowo napisany program. Zbadajmy teraz kolejno każdy
-poprzedzający etap.
+poprzedzający ten moment etap.
 
 Zanim uruchomisz program w Ruście, należy go skompilować kompilatorem Rusta,
 wprowadzając polecenie `rustc` i przekazując do niego jako argument nazwę pliku
@@ -165,12 +156,29 @@ Jeśli masz doświadczenie w C lub C++, zauważysz, że jest to podobne do
 wywoływania `gcc` lub `clang`. Po udanej kompilacji, Rust tworzy binarny plik
 wykonywalny.
 
-Pod Linuksem, macOS lub w PowerShell pod Windowsem możesz sprawdzić obecność
-pliku wykonywalnego używając w terminalu polecenia `ls`:
+Pod Linuksem lub macOS możesz sprawdzić obecność pliku wykonywalnego używając w
+terminalu polecenia `ls`:
 
 ```text
 $ ls
 main  main.rs
+```
+
+W PowerShell pod Windowsem, możesz także użyć komendy `ls`, ale zobaczysz trzy
+utworzone pliki:
+
+```text
+> ls
+
+
+    Directory: Sciezka:\do\twojego\projektu
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         6/1/2018   7:31 AM         137728 main.exe
+-a----         6/1/2018   7:31 AM        1454080 main.pdb
+-a----         6/1/2018   7:31 AM             14 main.rs
 ```
 
 W CMD pod Windowsem wyglądałoby to tak:
@@ -201,7 +209,7 @@ uruchomienia programu jako oddzielnych kroków. Rust jest językiem kompilowanym
 *z wyprzedzeniem*, co oznacza, że możesz skompilować program i dać go komuś,
 kto uruchomi go nawet nie mając zainstalowanego Rusta. Jeśli natomiast dasz
 komuś plik `.rb`, `.py` lub `.js`, odbiorca musi mieć zainstalowane
-odpowiednio implementacje Ruby, Pythona lub JavaScripta. Jednak w tych językach
+odpowiednio implementacje Ruby, Pythona lub JavaScript. Jednak w tych językach
 jedna komenda wystarczy, aby jednocześnie skompilować i uruchomić program.
 Wszystko jest kompromisem w konstrukcji danego języka.
 
@@ -210,3 +218,5 @@ miarę rozrastania się twojego projektu, odczujesz potrzebę zarzadzania
 wszystkimi dostępnymi w nim opcjami i ułatwienia dzielenia się kodem.
 W dalszym ciągu przedstawimy narzędzie zwane Cargo, które pomoże ci w pisaniu
 *prawdziwych* programów w Ruście.
+
+[troubleshooting]: ch01-01-installation.html#rozwiązywanie-problemów

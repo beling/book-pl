@@ -6,18 +6,16 @@ wersjami Rusta i powiązanych narzędzi. Będzie do tego potrzebne połączenie 
 internetem.
 
 > Uwaga: Jeśli z jakiegoś powodu wolisz nie używać narzędzia `rustup`, odwiedź
-> [Stronę omawiającą instalację Rusta](https://www.rust-lang.org/install.html),
+> [Stronę instalacyjną Rusta](https://www.rust-lang.org/install.html),
 > aby dowiedzieć się, jakie masz inne opcje.
 
 Wykonanie kolejnych kroków spowoduje zainstalowanie najnowszej, stabilnej wersji
-kompilatora Rusta. Wszystkie przykłady i teksty komunikatów zaprezentowane w
-niniejszej książce pochodzą ze stabilnej wersji o numerze 1.21.0. Gwarancja
-stabilności Rusta pozwala na to, aby wszystkie przykłady z książki, które
-poprawnie się kompilują, kompilowały się nadal w nowszych wersjach języka.
-Komunikaty mogą nieco różnić się od siebie w zależności od wersji, ponieważ dość
-często są one poprawiane. Innymi słowy, każda nowsza, stabilna wersja Rusta
-zainstalowana przy użyciu tych samych kroków powinna współgrać z treścią
-ksiażki zgodnie z oczekiwaniami.
+kompilatora Rusta. Stabilność Rusta gwarantuje, że wszystkie przykłady z
+książki, które poprawnie się kompilują, kompilowały się będą nadal w nowszych
+wersjach języka. Komunikaty zwrotne błędów i ostrzeżeń mogą nieco różnić się od
+siebie w zależności od wersji, ponieważ dość często są one poprawiane. Innymi
+słowy, każda nowsza, stabilna wersja Rusta zainstalowana przy użyciu tych samych
+kroków powinna współgrać z treścią książki zgodnie z oczekiwaniami.
 
 > ### Oznaczenia w linii poleceń
 >
@@ -29,7 +27,7 @@ ksiażki zgodnie z oczekiwaniami.
 > wyświetlony po wydaniu ostatniego polecenia. Dodatkowo, specyficzne przykłady
 > dla terminala PowerShell będą wykorzystywały znak `>` zamiast `$`.
 
-### Instalacja rustup pod Linuksem lub macOS
+### Instalacja `rustup` pod Linuksem lub macOS
 
 Jeśli korzystasz z Linuksa lub macOS, otwórz konsolę / terminal i wpisz
 następujące polecenie:
@@ -66,29 +64,30 @@ $ export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
 Następnie będziesz potrzebować programu linkującego (*linkera*). Prawdopodobnie
-masz już jakiś zainstalowany, ale jeżeli przy próbie kompilacji programu Rusta
+masz już taki zainstalowany, ale jeżeli przy próbie kompilacji programu Rusta
 uzyskasz błędy informujące, że nie można uruchomić linkera, oznacza to, że w
 danym systemie linker nie jest zainstalowany i konieczna jest jego ręczna
 instalacja. Kompilatory języka C zazwyczaj wyposażone są w odpowiedni linker.
 Sprawdź dokumentację swojej platformy, aby dowiedzieć się, jak przeprowadzić
 ewentualną instalację kompilatora C. Wiele popularnych pakietów Rusta korzysta z
-kodu C i wymaga również kompilatora C. Z tego wzgledu jego instalacja w tym
+kodu C i wymaga również kompilatora C. Z tego względu jego instalacja w tym
 momencie może być zasadna.
 
 ### Instalacja `rustup` pod Windowsem
 
 Z poziomu Windowsa, odwiedź stronę
-[https://www.rust-lang.org/en-US/install.html][install]
-i kieruj się instrukcjami instalacji Rusta. W którymś momencie procesu otrzymasz
-komunikat informujący, że będziesz również potrzebować narzędzi budowania C++
-dla Visual Studio 2013 lub nowszego. Najprościej jest w tym celu zainstalować
+[https://www.rust-lang.org/tools/install][install] i kieruj się instrukcjami
+instalacji Rusta. W którymś momencie procesu otrzymasz komunikat informujący, że
+będziesz również potrzebować narzędzi budowania C++ dla Visual Studio 2013 lub
+nowszego. Najprościej jest w tym celu zainstalować
 [narzędzia budowania dla Visual Studio 2017][visualstudio], które można znaleźć
-w sekcji z innymi narzędziami i platformami programistycznymi.
+w sekcji „Other Tools and Frameworks” (*inne narzędzia i platformy
+programistyczne).
 
-[install]: https://www.rust-lang.org/install.html
-[visualstudio]: https://www.visualstudio.com/downloads/
+[install]: https://www.rust-lang.org/tools/install
+[visualstudio]: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017
 
-Dalsza część książki będzie zawierać polecenia działające zarówno w `cmd.exe`
+Dalsza część książki będzie zawierać polecenia działające zarówno w *cmd.exe*
 jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaśnione.
 
 ### Aktualizowanie i odinstalowanie
