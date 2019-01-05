@@ -260,7 +260,7 @@ wydawać się to proste, ale program może zachować się niespodziewanie w bard
 złożonych przypadkach, kiedy chcemy, aby kilka zmiennych używało tej samej
 danej, alokowanej na stercie. Zbadajmy teraz kilka takich sytuacji.
 
-#### Metody interakcji między zmiennymi a danymi: przeniesienie
+#### Metody interakcji między zmiennymi a danymi: Move (*przeniesienie*)
 
 Kilka zmiennych może w Ruście odnosić się do tej samej danej na różne sposoby.
 Spójrzmy na przykład w Listingu 4-2, z wykorzystaniem liczby całkowitej:
@@ -290,66 +290,68 @@ Wygląda to bardzo podobnie do wcześniejszego kodu, więc możemy zakładać, �
 działanie też będzie podobne: w drugiej linii powstaje kopia wartości w `s1` i
 zostaje ona przypisana do `s2`. Ale tak się akurat nie dzieje.
 
-To explain this more thoroughly, let’s look at what `String` looks like under
-the covers in Figure 4-1. A `String` is made up of three parts, shown on the
-left: a pointer to the memory that holds the contents of the string, a length,
-and a capacity. This group of data is stored on the stack. On the right is the
-memory on the heap that holds the contents.
+Rysunek 4-1 objaśnia, co dzieje się we wnętrzu typu `String`. Typ `String`
+składa się z trzech części, pokazanych po lewej stronie. Są to: wskaźnik do
+pamięci przechowującej właściwy łańcuch znaków, znacznik jego długości
+(*length*) i dane o ilości pamięci dostępnej dla danego ciągu (*capacity*). Ta
+grupa danych przechowywana jest na stosie. Po prawej pokazano obszar pamięci na
+stercie, który zawiera tekst.
 
-<img alt="String in memory" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+<img alt="String w pamięci" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-1: Representation in memory of a `String`
-holding the value `"hello"` bound to `s1`</span>
+<span class="caption">Rysunek 4-1: Reprezentacja pamięci dla typu `String`
+przechowującego wartość `"hello"` przypisaną do `s1`</span>
 
-The length is how much memory, in bytes, the contents of the `String` is
-currently using. The capacity is the total amount of memory, in bytes, that the
-`String` has received from the operating system. The difference between length
-and capacity matters, but not in this context, so for now, it’s fine to ignore
-the capacity.
+Znacznik `length` wskazuje, ile bajtów pamięci zajmuje bieżący ciąg znaków w
+zmiennej typu `String`, natomiast `capacity` przechowuje dane o całkowitej
+ilości pamięci, jaką system operacyjny dla tej zmiennej przydzielił. Różnica
+między `length` i `capacity` ma znaczenie, ale nie w tym kontekście. Dlatego na
+razie możemy zignorować `capacity`.
 
-When we assign `s1` to `s2`, the `String` data is copied, meaning we copy the
-pointer, the length, and the capacity that are on the stack. We do not copy the
-data on the heap that the pointer refers to. In other words, the data
-representation in memory looks like Figure 4-2.
+Kiedy przypisujemy `s1` do `s2`, dane ze zmiennej typu `String` zostają
+skopiowane. Dotyczy to przechowywanych na stosie: wskaźnika, długości i
+pojemności. Dane tekstowe, do których odnosi się wskaźnik nie są kopiowane.
+Innymi słowy, reprezentację pamięci w tej sytuacji ilustruje Rysunek 4-2.
 
-<img alt="s1 and s2 pointing to the same value" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<img alt="s1 i s2 wskazujące tę samą wartość" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-2: Representation in memory of the variable `s2`
-that has a copy of the pointer, length, and capacity of `s1`</span>
+<span class="caption">Rysunek 4-2: Reprezentacja w pamięci zmiennej `s2`
+posiadającej kopię wskaźnika i znaczników długości i pojemności zmiennej `s1`</span>
 
-The representation does *not* look like Figure 4-3, which is what memory would
-look like if Rust instead copied the heap data as well. If Rust did this, the
-operation `s2 = s1` could potentially be very expensive in terms of runtime
-performance if the data on the heap was large.
+Rysunek 4-3 ukazuje *nieprawdziwą* reprezentację pamięci, w której Rust również
+skopiował dane na stercie. Gdyby taka sytuacja miała miejsce, operacja
+`s2 = s1` mogłaby potencjalnie zająć dużo czasu, w przypadku sporej ilości
+danych na stercie.
 
-<img alt="s1 and s2 to two places" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+<img alt="s1 i s2 wskazujące do dwóch obszarów" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-3: Another possibility of what `s2 = s1` might
-do if Rust copied the heap data as well</span>
+<span class="caption">Rysunek 4-3: Hipotetyczny wynik operacji `s2 = s1`, gdyby
+Rust również kopiował dane sterty</span>
 
-Earlier, we said that when a variable goes out of scope, Rust automatically
-calls the `drop` function and cleans up the heap memory for that variable. But
-Figure 4-2 shows both data pointers pointing to the same location. This is a
-problem: when `s2` and `s1` go out of scope, they will both try to free the
-same memory. This is known as a *double free* error and is one of the memory
-safety bugs we mentioned previously. Freeing memory twice can lead to memory
-corruption, which can potentially lead to security vulnerabilities.
+Wcześniej powiedzieliśmy, że kiedy zasięg zmiennej się kończy, Rust wywołuje
+automatycznie funkcję `drop` i zwalnia obszar na stercie dla tej zmiennej. Ale
+na Rysunku 4-2 przedstawiono sytuację, w której oba wskaźniki wskazują na ten
+sam obszar. Jest to problematyczne: kiedy zasięg `s2` i `s1` się skończy,
+nastąpi próba dwukrotnego zwolnienia tej samej pamięci. Sytuacja ta jest znana
+jako *błąd podwójnego zwolnienia* i należy do grupy bugów bezpieczeństwa
+pamięci, o których wcześniej wspomnieliśmy. Podwójne zwalnianie pamięci może
+prowadzić do jej *zepsucia*, a w efekcie potencjalnie do luk w zabezpieczeniach.
 
-To ensure memory safety, there’s one more detail to what happens in this
-situation in Rust. Instead of trying to copy the allocated memory, Rust
-considers `s1` to no longer be valid and therefore, Rust doesn’t need to free
-anything when `s1` goes out of scope. Check out what happens when you try to
-use `s1` after `s2` is created, it won’t work:
+Aby zapewnić bezpieczeństwo pamięci, w Ruście ma miejsce w takiej sytuacji
+jeszcze jeden szczegół. Zamiast próbować skopiować zaalokowaną pamięć, Rust
+traktuje zmienną `s1` jako nieważną i, tym samym, nie musi nic zwalniać, kiedy
+zasięg `s1` się kończy. Zobacz, co stanie się przy próbie użycia zmiennej `s1`
+po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
 
-```rust,ignore
+```rust,ignore,does_not_compile
 let s1 = String::from("hello");
 let s2 = s1;
 
 println!("{}, world!", s1);
 ```
 
-You’ll get an error like this because Rust prevents you from using the
-invalidated reference:
+Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów
+przy użyciu nieważnych zmiennych:
 
 ```text
 error[E0382]: use of moved value: `s1`
@@ -365,33 +367,35 @@ error[E0382]: use of moved value: `s1`
   not implement the `Copy` trait
 ```
 
-If you’ve heard the terms “shallow copy” and “deep copy” while working with
-other languages, the concept of copying the pointer, length, and capacity
-without copying the data probably sounds like a shallow copy. But because Rust
-also invalidates the first variable, instead of calling this a shallow copy,
-it’s known as a *move*. Here we would read this by saying that `s1` was *moved*
-into `s2`. So what actually happens is shown in Figure 4-4.
+Jeśli zdarzyło ci się słyszeć terminy „płytka kopia” oraz „głęboka kopia” przy
+pracy z innymi językami, koncept kopiowania wskaźnika ze znacznikami długości
+i pojemności, ale bez kopiowania danych, przypomina tworzenie płytkiej kopii.
+Ale ponieważ Rust jednocześnie unieważnia źródłową zmienną, zamiast nazywać taki
+proces płytką kopią, używa się terminu *przeniesienie*. W tym przypadku
+moglibyśmy powiedzieć, że zmienna `s1` została *przeniesiona* do `s2`. Rysunek
+4-4 ilustruje, co tak naprawdę dzieje się w pamięci.
 
-<img alt="s1 moved to s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
+<img alt="s1 przeniesiona do s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-4: Representation in memory after `s1` has been
-invalidated</span>
+<span class="caption">Rysunek 4-4: Reprezentacja w pamięci po unieważnieniu
+zmiennej `s1`</span>
 
-That solves our problem! With only `s2` valid, when it goes out of scope, it
-alone will free the memory, and we’re done.
+To rozwiązuje nasz problem! Jeśli tylko zmienna `s2` zachowuje ważność w
+momencie wyjścia z zasięgu, sama zwolni zajmowaną pamięć i po sprawie.
 
-In addition, there’s a design choice that’s implied by this: Rust will never
-automatically create “deep” copies of your data. Therefore, any *automatic*
-copying can be assumed to be inexpensive in terms of runtime performance.
+Dodatkowo, implikuje to decyzję w budowie języka: Rust nigdy automatycznie nie
+tworzy „głębokich” kopii twoich danych. Można zatem założyć, że automatyczny
+proces kopiowania nie będzie drogą operacją w sensie czasu jej trwania.
 
-#### Ways Variables and Data Interact: Clone
+#### Metody interakcji między zmiennymi a danymi: Clone (*klonowanie*)
 
-If we *do* want to deeply copy the heap data of the `String`, not just the
-stack data, we can use a common method called `clone`. We’ll discuss method
-syntax in Chapter 5, but because methods are a common feature in many
-programming languages, you’ve probably seen them before.
+W przypadku jeśli *chcemy* wykonać głęboką kopię danych ze sterty dla typu
+`String`, a nie tylko danych ze stosu, możemy skorzystać z często stosowanej
+metody o nazwie `clone` (*klonuj*). Składnia metod będzie omawiana w Rozdziale
+5, ale ponieważ metody są popularnymi funkcjonalnościami wielu języków, zapewne
+już je wcześniej widziałeś.
 
-Here’s an example of the `clone` method in action:
+Oto przykład działania metody `clone`:
 
 ```rust
 let s1 = String::from("hello");
@@ -400,17 +404,17 @@ let s2 = s1.clone();
 println!("s1 = {}, s2 = {}", s1, s2);
 ```
 
-This works just fine and is how you can explicitly produce the behavior shown
-in Figure 4-3, where the heap data *does* get copied.
+Ten przykład działa bez problemu i ilustruje on celowe odtworzenie zachowania
+pokazanego na Rysunku 4-3, na którym dane ze sterty *są* kopiowane.
 
-When you see a call to `clone`, you know that some arbitrary code is being
-executed and that code may be expensive. It’s a visual indicator that something
-different is going on.
+Kiedy widzisz odwołanie do metody `clone`, możesz się spodziewać, że wykonywana
+operacja będzie kosztowna czasowo.
 
-#### Stack-Only Data: Copy
+#### Dane przechowywane wyłącznie na stosie: Copy (*kopiowanie*)
 
-There’s another wrinkle we haven’t talked about yet. This code using integers,
-part of which was shown earlier in Listing 4-2, works and is valid:
+Jest jeszcze jeden szczegół, którego nie omówiliśmy. Część kodu korzystającego z
+liczb całkowitych, którego treść pokazano na Listingu 4-2, działa i jest
+prawidłowa:
 
 ```rust
 let x = 5;
@@ -419,25 +423,28 @@ let y = x;
 println!("x = {}, y = {}", x, y);
 ```
 
-But this code seems to contradict what we just learned: we don’t have a call to
-`clone`, but `x` is still valid and wasn’t moved into `y`.
+Zdaje się on przeczyć temu, czego przed chwilą się nauczyliśmy: nie mamy
+odwołania do `clone`, ale zmienna `x` zachowuje ważność i nie zostaje
+przeniesiona do `y`.
 
-The reason is that types like integers that have a known size at compile time
-are stored entirely on the stack, so copies of the actual values are quick to
-make. That means there’s no reason we would want to prevent `x` from being
-valid after we create the variable `y`. In other words, there’s no difference
-between deep and shallow copying here, so calling `clone` wouldn’t do anything
-differently from the usual shallow copying and we can leave it out.
+Przyczyną jest to, że typy takie jak liczby całkowite, które mają znany rozmiar
+już podczas kompilacji, są w całości przechowywane na stosie. Tworzenie kopii
+ich wartości jest więc szybkie. To oznacza, że nie ma powodu unieważniać zmienną
+`x` po stworzeniu zmiennej `y`. Innymi słowy, w tym wypadku nie ma różnicy
+między głęboką i płytką kopią, więc wywołanie metody `clone` nie różniłoby się
+od zwykłego płytkiego kopiowania i można je zatem pominąć.
 
-Rust has a special annotation called the `Copy` trait that we can place on
-types like integers that are stored on the stack (we’ll talk more about traits
-in Chapter 10). If a type has the `Copy` trait, an older variable is still
-usable after assignment. Rust won’t let us annotate a type with the `Copy`
-trait if the type, or any of its parts, has implemented the `Drop` trait. If
-the type needs something special to happen when the value goes out of scope and
-we add the `Copy` annotation to that type, we’ll get a compile time error. To
-learn about how to add the `Copy` annotation to your type, see Appendix C on
-Derivable Traits.
+Rust zawiera specjalną adnotację zwaną „cechą `Copy`”, którą można
+zaimplementować dla typów przechowywanych na stosie, takich jak liczby
+całkowite (więcej o cechach będzie w Rozdziale 10). Jeśli dany typ ma
+zaimplementowaną cechę `Copy`, zmienną, którą przypisano do innej zmiennej,
+można dalej używać po tej operacji. Rust nie pozwoli zaimplementować cechy
+`Copy` dla żadnego typu, dla którego całości lub jakiejkolwiek jego części
+zaimplementowano wcześniej cechę `Drop`. Jeśli specyfikacja typu wymaga
+wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
+się zasięg, a dodamy dla tego typu cechę `Copy`, wywołamy błąd kompilacji. Aby
+nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
+[“Derivable Traits”][derivable-traits]<!-- ignore --> w Dodatku C.
 
 So what types are `Copy`? You can check the documentation for the given type to
 be sure, but as a general rule, any group of simple scalar values can be

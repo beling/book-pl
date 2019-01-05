@@ -156,29 +156,14 @@ Jeśli masz doświadczenie w C lub C++, zauważysz, że jest to podobne do
 wywoływania `gcc` lub `clang`. Po udanej kompilacji, Rust tworzy binarny plik
 wykonywalny.
 
-Pod Linuksem lub macOS możesz sprawdzić obecność pliku wykonywalnego używając w
-terminalu polecenia `ls`:
+Pod Linuksem, macOS lub w PowerShell pod Windowsem możesz sprawdzić obecność
+pliku wykonywalnego używając w terminalu polecenia `ls`. W przypadku Linuksa i
+macOS zobaczysz dwa pliki. PowerShell pod Windowsem wyświetli trzy pliki - te
+same, które wyświetliłby CMD.
 
 ```text
 $ ls
 main  main.rs
-```
-
-W PowerShell pod Windowsem, możesz także użyć komendy `ls`, ale zobaczysz trzy
-utworzone pliki:
-
-```text
-> ls
-
-
-    Directory: Sciezka:\do\twojego\projektu
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----         6/1/2018   7:31 AM         137728 main.exe
--a----         6/1/2018   7:31 AM        1454080 main.pdb
--a----         6/1/2018   7:31 AM             14 main.rs
 ```
 
 W CMD pod Windowsem wyglądałoby to tak:
@@ -192,9 +177,9 @@ main.rs
 
 To potwierdza obecność kodu źródłowego z rozszerzeniem *.rs*, programu
 wykonywalnego (*main.exe* pod Windowsem, *main* wszędzie indziej), a także, w
-przypadku CMD, pliku z rozszerzeniem *.pdb* zawierającego informacje debugujące.
-Wszystko, co pozostało do zrobienia, to uruchomienie pliku *main* lub
-*main.exe*, w taki sposób:
+przypadku Windowsa, pliku z rozszerzeniem *.pdb* zawierającego informacje
+debugujące. Wszystko, co pozostało do zrobienia, to uruchomienie pliku *main*
+lub *main.exe*, w taki sposób:
 
 ```text
 $ ./main  # lub .\main.exe pod Windowsem

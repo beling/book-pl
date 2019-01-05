@@ -83,10 +83,10 @@ konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też i
 sekcje.
 
 Następne cztery  linie ustalają informacje konfiguracyjne, których Cargo
-potrzebuje do kompilacji twojego programu: nazwę, wersję i dane o autorze. Cargo
-pobiera twoje imię i adres email z twojego środowiska, więc jeśli nie są one
-prawidłowe, popraw je śmiało i zapisz plik. O kluczu `edition` będzie mowa
-w Dodatku E.
+potrzebuje do kompilacji twojego programu: nazwę, wersję, dane o autorze i
+używanej edycji Rusta. Cargo pobiera twoje imię i adres email z twojego
+środowiska, więc jeśli nie są one prawidłowe, popraw je śmiało i zapisz plik. O
+kluczu `edition` będzie mowa w Dodatku E.
 
 Ostatnia linia, `[dependencies]`, rozpoczyna sekcję, gdzie wyszczególnia się
 wszystkie zależności twojego projektu. W Ruście paczki z kodem źródłowym
