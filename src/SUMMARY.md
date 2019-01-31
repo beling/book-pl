@@ -1,8 +1,8 @@
 # Język Programowania Rust
 
-[Język Programowania Rust](title-page.md)
-[Przedmowa](foreword.md)
-[Wstęp](ch00-00-introduction.md)
+- [Język Programowania Rust](title-page.md)
+- [Przedmowa](foreword.md)
+- [Wstęp](ch00-00-introduction.md)
 
 ## Na początek
 
@@ -11,7 +11,7 @@
     - [Hello, World!](ch01-02-hello-world.md)
     - [Hello, Cargo!](ch01-03-hello-cargo.md)
 
-- [Programming a Guessing Game](ch02-00-guessing-game-tutorial.md)
+- [Piszemy grę zgadywankę](ch02-00-guessing-game-tutorial.md)
 
 - [Powszechne koncepcje programistyczne](ch03-00-common-programming-concepts.md)
     - [Zmienne i ich modyfikowalność](ch03-01-variables-and-mutability.md)
