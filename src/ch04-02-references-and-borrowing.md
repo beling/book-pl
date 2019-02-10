@@ -1,13 +1,10 @@
-## References and Borrowing
+## Referencje i Pożyczanie
 
-The issue with the tuple code in Listing 4-5 is that we have to return the
-`String` to the calling function so we can still use the `String` after the
-call to `calculate_length`, because the `String` was moved into
-`calculate_length`.
+Z rozwiązaniem z krotką zastosowanym na Listingu 4-5 związana jest taka niedogodność,
+że musieliśmy zwrócić `String` do funkcji wywołującej, by ta mogła dalej z niego korzystać
+(po wywołaniu `calculate_length`). Było tak dlatego że wspomniany `String` był przenoszony do `calculate_length`.
 
-Here is how you would define and use a `calculate_length` function that has a
-reference to an object as a parameter instead of taking ownership of the
-value:
+Funkcję `calculate_length` można by zdefiniować w następujący sposób, w którym jako parametr przekazywana jest jedynie referencja do obiektu i dzięki temu nie jest on przez `calculate_length` przejmowany na własność:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -24,19 +21,14 @@ fn calculate_length(s: &String) -> usize {
     s.len()
 }
 ```
+Po pierwsze proszę zauważyć, że krotki nie są nam już dalej potrzebne. Nie ma ich ani przy deklaracji zmiennej, ani w typie zwracanym przez funkcję `calculate_length`. Po drugie, proszę zwrócić uwagę, że przekazujemy do tej funkcji `&s1` oraz, że typ jej parametru został zmieniony z `String` na `&String`.
 
-First, notice that all the tuple code in the variable declaration and the
-function return value is gone. Second, note that we pass `&s1` into
-`calculate_length` and, in its definition, we take `&String` rather than
-`String`.
+Te ampersandy oznaczają *referencje* i pozwalają na odnoszenie się (referowanie) do wartości bez przejmowania jej na własność.
+Jest to zilustrowane na Rysunku 4-5.
 
-These ampersands are *references*, and they allow you to refer to some value
-without taking ownership of it. Figure 4-5 shows a diagram.
+<img alt="&String s wskazuje na String s1" src="img/trpl04-05.svg" class="center" />
 
-<img alt="&String s pointing at String s1" src="img/trpl04-05.svg" class="center" />
-
-<span class="caption">Figure 4-5: A diagram of `&String s` pointing at `String
-s1`</span>
+<span class="caption">Rysunek 4-5: `&String s` wskazuje na `String s1`</span>
 
 > Note: The opposite of referencing by using `&` is *dereferencing*, which is
 > accomplished with the dereference operator, `*`. We’ll see some uses of the
