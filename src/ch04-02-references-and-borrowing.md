@@ -46,7 +46,7 @@ let s1 = String::from("hello");
 let len = calculate_length(&s1);
 ```
 Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale
-równocześnie nie posiada go na własność.
+nie posiada go na własność.
 Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie
 usunięta wraz z końcem zakresu życia samej referencji.
 
@@ -59,12 +59,10 @@ fn calculate_length(s: &String) -> usize { // s jest referencją do Stringa
 } // Tu kończy się zakres życia s. Ale ponieważ s nie posiada na własność tego
   // na co wskazuje, nic się nie dzieje.
 ```
-
-The scope in which the variable `s` is valid is the same as any function
-parameter’s scope, but we don’t drop what the reference points to when it goes
-out of scope because we don’t have ownership. When functions have references as
-parameters instead of the actual values, we won’t need to return the values in
-order to give back ownership, because we never had ownership.
+Zakres, w którym zmienna `s` jest dostępna, jest taki sam jak zakres każdego innego parametru funkcji.
+Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zakres.
+W przeciwieństwie do argumentów przekazywanych przez wartość, te przekazywane przez referencje nie są funkcji dawane na własność.
+Dlatego też nie ma dalej potrzeby by funkcja je zwracała (`return`) calem ich oddania.
 
 We call having references as function parameters *borrowing*. As in real life,
 if a person owns something, you can borrow it from them. When you’re done, you
