@@ -30,12 +30,12 @@ Jest to zilustrowane na Rysunku 4-5.
 
 <span class="caption">Rysunek 4-5: `&String s` wskazuje na `String s1`</span>
 
-> Note: The opposite of referencing by using `&` is *dereferencing*, which is
-> accomplished with the dereference operator, `*`. We’ll see some uses of the
-> dereference operator in Chapter 8 and discuss details of dereferencing in
-> Chapter 15.
+> Uwaga: Przeciwieństwem referowania za pomocą `&` jest *dereferowanie*,
+> które realizowane jest za pomocą operatora dereferencji, `*`.
+> W rozdziale 8 przedstawiono przykładowe zastosowania operatora dereferencji,
+> zaś więcej szczegółów na jego temat można znaleźć w rozdziale 15.
 
-Let’s take a closer look at the function call here:
+Przyjrzyjmy się nieco bliżej temu wywołaniu funkcji:
 
 ```rust
 # fn calculate_length(s: &String) -> usize {
@@ -45,19 +45,19 @@ let s1 = String::from("hello");
 
 let len = calculate_length(&s1);
 ```
+Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale
+równocześnie nie posiada go na własność.
+Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie
+usunięta wraz z końcem zakresu życia samej referencji.
 
-The `&s1` syntax lets us create a reference that *refers* to the value of `s1`
-but does not own it. Because it does not own it, the value it points to will
-not be dropped when the reference goes out of scope.
-
-Likewise, the signature of the function uses `&` to indicate that the type of
-the parameter `s` is a reference. Let’s add some explanatory annotations:
+Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją.
+Poniżej dodano kilka komentarzy z wyjaśnieniami:
 
 ```rust
-fn calculate_length(s: &String) -> usize { // s is a reference to a String
+fn calculate_length(s: &String) -> usize { // s jest referencją do Stringa
     s.len()
-} // Here, s goes out of scope. But because it does not have ownership of what
-  // it refers to, nothing happens.
+} // Tu kończy się zakres życia s. Ale ponieważ s nie posiada na własność tego
+  // na co wskazuje, nic się nie dzieje.
 ```
 
 The scope in which the variable `s` is valid is the same as any function
