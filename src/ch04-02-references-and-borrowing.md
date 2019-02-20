@@ -62,7 +62,7 @@ fn calculate_length(s: &String) -> usize { // s jest referencją do Stringa
 Zakres, w którym zmienna `s` jest dostępna, jest taki sam jak zakres każdego innego parametru funkcji.
 Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zakres.
 W przeciwieństwie do argumentów przekazywanych przez wartość, te przekazywane przez referencje nie są funkcji dawane na własność.
-Dlatego też nie ma dalej potrzeby by funkcja je zwracała (`return`) calem ich oddania.
+Dlatego też funkcja nie musi wiecej zwracać ich za pomocą `return`, by je oddać.
 
 We call having references as function parameters *borrowing*. As in real life,
 if a person owns something, you can borrow it from them. When you’re done, you
