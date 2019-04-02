@@ -250,7 +250,7 @@ funkcję. Funkcja ta nosi nazwę `drop` (*rzuć, upuść*), a w jej treści auto
 `String` umieszcza kod zwrotu pamięci. Funkcja `drop` zostaje wywołana przez
 Rusta automatycznie, przy zamykającej kod klamrze.
 
-> Uwaga: W C++ schemat dealokacji zasobów przy końcu okresu trwania jakiegoś
+> Uwaga: W C++ schemat dealokacji zasobów przy końcu czasu życia jakiegoś
 > elementu jest czasem nazywany *Inicjowaniem Przy Pozyskaniu Zasobu* (*Resource
 > Acquisition Is Initialization (RAII)*). Funkcja `drop` z Rusta może wydać ci
 > się znajoma, jeśli miałeś styczność ze schematami RAII.
@@ -384,7 +384,7 @@ To rozwiązuje nasz problem! Jeśli tylko zmienna `s2` zachowuje ważność w
 momencie wyjścia z zasięgu, sama zwolni zajmowaną pamięć i po sprawie.
 
 Dodatkowo, implikuje to decyzję w budowie języka: Rust nigdy automatycznie nie
-tworzy „głębokich” kopii twoich danych. Można zatem założyć, że automatyczny
+tworzy „głębokich” kopii twoich danych. Można zatem założyć, że *automatyczny*
 proces kopiowania nie będzie drogą operacją w sensie czasu jej trwania.
 
 #### Metody interakcji między zmiennymi a danymi: Clone (*klonowanie*)
@@ -412,9 +412,8 @@ operacja będzie kosztowna czasowo.
 
 #### Dane przechowywane wyłącznie na stosie: Copy (*kopiowanie*)
 
-Jest jeszcze jeden szczegół, którego nie omówiliśmy. Część kodu korzystającego z
-liczb całkowitych, którego treść pokazano na Listingu 4-2, działa i jest
-prawidłowa:
+Jest jeszcze jeden szczegół, którego nie omówiliśmy. Kod korzystający z liczb
+całkowitych, którego treść pokazano na Listingu 4-2, działa i jest prawidłowy:
 
 ```rust
 let x = 5;
@@ -444,26 +443,26 @@ zaimplementowano wcześniej cechę `Drop`. Jeśli specyfikacja typu wymaga
 wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
 się zasięg, a dodamy dla tego typu cechę `Copy`, wywołamy błąd kompilacji. Aby
 nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
-[“Derivable Traits”][derivable-traits]<!-- ignore --> w Dodatku C.
+[“Cechy wyprowadzane”][derivable-traits]<!-- ignore --> w Dodatku C.
 
-So what types are `Copy`? You can check the documentation for the given type to
-be sure, but as a general rule, any group of simple scalar values can be
-`Copy`, and nothing that requires allocation or is some form of resource is
-`Copy`. Here are some of the types that are `Copy`:
+Które więc typy mają cechę `Copy`? Dla danego typu można dla pewności sprawdzić
+w dokumentacji, ale jako regułę zapamiętaj, że każda grupa wartości skalarnych
+może mieć cechę `Copy` i nic, co wymaga alokacji lub jest pewnego rodzaju
+zasobem jej nie ma. Oto przykłady typów z zaimplementowaną cechą `Copy`:
 
-* All the integer types, like `u32`.
-* The Boolean type, `bool`, with values `true` and `false`.
-* The character type, `char`.
+* Wszystkie typy całkowite, takie jak `u32`.
+* Typ logiczny, `bool`, z wartościami `true` oraz `false`.
+* Typ znakowy, `char`.
 * All the floating point types, like `f64`.
-* Tuples, but only if they contain types that are also `Copy`. `(i32, i32)` is
-`Copy`, but `(i32, String)` is not.
+* Krotki, ale tylko wtedy, jeśli zawierają wyłącznie typy z cechą `Copy`. Na
+  przykład, `(i32, i32)` ma cechę `Copy`, ale `(i32, String)` już nie.
 
-### Ownership and Functions
+### Własność i funkcje
 
-The semantics for passing a value to a function are similar to assigning a
-value to a variable. Passing a variable to a function will move or copy, just
-like assignment. Listing 4-3 has an example with some annotations showing where
-variables go into and out of scope:
+Semantyka przekazywania wartości do funkcji jest podobna do przypisania wartości
+do zmiennej. Przekazanie zmiennej do funkcji przeniesie ją lub skopiuje, tak jak
+przy przypisywaniu. Listing 4-3 ukazuje przykład z kilkoma adnotacjami
+ilustrującymi, kiedy zaczynają się lub kończą zasięgi zmiennych:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -471,87 +470,94 @@ variables go into and out of scope:
 fn main() {
     let s = String::from("hello");  // s comes into scope.
 
-    takes_ownership(s);             // s's value moves into the function...
-                                    // ... and so is no longer valid here.
+    bierze_na_wlasnosc(s);      // Wartość zmiennej s przenosi się do funkcji...
+                                // ...i w tym miejscu zmienna jest już nieważna.
 
-    let x = 5;                      // x comes into scope.
+    let x = 5;                  // Zaczyna się zasięg zmiennej x.
 
-    makes_copy(x);                  // x would move into the function,
-                                    // but i32 is Copy, so it’s okay to still
-                                    // use x afterward.
+    robi_kopie(x);              // Wartość x przeniosłaby się do funkcji, ale
+                                // typ i32 ma cechę Copy, więc w dalszym ciągu
+                                // można używać zmiennej x.
 
-} // Here, x goes out of scope, then s. But since s's value was moved, nothing
-  // special happens.
+} // Tu kończy sie zasięg zmiennych x, a potem s. Ale ponieważ wartość s
+  // została przeniesiona, nie dzieje się nic szczególnego.
 
-fn takes_ownership(some_string: String) { // some_string comes into scope.
-    println!("{}", some_string);
-} // Here, some_string goes out of scope and `drop` is called. The backing
-  // memory is freed.
+fn bierze_na_wlasnosc(jakis_string: String) { // Zaczyna się zasięg some_string.
+    println!("{}", jakis_string);
+} // Tu kończy się zasięg jakis_string i wywołana zostaje funkcja `drop`.
+  // Zajmowana pamięć zostaje zwolniona.
 
-fn makes_copy(some_integer: i32) { // some_integer comes into scope.
-    println!("{}", some_integer);
-} // Here, some_integer goes out of scope. Nothing special happens.
+fn robi_kopie(jakas_calkowita: i32) { // Zaczyna się zasięg jakas_calkowita.
+    println!("{}", jakas_calkowita);
+} // Tu kończy się zasięg jakas_calkowita. Nic szczególnego się nie dzieje.
 ```
 
-<span class="caption">Listing 4-3: Functions with ownership and scope
-annotated</span>
+<span class="caption">Listing 4-3: Funkcje z adnotacjami dotyczącymi własności i
+zasięgów</span>
 
-If we tried to use `s` after the call to `takes_ownership`, Rust would throw a
-compile time error. These static checks protect us from mistakes. Try adding
-code to `main` that uses `s` and `x` to see where you can use them and where
-the ownership rules prevent you from doing so.
+Gdybyśmy spróbowali użyć `s` po wywołaniu `bierze_na_wlasnosc`, Rust
+wygenerowałby błąd kompilacji. Te statyczne kontrole chronią nas przed
+popełnianiem błędów. Spróbuj dodać do `main` kod, który używa zmiennych `s` oraz
+`x`, żeby zobaczyć, gdzie można ich używać, a gdzie zasady systemu własności nam
+tego zabraniają.
 
-### Return Values and Scope
+### Wartości zwracane i ich zasięg
 
-Returning values can also transfer ownership. Here’s an example with similar
-annotations to those in Listing 4-3:
+Wartości zwracane mogą również przenosić własność. Listing 4-4 ilustruje
+przykład z podobnymi komentarzami do tych z Listingu 4-3:
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
 fn main() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-                                        // value into s1.
+    let s1 = daje_wlasnosc();       // daje_wlasnosc przenosi zwracaną
+                                    // wartość do s1.
 
-    let s2 = String::from("hello");     // s2 comes into scope.
+    let s2 = String::from("hello"); // Rozpoczyna się zakres s2.
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3.
-} // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
-  // moved, so nothing happens. s1 goes out of scope and is dropped.
+    let s3 = bierze_i_oddaje(s2);   // s2 zostaje przeniesiona do
+                                    // bierze_i_oddaje, która jednocześnie
+                                    // przenosi swoją wartość zwracaną do s3.
+} // Tutaj kończy się zasięg s3 i jej dane zostają usunięte. Zasięg s2 też, ale
+  // ponieważ jej dane przeniesiono, nic się nie dziejej. Zasięg s1 kończy się,
+  // a jej dane zostają usunięte.
 
-fn gives_ownership() -> String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it.
+fn daje_wlasnosc() -> String {                // daje_wlasnosc przenosi jej
+                                              // wartość zwracaną do funkcji,
+                                              // która ją wywołała.
 
-    let some_string = String::from("hello"); // some_string comes into scope.
+    let jakis_string = String::from("hello"); // Początek zasięgu jakis_string.
 
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function.
+    jakis_string                              // jakis_string jest zwracany i
+                                              // przeniesiony do funkcji
+                                              // wywołującej.
 }
 
-// takes_and_gives_back will take a String and return one.
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
-                                                      // scope.
+// bierze_i_oddaje pobiera dane w zmiennej String i zwraca je w innej.
+fn bierze_i_oddaje(a_string: String) -> String { // Rozpoczyna się zasięg
+                                                 // zmiennej a_string.
 
-    a_string  // a_string is returned and moves out to the calling function.
+    a_string // a_string zostaje zwrócona i przeniesiona do funkcji wywołującej.
 }
 ```
 
-The ownership of a variable follows the same pattern every time: assigning a
-value to another variable moves it. When a variable that includes data on the
-heap goes out of scope, the value will be cleaned up by `drop` unless the data
-has been moved to be owned by another variable.
+<span class="caption">Listing 4-4: Przenoszenie własności wartości
+zwracanych</span>
 
-Taking ownership and then returning ownership with every function is a bit
-tedious. What if we want to let a function use a value but not take ownership?
-It’s quite annoying that anything we pass in also needs to be passed back if we
-want to use it again, in addition to any data resulting from the body of the
-function that we might want to return as well.
+Własność zmiennej zachowuje się zawsze w ten sam sposób: przypisanie wartości do
+innej zmiennej przenosi tę wartość. Kiedy kończy się zakres zmiennej
+zawierającej dane ze sterty, dane te zostaną usunięte przez `drop`, chyba że
+przekażemy je na własność innej zmiennej.
 
-It’s possible to return multiple values using a tuple, like this:
+Przyjmowanie własności, a następnie oddawanie jej przy wywołaniu każdej funkcji
+jest trochę pracochłonne. A co jeśli chcemy zezwolić funkcji na użycie wartości,
+ale nie chcemy, by przejęła ją na własność? To dość denerwujące, kiedy wszystko,
+co przekazujemy, musi zostać powtórnie zabrane, jeśli chcemy tego ponownie użyć.
+Nie mówiąc już o danych generowanych przy okazji normalnego działania funkcji,
+które być może także chcielibyśmy zwrócić.
+
+Z funkcji można zwrócić kilka wartości za pomocą krotki. Listing 4-5 ilustruje
+ten przypadek:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -559,18 +565,25 @@ It’s possible to return multiple values using a tuple, like this:
 fn main() {
     let s1 = String::from("hello");
 
-    let (s2, len) = calculate_length(s1);
+    let (s2, len) = oblicz_dlugosc(s1);
 
-    println!("The length of '{}' is {}.", s2, len);
+    println!("Długość '{}' wynosi {}.", s2, len);
 }
 
-fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len(); // len() returns the length of a String.
+fn oblicz_dlugosc(s: String) -> (String, usize) {
+    let dlugosc = s.len(); // len() zwraca długość łańcucha znaków.
 
-    (s, length)
+    (s, dlugosc)
 }
 ```
 
-But this is too much ceremony and a lot of work for a concept that should be
-common. Luckily for us, Rust has a feature for this concept, and it’s called
-*references*.
+<span class="caption">Listing 4-5: Zwracanie własności przez argumenty</span>
+
+Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest
+powszechnie. Na szczęście dla nas, Rust wyposażony jest w funkcjonalność
+obsługującą takie przypadki, zwaną *referencje*.
+
+[data-types]: ch03-02-data-types.html#data-types
+[derivable-traits]: appendix-03-derivable-traits.html
+[method-syntax]: ch05-03-method-syntax.html#method-syntax
+[paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
