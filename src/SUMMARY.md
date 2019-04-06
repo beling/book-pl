@@ -22,8 +22,8 @@
 
 - [Zrozumienie systemu własności](ch04-00-understanding-ownership.md)
     - [Czym jest własność?](ch04-01-what-is-ownership.md)
-    - [References & Borrowing](ch04-02-references-and-borrowing.md)
-    - [Slices](ch04-03-slices.md)
+    - [Referencje i pożyczanie](ch04-02-references-and-borrowing.md)
+    - [Wycinki](ch04-03-slices.md)
 
 - [Using Structs to Structure Related Data](ch05-00-structs.md)
     - [Defining and Instantiating Structs](ch05-01-defining-structs.md)
@@ -35,11 +35,14 @@
     - [The `match` Control Flow Operator](ch06-02-match.md)
     - [Concise Control Flow with `if let`](ch06-03-if-let.md)
 
-## Basic Rust Literacy
+## Podstawowe umiejętności w Ruście
 
-- [Packages, Crates, and Modules](ch07-00-packages-crates-and-modules.md)
-    - [Packages and crates for making libraries and executables](ch07-01-packages-and-crates-for-making-libraries-and-executables.md)
-    - [Modules and `use` to control scope and privacy](ch07-02-modules-and-use-to-control-scope-and-privacy.md)
+- [Packages, Crates, and Modules](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+    - [Packages and crates for making libraries and executables](ch07-01-packages-and-crates.md)
+    - [Modules and `use` to control scope and privacy](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+    - [07-03](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
+    - [07-04](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
+    - [07-05](ch07-05-separating-modules-into-different-files.md)
 
 - [Common Collections](ch08-00-common-collections.md)
     - [Vectors](ch08-01-vectors.md)
@@ -69,7 +72,7 @@
     - [Working with Environment Variables](ch12-05-working-with-environment-variables.md)
     - [Writing Error Messages to Standard Error Instead of Standard Output](ch12-06-writing-to-stderr-instead-of-stdout.md)
 
-## Thinking in Rust
+## Myślenie w Ruście
 
 - [Functional Language Features: Iterators and Closures](ch13-00-functional-features.md)
     - [Closures: Anonymous Functions that Can Capture Their Environment](ch13-01-closures.md)
@@ -103,7 +106,7 @@
     - [Using Trait Objects that Allow for Values of Different Types](ch17-02-trait-objects.md)
     - [Implementing an Object-Oriented Design Pattern](ch17-03-oo-design-patterns.md)
 
-## Advanced Topics
+## Zaawansowane tematy
 
 - [Patterns Match the Structure of Values](ch18-00-patterns.md)
     - [All the Places Patterns May be Used](ch18-01-all-the-places-for-patterns.md)

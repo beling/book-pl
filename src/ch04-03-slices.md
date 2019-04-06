@@ -1,32 +1,33 @@
-## The Slice Type
+## Wycinek jako typ
 
-Another data type that does not have ownership is the *slice*. Slices let you
-reference a contiguous sequence of elements in a collection rather than the
-whole collection.
+Kolejnym typem danych, który nie przejmuje własności jest wycinek (*slice*).
+Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w
+kolekcji, bez konieczności odnoszenia się do całej kolekcji.
 
-Here’s a small programming problem: write a function that takes a string and
-returns the first word it finds in that string. If the function doesn’t find a
-space in the string, the whole string must be one word, so the entire string
-should be returned.
+Spójrzmy na mały, programistyczny problem: Napisz funkcję, która pobiera łańcuch
+znaków i zwraca pierwsze słowo, które w nim znajdzie. Jeśli funkcja nie znajdzie
+znaku spacji w łańcuchu, załóż, że cały łańcuch stanowi jedno słowo i zwróć
+cały łańcuch.
 
-Let’s think about the signature of this function:
+Pomyślmy nad sygnaturą tej funkcji:
 
 ```rust,ignore
-fn first_word(s: &String) -> ?
+fn pierwsze_slowo(s: &String) -> ?
 ```
 
-This function, `first_word`, has a `&String` as a parameter. We don’t want
-ownership, so this is fine. But what should we return? We don’t really have a
-way to talk about *part* of a string. However, we could return the index of the
-end of the word. Let’s try that, as shown in Listing 4-7.
+Funkcja `pierwsze_slowo`, jako argument przyjmuje typ `&String`. Nie chcemy
+przejmować własności, więc wszystko jest w porządku. Ale co powinniśmy zwrócić?
+Nie znamy tak naprawdę metody na odniesienie się do *części* łańcucha.
+Moglibyśmy za to zwrócić pozycję, na której znajduje się koniec słowa. Naszą
+próbę ilustruje Listing 4-7.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn first_word(s: &String) -> usize {
-    let bytes = s.as_bytes();
+fn pierwsze_slowo(s: &String) -> usize {
+    let bajty = s.as_bytes();
 
-    for (i, &item) in bytes.iter().enumerate() {
+    for (i, &item) in bajty.iter().enumerate() {
         if item == b' ' {
             return i;
         }
@@ -36,29 +37,29 @@ fn first_word(s: &String) -> usize {
 }
 ```
 
-<span class="caption">Listing 4-7: The `first_word` function that returns a
-byte index value into the `String` parameter</span>
+<span class="caption">Listing 4-7: Funkcja `pierwsze_slowo`, która zwraca
+wartość pozycji w bajtach wewnątrz argumentu typu `String`</span>
 
-Because we need to go through the `String` element by element and check whether
-a value is a space, we’ll convert our `String` to an array of bytes using the
-`as_bytes` method:
-
-```rust,ignore
-let bytes = s.as_bytes();
-```
-
-Next, we create an iterator over the array of bytes using the `iter` method:
+Ponieważ musimy prześledzić `String` element po elemencie, sprawdzając, czy
+któryś z nich jest spacją, konwertujemy nasz `String` do tablicy bajtów, z
+wykorzystaniem metody `as_bytes`:
 
 ```rust,ignore
-for (i, &item) in bytes.iter().enumerate() {
+let bajty = s.as_bytes();
 ```
 
-We’ll discuss iterators in more detail in Chapter 13. For now, know that `iter`
-is a method that returns each element in a collection and that `enumerate`
-wraps the result of `iter` and returns each element as part of a tuple instead.
-The first element of the tuple returned from `enumerate` is the index, and the
-second element is a reference to the element. This is a bit more convenient
-than calculating the index ourselves.
+Następnie tworzymy iterator po tablicy bajtów, przy użyciu metody `iter`:
+
+```rust,ignore
+for (i, &item) in bajty.iter().enumerate() {
+```
+
+Iteratory będziemy omawiać szczegółowo w Rozdziale 13. Na razie zapamiętaj, że
+`iter` jest metodą, która zwraca kolejno każdy element w kolekcji, a `enumerate`
+opakowuje wynik metody `iter` i zwraca każdy element jako część krotki. Pierwszy
+wyraz krotki zwróconej przez `enumerate` to pozycja / indeks, a drugi jest
+referencją do elementu. Takie podejście jest wygodniejsze od samodzielnego
+wyliczania indeksu.
 
 Because the `enumerate` method returns a tuple, we can use patterns to
 destructure that tuple, just like everywhere else in Rust. So in the `for`
@@ -84,12 +85,12 @@ string, but there’s a problem. We’re returning a `usize` on its own, but it�
 only a meaningful number in the context of the `&String`. In other words,
 because it’s a separate value from the `String`, there’s no guarantee that it
 will still be valid in the future. Consider the program in Listing 4-8 that
-uses the `first_word` function from Listing 4-7.
+uses the `pierwsze_slowo` function from Listing 4-7.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-# fn first_word(s: &String) -> usize {
+# fn pierwsze_slowo(s: &String) -> usize {
 #     let bytes = s.as_bytes();
 #
 #     for (i, &item) in bytes.iter().enumerate() {
@@ -104,7 +105,7 @@ uses the `first_word` function from Listing 4-7.
 fn main() {
     let mut s = String::from("hello world");
 
-    let word = first_word(&s); // word will get the value 5
+    let word = pierwsze_slowo(&s); // word will get the value 5
 
     s.clear(); // this empties the String, making it equal to ""
 
@@ -114,7 +115,7 @@ fn main() {
 ```
 
 <span class="caption">Listing 4-8: Storing the result from calling the
-`first_word` function and then changing the `String` contents</span>
+`pierwsze_slowo` function and then changing the `String` contents</span>
 
 This program compiles without any errors and would also do so if we used `word`
 after calling `s.clear()`. Because `word` isn’t connected to the state of `s`
@@ -150,19 +151,7 @@ let world = &s[6..11];
 
 This is similar to taking a reference to the whole `String` but with the extra
 `[0..5]` bit. Rather than a reference to the entire `String`, it’s a reference
-to a portion of the `String`. The `start..end` syntax is a range that begins at
-`start` and continues up to, but not including, `end`. If we wanted to include
-`end`, we can use `..=` instead of `..`:
-
-```rust
-let s = String::from("hello world");
-
-let hello = &s[0..=4];
-let world = &s[6..=10];
-```
-
-The `=` means that we’re including the last number, if that helps you remember
-the difference between `..` and `..=`.
+to a portion of the `String`.
 
 We can create slices using a range within brackets by specifying
 `[starting_index..ending_index]`, where `starting_index` is the first position
@@ -220,13 +209,13 @@ let slice = &s[..];
 > more thorough discussion of UTF-8 handling is in the [“Storing UTF-8 Encoded
 > Text with Strings”][strings]<!-- ignore --> section of Chapter 8.
 
-With all this information in mind, let’s rewrite `first_word` to return a
+With all this information in mind, let’s rewrite `pierwsze_slowo` to return a
 slice. The type that signifies “string slice” is written as `&str`:
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn first_word(s: &String) -> &str {
+fn pierwsze_slowo(s: &String) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
@@ -244,7 +233,7 @@ We get the index for the end of the word in the same way as we did in Listing
 return a string slice using the start of the string and the index of the space
 as the starting and ending indices.
 
-Now when we call `first_word`, we get back a single value that is tied to the
+Now when we call `pierwsze_slowo`, we get back a single value that is tied to the
 underlying data. The value is made up of a reference to the starting point of
 the slice and the number of elements in the slice.
 
@@ -261,7 +250,7 @@ first word but then cleared the string so our index was invalid? That code was
 logically incorrect but didn’t show any immediate errors. The problems would
 show up later if we kept trying to use the first word index with an emptied
 string. Slices make this bug impossible and let us know we have a problem with
-our code much sooner. Using the slice version of `first_word` will throw a
+our code much sooner. Using the slice version of `pierwsze_slowo` will throw a
 compile-time error:
 
 <span class="filename">Filename: src/main.rs</span>
@@ -270,7 +259,7 @@ compile-time error:
 fn main() {
     let mut s = String::from("hello world");
 
-    let word = first_word(&s);
+    let word = pierwsze_slowo(&s);
 
     s.clear(); // error!
 
@@ -282,16 +271,16 @@ Here’s the compiler error:
 
 ```text
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
-  --> src/main.rs:10:5
+  --> src/main.rs:18:5
    |
-8  |     let word = first_word(&s);
+16 |     let word = pierwsze_slowo(&s);
    |                           -- immutable borrow occurs here
-9  |
-10 |     s.clear(); // error!
+17 |
+18 |     s.clear(); // error!
    |     ^^^^^^^^^ mutable borrow occurs here
-11 |
-12 |     println!("the first word is: {}", word);
-   |                                       ---- borrow later used here
+19 |
+20 |     println!("the first word is: {}", word);
+   |                                       ---- immutable borrow later used here
 ```
 
 Recall from the borrowing rules that if we have an immutable reference to
@@ -316,10 +305,10 @@ immutable reference.
 #### String Slices as Parameters
 
 Knowing that you can take slices of literals and `String` values leads us to
-one more improvement on `first_word`, and that’s its signature:
+one more improvement on `pierwsze_slowo`, and that’s its signature:
 
 ```rust,ignore
-fn first_word(s: &String) -> &str {
+fn pierwsze_slowo(s: &String) -> &str {
 ```
 
 A more experienced Rustacean would write the signature shown in Listing 4-9
@@ -327,10 +316,10 @@ instead because it allows us to use the same function on both `String` values
 and `&str` values.
 
 ```rust,ignore
-fn first_word(s: &str) -> &str {
+fn pierwsze_slowo(s: &str) -> &str {
 ```
 
-<span class="caption">Listing 4-9: Improving the `first_word` function by using
+<span class="caption">Listing 4-9: Improving the `pierwsze_slowo` function by using
 a string slice for the type of the `s` parameter</span>
 
 If we have a string slice, we can pass that directly. If we have a `String`, we
@@ -341,7 +330,7 @@ without losing any functionality:
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-# fn first_word(s: &str) -> &str {
+# fn pierwsze_slowo(s: &str) -> &str {
 #     let bytes = s.as_bytes();
 #
 #     for (i, &item) in bytes.iter().enumerate() {
@@ -355,17 +344,17 @@ without losing any functionality:
 fn main() {
     let my_string = String::from("hello world");
 
-    // first_word works on slices of `String`s
-    let word = first_word(&my_string[..]);
+    // pierwsze_slowo works on slices of `String`s
+    let word = pierwsze_slowo(&my_string[..]);
 
     let my_string_literal = "hello world";
 
-    // first_word works on slices of string literals
-    let word = first_word(&my_string_literal[..]);
+    // pierwsze_slowo works on slices of string literals
+    let word = pierwsze_slowo(&my_string_literal[..]);
 
     // Because string literals *are* string slices already,
     // this works too, without the slice syntax!
-    let word = first_word(my_string_literal);
+    let word = pierwsze_slowo(my_string_literal);
 }
 ```
 
