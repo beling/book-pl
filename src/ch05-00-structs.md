@@ -1,11 +1,11 @@
-# Using Structs to Structure Related Data
+# Używanie struktur do przechowywania powiązanych danych
 
-A *struct*, or *structure*, is a custom data type that lets you name and
-package together multiple related values that make up a meaningful group. If
-you’re familiar with an object-oriented language, a *struct* is like an
-object’s data attributes. In this chapter, we’ll compare and contrast tuples
-with structs, demonstrate how to use structs, and discuss how to define methods
-and associated functions to specify behavior associated with a struct’s data.
-Structs and enums (discussed in Chapter 6) are the building blocks for creating
-new types in your program’s domain to take full advantage of Rust’s compile
-time type checking.
+Struktura (ang. *struct* lub *structure*) to złożony typ danych, który
+pozwala spakować razem powiązane ze sobą wartości i nadać im konkretną nazwę.
+Jeśli znasz już jakiś obiektowy język programowania, to możesz wyobrazić sobie
+strukturę jako grupę atrybutów pewnego obiektu. W tym rozdziale porównamy ze sobą struktury i krotki (and. *tuples*)
+oraz wykażemy różnice pomiędzy nimi. Pokażemy też, jak używać struktur, oraz przedyskutujemy jak definiować dla nich metody i funkcje powiązane,
+które będą określały zachowania powiązane z danymi wewnątrz struktury.
+Struktury i typy wyliczeniowe (omówione w Rozdziale 6) są cegiełkami służącymi do
+tworzenia nowych typów w twoim programie, dzięki którym maksymalnie wykorzystasz
+Rustowy mechanizm sprawdzania zgodności typów w czasie kompilacji.
