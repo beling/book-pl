@@ -53,13 +53,14 @@ zostać użyty do zadeklarowania typu danych liczby całkowitej.
 
 <span class="caption">Tabela 3-1: Typy całkowite w Ruście</span>
 
-| Rozmiar  | Ze znakiem | Bez znaku |
-| -------- | ---------- | --------- |
-| 8-bitów  | i8         | u8        |
-| 16-bitów | i16        | u16       |
-| 32-bity  | i32        | u32       |
-| 64-bity  | i64        | u64       |
-| arch     | isize      | usize     |
+| Rozmiar   | Ze znakiem | Bez znaku |
+| --------- | ---------- | --------- |
+| 8-bitów   | i8         | u8        |
+| 16-bitów  | i16        | u16       |
+| 32-bity   | i32        | u32       |
+| 64-bity   | i64        | u64       |
+| 128-bitów | i128       | u128      |
+| arch      | isize      | usize     |
 
 Każdy z wariantów może posiadać znak lub nie, a także ma określony rozmiar.
 Nazwy *Ze znakiem* i *Bez znaku* odnoszą się do tego, czy dana liczba może
@@ -103,6 +104,32 @@ jesteś pewien, typy domyślnie wykorzystywane przez Rusta są w większości
 przypadków dobrym wyborem, dla liczb całkowitych to `i32`; ogólnie ten typ
 jest najszybszy, nawet na 64-bitowych systemach. Z typów `isize` i `usize`
 skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
+
+> ##### Przekroczenie zakresu liczb całkowitych
+>
+> Załóż, że masz zmienną typy `u8`, która może przechowywać wartości
+> między 0 i 255. Jeżeli spróbujesz przypisać tej zmiennej wartość nie
+> mieszczącą się w podanym zakresie, np. 256, nastąpi przekroczenie zakresu
+> liczb całkowitych. Rust posiada kilka ciekawych zasad dotyczących takiego
+> zachowania. Kiedy kompilujesz program w trybie debugowania, Rust dołącza 
+> do programu mechanizmy wykrywające przekroczenia zakresu liczb całkowitych,
+> które w przypadku wystąpienia przekroczenia zakresu liczb całkowitych 
+> zmuszą twój program do spanikowania (*panic*). Rust wykorzystuje termin 
+> "panikowania" programu wtedy, gdy program kończy działaniem zwracając błąd;
+> panikowanie szczegółowiej omówimy w sekcji [“Nieodwracalne błędy z `panic!`”][unrecoverable-errors-with-panic]<!-- ignore -->
+> w Rodziale 9.
+>
+> Kiedy kompilujesz program w trybie produkcyjnym z włączoną flagą `--release`,
+> Rust *nie* dołącza do programu mechanizmów wykrywających przekroczenia 
+> zakresu liczb całkowitych, które spowodują spanikowanie programu. Zamiast tego 
+> w przypadku wystąpienia przekroczenia zakresu, Rust wykona operację nazywaną
+> *zwinięciem uzupełnia do dwóch*. Krótko mówiąc, wartości większe niż 
+> maksymalna dla danego typu danych zostaną "zwinięte" do najmniejszych wartości 
+> dla danego typu danych. Na przykład w przypadku `u8`, 256 zostanie zamienione 
+> na 0, 257 na 1 itd. Program nie spanikuje, ale zmiennym zostaną przypisane 
+> inne wartości niż byś tego oczekiwał. Poleganie na zwinięciu uzupełnia do 
+> dwóch jest uważane za błąd. Jeżeli chcesz jawnie zwijać, może skorzystać 
+> z typu danych z biblioteki standardowej o nazwie `Wrapping`.
 
 #### Typy zmiennoprzecinkowe
 
@@ -376,3 +403,9 @@ a skorzystanie z niepoprawnego indeksu, może skutkować uzyskaniem dostępu do
 niewłaściwego bloku pamięci. Rust chroni cię przed takimi błędami. Zamiast
 pozwolić ci na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
 program. W Rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
+
+[comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+[control-flow]: ch03-05-control-flow.html#control-flow
+[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
+[wrapping]: ../std/num/struct.Wrapping.html
