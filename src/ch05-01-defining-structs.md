@@ -9,7 +9,7 @@ Nie musisz polegać na kolejności danych, aby dostać się do wartości danej s
 
 Aby zdefiniować strukturę posługujemy się słowem kluczowym `struct`,
 po którym wstawiamy nazwę struktury.
-Nazwa struktury powinna mieć znaczenie zgrupowanych fragmentów danych
+Nazwa struktury powinna odzwierciedlać znaczenie grupy danych
 znajdujących się w danej strukturze.
 Następnie, w nawiasach klamrowych definiujemy nazwy i typy fragmentów danych,
 które nazywamy *atrybutami*. 
@@ -115,7 +115,7 @@ fn build_user(email: String, username: String) -> User {
 <span class="caption">Listing 5-4: Funkcja `build_user`, która jako argument 
 przyjmuje email i nazwę użytkownika, a zwraca instancję struktury`User`</span>
 
-Nadanie parametrom funkcji tą samą nazwę co atrybutom struktury ma sens, ale
+Nadanie parametrom funkcji tej samej nazwy co atrybutom struktury ma sens, ale
 przez to musimy powtarzać nazwy atrybutów `email` i `username`, co jest trochę męczące.
 Jeśli jakaś struktura miałaby więcej atrybutów powtarzanie każdego z nich
 byłoby jeszcze bardziej męczące. Na szczęście, istnieje wygodny skrótowiec!
@@ -150,11 +150,11 @@ fn build_user(email: String, username: String) -> User {
 używająca skrótowej inicjalizacji atrybutów `email` oraz `username`,
 które mają takie same nazwy jak parametry funkcji</span>
 
-Here, we’re creating a new instance of the `User` struct, which has a field
-named `email`. We want to set the `email` field’s value to the value in the
-`email` parameter of the `build_user` function. Because the `email` field and
-the `email` parameter have the same name, we only need to write `email` rather
-than `email: email`.
+Tutaj tworzymy nową instancję struktury `User`, która posiada atrybut
+o nazwie `email`. Chcemy nadać atrybutowi `email` wartość znajdującą się
+w parametrze `email` funkcji `build_user`. Skoro atrybut `email` i parametr `email`
+mają takie same nazwy wystarczy, że napiszemy `email` jedynie raz zamiast
+musieć napisać `email: email`.
 
 ### Tworzenie instancji z innych instancji przy użyciu składni zmiany struktury
 
