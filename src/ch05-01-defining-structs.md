@@ -113,7 +113,7 @@ fn build_user(email: String, username: String) -> User {
 ```
 
 <span class="caption">Listing 5-4: Funkcja `build_user`, która jako argument 
-przyjmuje email i nazwę użytkownika, a zwraca instancję struktury`User`</span>
+przyjmuje email i nazwę użytkownika, a zwraca instancję struktury `User`</span>
 
 Nadanie parametrom funkcji tej samej nazwy co atrybutom struktury ma sens, ale
 przez to musimy powtarzać nazwy atrybutów `email` i `username`, co jest trochę męczące.
