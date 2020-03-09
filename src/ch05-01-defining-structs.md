@@ -1,16 +1,20 @@
-## Defining and Instantiating Structs
+## Definiowanie i tworzenie instancji struktur
 
-Structs are similar to tuples, which were discussed in Chapter 3. Like tuples,
-the pieces of a struct can be different types. Unlike with tuples, you’ll name
-each piece of data so it’s clear what the values mean. As a result of these
-names, structs are more flexible than tuples: you don’t have to rely on the
-order of the data to specify or access the values of an instance.
+Struktury są podobne do krotek, które omawiane były w Rozdziale 3. 
+Podobnie do krotek, poszczególne części struktur mogą różnić się typami.
+W odróżnieniu od krotek, każdy fragment danych musisz nazwać,
+aby jasne było co każdy oznacza. W wyniku tego nazewnictwa struktury są bardziej
+elastyczne od krotek. 
+Nie musisz polegać na kolejności danych, aby dostać się do wartości danej struktury.
 
-To define a struct, we enter the keyword `struct` and name the entire struct. A
-struct’s name should describe the significance of the pieces of data being
-grouped together. Then, inside curly brackets, we define the names and types of
-the pieces of data, which we call *fields*. For example, Listing 5-1 shows a
-struct that stores information about a user account.
+Aby zdefiniować strukturę posługujemy się słowem kluczowym `struct`,
+po którym wstawiamy nazwę struktury.
+Nazwa struktury powinna odzwierciedlać znaczenie grupy danych
+znajdujących się w danej strukturze.
+Następnie, w nawiasach klamrowych definiujemy nazwy i typy fragmentów danych,
+które nazywamy *atrybutami*. 
+Na przykład, w Listingu 5-1 widzimy strukturę,
+w której znajdują się przykładowe dane profilu użytkownika.
 
 ```rust
 struct User {
@@ -21,17 +25,18 @@ struct User {
 }
 ```
 
-<span class="caption">Listing 5-1: A `User` struct definition</span>
+<span class="caption">Listing 5-1: `User` definicja struktury</span>
 
-To use a struct after we’ve defined it, we create an *instance* of that struct
-by specifying concrete values for each of the fields. We create an instance by
-stating the name of the struct and then add curly brackets containing `key:
-value` pairs, where the keys are the names of the fields and the values are the
-data we want to store in those fields. We don’t have to specify the fields in
-the same order in which we declared them in the struct. In other words, the
-struct definition is like a general template for the type, and instances fill
-in that template with particular data to create values of the type. For
-example, we can declare a particular user as shown in Listing 5-2.
+Aby wykorzystać strukturę po jej zdefiniowaniu tworzymy *instancję* tej struktury
+poprzez podanie konkretnych wartości dla każdego atrybutu.
+Tworzymy strukturę przez podanie jej nazwy, następnie nawiasy klamrowe zawierające
+pary `klucz: wartość`, gdzie klucze to nazwy atrybutów,
+a wartości to dane, które chcemy umieścić w danych atrybutach.
+Nie musimy podawać atrybutów w tej samej kolejności w jakiej zostały one zdefiniowane
+podczas deklaracji struktury.
+Innymi słowy, definicja struktury jest ogólnym szablonem, a instancje jakby wypełniają
+dany szablon jakimiś danymi tworząc wartości typu struktury.
+Przykładowa deklaracja użytkownika pokazana jest w Listingu 5-2.
 
 ```rust
 # struct User {
@@ -49,14 +54,14 @@ let user1 = User {
 };
 ```
 
-<span class="caption">Listing 5-2: Creating an instance of the `User`
-struct</span>
+<span class="caption">Listing 5-2: Tworzenie instancji struktury `User`</span>
 
-To get a specific value from a struct, we can use dot notation. If we wanted
-just this user’s email address, we could use `user1.email` wherever we wanted
-to use this value. If the instance is mutable, we can change a value by using
-the dot notation and assigning into a particular field. Listing 5-3 shows how
-to change the value in the `email` field of a mutable `User` instance.
+Aby uzyskać dostęp do danego atrybutu struktury używamy kropki.
+Jeśli chcielibyśmy zdobyć tylko adres email danego użytkownika moglibyśmy
+napisać `user1.email` gdziekolwiek ta wartość byłaby nam potrzebna.
+Jeśli instancja jest mutowalna możemy zmienić atrybut używając
+kropki aby uzyskać daną wartości i ją zmienić.
+Listing 5-3 pokazuje jak zmienić atrybut `email` w mutowalnej instancji struktury `User`.
 
 ```rust
 # struct User {
@@ -76,17 +81,18 @@ let mut user1 = User {
 user1.email = String::from("anotheremail@example.com");
 ```
 
-<span class="caption">Listing 5-3: Changing the value in the `email` field of a
-`User` instance</span>
+<span class="caption">Listing 5-3: Zmiana atrybutu `email` instancji struktury `User`.
 
-Note that the entire instance must be mutable; Rust doesn’t allow us to mark
-only certain fields as mutable. As with any expression, we can construct a new
-instance of the struct as the last expression in the function body to
-implicitly return that new instance.
+Należy pamiętać, że cała instancja musi być mutowalna;
+Rust nie pozwala nam zaznaczyć poszczególnych atrybutów jako mutowalnych.
+Jak z każdym wyrażeniem, możemy skonstruować nową instancję struktury jako
+ostatnie wyrażenie w ciele funkcji, aby dana instancja została zwrócona przez funkcję.
 
-Listing 5-4 shows a `build_user` function that returns a `User` instance with
-the given email and username. The `active` field gets the value of `true`, and
-the `sign_in_count` gets a value of `1`.
+Listing 5-4 ukazuje funkcję `build_user`
+zwracającą instancję struktury `User` z pewnym emailem
+i nazwą użytkownika.
+Atrybutowi `active` przypisana jest wartość `true`,
+a atrybutowi `sign_in_count` przypisana jest wartość `1`.
 
 ```rust
 # struct User {
@@ -106,20 +112,21 @@ fn build_user(email: String, username: String) -> User {
 }
 ```
 
-<span class="caption">Listing 5-4: A `build_user` function that takes an email
-and username and returns a `User` instance</span>
+<span class="caption">Listing 5-4: Funkcja `build_user`, która jako argument 
+przyjmuje email i nazwę użytkownika, a zwraca instancję struktury `User`</span>
 
-It makes sense to name the function parameters with the same name as the struct
-fields, but having to repeat the `email` and `username` field names and
-variables is a bit tedious. If the struct had more fields, repeating each name
-would get even more annoying. Luckily, there’s a convenient shorthand!
+Nadanie parametrom funkcji tej samej nazwy co atrybutom struktury ma sens, ale
+przez to musimy powtarzać nazwy atrybutów `email` i `username`, co jest trochę męczące.
+Jeśli jakaś struktura miałaby więcej atrybutów powtarzanie każdego z nich
+byłoby jeszcze bardziej męczące. Na szczęście, istnieje wygodny skrótowiec!
 
-### Using the Field Init Shorthand when Variables and Fields Have the Same Name
+### Używanie skrótowej inicjalizacji atrybutów gdy atrybut i wartość mają taką samą nazwę
 
-Because the parameter names and the struct field names are exactly the same in
-Listing 5-4, we can use the *field init shorthand* syntax to rewrite
-`build_user` so that it behaves exactly the same but doesn’t have the
-repetition of `email` and `username`, as shown in Listing 5-5.
+Ponieważ nazwy parametrów i atrybutów struktury są takie same, w
+Listingu 5-4 możemy użyć składni tzw. *skrótowej inicjializacji atrybutów*
+(ang. field init shorthand), aby zmienić funkcję `build_user`,
+tak aby nie zmieniać jej zachowania, ale też nie powtarzając
+`email` i `username`. Taki zabieg widzimy w Listingu 5-5.
 
 ```rust
 # struct User {
@@ -139,24 +146,25 @@ fn build_user(email: String, username: String) -> User {
 }
 ```
 
-<span class="caption">Listing 5-5: A `build_user` function that uses field init
-shorthand because the `email` and `username` parameters have the same name as
-struct fields</span>
+<span class="caption">Listing 5-5: Funkcja `build_user`
+używająca skrótowej inicjalizacji atrybutów `email` oraz `username`,
+które mają takie same nazwy jak parametry funkcji</span>
 
-Here, we’re creating a new instance of the `User` struct, which has a field
-named `email`. We want to set the `email` field’s value to the value in the
-`email` parameter of the `build_user` function. Because the `email` field and
-the `email` parameter have the same name, we only need to write `email` rather
-than `email: email`.
+Tutaj tworzymy nową instancję struktury `User`, która posiada atrybut
+o nazwie `email`. Chcemy nadać atrybutowi `email` wartość znajdującą się
+w parametrze `email` funkcji `build_user`. Skoro atrybut `email` i parametr `email`
+mają takie same nazwy wystarczy, że napiszemy `email` jedynie raz zamiast
+musieć napisać `email: email`.
 
-### Creating Instances From Other Instances With Struct Update Syntax
+### Tworzenie instancji z innych instancji przy użyciu składni zmiany struktury
 
-It’s often useful to create a new instance of a struct that uses most of an old
-instance’s values but changes some. You’ll do this using *struct update syntax*.
+Czasem bardzo przydatnym jest stworzenie nowej struktury, która jest w zasadzie
+kopią innej struktury, w której chcemy zmienić tylko niektóre atrybuty.
+Do tego celu zastosujemy *składnię zmiany struktury*.
 
-First, Listing 5-6 shows how we create a new `User` instance in `user2` without
-the update syntax. We set new values for `email` and `username` but otherwise
-use the same values from `user1` that we created in Listing 5-2.
+Listing 5-6 obrazuje tworzenie instancji struktury `User` zapisanej do zmiennej `user2`
+bez użycia naszej nowej składni. Nadajemy nowe wartości atrybutom `email` i `username`, ale poza tym
+zostawiamy te same wartości w instancji `user1`, które przypisaliśmy w Listingu 5-2.
 
 ```rust
 # struct User {
@@ -181,12 +189,12 @@ let user2 = User {
 };
 ```
 
-<span class="caption">Listing 5-6: Creating a new `User` instance using some of
-the values from `user1`</span>
+<span class="caption">Listing 5-6: Tworzenie nowej instancji struktury `User` pozostawiając
+niektóre wartości z instancji struktury `user1`</span>
 
-Using struct update syntax, we can achieve the same effect with less code, as
-shown in Listing 5-7. The syntax `..` specifies that the remaining fields not
-explicitly set should have the same value as the fields in the given instance.
+Przy użyciu składni zmiany struktury możemy osiągnąć ten sam efekt mniejszym nakładem kodu,
+co widzimy w Listingu 5-7. Składnia `..` oznacza, że pozostałym atrybutom, którym nie oznaczyliśmy ręcznie
+wartości przypisane zostaną wartości z danej, oznaczonej instancji.
 
 ```rust
 # struct User {
@@ -210,26 +218,26 @@ let user2 = User {
 };
 ```
 
-<span class="caption">Listing 5-7: Using struct update syntax to set new
-`email` and `username` values for a `User` instance but use the rest of the
-values from the fields of the instance in the `user1` variable</span>
+<span class="caption">Listing 5-7: Użycie składni zmiany struktury w celu przypisania
+nowych wartości atrybutom `email` oraz `username` z instancji struktury `User`,
+jednocześnie pozostawiając wartości atrybutów ze zmiennej `user1`</span>
 
-The code in Listing 5-7 also creates an instance in `user2` that has a
-different value for `email` and `username` but has the same values for the
-`active` and `sign_in_count` fields from `user1`.
+Kod przedstawiony w Listingu 5-7 tworzy też instancję w zmiennej `user2`, która
+zmienia wartości w atrybutach `email` i `username`, ale pozostawia wartości
+z atrybutów `active` i `sign_in_count` ze zmiennej `user1`.
 
-### Using Tuple Structs without Named Fields to Create Different Types
+### Wykorzystanie braku nazywania atrybutów w strukturach-krotkach do tworzenia nowych typów
 
-You can also define structs that look similar to tuples, called *tuple
-structs*. Tuple structs have the added meaning the struct name provides but
-don’t have names associated with their fields; rather, they just have the types
-of the fields. Tuple structs are useful when you want to give the whole tuple a
-name and make the tuple be a different type than other tuples, and naming each
-field as in a regular struct would be verbose or redundant.
+Możesz też stworzyć struktury podobne do krotek, nazywane *strukturami-krotkami* (ang. tuple structs).
+Atutem struktur-krotek jest przypisanie znaczenia atrybutom bez ich nazywania,
+a jedynie przez przypisanie atrybutom ich typu.
+Struktury-krotki przydatne są najbardziej, kiedy: chciałbyś użyć krotkę,
+chcesz nadać jej nazwę i odróżnić ją od innych poprzez posiadanie innego typu,
+oraz kiedy nazywanie każdego atrybutu (jak w normalnej strukturze) byłoby zbyt rozwlekłe lub zbędne.
 
-To define a tuple struct, start with the `struct` keyword and the struct name
-followed by the types in the tuple. For example, here are definitions and
-usages of two tuple structs named `Color` and `Point`:
+Aby zdefiniować strukturę-krotkę, najpierw wpisz słowo kluczowe `struct`, po nim nazwę struktury,
+a następnie typy twojej nowej krotki.
+Dla przykładu, tutaj pokazane są działania na dwóch strukturach-krotkach, tj. `Color` i `Point`:
 
 ```rust
 struct Color(i32, i32, i32);
@@ -239,37 +247,38 @@ let black = Color(0, 0, 0);
 let origin = Point(0, 0, 0);
 ```
 
-Note that the `black` and `origin` values are different types, because they’re
-instances of different tuple structs. Each struct you define is its own type,
-even though the fields within the struct have the same types. For example, a
-function that takes a parameter of type `Color` cannot take a `Point` as an
-argument, even though both types are made up of three `i32` values. Otherwise,
-tuple struct instances behave like tuples: you can destructure them into their
-individual pieces, you can use a `.` followed by the index to access an
-individual value, and so on.
+Zauważ, że `black` i `origin` mają różne typy, bo są instancjami różnych struktur-krotek.
+Każda zdefiniowana struktura ma własny, niepowtarzalny typ mimo, tego że atrybuty w danych
+dwóch strukturach mogą mieć identyczne typy.
+Na przykład, funkcja przyjmująca parametr typu `Color` nie może także przyjąć argumentu typu `Point`,
+mimo że np. oba typy mogą składać się z trzech wartości typu `i32`.
+Oprócz tego wyjątku struktury-krotki zachowują się całkiem jak krotki:
+możesz użyć składni przypisania destrukturyzującego, aby przypisać atrybuty zmiennym;
+możesz także użyć numeru indeksu bezimiennego atrybutu poprzedzonego `.`, aby
+uzyskać do niego dostęp.
 
-### Unit-Like Structs Without Any Fields
+### Struktura-jednostka bez żadnych atrybutów
 
-You can also define structs that don’t have any fields! These are called
-*unit-like structs* because they behave similarly to `()`, the unit type.
-Unit-like structs can be useful in situations in which you need to implement a
-trait on some type but don’t have any data that you want to store in the type
-itself. We’ll discuss traits in Chapter 10.
+Możesz także definiować struktury nie posiadające żadnych atrybutów!
+Są to tzw. *struktury-jednostki* (ang. unit-like structs), bo zachowują się podobnie do `()`, czyli jednostki.
+Struktury-jednostki mogą być przydatne, kiedy chciałbyś zaimplementować cechę w typie,
+ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w Rozdziale 10.
 
-> ### Ownership of Struct Data
+> ### System własności danych struktury
 >
-> In the `User` struct definition in Listing 5-1, we used the owned `String`
-> type rather than the `&str` string slice type. This is a deliberate choice
-> because we want instances of this struct to own all of its data and for that
-> data to be valid for as long as the entire struct is valid.
+> W definicji struktury `User` w Listingu 5-1 użyliśmy posiadanego typu `String`a
+> zamiast wycinka *stringowego* typu `&str`. To świadomy wybór, gdyż chcemy, aby instancje struktury posiadały wszystkie
+> swoje dane oraz żeby te dane były nienaruszone, jeśli sama struktura jest nienaruszona.
 >
-> It’s possible for structs to store references to data owned by something else,
-> but to do so requires the use of *lifetimes*, a Rust feature that we’ll
-> discuss in Chapter 10. Lifetimes ensure that the data referenced by a struct
-> is valid for as long as the struct is. Let’s say you try to store a reference
-> in a struct without specifying lifetimes, like this, which won’t work:
+> Struktury mogą przechowywać referencje do danych należących do czegoś innego,
+> ale do tego potrzebne byłyby informacje o *długości życia* zmiennych (ang. lifetime).
+> Jest to funkcja Rusta, o której powiemy więcej w Rozdziale 10. 
+> Długość życia gwarantuje nam, że dane wskazywane przez referencję
+> są nienaruszone dopóty, dopóki struktura istnieje.
+> Załóżmy, że próbujesz przechować referencję do struktury bez podania informacji
+> o długości życia tak jak tutaj, co nie zadziała:
 >
-> <span class="filename">Filename: src/main.rs</span>
+> <span class="filename">Nazwa pliku: src/main.rs</span>
 >
 > ```rust,ignore,does_not_compile
 > struct User {
@@ -289,7 +298,7 @@ itself. We’ll discuss traits in Chapter 10.
 > }
 > ```
 >
-> The compiler will complain that it needs lifetime specifiers:
+> Kompilator da ci znać, że potrzebuje specyfikatoru długości życia:
 >
 > ```text
 > error[E0106]: missing lifetime specifier
@@ -305,6 +314,6 @@ itself. We’ll discuss traits in Chapter 10.
 >   |            ^ expected lifetime parameter
 > ```
 >
-> In Chapter 10, we’ll discuss how to fix these errors so you can store
-> references in structs, but for now, we’ll fix errors like these using owned
-> types like `String` instead of references like `&str`.
+> W Rozdziale 10 pokażemy jak pozbyć się tych błędów, aby przechować
+> referencje do innych struktur, ale póki co pozbędziemy się ich po prostu
+> używając posiadanych typów, takich jak `String` zamiast referencji typu `&str`.
