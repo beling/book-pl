@@ -1,266 +1,286 @@
-## An Example Program Using Structs
+## Przykładowy program wykorzystujący struktury
 
-To understand when we might want to use structs, let’s write a program that
-calculates the area of a rectangle. We’ll start with single variables, and then
-refactor the program until we’re using structs instead.
+Aby zrozumieć dlaczego chcielibyśmy używać struktury napiszmy program, który
+policzy pole prostokąta. Zaczniemy od jednej zmiennej, potem zrefaktorujemy
+program, tak aby używał struktur.
 
-Let’s make a new binary project with Cargo called *rectangles* that will take
-the width and height of a rectangle specified in pixels and calculate the area
-of the rectangle. Listing 5-8 shows a short program with one way of doing
-exactly that in our project’s *src/main.rs*.
+Stwórzmy projekt aplikacji binarnej przy użyciu Cargo. Nazwijmy go *prostokaty*.
+Jako wejście przyjmie szerokość i wysokość danego prostokąta i wyliczy
+jego pole. Listing 5-8 pokazuje krótki program obrazujący jeden ze sposobów,
+w jaki możemy to wykonać.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
-    let width1 = 30;
-    let height1 = 50;
+    let szerokosc1 = 30;
+    let wysokosc1 = 50;
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(width1, height1)
+        "Pole prostokąta wynosi {} pikseli kwadratowych."
+        pole(szerokosc1, wysokosc1)
     );
 }
 
-fn area(width: u32, height: u32) -> u32 {
-    width * height
+fn pole(wysokosc: u32, szerokosc: u32) -> u32 {
+    wysokosc * szerokosc
 }
 ```
 
-<span class="caption">Listing 5-8: Calculating the area of a rectangle
-specified by separate width and height variables</span>
+<span class="caption">Listing 5-8: Kalkulacja pola prostokąta określonego
+poprzez oddzielne zmienne wymiarów: szerokości i wysokości</span>
 
-Now, run this program using `cargo run`:
+Uruchommy program komendą `cargo run`:
 
 ```text
-The area of the rectangle is 1500 square pixels.
+Pole prostokąta wynosi 1500 pikseli kwadratowych.
 ```
 
-Even though Listing 5-8 works and figures out the area of the rectangle by
-calling the `area` function with each dimension, we can do better. The width
-and the height are related to each other because together they describe one
-rectangle.
+Mimo że w Listingu 5-8 wszystko wygląda OK, a więc wylicza pole prostokąta
+wywołując funkcję `pole` z oboma wymiarami, to jednak da się to napisać lepiej.
+Szerokość i wysokość są blisko ze sobą spokrewnione, bo razem opisują pewien prostokąt.
 
-The issue with this code is evident in the signature of `area`:
+Problem w tym kodzie widnieje w sygnaturze funkcji `pole`:
 
 ```rust,ignore
-fn area(width: u32, height: u32) -> u32 {
+fn pole(wysokosc: u32, szerokosc: u32) -> u32 {
 ```
 
-The `area` function is supposed to calculate the area of one rectangle, but the
-function we wrote has two parameters. The parameters are related, but that’s
-not expressed anywhere in our program. It would be more readable and more
-manageable to group width and height together. We’ve already discussed one way
-we might do that in [“The Tuple Type”][the-tuple-type]<!-- ignore --> section
-of Chapter 3: by using tuples.
+Funkcja `pole` ma wyliczyć pole jakiegoś prostokąta, ale przecież
+funkcja którą my napisaliśmy ma dwa parametry.
+Parametry są ze sobą powiązane, ale ta zależność nie widnieje nigdzie w naszym
+programie. Łatwiej byłoby ten kod zrozumieć i nim się posługiwać,
+jeśli szerokość i wysokość byłyby ze sobą zgrupowane.
+Już omówiliśmy jeden ze sposobów, w jaki można to wykonać w sekcji 
+[“Krotka”][the-tuple-type]<!-- ignore --> rozdziału 3, czyli poprzez
+wykorzystanie krotek.
 
-### Refactoring with Tuples
+### Refaktoryzacja z krotkami
 
-Listing 5-9 shows another version of our program that uses tuples.
+Listing 5-9 pokazuje jeszcze jedną wersję programu wykorzystującego krotki.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
     let rect1 = (30, 50);
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(rect1)
+        "Pole prostokąta wynosi {} pikseli kwadratowych."
+        pole(rect1)
     );
 }
 
-fn area(dimensions: (u32, u32)) -> u32 {
-    dimensions.0 * dimensions.1
+fn pole(wymiary: (u32, u32)) -> u32 {
+    wymiary.0 * wymiary.1
 }
 ```
 
-<span class="caption">Listing 5-9: Specifying the width and height of the
-rectangle with a tuple</span>
+<span class="caption">Listing 5-9: Określenie szerokości i wysokości prostokąta
+przy użyciu krotki</span>
 
-In one way, this program is better. Tuples let us add a bit of structure, and
-we’re now passing just one argument. But in another way, this version is less
-clear: tuples don’t name their elements, so our calculation has become more
-confusing because we have to index into the parts of the tuple.
+Ten program jest, w pewnych aspektach, lepszy.
+Krotki dodają odrobinę organizacji,
+oraz pozwalają nam podać funkcji tylko jeden argument.
+Ale z drugiej strony ta wersja jest mniej czytelna:
+elementy krotki nie mają nazw, a nasze kalkulacje stały się enigmatyczne, 
+bo dany wymiar prostokąta reprezentowany jest przez indeks elementu krotki.
 
-It doesn’t matter if we mix up width and height for the area calculation, but
-if we want to draw the rectangle on the screen, it would matter! We would have
-to keep in mind that `width` is the tuple index `0` and `height` is the tuple
-index `1`. If someone else worked on this code, they would have to figure this
-out and keep it in mind as well. It would be easy to forget or mix up these
-values and cause errors, because we haven’t conveyed the meaning of our data in
-our code.
+Dla kalkulacji pola prostokąta akurat nie ma to znaczenia, ale jeśli chcielibyśmy
+narysować ten prostokąt na ekranie, wtedy już miałoby to znaczenie!
+Musielibyśmy zapamiętać, że szerokość znajduje się w elemencie krotki o indeksie 
+`0`, a wysokość w indeksie `1`.
+Jeśli ktoś inny pracowałby nad tym kodem musiałby rozgryźć to samemu,
+a także to zapamiętać. Omyłkowe pomieszanie tych dwóch wartości nie byłoby zaskakujące,
+a następstwem takiej pomyłki byłyby błędy spowodowane brakiem zawarcia
+kontekstu i znaczenia danych w naszym kodzie.
 
-### Refactoring with Structs: Adding More Meaning
+### Refaktoryzacja ze strukturami: ukazywanie znaczenia
 
-We use structs to add meaning by labeling the data. We can transform the tuple
-we’re using into a data type with a name for the whole as well as names for the
-parts, as shown in Listing 5-10.
+Struktur używamy, aby przekazać znaczenie poprzez etykietowanie danych.
+Możemy przekształcić używaną przez nas krotkę nazywając zarówno
+całość jak i pojedyncze jej części, tak jak w Listingu 5-10.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Prostokat {
+    szerokosc: u32,
+    wysokosc: u32,
 }
 
 fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
 
     println!(
-        "The area of the rectangle is {} square pixels.",
-        area(&rect1)
+        "Pole prostokąta wynosi {} pikseli kwadratowych."
+        pole(&rect1)
     );
 }
 
-fn area(rectangle: &Rectangle) -> u32 {
-    rectangle.width * rectangle.height
+fn pole(prostokat: &Prostokat) -> u32 {
+    prostokat.width * prostokat.height
 }
 ```
 
-<span class="caption">Listing 5-10: Defining a `Rectangle` struct</span>
+<span class="caption">Listing 5-10: Definicja struktury `Prostokat`.
 
-Here we’ve defined a struct and named it `Rectangle`. Inside the curly
-brackets, we defined the fields as `width` and `height`, both of which have
-type `u32`. Then in `main`, we created a particular instance of `Rectangle`
-that has a width of 30 and a height of 50.
+Powyżej zdefiniowaliśmy strukturę i nazwaliśmy ją `Prostokat`.
+Wewnątrz nawiasów klamrowych zdefiniowaliśmy atrybuty `szerokosc` i `wysokosc`,
+oba mające typ `u32`.
+Następnie w funkcji `main` stworzyliśmy konkretną instancję struktury `Prostokat`,
+gdzie szerokość wynosi 30 jednostek i wysokość 50 jednostek.
 
-Our `area` function is now defined with one parameter, which we’ve named
-`rectangle`, whose type is an immutable borrow of a struct `Rectangle`
-instance. As mentioned in Chapter 4, we want to borrow the struct rather than
-take ownership of it. This way, `main` retains its ownership and can continue
-using `rect1`, which is the reason we use the `&` in the function signature and
-where we call the function.
+Nasza funkcja `area` przyjmuje teraz jeden parametr,
+który nazwaliśmy `prostokat`, którego typ to niezmienne zapożyczenie
+instancji struktury `Prostokat`.
+Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę zamiast
+wejść w jej posiadanie. Takim sposobem `main` pozostaje właścicielem i może dalej
+używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywołania.
 
-The `area` function accesses the `width` and `height` fields of the `Rectangle`
-instance. Our function signature for `area` now says exactly what we mean:
-calculate the area of `Rectangle`, using its `width` and `height` fields. This
-conveys that the width and height are related to each other, and it gives
-descriptive names to the values rather than using the tuple index values of `0`
-and `1`. This is a win for clarity.
+Funkcja `pole` dostaje się do atrybutów `szerokosc` i `wysokosc`
+instancji struktury `Prostokat`.
+Znaczenie sygnatury funkcji `pole` jest teraz jednakowe jak nasze zamiary:
+kalkulacja pola danego prostokąta `Prostokat` poprzez wykorzystanie jego
+szerokości i wysokości. Bez niejasności przedstawiamy relację między
+szerokością a wysokością i przypisujemy logiczne nazwy wartościom
+zamiast indeksowania krotek wartościami `0` oraz `1`.
+ 
+To wygrana dla przejrzystości.
 
-### Adding Useful Functionality with Derived Traits
+### Dodawanie przydatnej funkcjonalności dzięki cechom derywowanym
 
-It’d be nice to be able to print an instance of `Rectangle` while we’re
-debugging our program and see the values for all its fields. Listing 5-11 tries
-using the `println!` macro as we have used in previous chapters. This won’t
-work, however.
+Miło byłoby móc wyświetlić instancję struktury `Prostokat` w trakcie
+debugowania naszego programu i zobaczyć wartość każdego atrybutu.
+Listing 5-11 próbuje użyć makra `println!`,
+którego używaliśmy w poprzednich rozdziałach.
+To jednakowoż nie zadziała.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Prostokat {
+    szerokosc: u32,
+    wysokosc: u32,
 }
 
 fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
 
-    println!("rect1 is {}", rect1);
+    println!("rect1 to {}", rect1);
 }
 ```
 
-<span class="caption">Listing 5-11: Attempting to print a `Rectangle`
-instance</span>
+<span class="caption">Listing 5-11: Próba wyświetlenia instancji `Prostokat` </span>
 
-When we run this code, we get an error with this core message:
+Podczas próby uruchomienia tego kodu wyświetlany jest błąd z poniższym komunikatem:
 
 ```text
-error[E0277]: the trait bound `Rectangle: std::fmt::Display` is not satisfied
+error[E0277]: the trait bound `Prostokat: std::fmt::Display` is not satisfied
 ```
 
-The `println!` macro can do many kinds of formatting, and by default, the curly
-brackets tell `println!` to use formatting known as `Display`: output intended
-for direct end user consumption. The primitive types we’ve seen so far
-implement `Display` by default, because there’s only one way you’d want to show
-a `1` or any other primitive type to a user. But with structs, the way
-`println!` should format the output is less clear because there are more
-display possibilities: Do you want commas or not? Do you want to print the
-curly brackets? Should all the fields be shown? Due to this ambiguity, Rust
-doesn’t try to guess what we want, and structs don’t have a provided
-implementation of `Display`.
+Makro `println!` może formatować na wiele sposobów, a domyślnie para nawiasów klamrowych
+daje `println!` znać, że chcemy wykorzystać formatowanie `Display` (ang. wyświetlenie).
+Jest to wyjście (*ang. output*) przeznaczone dla bezpośredniej konsumpcji przez
+docelowego użytkownika.
+Widziane przez nas wcześniej prymitywne typy implementują `Display` automatycznie,
+bo przecież jest tylko jeden sposób wyświetlenia użytkownikowi symbolu `1` czy 
+jakiegokolwiek innego prymitywnego typu.
+Ale kiedy w grę wchodzą struktury, sposób w jaki `println!` powinno formatować
+wyjście jest mniej oczywiste, bo wyświetlać strukturę można na wiele sposobów:
+z przecinkami, czy bez?
+Chcesz wyświetlić nawiasy klamrowe?
+Czy każdy atrybut powinien być wyświetlony?
+Przez tę wieloznaczność Rust nie zakłada z góry co jest dla nas najlepsze, 
+więc z tego powodu struktury nie implementują automatycznie cechy `Display`.
 
-If we continue reading the errors, we’ll find this helpful note:
+Jeśli będziemy czytać dalej znajdziemy taką przydatną informację:
 
 ```text
-`Rectangle` cannot be formatted with the default formatter; try using
+`Prostokat` cannot be formatted with the default formatter; try using
 `:?` instead if you are using a format string
 ```
 
-Let’s try it! The `println!` macro call will now look like `println!("rect1 is
-{:?}", rect1);`. Putting the specifier `:?` inside the curly brackets tells
-`println!` we want to use an output format called `Debug`. The `Debug` trait
-enables us to print our struct in a way that is useful for developers so we can
-see its value while we’re debugging our code.
+Jesteśmy poinformowani, że podana przez nas struktura nie może być użyta
+z domyślnym formaterem i zasugerowane jest nam użycie specyfikatora formatowania `:?`.
+To tak też zróbmy! Wywołanie makra `println!` teraz będzie wyglądać następująco:
+`println!("rect1 to {:?}", rect1);`. 
+Wprowadzenie specyfikatora `:?` wewnątrz pary nawiasów klamrowych
+przekazuje `println!`, że chcemy użyć formatu wyjścia o nazwie `Debug`.
+Cecha `Debug` pozwala nam wypisać strukturę w sposób użyteczny dla deweloperów,
+czyli ułatwia nam zajrzeć do wartości wewnątrz struktury podczas debugowania przez nas kodu.
 
-Run the code with this change. Drat! We still get an error:
+Uruchom kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
 
 ```text
-error[E0277]: the trait bound `Rectangle: std::fmt::Debug` is not satisfied
+error[E0277]: the trait bound `Prostokat: std::fmt::Debug` is not satisfied
 ```
 
-But again, the compiler gives us a helpful note:
+Ale kompilator nas nie opuszcza:
 
 ```text
-`Rectangle` cannot be formatted using `:?`; if it is defined in your
+`Prostokat` cannot be formatted using `:?`; if it is defined in your
 crate, add `#[derive(Debug)]` or manually implement it
 ```
 
-Rust *does* include functionality to print out debugging information, but we
-have to explicitly opt in to make that functionality available for our struct.
-To do that, we add the annotation `#[derive(Debug)]` just before the struct
-definition, as shown in Listing 5-12.
+Powyższy komunikat informuje nas, że cecha `Debug` nie jest zaimplementowana dla
+struktury `Prostokat` i zaleca nam dodanie adnotacji. Rust *doprawdy* zawiera
+funkcjonalność pozwalającą wyświetlić informacje pomocne w debugowaniu, ale
+wymaga od nas, abyśmy ręcznie i wyraźnie zaznaczyli naszą decyzję
+o dodaniu tej funkcjonalności do naszej struktury.
+W tym celu dodajemy adnotację `#[derive(Debug)]` przed samą definicją
+struktury, jak w Listingu 5-12.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
+struct Prostokat {
+    szerokosc: u32,
+    wysokosc: u32,
 }
 
 fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
 
-    println!("rect1 is {:?}", rect1);
+    println!("rect1 to {}", rect1);
 }
 ```
 
-<span class="caption">Listing 5-12: Adding the annotation to derive the `Debug`
-trait and printing the `Rectangle` instance using debug formatting</span>
+<span class="caption">Listing 5-12: Dodanie adnotacji derywacji cechy `Debug`
+i wyświetlanie instancji `Rectangle` formatowaniem przeznaczonym do celów debugowania</span> 
 
-Now when we run the program, we won’t get any errors, and we’ll see the
-following output:
+Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
+ukaże się poniższe wyjście:
 
 ```text
-rect1 is Rectangle { width: 30, height: 50 }
+rect1 to Prostokat { szerokosc: 30, wysokosc: 50 }
 ```
 
-Nice! It’s not the prettiest output, but it shows the values of all the fields
-for this instance, which would definitely help during debugging. When we have
-larger structs, it’s useful to have output that’s a bit easier to read; in
-those cases, we can use `{:#?}` instead of `{:?}` in the `println!` string.
-When we use the `{:#?}` style in the example, the output will look like this:
+No nieźle! Nie jest to może najpiękniejsza reprezentacja, ale spełnia swoje zadanie i
+pokazuje wartości wszystkich atrybutów tej instancji,
+co zdecydowanie by pomogło gdybyśmy polowali na bugi.
+Kiedy w grę wchodzą większe struktury miło byłoby też mieć troszkę czytelniejszy wydruk;
+w takich sytuacjach możemy użyć `{:#?}` zamiast `{:?}` w makrze `println!`.
+Użycie stylu `{:#?}` w tym przypadku wyglądało będzie tak:
 
 ```text
-rect1 is Rectangle {
-    width: 30,
-    height: 50
+rect1 to Prostokat {
+    szerokosc: 30,
+    wysokosc: 50
 }
 ```
 
-Rust has provided a number of traits for us to use with the `derive` annotation
-that can add useful behavior to our custom types. Those traits and their
-behaviors are listed in Appendix C. We’ll cover how to implement these traits
-with custom behavior as well as how to create your own traits in Chapter 10.
+Rust oddaje nam do użytku cały szereg cech, które możemy użyć wspólnie z adnotacją `derive`
+dostarczając przydatne funkcjonalności typom zadeklarowanym przez nas.
+Te cechy i ich zachowania opisane są w Załączniku C. Jak dodawać takim
+cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w Rozdziale 10.
 
-Our `area` function is very specific: it only computes the area of rectangles.
-It would be helpful to tie this behavior more closely to our `Rectangle`
-struct, because it won’t work with any other type. Let’s look at how we can
-continue to refactor this code by turning the `area` function into an `area`
-*method* defined on our `Rectangle` type.
+Nasza funkcja `pole` jest dość specyficzna: oblicza pola jedynie prostokątów.
+Skoro i tak nie zadziała ona z żadnym innym typem, przydatnym 
+byłoby bliższe połączenie poleceń zawartych w tej funkcji z naszą strukturą `Prostokat`.
 
-[the-tuple-type]: ch03-02-data-types.html#the-tuple-type
+Kontynuacja tej refaktoryzacji zmieni funkcję `pole` w metodę `pole`, którą
+zdefiniujemy w naszym typie *Prostokat*.
+
+[the-tuple-type]: ch03-02-data-types.html#krotka
