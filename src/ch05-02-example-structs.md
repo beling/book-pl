@@ -271,8 +271,8 @@ rect1 to Prostokat {
 }
 ```
 
-Rust oddaje nam do użytku cały szereg cech, które możemy użyć wspólnie z adnotacją `derive`
-dostarczając przydatne funkcjonalności typom zadeklarowanym przez nas.
+Rust oddaje nam do użytku cały szereg cech, które możemy użyć wspólnie z adnotacją `derive`,
+która dostarcza przydatne funkcjonalności zadeklarowanym przez nas typom.
 Te cechy i ich zachowania opisane są w Załączniku C. Jak dodawać takim
 cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w Rozdziale 10.
 
