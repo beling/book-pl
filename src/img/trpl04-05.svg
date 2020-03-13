@@ -15,9 +15,9 @@
 <polyline fill="none" stroke="#000000" points="8,-124 80,-124 "/>
 <text text-anchor="start" x="41.2759" y="-129.8" font-family="Times,serif" font-size="14.00" fill="#000000">s</text>
 <polygon fill="none" stroke="#000000" points="8,-104 8,-124 44,-124 44,-104 8,-104"/>
-<text text-anchor="start" x="10.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">nazwa</text>
+<text text-anchor="start" x="10.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">name</text>
 <polygon fill="none" stroke="#000000" points="44,-104 44,-124 80,-124 80,-104 44,-104"/>
-<text text-anchor="start" x="46.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">wartość</text>
+<text text-anchor="start" x="46.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">value</text>
 <polygon fill="none" stroke="#000000" points="8,-84 8,-104 44,-104 44,-84 8,-84"/>
 <text text-anchor="start" x="18.2241" y="-89.8" font-family="Times,serif" font-size="14.00" fill="#000000">ptr</text>
 <polygon fill="none" stroke="#000000" points="44,-84 44,-104 80,-104 80,-84 44,-84"/>
@@ -28,9 +28,9 @@
 <polyline fill="none" stroke="#000000" points="132,-124 220,-124 "/>
 <text text-anchor="start" x="169.7759" y="-129.8" font-family="Times,serif" font-size="14.00" fill="#000000">s1</text>
 <polygon fill="none" stroke="#000000" points="132,-104 132,-124 184,-124 184,-104 132,-104"/>
-<text text-anchor="start" x="142.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">nazwa</text>
+<text text-anchor="start" x="142.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">name</text>
 <polygon fill="none" stroke="#000000" points="184,-104 184,-124 220,-124 220,-104 184,-104"/>
-<text text-anchor="start" x="186.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">wartość</text>
+<text text-anchor="start" x="186.8413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">value</text>
 <polygon fill="none" stroke="#000000" points="132,-84 132,-104 184,-104 184,-84 132,-84"/>
 <text text-anchor="start" x="150.2241" y="-89.8" font-family="Times,serif" font-size="14.00" fill="#000000">ptr</text>
 <polygon fill="none" stroke="#000000" points="184,-84 184,-104 220,-104 220,-84 184,-84"/>
