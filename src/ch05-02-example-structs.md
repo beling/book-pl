@@ -2,10 +2,10 @@
 
 Aby pokazać, kiedy warto skorzystać ze struktur, napiszmy program, który
 policzy pole prostokąta. Zaczniemy od pojedynczych zmiennych, potem zrefaktorujemy
-program, tak aby używał struktur.
+program tak, aby używał struktur.
 
 Stwórzmy projekt aplikacji binarnej przy użyciu Cargo. Nazwijmy go *prostokąty*.
-Jako wejście przyjmie szerokość i wysokość danego prostokąta i wyliczy
+Jako wejście przyjmie on szerokość i wysokość danego prostokąta i wyliczy
 jego pole. Listing 5-8 pokazuje krótki program obrazujący jeden ze sposobów,
 w jaki możemy to wykonać.
 
@@ -22,13 +22,13 @@ fn main() {
     );
 }
 
-fn area(height: u32, width: u32) -> u32 {
+fn area(width: u32, height: u32) -> u32 {
     height * width
 }
 ```
 
-<span class="caption">Listing 5-8: Kalkulacja pola prostokąta określonego
-poprzez oddzielne zmienne wymiarów: szerokości i wysokości</span>
+<span class="caption">Listing 5-8: Obliczanie pola prostokąta o szerokości i wysokości
+podanych jako osobne argumenty</span>
 
 Uruchommy program komendą `cargo run`:
 
@@ -36,14 +36,14 @@ Uruchommy program komendą `cargo run`:
 Pole prostokąta wynosi 1500 pikseli kwadratowych.
 ```
 
-Mimo że w Listingu 5-8 wszystko wygląda OK, a więc wylicza pole prostokąta
-wywołując funkcję `area` z oboma wymiarami, to jednak da się to napisać lepiej.
+Pomimo że program z Listingu 5-8 wygląda dobrze i poprawnie oblicza pole prostokąta
+wywołując funkcję `area` podając oba wymiary, to możemy napisać go lepiej.
 Szerokość i wysokość są blisko ze sobą spokrewnione, bo razem opisują pewien prostokąt.
 
 Problem w tym kodzie widnieje w sygnaturze funkcji `area`:
 
 ```rust,ignore
-fn area(height: u32, width: u32) -> u32 {
+fn area(width: u32, height: u32) -> u32 {
 ```
 
 Funkcja `area` ma wyliczyć pole jakiegoś prostokąta, ale przecież
@@ -82,18 +82,17 @@ przy użyciu krotki</span>
 Ten program jest, w pewnych aspektach, lepszy.
 Krotki dodają odrobinę organizacji,
 oraz pozwalają nam podać funkcji tylko jeden argument.
-Ale z drugiej strony ta wersja jest mniej czytelna:
+Z drugiej zaś strony ta wersja jest mniej czytelna:
 elementy krotki nie mają nazw, a nasze obliczenia stały się enigmatyczne, 
 bo dany wymiar prostokąta reprezentowany jest przez indeks elementu krotki.
 
-Dla obliczenia pola prostokąta akurat nie ma to znaczenia, ale jeśli chcielibyśmy
-narysować ten prostokąt na ekranie, wtedy już miałoby to znaczenie!
+Ewentualne pomylenie wymiarów prostokąta nie ma znaczenia przy obliczaniu jego pola,
+ale sytuacja by się zmieniła gdybyśmy chcieli na przykład narysować go na ekranie.
 Musielibyśmy zapamiętać, że szerokość znajduje się w elemencie krotki o indeksie 
 `0`, a wysokość w indeksie `1`.
 Jeśli ktoś inny pracowałby nad tym kodem musiałby rozgryźć to samemu,
-a także to zapamiętać. Omyłkowe pomieszanie tych dwóch wartości nie byłoby zaskakujące,
-a następstwem takiej pomyłki byłyby błędy spowodowane brakiem zawarcia
-kontekstu i znaczenia danych w naszym kodzie.
+a także to zapamiętać. Nie byłoby zaskakujące omyłkowe pomieszanie tych dwóch wartości,
+wynikające z braku zawarcia znaczenia danych w naszym kodzie.
 
 ### Refaktoryzacja ze strukturami: ukazywanie znaczenia
 
@@ -206,8 +205,8 @@ To tak też zróbmy! Wywołanie makra `println!` teraz będzie wyglądać nastę
 `println!("rect1 to {:?}", rect1);`. 
 Wprowadzenie specyfikatora `:?` wewnątrz pary nawiasów klamrowych
 przekazuje `println!`, że chcemy użyć formatu wyjścia o nazwie `Debug`.
-Cecha `Debug` pozwala nam wypisać strukturę w sposób użyteczny dla deweloperów,
-czyli ułatwia nam zajrzeć do wartości wewnątrz struktury podczas debugowania przez nas kodu.
+Cecha Debug pozwala nam wypisać strukturę w sposób użyteczny dla deweloperów,
+pozwalając nam na obejrzenie jej wartości podczas debugowania kodu.
 
 Uruchom kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
 
@@ -215,7 +214,7 @@ Uruchom kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzi
 error[E0277]: the trait bound `Rectangle: std::fmt::Debug` is not satisfied
 ```
 
-Ale kompilator nas nie opuszcza:
+Ale kompilator ponownie daje nam pomocny komunikat:
 
 ```text
 `Rectangle` cannot be formatted using `:?`; if it is defined in your
