@@ -53,9 +53,9 @@
 <g id="node3" class="node">
 <title>table2</title>
 <polygon fill="none" stroke="#000000" points="272.5,-104 272.5,-124 309.5,-124 309.5,-104 272.5,-104"/>
-<text text-anchor="start" x="275.4482" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">indeks</text>
+<text text-anchor="start" x="275.4482" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">index</text>
 <polygon fill="none" stroke="#000000" points="309.5,-104 309.5,-124 345.5,-124 345.5,-104 309.5,-104"/>
-<text text-anchor="start" x="312.3413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">wartość</text>
+<text text-anchor="start" x="312.3413" y="-109.8" font-family="Times,serif" font-size="14.00" fill="#000000">value</text>
 <polygon fill="none" stroke="#000000" points="272.5,-84 272.5,-104 309.5,-104 309.5,-84 272.5,-84"/>
 <text text-anchor="start" x="287.5" y="-89.8" font-family="Times,serif" font-size="14.00" fill="#000000">0</text>
 <polygon fill="none" stroke="#000000" points="309.5,-84 309.5,-104 345.5,-104 345.5,-84 309.5,-84"/>
