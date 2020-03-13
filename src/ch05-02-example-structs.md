@@ -134,8 +134,8 @@ gdzie szerokość wynosi 30 jednostek i wysokość 50 jednostek.
 Nasza funkcja `area` przyjmuje teraz jeden parametr,
 który nazwaliśmy `rectangle`, którego typ to niezmienne zapożyczenie
 instancji struktury `Rectangle`.
-Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę zamiast
-wejść w jej posiadanie. Takim sposobem `main` pozostaje właścicielem i może dalej
+Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę bez
+przenoszenia jej własności. Takim sposobem `main` pozostaje właścicielem i może dalej
 używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywołania.
 
 Funkcja `area` dostaje się do atrybutów `width` i `height`
