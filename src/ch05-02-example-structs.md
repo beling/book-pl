@@ -4,7 +4,7 @@ Aby zrozumieć dlaczego chcielibyśmy używać struktury napiszmy program, któr
 policzy pole prostokąta. Zaczniemy od jednej zmiennej, potem zrefaktorujemy
 program, tak aby używał struktur.
 
-Stwórzmy projekt aplikacji binarnej przy użyciu Cargo. Nazwijmy go *prostokaty*.
+Stwórzmy projekt aplikacji binarnej przy użyciu Cargo. Nazwijmy go *prostokąty*.
 Jako wejście przyjmie szerokość i wysokość danego prostokąta i wyliczy
 jego pole. Listing 5-8 pokazuje krótki program obrazujący jeden ze sposobów,
 w jaki możemy to wykonać.
@@ -13,17 +13,17 @@ w jaki możemy to wykonać.
 
 ```rust
 fn main() {
-    let szerokosc1 = 30;
-    let wysokosc1 = 50;
+    let width1 = 30;
+    let height1 = 50;
 
     println!(
         "Pole prostokąta wynosi {} pikseli kwadratowych."
-        pole(szerokosc1, wysokosc1)
+        area(width1, height1)
     );
 }
 
-fn pole(wysokosc: u32, szerokosc: u32) -> u32 {
-    wysokosc * szerokosc
+fn area(height: u32, width: u32) -> u32 {
+    height * width
 }
 ```
 
@@ -37,16 +37,16 @@ Pole prostokąta wynosi 1500 pikseli kwadratowych.
 ```
 
 Mimo że w Listingu 5-8 wszystko wygląda OK, a więc wylicza pole prostokąta
-wywołując funkcję `pole` z oboma wymiarami, to jednak da się to napisać lepiej.
+wywołując funkcję `area` z oboma wymiarami, to jednak da się to napisać lepiej.
 Szerokość i wysokość są blisko ze sobą spokrewnione, bo razem opisują pewien prostokąt.
 
-Problem w tym kodzie widnieje w sygnaturze funkcji `pole`:
+Problem w tym kodzie widnieje w sygnaturze funkcji `area`:
 
 ```rust,ignore
-fn pole(wysokosc: u32, szerokosc: u32) -> u32 {
+fn area(height: u32, width: u32) -> u32 {
 ```
 
-Funkcja `pole` ma wyliczyć pole jakiegoś prostokąta, ale przecież
+Funkcja `area` ma wyliczyć pole jakiegoś prostokąta, ale przecież
 funkcja którą my napisaliśmy ma dwa parametry.
 Parametry są ze sobą powiązane, ale ta zależność nie widnieje nigdzie w naszym
 programie. Łatwiej byłoby ten kod zrozumieć i nim się posługiwać,
@@ -67,12 +67,12 @@ fn main() {
 
     println!(
         "Pole prostokąta wynosi {} pikseli kwadratowych."
-        pole(rect1)
+        area(rect1)
     );
 }
 
-fn pole(wymiary: (u32, u32)) -> u32 {
-    wymiary.0 * wymiary.1
+fn area(dimensions: (u32, u32)) -> u32 {
+    dimensions.0 * dimensions.1
 }
 ```
 
@@ -105,43 +105,43 @@ całość jak i pojedyncze jej części, tak jak w Listingu 5-10.
 
 ```rust
 struct Prostokat {
-    szerokosc: u32,
-    wysokosc: u32,
+    width: u32,
+    height: u32,
 }
 
 fn main() {
-    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
+    let rect1 = Prostokat { width: 30, height: 50 };
 
     println!(
         "Pole prostokąta wynosi {} pikseli kwadratowych."
-        pole(&rect1)
+        area(&rect1)
     );
 }
 
-fn pole(prostokat: &Prostokat) -> u32 {
-    prostokat.width * prostokat.height
+fn area(rectangle: &Prostokat) -> u32 {
+    rectangle.width * rectangle.height
 }
 ```
 
-<span class="caption">Listing 5-10: Definicja struktury `Prostokat`.
+<span class="caption">Listing 5-10: Definicja struktury `Rectangle`.
 
-Powyżej zdefiniowaliśmy strukturę i nazwaliśmy ją `Prostokat`.
-Wewnątrz nawiasów klamrowych zdefiniowaliśmy atrybuty `szerokosc` i `wysokosc`,
+Powyżej zdefiniowaliśmy strukturę i nazwaliśmy ją `Rectangle`.
+Wewnątrz nawiasów klamrowych zdefiniowaliśmy atrybuty `width` i `height`,
 oba mające typ `u32`.
-Następnie w funkcji `main` stworzyliśmy konkretną instancję struktury `Prostokat`,
+Następnie w funkcji `main` stworzyliśmy konkretną instancję struktury `Rectangle`,
 gdzie szerokość wynosi 30 jednostek i wysokość 50 jednostek.
 
 Nasza funkcja `area` przyjmuje teraz jeden parametr,
-który nazwaliśmy `prostokat`, którego typ to niezmienne zapożyczenie
-instancji struktury `Prostokat`.
+który nazwaliśmy `rectangle`, którego typ to niezmienne zapożyczenie
+instancji struktury `Rectangle`.
 Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę zamiast
 wejść w jej posiadanie. Takim sposobem `main` pozostaje właścicielem i może dalej
 używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywołania.
 
-Funkcja `pole` dostaje się do atrybutów `szerokosc` i `wysokosc`
-instancji struktury `Prostokat`.
-Znaczenie sygnatury funkcji `pole` jest teraz jednakowe jak nasze zamiary:
-kalkulacja pola danego prostokąta `Prostokat` poprzez wykorzystanie jego
+Funkcja `area` dostaje się do atrybutów `width` i `height`
+instancji struktury `Rectangle`.
+Znaczenie sygnatury funkcji `area` jest teraz jednakowe jak nasze zamiary:
+kalkulacja pola danego prostokąta `Rectangle` poprzez wykorzystanie jego
 szerokości i wysokości. Bez niejasności przedstawiamy relację między
 szerokością a wysokością i przypisujemy logiczne nazwy wartościom
 zamiast indeksowania krotek wartościami `0` oraz `1`.
@@ -150,7 +150,7 @@ To wygrana dla przejrzystości.
 
 ### Dodawanie przydatnej funkcjonalności dzięki cechom derywowanym
 
-Miło byłoby móc wyświetlić instancję struktury `Prostokat` w trakcie
+Miło byłoby móc wyświetlić instancję struktury `Rectangle` w trakcie
 debugowania naszego programu i zobaczyć wartość każdego atrybutu.
 Listing 5-11 próbuje użyć makra `println!`,
 którego używaliśmy w poprzednich rozdziałach.
@@ -159,24 +159,24 @@ To jednakowoż nie zadziała.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-struct Prostokat {
-    szerokosc: u32,
-    wysokosc: u32,
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
 
 fn main() {
-    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
+    let rect1 = Rectangle { width: 30, height: 50 };
 
     println!("rect1 to {}", rect1);
 }
 ```
 
-<span class="caption">Listing 5-11: Próba wyświetlenia instancji `Prostokat` </span>
+<span class="caption">Listing 5-11: Próba wyświetlenia instancji `Rectangle` </span>
 
 Podczas próby uruchomienia tego kodu wyświetlany jest błąd z poniższym komunikatem:
 
 ```text
-error[E0277]: the trait bound `Prostokat: std::fmt::Display` is not satisfied
+error[E0277]: the trait bound `Rectangle: std::fmt::Display` is not satisfied
 ```
 
 Makro `println!` może formatować na wiele sposobów, a domyślnie para nawiasów klamrowych
@@ -197,7 +197,7 @@ więc z tego powodu struktury nie implementują automatycznie cechy `Display`.
 Jeśli będziemy czytać dalej znajdziemy taką przydatną informację:
 
 ```text
-`Prostokat` cannot be formatted with the default formatter; try using
+`Rectangle` cannot be formatted with the default formatter; try using
 `:?` instead if you are using a format string
 ```
 
@@ -213,18 +213,18 @@ czyli ułatwia nam zajrzeć do wartości wewnątrz struktury podczas debugowania
 Uruchom kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
 
 ```text
-error[E0277]: the trait bound `Prostokat: std::fmt::Debug` is not satisfied
+error[E0277]: the trait bound `Rectangle: std::fmt::Debug` is not satisfied
 ```
 
 Ale kompilator nas nie opuszcza:
 
 ```text
-`Prostokat` cannot be formatted using `:?`; if it is defined in your
+`Rectangle` cannot be formatted using `:?`; if it is defined in your
 crate, add `#[derive(Debug)]` or manually implement it
 ```
 
 Powyższy komunikat informuje nas, że cecha `Debug` nie jest zaimplementowana dla
-struktury `Prostokat` i zaleca nam dodanie adnotacji. Rust *doprawdy* zawiera
+struktury `Rectangle` i zaleca nam dodanie adnotacji. Rust *doprawdy* zawiera
 funkcjonalność pozwalającą wyświetlić informacje pomocne w debugowaniu, ale
 wymaga od nas, abyśmy ręcznie i wyraźnie zaznaczyli naszą decyzję
 o dodaniu tej funkcjonalności do naszej struktury.
@@ -235,13 +235,13 @@ struktury, jak w Listingu 5-12.
 
 ```rust
 #[derive(Debug)]
-struct Prostokat {
-    szerokosc: u32,
-    wysokosc: u32,
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
 
 fn main() {
-    let rect1 = Prostokat { szerokosc: 30, wysokosc: 50 };
+    let rect1 = Rectangle { width: 30, height: 50 };
 
     println!("rect1 to {}", rect1);
 }
@@ -254,7 +254,7 @@ Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
 ukaże się poniższe wyjście:
 
 ```text
-rect1 to Prostokat { szerokosc: 30, wysokosc: 50 }
+rect1 to Rectangle { width: 30, height: 50 }
 ```
 
 No nieźle! Nie jest to może najpiękniejsza reprezentacja, ale spełnia swoje zadanie i
@@ -265,9 +265,9 @@ w takich sytuacjach możemy użyć `{:#?}` zamiast `{:?}` w makrze `println!`.
 Użycie stylu `{:#?}` w tym przypadku wyglądało będzie tak:
 
 ```text
-rect1 to Prostokat {
-    szerokosc: 30,
-    wysokosc: 50
+rect1 to Rectangle {
+    width: 30,
+    height: 50
 }
 ```
 
@@ -276,11 +276,11 @@ która dostarcza przydatne funkcjonalności zadeklarowanym przez nas typom.
 Te cechy i ich zachowania opisane są w Załączniku C. Jak dodawać takim
 cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w Rozdziale 10.
 
-Nasza funkcja `pole` jest dość specyficzna: oblicza pola jedynie prostokątów.
+Nasza funkcja `area` jest dość specyficzna: oblicza pola jedynie prostokątów.
 Skoro i tak nie zadziała ona z żadnym innym typem, przydatnym 
-byłoby bliższe połączenie poleceń zawartych w tej funkcji z naszą strukturą `Prostokat`.
+byłoby bliższe połączenie poleceń zawartych w tej funkcji z naszą strukturą `Rectangle`.
 
-Kontynuacja tej refaktoryzacji zmieni funkcję `pole` w metodę `pole`, którą
-zdefiniujemy w naszym typie *Prostokat*.
+Kontynuacja tej refaktoryzacji zmieni funkcję `area` w metodę `area`, którą
+zdefiniujemy w naszym typie *Rectangle*.
 
 [the-tuple-type]: ch03-02-data-types.html#krotka
