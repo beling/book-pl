@@ -6,15 +6,15 @@ Z rozwiązaniem z krotką zastosowanym na Listingu 4-5 związana jest taka niedo
 
 Funkcję `calculate_length` można by zdefiniować w następujący sposób, w którym jako parametr przekazywana jest jedynie referencja do obiektu i dzięki temu nie jest on przez `calculate_length` przejmowany na własność:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
-    let s1 = String::from("hello");
+    let s1 = String::from("witaj");
 
     let len = calculate_length(&s1);
 
-    println!("The length of '{}' is {}.", s1, len);
+    println!("Długość '{}' wynosi {}.", s1, len);
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -23,7 +23,7 @@ fn calculate_length(s: &String) -> usize {
 ```
 Po pierwsze proszę zauważyć, że krotki nie są nam już dalej potrzebne. Nie ma ich ani przy deklaracji zmiennej, ani w typie zwracanym przez funkcję `calculate_length`. Po drugie, proszę zwrócić uwagę, że przekazujemy do tej funkcji `&s1` oraz, że typ jej parametru został zmieniony z `String` na `&String`.
 
-Te ampersandy oznaczają *referencje* i pozwalają na odnoszenie się (referowanie) do wartości bez przejmowania jej na własność.
+Te ampersandy oznaczają *referencje* (ang. references) i pozwalają na odnoszenie się (referowanie) do wartości bez przejmowania jej na własność.
 Jest to zilustrowane na Rysunku 4-5.
 
 <img alt="&String s wskazuje na String s1" src="img/trpl04-05.svg" class="center" />
@@ -41,7 +41,7 @@ Przyjrzyjmy się nieco bliżej temu wywołaniu funkcji:
 # fn calculate_length(s: &String) -> usize {
 #     s.len()
 # }
-let s1 = String::from("hello");
+let s1 = String::from("witaj");
 
 let len = calculate_length(&s1);
 ```
@@ -64,30 +64,30 @@ Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowa
 W przeciwieństwie do argumentów przekazywanych przez wartość, te przekazywane przez referencje nie są funkcji dawane na własność.
 Dlatego też funkcja nie musi więcej zwracać ich za pomocą `return`, by je oddać.
 
-We call having references as function parameters *borrowing*. As in real life,
-if a person owns something, you can borrow it from them. When you’re done, you
-have to give it back.
+Przekazywanie referencji jako parametrów funkcji nazywamy *pożyczaniem* (ang. borrowing).
+I jak w prawdziwym życiu, jeśli ktoś coś posiada, możemy to od niego pożyczyć.
+W końcu jednak musimy mu to także oddać.
 
-So what happens if we try to modify something we’re borrowing? Try the code in
-Listing 4-6. Spoiler alert: it doesn’t work!
+Co więc się stanie gdy spróbujemy zmodyfikować coś, co pożyczyliśmy?
+Wypróbujmy kod z Listingu 4-6. Uwaga: on nie zadziała!
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {
-    let s = String::from("hello");
+    let s = String::from("witaj");
 
     change(&s);
 }
 
 fn change(some_string: &String) {
-    some_string.push_str(", world");
+    some_string.push_str(", świecie");
 }
 ```
 
-<span class="caption">Listing 4-6: Attempting to modify a borrowed value</span>
+<span class="caption">Listing 4-6: Próba modyfikacji pożyczonej wartości</span>
 
-Here’s the error:
+Otrzymamy następujący błąd:
 
 ```text
 error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable
@@ -95,43 +95,39 @@ error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable
   |
 7 | fn change(some_string: &String) {
   |                        ------- use `&mut String` here to make mutable
-8 |     some_string.push_str(", world");
+8 |     some_string.push_str(", świecie");
   |     ^^^^^^^^^^^ cannot borrow as mutable
 ```
 
-Just as variables are immutable by default, so are references. We’re not
-allowed to modify something we have a reference to.
+Tak jak zmienne, referencje są domyślnie niemutowalne.
+Nie możemy zmieniać czegoś do czego mamy referencję.
 
-### Mutable References
+### Mutowalne Referencje
 
-We can fix the error in the code from Listing 4-6 with just a small tweak:
+Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawkę:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
-    let mut s = String::from("hello");
+    let mut s = String::from("witaj");
 
     change(&mut s);
 }
 
 fn change(some_string: &mut String) {
-    some_string.push_str(", world");
+    some_string.push_str(", świecie");
 }
 ```
 
-First, we had to change `s` to be `mut`. Then we had to create a mutable
-reference with `&mut s` and accept a mutable reference with `some_string: &mut
-String`.
+Po pierwsze, zmieniliśmy `s` by było `mut`. Następnie, utworzyliśmy mutowalną referencję za pomocą `&mut s` i ją przyjęliśmy za pomocą `some_string: &mut String`.
 
-But mutable references have one big restriction: you can have only one mutable
-reference to a particular piece of data in a particular scope. This code will
-fail:
+Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zakresie można mieć tylko jedną mutowalną referencję do konkretnych danych. Ten kod nie skompiluje się:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-let mut s = String::from("hello");
+let mut s = String::from("witaj");
 
 let r1 = &mut s;
 let r2 = &mut s;
@@ -139,7 +135,7 @@ let r2 = &mut s;
 println!("{}, {}", r1, r2);
 ```
 
-Here’s the error:
+Otrzymamy następujący błąd:
 
 ```text
 error[E0499]: cannot borrow `s` as mutable more than once at a time
