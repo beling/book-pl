@@ -104,13 +104,13 @@ całość jak i pojedyncze jej części, tak jak w Listingu 5-10.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-struct Prostokat {
+struct Rectangle {
     width: u32,
     height: u32,
 }
 
 fn main() {
-    let rect1 = Prostokat { width: 30, height: 50 };
+    let rect1 = Rectangle { width: 30, height: 50 };
 
     println!(
         "Pole prostokąta wynosi {} pikseli kwadratowych."
@@ -118,7 +118,7 @@ fn main() {
     );
 }
 
-fn area(rectangle: &Prostokat) -> u32 {
+fn area(rectangle: &Rectangle) -> u32 {
     rectangle.width * rectangle.height
 }
 ```
