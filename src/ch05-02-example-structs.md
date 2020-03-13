@@ -1,7 +1,7 @@
 ## Przykładowy program wykorzystujący struktury
 
-Aby zrozumieć dlaczego chcielibyśmy używać struktury napiszmy program, który
-policzy pole prostokąta. Zaczniemy od jednej zmiennej, potem zrefaktorujemy
+Aby pokazać, kiedy warto skorzystać ze struktur, napiszmy program, który
+policzy pole prostokąta. Zaczniemy od pojedynczych zmiennych, potem zrefaktorujemy
 program, tak aby używał struktur.
 
 Stwórzmy projekt aplikacji binarnej przy użyciu Cargo. Nazwijmy go *prostokąty*.
@@ -83,10 +83,10 @@ Ten program jest, w pewnych aspektach, lepszy.
 Krotki dodają odrobinę organizacji,
 oraz pozwalają nam podać funkcji tylko jeden argument.
 Ale z drugiej strony ta wersja jest mniej czytelna:
-elementy krotki nie mają nazw, a nasze kalkulacje stały się enigmatyczne, 
+elementy krotki nie mają nazw, a nasze obliczenia stały się enigmatyczne, 
 bo dany wymiar prostokąta reprezentowany jest przez indeks elementu krotki.
 
-Dla kalkulacji pola prostokąta akurat nie ma to znaczenia, ale jeśli chcielibyśmy
+Dla obliczenia pola prostokąta akurat nie ma to znaczenia, ale jeśli chcielibyśmy
 narysować ten prostokąt na ekranie, wtedy już miałoby to znaczenie!
 Musielibyśmy zapamiętać, że szerokość znajduje się w elemencie krotki o indeksie 
 `0`, a wysokość w indeksie `1`.
@@ -141,7 +141,7 @@ używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywoł
 Funkcja `area` dostaje się do atrybutów `width` i `height`
 instancji struktury `Rectangle`.
 Znaczenie sygnatury funkcji `area` jest teraz jednakowe jak nasze zamiary:
-kalkulacja pola danego prostokąta `Rectangle` poprzez wykorzystanie jego
+obliczenie pola danego prostokąta `Rectangle` poprzez wykorzystanie jego
 szerokości i wysokości. Bez niejasności przedstawiamy relację między
 szerokością a wysokością i przypisujemy logiczne nazwy wartościom
 zamiast indeksowania krotek wartościami `0` oraz `1`.
@@ -181,13 +181,12 @@ error[E0277]: the trait bound `Rectangle: std::fmt::Display` is not satisfied
 
 Makro `println!` może formatować na wiele sposobów, a domyślnie para nawiasów klamrowych
 daje `println!` znać, że chcemy wykorzystać formatowanie `Display` (ang. wyświetlenie).
-Jest to wyjście (*ang. output*) przeznaczone dla bezpośredniej konsumpcji przez
-docelowego użytkownika.
+Jest to tekst przeznaczony dla docelowego użytkownika.
 Widziane przez nas wcześniej prymitywne typy implementują `Display` automatycznie,
 bo przecież jest tylko jeden sposób wyświetlenia użytkownikowi symbolu `1` czy 
 jakiegokolwiek innego prymitywnego typu.
 Ale kiedy w grę wchodzą struktury, sposób w jaki `println!` powinno formatować
-wyjście jest mniej oczywiste, bo wyświetlać strukturę można na wiele sposobów:
+tekst jest mniej oczywiste, bo wyświetlać strukturę można na wiele sposobów:
 z przecinkami, czy bez?
 Chcesz wyświetlić nawiasy klamrowe?
 Czy każdy atrybut powinien być wyświetlony?
@@ -251,7 +250,7 @@ fn main() {
 i wyświetlanie instancji `Rectangle` formatowaniem przeznaczonym do celów debugowania</span> 
 
 Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
-ukaże się poniższe wyjście:
+ukaże się poniższy tekst:
 
 ```text
 rect1 to Rectangle { width: 30, height: 50 }
