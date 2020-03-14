@@ -89,7 +89,7 @@ bo dany wymiar prostokąta reprezentowany jest przez indeks elementu krotki.
 Ewentualne pomylenie wymiarów prostokąta nie ma znaczenia przy obliczaniu jego pola,
 ale sytuacja by się zmieniła gdybyśmy chcieli na przykład narysować go na ekranie.
 Musielibyśmy zapamiętać, że szerokość znajduje się w elemencie krotki o indeksie 
-`0`, a wysokość w indeksie `1`.
+`0`, a wysokość pod indeksem `1`.
 Jeśli ktoś inny pracowałby nad tym kodem musiałby rozgryźć to samemu,
 a także to zapamiętać. Nie byłoby zaskakujące omyłkowe pomieszanie tych dwóch wartości,
 wynikające z braku zawarcia znaczenia danych w naszym kodzie.
@@ -125,7 +125,7 @@ fn area(rectangle: &Rectangle) -> u32 {
 <span class="caption">Listing 5-10: Definicja struktury `Rectangle`.
 
 Powyżej zdefiniowaliśmy strukturę i nazwaliśmy ją `Rectangle`.
-Wewnątrz nawiasów klamrowych zdefiniowaliśmy atrybuty `width` i `height`,
+Wewnątrz nawiasów klamrowych zdefiniowaliśmy pola `width` i `height`,
 oba mające typ `u32`.
 Następnie w funkcji `main` stworzyliśmy konkretną instancję struktury `Rectangle`,
 gdzie szerokość wynosi 30 jednostek i wysokość 50 jednostek.
@@ -137,7 +137,7 @@ Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę bez
 przenoszenia jej własności. Takim sposobem `main` pozostaje właścicielem i może dalej
 używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywołania.
 
-Funkcja `area` dostaje się do atrybutów `width` i `height`
+Funkcja `area` dostaje się do pól `width` i `height`
 instancji struktury `Rectangle`.
 Znaczenie sygnatury funkcji `area` jest teraz jednakowe jak nasze zamiary:
 obliczenie pola danego prostokąta `Rectangle` poprzez wykorzystanie jego
@@ -150,7 +150,7 @@ To wygrana dla przejrzystości.
 ### Dodawanie przydatnej funkcjonalności dzięki cechom derywowanym
 
 Miło byłoby móc wyświetlić instancję struktury `Rectangle` w trakcie
-debugowania naszego programu i zobaczyć wartość każdego atrybutu.
+debugowania naszego programu i zobaczyć wartość każdego pola.
 Listing 5-11 próbuje użyć makra `println!`,
 którego używaliśmy w poprzednich rozdziałach.
 To jednakowoż nie zadziała.
@@ -188,7 +188,7 @@ Ale kiedy w grę wchodzą struktury, sposób w jaki `println!` powinno formatowa
 tekst jest mniej oczywiste, bo wyświetlać strukturę można na wiele sposobów:
 z przecinkami, czy bez?
 Chcesz wyświetlić nawiasy klamrowe?
-Czy każdy atrybut powinien być wyświetlony?
+Czy każde pole powinno być wyświetlone?
 Przez tę wieloznaczność Rust nie zakłada z góry co jest dla nas najlepsze, 
 więc z tego powodu struktury nie implementują automatycznie cechy `Display`.
 
@@ -208,7 +208,7 @@ przekazuje `println!`, że chcemy użyć formatu wyjścia o nazwie `Debug`.
 Cecha Debug pozwala nam wypisać strukturę w sposób użyteczny dla deweloperów,
 pozwalając nam na obejrzenie jej wartości podczas debugowania kodu.
 
-Uruchom kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
+Uruchommy kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
 
 ```text
 error[E0277]: the trait bound `Rectangle: std::fmt::Debug` is not satisfied
@@ -245,7 +245,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 5-12: Dodanie adnotacji derywacji cechy `Debug`
+<span class="caption">Listing 5-12: Dodanie adnotacji nadającą cechę `Debug`
 i wyświetlanie instancji `Rectangle` formatowaniem przeznaczonym do celów debugowania</span> 
 
 Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
@@ -256,7 +256,7 @@ rect1 to Rectangle { width: 30, height: 50 }
 ```
 
 No nieźle! Nie jest to może najpiękniejsza reprezentacja, ale spełnia swoje zadanie i
-pokazuje wartości wszystkich atrybutów tej instancji,
+pokazuje wartości wszystkich pól tej instancji,
 co zdecydowanie by pomogło gdybyśmy polowali na bugi.
 Kiedy w grę wchodzą większe struktury miło byłoby też mieć troszkę czytelniejszy wydruk;
 w takich sytuacjach możemy użyć `{:#?}` zamiast `{:?}` w makrze `println!`.
@@ -269,13 +269,13 @@ rect1 to Rectangle {
 }
 ```
 
-Rust oddaje nam do użytku cały szereg cech, które możemy użyć wspólnie z adnotacją `derive`,
+Rust oddaje nam do użytku cały szereg cech, które możemy nadać za pomocą adnotacji `derive`,
 która dostarcza przydatne funkcjonalności zadeklarowanym przez nas typom.
 Te cechy i ich zachowania opisane są w Załączniku C. Jak dodawać takim
 cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w Rozdziale 10.
 
 Nasza funkcja `area` jest dość specyficzna: oblicza pola jedynie prostokątów.
-Skoro i tak nie zadziała ona z żadnym innym typem, przydatnym 
+Skoro i tak nie zadziała ona z żadnym innym typem, przydatne 
 byłoby bliższe połączenie poleceń zawartych w tej funkcji z naszą strukturą `Rectangle`.
 
 Kontynuacja tej refaktoryzacji zmieni funkcję `area` w metodę `area`, którą
