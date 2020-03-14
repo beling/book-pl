@@ -36,7 +36,7 @@ Uruchommy program komendą `cargo run`:
 Pole prostokąta wynosi 1500 pikseli kwadratowych.
 ```
 
-Pomimo że program z Listingu 5-8 wygląda dobrze i poprawnie oblicza pole prostokąta
+Pomimo że program z listingu 5-8 wygląda dobrze i poprawnie oblicza pole prostokąta
 wywołując funkcję `area` podając oba wymiary, to możemy napisać go lepiej.
 Szerokość i wysokość są blisko ze sobą spokrewnione, bo razem opisują pewien prostokąt.
 
@@ -98,7 +98,7 @@ wynikające z braku zawarcia znaczenia danych w naszym kodzie.
 
 Struktur używamy, aby przekazać znaczenie poprzez etykietowanie danych.
 Możemy przekształcić używaną przez nas krotkę nazywając zarówno
-całość jak i pojedyncze jej części, tak jak w Listingu 5-10.
+całość jak i pojedyncze jej części, tak jak w listingu 5-10.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -133,7 +133,7 @@ gdzie szerokość wynosi 30 jednostek i wysokość 50 jednostek.
 Nasza funkcja `area` przyjmuje teraz jeden parametr,
 który nazwaliśmy `rectangle`, którego typ to niezmienne zapożyczenie
 instancji struktury `Rectangle`.
-Jak wspomnieliśmy w Rozdziale 4, chcemy jedynie pożyczyć strukturę bez
+Jak wspomnieliśmy w rozdziale 4, chcemy jedynie pożyczyć strukturę bez
 przenoszenia jej własności. Takim sposobem `main` pozostaje właścicielem i może dalej
 używać `rect1`, i dlatego używamy `&` w sygnaturze funkcji podczas jej wywołania.
 
@@ -227,7 +227,7 @@ funkcjonalność pozwalającą wyświetlić informacje pomocne w debugowaniu, al
 wymaga od nas, abyśmy ręcznie i wyraźnie zaznaczyli naszą decyzję
 o dodaniu tej funkcjonalności do naszej struktury.
 W tym celu dodajemy adnotację `#[derive(Debug)]` przed samą definicją
-struktury, jak w Listingu 5-12.
+struktury, jak w listingu 5-12.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -272,7 +272,7 @@ rect1 to Rectangle {
 Rust oddaje nam do użytku cały szereg cech, które możemy nadać za pomocą adnotacji `derive`,
 która dostarcza przydatne funkcjonalności zadeklarowanym przez nas typom.
 Te cechy i ich zachowania opisane są w Załączniku C. Jak dodawać takim
-cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w Rozdziale 10.
+cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w rozdziale 10.
 
 Nasza funkcja `area` jest dość specyficzna: oblicza pola jedynie prostokątów.
 Skoro i tak nie zadziała ona z żadnym innym typem, przydatne 
