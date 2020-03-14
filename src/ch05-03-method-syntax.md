@@ -4,7 +4,7 @@
 po którym umieszczamy nazwę, a czasem parametry i typ zwracanej wartości.
 Tak jak funkcje, zawierają jakieś polecenia wykonywane przy wywołaniu. 
 Metody jednak różnią się od funkcji tym, że definiujemy je w kontekście struktur
-(lub enumeracji czy obiektów-cech, które omówimy je odpowiednio w Rozdziałach 6 i 17)
+(lub enumeracji czy obiektów-cech, które omówimy je odpowiednio w rozdziałach 6 i 17)
 a ich pierwszym parametrem jest zawsze `self` reprezentujące instancję
 struktury na której metoda jest wywołana.
 
@@ -12,7 +12,7 @@ struktury na której metoda jest wywołana.
 
 Zmieńmy funkcję `area` przyjmującą jako parametr instancję struktury `Rectangle`,
 w taki sposób aby od teraz `area` było metodą zdefiniowaną na strukturze `Rectangle`.
-To przedstawia Listing 5-13.
+To przedstawia listing 5-13.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -41,10 +41,10 @@ fn main() {
 
 <span class="caption">Listing 5-13: Definicja metody `area` w strukturze `Rectangle`</span>
 
-Aby zdefiniować funkcję w kontekście `Rectangle` otwieramy blok implementacji `impl`. 
+Aby zdefiniować funkcję w kontekście `Rectangle` otwieramy blok `impl`, czyli implementacji. 
 Następnie przenosimy funkcję `area` do nawiasów klamrowych
 należących do bloku `impl` i jako pierwszy parametr funkcji dodajemy
-`self` w jej sygnaturze i wszędzie wewnątrz funkcji. W funkcji `main`,
+`self` w jej sygnaturze i wszędzie w jej wnętrzu. W funkcji `main`,
 zamiast jak poprzednio wywołania funkcji `area`, a jako argument
 podawania jej `rect1`, możemy użyć *składni metody* aby wywołać metodę `area`
 na instancji struktury `Rectangle`.
@@ -55,7 +55,7 @@ W sygnaturze funkcji `area` używamy `&self` zamiast `rectangle: &Rectangle`
 ponieważ Rust wie, że typ `self` to `Rectangle`, gdyż metoda znajduje się
 wewnątrz kontekstu `impl Rectangle`. Zauważ, że nadal musimy użyć `&`
 przed `self`, podobnie jak w `&Rectangle`. Metody mogą wejść w posiadanie `self`,
-pożyczyć `self` bez możliwości zmiany, lub pożyczyć `self` z możliwością zmiany, 
+pożyczyć `self` niemutowalnie, lub pożyczyć `self` mutowalnie, 
 tak jakby to był jakikolwiek inny parametr.
 
 W tym wypadku użyliśmy `&self` z tego samego powodu, co `&Rectangle`
@@ -82,7 +82,7 @@ struktury `Rectangle` po różnych zakątkach naszej biblioteki.
 > musimy poddać dereferencji. Innymi słowy, jeśli `object` jest wskaźnikiem,
 > `object->something()` jest podobne do `(*object).something()`.
 >
-> Rust nie ma operatora równoważnego z `->`; a za to w Rust'cie spotkasz
+> Rust nie ma operatora równoważnego z `->`; a za to w Ruście spotkasz
 > funkcję *automatycznej referencji i dereferencji*. Wywoływanie metod jest jednym z niewielu miejsc,
 > w których Rust wykorzystuje tę funkcję.
 >
@@ -116,7 +116,7 @@ struktury `Rectangle` po różnych zakątkach naszej biblioteki.
 > Mając informacje o odbierającym oraz o nazwie metody Rust jest w stanie jednoznacznie
 > stwierdzić, czy metoda odczytuje (`&self`), zmienia (`&mut self`) lub konsumuje (`self`).
 > Wymaganie przez Rusta oznaczenia pożyczania w odbierającym metody jest
-> w dużej części dlaczego mechanizm posiadania jest tak ergonomiczny w jego używaniu.
+> w dużej części dlaczego mechanizm posiadania jest tak ergonomiczny w używaniu.
 
 ### Metody z wieloma parametrami
 
@@ -125,7 +125,7 @@ Tym razem chcemy, żeby instancja struktury `Rectangle` przyjęła inną instanc
 i zwróciła: wartość `true` (*ang. prawda*), jeśli ta inna instancja `Rectangle`
 całkowicie mieści się w instancji `self`; a jeśli nie, wartość `false` (*ang. fałsz*).
 Innymi słowy, zakładając, że wcześniej zdefiniowaliśmy metodę `can_hold`, chcemy
-być w stanie napisać program przedstawiony w Listingu 5-14.
+być w stanie napisać program przedstawiony w listingu 5-14.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -152,18 +152,18 @@ rect1 mieści w sobie rect3? false
 ```
 
 Skoro wiemy, że chcemy zdefiniować metodę, umieścimy ją w bloku `impl Rectangle`.
-Metodę nazwiemy `can_hold`, i przyjmie ona jako parametr niezmienne wypożyczenie
+Metodę nazwiemy `can_hold`, i przyjmie ona jako parametr niemutowalne wypożyczenie
 innej instancji `Rectangle`. Aby dowiedzieć się jaki dokładnie typ powinien
 znajdować się w parametrze, spójrzmy na kod wywołujący metodę:
 `rect1.can_hold(&rect2)`, przekazuje `&rect2` będące niezmiennym wypożyczeniem
 `rect2`, czyli pewnej instancji `Rectangle`. Zależy nam jedynie
-na odczytaniu wartości zawartych w `rect2` (do ich zmieniania wymagane byłoby zmienne wypożyczenie),
+na odczytaniu wartości zawartych w `rect2` (do ich zmieniania wymagane byłoby mutowalne wypożyczenie),
 a chcemy, żeby `main` pozostało właścicielem `rect2`, abyśmy mogli ponownie wykorzystać `rect2`
 po wywołaniu metody `can_hold`. Wartość zwracana przez `can_hold` będzie typem
 Boolean, a sama implementacja sprawdzi czy wysokość i szerokość instancji
 `self` są większe niż odpowiednio wysokość i szerokość innej instancji `Rectangle`.
 Dodanie nowej metody `can_hold` do bloku `impl` z
-Listingu 5-13 pokazane jest w Listingu 5-15.
+listingu 5-13 pokazane jest w listingu 5-15.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -188,7 +188,7 @@ impl Rectangle {
 <span class="caption">Listing 5-15: Implementacja metody `can_hold` na instancji
 `Rectangle`, która przyjmuje inną instancję `Rectangle` jako parametr</span>
 
-Po uruchomieniu tego kodu funkcją `main` z Listingu 5-14,
+Po uruchomieniu tego kodu funkcją `main` z listingu 5-14,
 naszym oczom ukaże się oczekiwany przez nas tekst.
 Metody mogą przyjmować wiele parametrów, które dodać możemy
 do ich sygnatur po parametrze `self`.
@@ -227,11 +227,11 @@ impl Rectangle {
 Aby wywołać funkcję powiązaną używamy składni `::` po nazwie struktury; np.
 `let sq = Rectangle::square(3)`. Ta funkcja znajduje się w przestrzeni nazw
 struktury: składnia `::` używana jest zarówno w kontekście funkcji powiązanych,
-ale i też w przestrzeniach nazw modułów. Moduły omówimy w Rozdziale 7.
+ale i też w przestrzeniach nazw modułów. Moduły omówimy w rozdziale 7.
 
 ### Wiele bloków `impl`
 
-Każda struktura może mieć wiele bloków `impl`. Dla przykładu, kod w Listingu 5-15 jest równoważny z kodem w Listingu 5-16
+Każda struktura może mieć wiele bloków `impl`. Dla przykładu, kod w listingu 5-15 jest równoważny z kodem w listingu 5-16
 zawierającym każdą metodę w innym bloku `impl`.
 
 ```rust
@@ -254,11 +254,11 @@ impl Rectangle {
 }
 ```
 
-<span class="caption">Listing 5-16: *Rewrite* Listingu 5-15 z wieloma blokami `impl`</span>
+<span class="caption">Listing 5-16: *Rewrite* listingu 5-15 z wieloma blokami `impl`</span>
 
 W tym przypadku nie ma powodu, aby odseparować od siebie te metody w różne bloki `impl`,
 ale jest to poprawna składnia. Przypadek przydatnego wykorzystania wielu bloków `impl`
-omówimy w Rozdziale 10, w którym omówimy typy uniwersalne i cechy.
+omówimy w rozdziale 10, w którym omówimy typy uniwersalne i cechy.
 
 ## Podsumowanie
 
