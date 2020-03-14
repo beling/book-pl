@@ -149,9 +149,8 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |                    -- borrow later used here
 ```
 
-This restriction allows for mutation but in a very controlled fashion. It’s
-something that new Rustaceans struggle with, because most languages let you
-mutate whenever you’d like.
+To ograniczenie pozwala na mutowalność jedynie w bardzo kontrolowany sposób.
+Może ono być kłopotliwe dla początkujących rustowców, gdyż większość innych języków nie nakłada podobnych ograniczeń.
 
 The benefit of having this restriction is that Rust can prevent data races at
 compile time. A *data race* is similar to a race condition and happens when
