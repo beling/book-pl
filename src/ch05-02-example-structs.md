@@ -84,7 +84,7 @@ Krotki dodają odrobinę organizacji,
 oraz pozwalają nam podać funkcji tylko jeden argument.
 Z drugiej zaś strony ta wersja jest mniej czytelna:
 elementy krotki nie mają nazw, a nasze obliczenia stały się enigmatyczne, 
-bo wymiary prostokąta reprezentowane są elementy krotki.
+bo wymiary prostokąta reprezentowane są przez elementy krotki.
 
 Ewentualne pomylenie wymiarów prostokąta nie ma znaczenia przy obliczaniu jego pola,
 ale sytuacja by się zmieniła gdybyśmy chcieli na przykład narysować go na ekranie.
