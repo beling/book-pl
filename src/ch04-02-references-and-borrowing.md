@@ -152,13 +152,11 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
 To ograniczenie pozwala na mutowalność jedynie w bardzo kontrolowany sposób.
 Może ono być kłopotliwe dla początkujących rustowców, gdyż większość innych języków nie nakłada podobnych ograniczeń.
 
-The benefit of having this restriction is that Rust can prevent data races at
-compile time. A *data race* is similar to a race condition and happens when
-these three behaviors occur:
+Korzyścią z tego ograniczenia jest to, że Rust może zapobiec tzw. wyścigom do danych (ang. data races) i to już na etapie kompilacji. Wyścig do danych podobny jest do wyścigu (ang. race condition) i ma miejsce, gdy zachodzą następujące trzy warunki:
 
-* Two or more pointers access the same data at the same time.
-* At least one of the pointers is being used to write to the data.
-* There’s no mechanism being used to synchronize access to the data.
+* W tym samym czasie współistnieją dwa lub więcej wskaźniki umożliwiające dostęp do tych samych danych.
+* Przynajmniej jeden z tych wskaźników jest używany do zapisu danych.
+* Nie ma żadnego mechanizmu synchronizacji dostępu do danych.
 
 Data races cause undefined behavior and can be difficult to diagnose and fix
 when you’re trying to track them down at runtime; Rust prevents this problem
