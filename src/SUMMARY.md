@@ -25,9 +25,9 @@
     - [Referencje i pożyczanie](ch04-02-references-and-borrowing.md)
     - [Wycinki](ch04-03-slices.md)
 
-- [Using Structs to Structure Related Data](ch05-00-structs.md)
-    - [Defining and Instantiating Structs](ch05-01-defining-structs.md)
-    - [An Example Program Using Structs](ch05-02-example-structs.md)
+- [Używanie struktur do przechowywania powiązanych danych](ch05-00-structs.md)
+    - [Definiowanie i tworzenie instancji struktur](ch05-01-defining-structs.md)
+    - [Przykładowy program wykorzystujący struktury](ch05-02-example-structs.md)
     - [Składnia metod](ch05-03-method-syntax.md)
 
 - [Enums and Pattern Matching](ch06-00-enums.md)
