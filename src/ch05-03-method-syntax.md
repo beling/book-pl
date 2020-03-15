@@ -3,10 +3,10 @@
 *Metody* są podobne do funkcji: też deklarujemy je słowem kluczowym `fn`,
 po którym umieszczamy nazwę, a czasem parametry i typ zwracanej wartości.
 Tak jak funkcje, zawierają jakieś polecenia wykonywane przy wywołaniu. 
-Metody jednak różnią się od funkcji tym, że definiujemy je w kontekście struktur
-(lub enumeracji czy obiektów-cech, które omówimy je odpowiednio w rozdziałach 6 i 17)
+Metody jednak różnią się od funkcji tym, że definiujemy je wewnątrz struktur
+(lub enumeracji czy obiektów-cech, które omówimy odpowiednio w rozdziałach 6 i 17)
 a ich pierwszym parametrem jest zawsze `self` reprezentujące instancję
-struktury na której metoda jest wywołana.
+struktury, na której metoda jest wywołana.
 
 ### Definiowanie metod
 
@@ -70,9 +70,11 @@ po jej transformacji.
 Podstawową zaletą używania metod zamiast funkcji, oprócz używania
 składni metody oraz braku wymogu podawania typu `self` w każdej sygnaturze,
 jest organizacja.  
-Umieściliśmy wszystko, co związane jest z instancją danego typu w jednym
-bloku `impl` zamiast narzucania przyszłym użytkownikom kodu szukania zachowań
-struktury `Rectangle` po różnych zakątkach naszej biblioteki.
+Umieściliśmy wszystko, co związane jest z instancją danego typu w jednym bloku `impl`.
+Dzięki temu oszczędzamy przyszłym użytkownikom kodu szukania zachowań struktury
+`Rectangle` po różnych zakątkach naszej biblioteki.
+
+
 
 > ### Co z operatorem `->`?
 >
@@ -122,8 +124,8 @@ struktury `Rectangle` po różnych zakątkach naszej biblioteki.
 
 Poćwiczymy używanie metod implementując drugą metodę na strukturze `Rectangle`.
 Tym razem chcemy, żeby instancja struktury `Rectangle` przyjęła inną instancję `Rectangle`,
-i zwróciła: wartość `true` (*ang. prawda*), jeśli ta inna instancja `Rectangle`
-całkowicie mieści się w instancji `self`; a jeśli nie, wartość `false` (*ang. fałsz*).
+i zwróciła: wartość `true`, jeśli ta inna instancja `Rectangle`
+całkowicie mieści się w instancji `self`; a jeśli nie, wartość `false`.
 Innymi słowy, zakładając, że wcześniej zdefiniowaliśmy metodę `can_hold`, chcemy
 być w stanie napisać program przedstawiony w listingu 5-14.
 
@@ -135,8 +137,8 @@ fn main() {
     let rect2 = Rectangle { width: 10, height: 40 };
     let rect3 = Rectangle { width: 60, height: 45 };
 
-    println!("rect1 mieście w sobie rect2? {}", rect1.can_hold(&rect2));
-    println!("rect1 mieści w sobie rect3? {}", rect1.can_hold(&rect3));
+    println!("Czy rect2 zmieści się wewnątrz rect1? {}", rect1.can_hold(&rect2));
+    println!("Czy rect3 zmieści się wewnątrz rect1? {}", rect1.can_hold(&rect3));
 }
 ```
 
@@ -147,11 +149,11 @@ Skoro wymiary
 od `rect1`, spodziewamy się następującego wyniku wykonania powyższej funkcji `main`.
 
 ```text
-rect1 mieści w sobie rect2? true
-rect1 mieści w sobie rect3? false
+Czy rect2 zmieści się wewnątrz rect1? true
+Czy rect3 zmieści się wewnątrz rect1? false
 ```
 
-Skoro wiemy, że chcemy zdefiniować metodę, umieścimy ją w bloku `impl Rectangle`.
+Chcemy zdefiniować metodę, więc umieścimy ją w bloku `impl Rectangle`.
 Metodę nazwiemy `can_hold`, i przyjmie ona jako parametr niemutowalne wypożyczenie
 innej instancji `Rectangle`. Aby dowiedzieć się jaki dokładnie typ powinien
 znajdować się w parametrze, spójrzmy na kod wywołujący metodę:
@@ -254,15 +256,15 @@ impl Rectangle {
 }
 ```
 
-<span class="caption">Listing 5-16: *Rewrite* listingu 5-15 z wieloma blokami `impl`</span>
+<span class="caption">Listing 5-16: Wersja kodu z listingu 5-15 z wieloma blokami `impl`</span>
 
-W tym przypadku nie ma powodu, aby odseparować od siebie te metody w różne bloki `impl`,
+W tym przypadku nie ma powodu, by metody były od siebie odseparowane w różne bloki `impl`,
 ale jest to poprawna składnia. Przypadek przydatnego wykorzystania wielu bloków `impl`
 omówimy w rozdziale 10, w którym omówimy typy uniwersalne i cechy.
 
 ## Podsumowanie
 
-Struktury to twoje własne, spersonalizowane typy przydatne dla pewnego problemu.
+Dzięki strukturom możesz tworzyć własne typy, potrzebne do rozwiązania problemów w Twojej domenie. 
 Kiedy używasz struktury grupujesz powiązane elementy danych,
 a każdemu elementowi nadajesz nazwę, co sprawia, że twój kod staje się przejrzysty. Metody pozwalają określić
 zachowanie instancji struktur, a funkcje powiązane pozwalają umieścić funkcję
