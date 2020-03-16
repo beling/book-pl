@@ -158,20 +158,18 @@ Korzyścią z tego ograniczenia jest to, że Rust może zapobiec tzw. wyścigom 
 * Przynajmniej jeden z tych wskaźników jest używany do zapisu danych.
 * Nie ma żadnego mechanizmu synchronizacji dostępu do danych.
 
-Data races cause undefined behavior and can be difficult to diagnose and fix
-when you’re trying to track them down at runtime; Rust prevents this problem
-from happening because it won’t even compile code with data races!
+Wyścigi danych powodują niezdefiniowane zachowania i mogą być trudne do zdiagnozowania, wyśledzenia w czasie wykonywania programu i naprawienia; Tymczasem Rust całkowicie im zapobiega, nie kompilując nawet kodu który je zawiera!
 
-As always, we can use curly brackets to create a new scope, allowing for
-multiple mutable references, just not *simultaneous* ones:
+Oczywiście zawsze możemy użyć nawiasów klamrowych do stworzenia nowego zakresu, pozwalając na
+wiele mutowalnych referencji, ale nie *równocześnie*:
 
 ```rust
-let mut s = String::from("hello");
+let mut s = String::from("witaj");
 
 {
     let r1 = &mut s;
 
-} // r1 goes out of scope here, so we can make a new reference with no problems.
+} // tu kończy się czas życia r1, więc odtąd możemy bez problemu utworzyć kolejną referencję
 
 let r2 = &mut s;
 ```
