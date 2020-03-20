@@ -10,14 +10,7 @@ As you saw in Chapter 6, you can match patterns against literals directly. The
 following code gives some examples:
 
 ```rust
-let x = 1;
-
-match x {
-    1 => println!("one"),
-    2 => println!("two"),
-    3 => println!("three"),
-    _ => println!("anything"),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/no-listing-01-literals/src/main.rs:here}}
 ```
 
 This code prints `one` because the value in `x` is 1. This syntax is useful
@@ -40,18 +33,7 @@ running this code or reading further.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = Some(5);
-    let y = 10;
-
-    match x {
-        Some(50) => println!("Got 50"),
-        Some(y) => println!("Matched, y = {:?}", y),
-        _ => println!("Default case, x = {:?}", x),
-    }
-
-    println!("at the end: x = {:?}, y = {:?}", x, y);
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-11/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-11: A `match` expression with an arm that
@@ -94,37 +76,26 @@ value of `x` matches either of the values in that arm, that arm’s code will
 run:
 
 ```rust
-let x = 1;
-
-match x {
-    1 | 2 => println!("one or two"),
-    3 => println!("three"),
-    _ => println!("anything"),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/no-listing-02-multiple-patterns/src/main.rs:here}}
 ```
 
 This code prints `one or two`.
 
-### Matching Ranges of Values with `...`
+### Matching Ranges of Values with `..=`
 
-The `...` syntax allows us to match to an inclusive range of values. In the
+The `..=` syntax allows us to match to an inclusive range of values. In the
 following code, when a pattern matches any of the values within the range, that
 arm will execute:
 
 ```rust
-let x = 5;
-
-match x {
-    1 ... 5 => println!("one through five"),
-    _ => println!("something else"),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/no-listing-03-ranges/src/main.rs:here}}
 ```
 
 If `x` is 1, 2, 3, 4, or 5, the first arm will match. This syntax is more
-convenient than using the `|` operator to express the same idea; instead of `1
-... 5`, we would have to specify `1 | 2 | 3 | 4 | 5` if we used `|`. Specifying
-a range is much shorter, especially if we want to match, say, any number
-between 1 and 1,000!
+convenient than using the `|` operator to express the same idea; instead of
+`1..=5`, we would have to specify `1 | 2 | 3 | 4 | 5` if we used `|`.
+Specifying a range is much shorter, especially if we want to match, say, any
+number between 1 and 1,000!
 
 Ranges are only allowed with numeric values or `char` values, because the
 compiler checks that the range isn’t empty at compile time. The only types for
@@ -133,13 +104,7 @@ which Rust can tell if a range is empty or not are `char` and numeric values.
 Here is an example using ranges of `char` values:
 
 ```rust
-let x = 'c';
-
-match x {
-    'a' ... 'j' => println!("early ASCII letter"),
-    'k' ... 'z' => println!("late ASCII letter"),
-    _ => println!("something else"),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/no-listing-04-ranges-of-char/src/main.rs:here}}
 ```
 
 Rust can tell that `c` is within the first pattern’s range and prints `early
@@ -158,18 +123,7 @@ break apart using a pattern with a `let` statement.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-fn main() {
-    let p = Point { x: 0, y: 7 };
-
-    let Point { x: a, y: b } = p;
-    assert_eq!(0, a);
-    assert_eq!(7, b);
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-12/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-12: Destructuring a struct’s fields into
@@ -192,18 +146,7 @@ in Listing 18-12, but the variables created in the `let` pattern are `x` and
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-fn main() {
-    let p = Point { x: 0, y: 7 };
-
-    let Point { x, y } = p;
-    assert_eq!(0, x);
-    assert_eq!(7, y);
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-13/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-13: Destructuring struct fields using struct
@@ -225,20 +168,7 @@ three cases: points that lie directly on the `x` axis (which is true when `y =
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-# struct Point {
-#     x: i32,
-#     y: i32,
-# }
-#
-fn main() {
-    let p = Point { x: 0, y: 7 };
-
-    match p {
-        Point { x, y: 0 } => println!("On the x axis at {}", x),
-        Point { x: 0, y } => println!("On the y axis at {}", y),
-        Point { x, y } => println!("On neither axis: ({}, {})", x, y),
-    }
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-14/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-14: Destructuring and matching literal values
@@ -268,38 +198,7 @@ a `match` with patterns that will destructure each inner value.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(i32, i32, i32),
-}
-
-fn main() {
-    let msg = Message::ChangeColor(0, 160, 255);
-
-    match msg {
-        Message::Quit => {
-            println!("The Quit variant has no data to destructure.")
-        },
-        Message::Move { x, y } => {
-            println!(
-                "Move in the x direction {} and in the y direction {}",
-                x,
-                y
-            );
-        }
-        Message::Write(text) => println!("Text message: {}", text),
-        Message::ChangeColor(r, g, b) => {
-            println!(
-                "Change the color to red {}, green {}, and blue {}",
-                r,
-                g,
-                b
-            )
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-15/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-15: Destructuring enum variants that hold
@@ -324,108 +223,26 @@ pattern is similar to the pattern we specify to match tuples. The number of
 variables in the pattern must match the number of elements in the variant we’re
 matching.
 
-#### Destructuring Nested Structs & Enums
+#### Destructuring Nested Structs and Enums
 
-Up until now, all of our examples have been matching structures that were one
-level deep. Matching can work on nested structures too!
+Until now, all our examples have been matching structs or enums that were one
+level deep. Matching can work on nested items too!
 
-We can refactor the example above to support both RGB and HSV colors:
-
-```rust
-enum Color {
-   Rgb(i32, i32, i32),
-   Hsv(i32, i32, i32)
-}
-
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(Color),
-}
-
-fn main() {
-    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
-
-    match msg {
-        Message::ChangeColor(Color::Rgb(r, g, b)) => {
-            println!(
-                "Change the color to red {}, green {}, and blue {}",
-                r,
-                g,
-                b
-            )
-        },
-        Message::ChangeColor(Color::Hsv(h, s, v)) => {
-            println!(
-                "Change the color to hue {}, saturation {}, and value {}",
-                h,
-                s,
-                v
-            )
-        }
-        _ => ()
-    }
-}
-```
-
-#### Destructuring References
-
-When the value we’re matching to our pattern contains a reference, we need to
-destructure the reference from the value, which we can do by specifying a `&`
-in the pattern. Doing so lets us get a variable holding the value that the
-reference points to rather than getting a variable that holds the reference.
-This technique is especially useful in closures where we have iterators that
-iterate over references, but we want to use the values in the closure rather
-than the references.
-
-The example in Listing 18-16 iterates over references to `Point` instances in a
-vector, destructuring the reference and the struct so we can perform
-calculations on the `x` and `y` values easily.
+For example, we can refactor the code in Listing 18-15 to support RGB and HSV
+colors in the `ChangeColor` message, as shown in Listing 18-16.
 
 ```rust
-# struct Point {
-#     x: i32,
-#     y: i32,
-# }
-#
-let points = vec![
-    Point { x: 0, y: 0 },
-    Point { x: 1, y: 5 },
-    Point { x: 10, y: -3 },
-];
-
-let sum_of_squares: i32 = points
-    .iter()
-    .map(|&Point { x, y }| x * x + y * y)
-    .sum();
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-16/src/main.rs}}
 ```
 
-<span class="caption">Listing 18-16: Destructuring a reference to a struct into
-the struct field values</span>
+<span class="caption">Listing 18-16: Matching on nested enums</span>
 
-This code gives us the variable `sum_of_squares` holding the value 135, which
-is the result of squaring the `x` value and the `y` value, adding those
-together, and then adding the result for each `Point` in the `points` vector to
-get one number.
-
-If we had not included the `&` in `&Point { x, y }`, we’d get a type mismatch
-error, because `iter` would then iterate over references to the items in the
-vector rather than the actual values. The error would look like this:
-
-```text
-error[E0308]: mismatched types
-  -->
-   |
-14 |         .map(|Point { x, y }| x * x + y * y)
-   |               ^^^^^^^^^^^^ expected &Point, found struct `Point`
-   |
-   = note: expected type `&Point`
-              found type `Point`
-```
-
-This error indicates that Rust was expecting our closure to match `&Point`, but
-we tried to match directly to a `Point` value, not a reference to a `Point`.
+The pattern of the first arm in the `match` expression matches a
+`Message::ChangeColor` enum variant that contains a `Color::Rgb` variant; then
+the pattern binds to the three inner `i32` values. The pattern of the second
+arm also matches a `Message::ChangeColor` enum variant, but the inner enum
+matches the `Color::Hsv` variant instead. We can specify these complex
+conditions in one `match` expression, even though two enums are involved.
 
 #### Destructuring Structs and Tuples
 
@@ -434,12 +251,7 @@ The following example shows a complicated destructure where we nest structs and
 tuples inside a tuple and destructure all the primitive values out:
 
 ```rust
-# struct Point {
-#     x: i32,
-#     y: i32,
-# }
-#
-let ((feet, inches), Point {x, y}) = ((3, 10), Point { x: 3, y: -10 });
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/no-listing-05-destructuring-structs-and-tuples/src/main.rs:here}}
 ```
 
 This code lets us break complex types into their component parts so we can use
@@ -468,13 +280,7 @@ including function parameters, as shown in Listing 18-17.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn foo(_: i32, y: i32) {
-    println!("This code only uses the y parameter: {}", y);
-}
-
-fn main() {
-    foo(3, 4);
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-17/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-17: Using `_` in a function signature</span>
@@ -497,23 +303,10 @@ example, when we want to test for only part of a value but have no use for the
 other parts in the corresponding code we want to run. Listing 18-18 shows code
 responsible for managing a setting’s value. The business requirements are that
 the user should not be allowed to overwrite an existing customization of a
-setting but can unset the setting and can give the setting a value if it is
-currently unset.
+setting but can unset the setting and give it a value if it is currently unset.
 
 ```rust
-let mut setting_value = Some(5);
-let new_setting_value = Some(10);
-
-match (setting_value, new_setting_value) {
-    (Some(_), Some(_)) => {
-        println!("Can't overwrite an existing customized value");
-    }
-    _ => {
-        setting_value = new_setting_value;
-    }
-}
-
-println!("setting is {:?}", setting_value);
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-18/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-18: Using an underscore within patterns that
@@ -536,13 +329,7 @@ particular values. Listing 18-19 shows an example of ignoring the second and
 fourth values in a tuple of five items.
 
 ```rust
-let numbers = (2, 4, 8, 16, 32);
-
-match numbers {
-    (first, _, third, _, fifth) => {
-        println!("Some numbers: {}, {}, {}", first, third, fifth)
-    },
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-19/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-19: Ignoring multiple parts of a tuple</span>
@@ -563,10 +350,7 @@ only get a warning about one of them.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let _x = 5;
-    let y = 10;
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-20/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-20: Starting a variable name with an
@@ -581,13 +365,7 @@ variable, whereas `_` doesn’t bind at all. To show a case where this
 distinction matters, Listing 18-21 will provide us with an error.
 
 ```rust,ignore,does_not_compile
-let s = Some(String::from("Hello!"));
-
-if let Some(_s) = s {
-    println!("found a string");
-}
-
-println!("{:?}", s);
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-21/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-21: An unused variable starting with an
@@ -599,13 +377,7 @@ doesn’t ever bind to the value. Listing 18-22 will compile without any errors
 because `s` doesn’t get moved into `_`.
 
 ```rust
-let s = Some(String::from("Hello!"));
-
-if let Some(_) = s {
-    println!("found a string");
-}
-
-println!("{:?}", s);
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-22/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-22: Using an underscore does not bind the
@@ -624,17 +396,7 @@ explicitly matched in the rest of the pattern. In Listing 18-23, we have a
 the values in the `y` and `z` fields.
 
 ```rust
-struct Point {
-    x: i32,
-    y: i32,
-    z: i32,
-}
-
-let origin = Point { x: 0, y: 0, z: 0 };
-
-match origin {
-    Point { x, .. } => println!("x is {}", x),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-23/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-23: Ignoring all fields of a `Point` except
@@ -651,15 +413,7 @@ shows how to use `..` with a tuple.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let numbers = (2, 4, 8, 16, 32);
-
-    match numbers {
-        (first, .., last) => {
-            println!("Some numbers: {}, {}", first, last);
-        },
-    }
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-24/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-24: Matching only the first and last values in
@@ -676,15 +430,7 @@ compile.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn main() {
-    let numbers = (2, 4, 8, 16, 32);
-
-    match numbers {
-        (.., second, ..) => {
-            println!("Some numbers: {}", second)
-        },
-    }
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-25/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-25: An attempt to use `..` in an ambiguous
@@ -693,11 +439,7 @@ way</span>
 When we compile this example, we get this error:
 
 ```text
-error: `..` can only be used once per tuple or tuple struct pattern
- --> src/main.rs:5:22
-  |
-5 |         (.., second, ..) => {
-  |                      ^^
+{{#include ../listings/ch18-patterns-and-matching/listing-18-25/output.txt}}
 ```
 
 It’s impossible for Rust to determine how many values in the tuple to ignore
@@ -720,13 +462,7 @@ The condition can use variables created in the pattern. Listing 18-26 shows a
 guard of `if x < 5`.
 
 ```rust
-let num = Some(4);
-
-match num {
-    Some(x) if x < 5 => println!("less than five: {}", x),
-    Some(x) => println!("{}", x),
-    None => (),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-26/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-26: Adding a match guard to a pattern</span>
@@ -754,18 +490,7 @@ problem.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = Some(5);
-    let y = 10;
-
-    match x {
-        Some(50) => println!("Got 50"),
-        Some(n) if n == y => println!("Matched, n = {:?}", n),
-        _ => println!("Default case, x = {:?}", x),
-    }
-
-    println!("at the end: x = {:?}, y = {:?}", x, y);
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-27/src/main.rs}}
 ```
 
 <span class="caption">Listing 18-27: Using a match guard to test for equality
@@ -791,13 +516,7 @@ to `4`, `5`, *and* `6`, even though it might look like `if y` only applies to
 `6`.
 
 ```rust
-let x = 4;
-let y = false;
-
-match x {
-    4 | 5 | 6 if y => println!("yes"),
-    _ => println!("no"),
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-28/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-28: Combining multiple patterns with a match
@@ -832,36 +551,20 @@ were applied only to the final value in the list of values specified using the
 The *at* operator (`@`) lets us create a variable that holds a value at the
 same time we’re testing that value to see whether it matches a pattern. Listing
 18-29 shows an example where we want to test that a `Message::Hello` `id` field
-is within the range `3...7`. But we also want to bind the value to the variable
+is within the range `3..=7`. But we also want to bind the value to the variable
 `id_variable` so we can use it in the code associated with the arm. We could
 name this variable `id`, the same as the field, but for this example we’ll use
 a different name.
 
 ```rust
-enum Message {
-    Hello { id: i32 },
-}
-
-let msg = Message::Hello { id: 5 };
-
-match msg {
-    Message::Hello { id: id_variable @ 3...7 } => {
-        println!("Found an id in range: {}", id_variable)
-    },
-    Message::Hello { id: 10...12 } => {
-        println!("Found an id in another range")
-    },
-    Message::Hello { id } => {
-        println!("Found some other id: {}", id)
-    },
-}
+{{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-29/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 18-29: Using `@` to bind to a value in a pattern
 while also testing it</span>
 
 This example will print `Found an id in range: 5`. By specifying `id_variable
-@` before the range `3...7`, we’re capturing whatever value matched the range
+@` before the range `3..=7`, we’re capturing whatever value matched the range
 while also testing that the value matched the range pattern.
 
 In the second arm, where we only have a range specified in the pattern, the code
@@ -878,66 +581,6 @@ applied any test to the value in the `id` field in this arm, as we did with the
 first two arms: any value would match this pattern.
 
 Using `@` lets us test a value and save it in a variable within one pattern.
-
-### Legacy patterns: `ref` and `ref mut`
-
-In older versions of Rust, `match` would assume that you want to move what is
-matched. But sometimes, that’s not what you wanted. For example:
-
-```rust
-let robot_name = &Some(String::from("Bors"));
-
-match robot_name {
-    Some(name) => println!("Found a name: {}", name),
-    None => (),
-}
-
-println!("robot_name is: {:?}", robot_name);
-```
-
-Here, `robot_name` is a `&Option<String>`. Rust would then complain that
-`Some(name)` doesn’t match up with `&Option<T>`, so you’d have to write this:
-
-```rust,ignore
-let robot_name = &Some(String::from("Bors"));
-
-match robot_name {
-    &Some(name) => println!("Found a name: {}", name),
-    None => (),
-}
-
-println!("robot_name is: {:?}", robot_name);
-```
-
-Next, Rust would complain that `name` is trying to move the `String` out of
-the option, but because it’s a reference to an option, it’s borrowed, and so
-can’t be moved out of. This is where the `ref` keyword comes into play:
-
-```rust
-let robot_name = &Some(String::from("Bors"));
-
-match robot_name {
-    &Some(ref name) => println!("Found a name: {}", name),
-    None => (),
-}
-
-println!("robot_name is: {:?}", robot_name);
-```
-
-The `ref` keyword is like the opposite of `&` in patterns; this says “please
-bind `ref` to be a `&String`, don’t try to move it out. In other words, the
-`&` in `&Some` is matching against a reference, but `ref` *creates* a
-reference. `ref mut` is like `ref`, but for mutable references.
-
-Anyway, today’s Rust doesn’t work like this. If you try to `match` on
-something borrowed, then all of the bindings you create will attempt to
-borrow as well. This means that the original code works as you’d expect.
-
-Because Rust is backwards compatible, we couldn’t remove `ref` and `ref mut`,
-and they’re sometimes useful in obscure situations, where you want to
-partially borrow part of a struct as mutable and another part as immutable.
-But you may see them in older Rust code, so knowing what they do is still
-useful.
 
 ## Summary
 

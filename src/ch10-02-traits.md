@@ -30,9 +30,7 @@ need a summary from each type, and we need to request that summary by calling a
 <span class="filename">Filename: src/lib.rs</span>
 
 ```rust
-pub trait Summary {
-    fn summarize(&self) -> String;
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
 
 <span class="caption">Listing 10-12: A `Summary` trait that consists of the
@@ -65,35 +63,7 @@ already limited to 280 characters.
 <span class="filename">Filename: src/lib.rs</span>
 
 ```rust
-# pub trait Summary {
-#     fn summarize(&self) -> String;
-# }
-#
-pub struct NewsArticle {
-    pub headline: String,
-    pub location: String,
-    pub author: String,
-    pub content: String,
-}
-
-impl Summary for NewsArticle {
-    fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
-    }
-}
-
-pub struct Tweet {
-    pub username: String,
-    pub content: String,
-    pub reply: bool,
-    pub retweet: bool,
-}
-
-impl Summary for Tweet {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 10-13: Implementing the `Summary` trait on the
@@ -112,14 +82,7 @@ After implementing the trait, we can call the methods on instances of
 `NewsArticle` and `Tweet` in the same way we call regular methods, like this:
 
 ```rust,ignore
-let tweet = Tweet {
-    username: String::from("horse_ebooks"),
-    content: String::from("of course, as you probably already know, people"),
-    reply: false,
-    retweet: false,
-};
-
-println!("1 new tweet: {}", tweet.summarize());
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-01-calling-trait-method/src/main.rs:here}}
 ```
 
 This code prints `1 new tweet: horse_ebooks: of course, as you probably already
@@ -168,11 +131,7 @@ in Listing 10-12.
 <span class="filename">Filename: src/lib.rs</span>
 
 ```rust
-pub trait Summary {
-    fn summarize(&self) -> String {
-        String::from("(Read more...)")
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 10-14: Definition of a `Summary` trait with a
@@ -188,15 +147,7 @@ directly, we’ve provided a default implementation and specified that
 the `summarize` method on an instance of `NewsArticle`, like this:
 
 ```rust,ignore
-let article = NewsArticle {
-    headline: String::from("Penguins win the Stanley Cup Championship!"),
-    location: String::from("Pittsburgh, PA, USA"),
-    author: String::from("Iceburgh"),
-    content: String::from("The Pittsburgh Penguins once again are the best
-    hockey team in the NHL."),
-};
-
-println!("New article available! {}", article.summarize());
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-02-calling-default-impl/src/main.rs:here}}
 ```
 
 This code prints `New article available! (Read more...)`.
@@ -216,24 +167,14 @@ a small part of it. For example, we could define the `Summary` trait to have a
 `summarize_author` method:
 
 ```rust
-pub trait Summary {
-    fn summarize_author(&self) -> String;
-
-    fn summarize(&self) -> String {
-        format!("(Read more from {}...)", self.summarize_author())
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
 ```
 
 To use this version of `Summary`, we only need to define `summarize_author`
 when we implement the trait on a type:
 
 ```rust,ignore
-impl Summary for Tweet {
-    fn summarize_author(&self) -> String {
-        format!("@{}", self.username)
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:impl}}
 ```
 
 After we define `summarize_author`, we can call `summarize` on instances of the
@@ -243,14 +184,7 @@ definition of `summarize_author` that we’ve provided. Because we’ve implemen
 `summarize` method without requiring us to write any more code.
 
 ```rust,ignore
-let tweet = Tweet {
-    username: String::from("horse_ebooks"),
-    content: String::from("of course, as you probably already know, people"),
-    reply: false,
-    retweet: false,
-};
-
-println!("1 new tweet: {}", tweet.summarize());
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/main.rs:here}}
 ```
 
 This code prints `1 new tweet: (Read more from @horse_ebooks...)`.
@@ -258,29 +192,34 @@ This code prints `1 new tweet: (Read more from @horse_ebooks...)`.
 Note that it isn’t possible to call the default implementation from an
 overriding implementation of that same method.
 
-### Traits as arguments
+### Traits as Parameters
 
-Now that you know how to define traits and implement those traits on types, we
-can explore how to use traits to accept arguments of many different types.
+Now that you know how to define and implement traits, we can explore how to use
+traits to define functions that accept many different types.
 
-For example, in Listing 10-13, we implemented the `Summary` trait on the types
-`NewsArticle` and `Tweet`. We can define a function `notify` that calls the
-`summarize` method on its parameter `item`, which is of some type that implements
-the `Summary` trait. To do this, we can use the ‘`impl Trait`’ syntax, like this:
+For example, in Listing 10-13, we implemented the `Summary` trait on the
+`NewsArticle` and `Tweet` types. We can define a `notify` function that calls
+the `summarize` method on its `item` parameter, which is of some type that
+implements the `Summary` trait. To do this, we can use the `impl Trait`
+syntax, like this:
 
 ```rust,ignore
-pub fn notify(item: impl Summary) {
-    println!("Breaking news! {}", item.summarize());
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
 ```
 
-In the body of `notify`, we can call any methods on `item` that come from
-the `Summary` trait, like `summarize`.
+Instead of a concrete type for the `item` parameter, we specify the `impl`
+keyword and the trait name. This parameter accepts any type that implements the
+specified trait. In the body of `notify`, we can call any methods on `item`
+that come from the `Summary` trait, such as `summarize`. We can call `notify`
+and pass in any instance of `NewsArticle` or `Tweet`. Code that calls the
+function with any other type, such as a `String` or an `i32`, won’t compile
+because those types don’t implement `Summary`.
 
-#### Trait Bounds
+#### Trait Bound Syntax
 
-The `impl Trait` syntax works for short examples, but is syntax sugar for a
-longer form. This is called a *trait bound*, and it looks like this:
+The `impl Trait` syntax works for straightforward cases but is actually
+syntax sugar for a longer form, which is called a *trait bound*; it looks like
+this:
 
 ```rust,ignore
 pub fn notify<T: Summary>(item: T) {
@@ -288,53 +227,60 @@ pub fn notify<T: Summary>(item: T) {
 }
 ```
 
-This is equivalent to the example above, but is a bit more verbose. We place
-trait bounds with the declaration of the generic type parameter, after a
-colon and inside angle brackets. Because of the trait bound on `T`, we can
-call `notify` and pass in any instance of `NewsArticle` or `Tweet`. Code that
-calls the function with any other type, like a `String` or an `i32`, won’t
-compile, because those types don’t implement `Summary`.
+This longer form is equivalent to the example in the previous section but is
+more verbose. We place trait bounds with the declaration of the generic type
+parameter after a colon and inside angle brackets.
 
-When should you use this form over `impl Trait`? While `impl Trait` is nice for
-shorter examples, trait bounds are nice for more complex ones. For example,
-say we wanted to take two things that implement `Summary`:
+The `impl Trait` syntax is convenient and makes for more concise code in simple
+cases. The trait bound syntax can express more complexity in other cases. For
+example, we can have two parameters that implement `Summary`. Using the `impl
+Trait` syntax looks like this:
 
 ```rust,ignore
 pub fn notify(item1: impl Summary, item2: impl Summary) {
 ```
 
-This would work well if `item1` and `item2` were allowed to have diferent types
-(as long as both implement `Summary`). But what if you wanted to force both to
-have the exact same type? That is only possible if you use a trait bound:
+If we wanted this function to allow `item1` and `item2` to have different
+types, using `impl Trait` would be appropriate (as long as both types implement
+`Summary`). If we wanted to force both parameters to have the same type, that’s
+only possible to express using a trait bound, like this:
 
 ```rust,ignore
 pub fn notify<T: Summary>(item1: T, item2: T) {
 ```
 
-#### Specify multiple traits with `+`
+The generic type `T` specified as the type of the `item1` and `item2`
+parameters constrains the function such that the concrete type of the value
+passed as an argument for `item1` and `item2` must be the same.
 
-If `notify` needed to display formatting on `item`, as well as use the
-`summarize` method, then `item` would need to implement two different traits at
-the same time: `Display` and `Summary`. This can be done using the `+` syntax:
+#### Specifying Multiple Trait Bounds with the `+` Syntax
+
+We can also specify more than one trait bound. Say we wanted `notify` to use
+display formatting on `item` as well as the `summarize` method: we specify in
+the `notify` definition that `item` must implement both `Display` and
+`Summary`. We can do so using the `+` syntax:
 
 ```rust,ignore
 pub fn notify(item: impl Summary + Display) {
 ```
 
-This syntax is also valid with trait bounds on generic types:
+The `+` syntax is also valid with trait bounds on generic types:
 
 ```rust,ignore
 pub fn notify<T: Summary + Display>(item: T) {
 ```
 
-#### `where` clauses for clearer code
+With the two trait bounds specified, the body of `notify` can call `summarize`
+and use `{}` to format `item`.
 
-However, there are downsides to using too many trait bounds. Each generic has
-its own trait bounds, so functions with multiple generic type parameters can
-have lots of trait bound information between a function’s name and its
-parameter list, making the function signature hard to read. For this reason,
-Rust has alternate syntax for specifying trait bounds inside a `where` clause
-after the function signature. So instead of writing this:
+#### Clearer Trait Bounds with `where` Clauses
+
+Using too many trait bounds has its downsides. Each generic has its own trait
+bounds, so functions with multiple generic type parameters can contain lots of
+trait bound information between the function’s name and its parameter list,
+making the function signature hard to read. For this reason, Rust has alternate
+syntax for specifying trait bounds inside a `where` clause after the function
+signature. So instead of writing this:
 
 ```rust,ignore
 fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
@@ -349,63 +295,43 @@ fn some_function<T, U>(t: T, u: U) -> i32
 {
 ```
 
-This function’s signature is less cluttered in that the function name,
-parameter list, and return type are close together, similar to a function
-without lots of trait bounds.
+This function’s signature is less cluttered: the function name, parameter list,
+and return type are close together, similar to a function without lots of trait
+bounds.
 
-### Returning Traits
+### Returning Types that Implement Traits
 
-We can use the `impl Trait` syntax in return position as well, to return
-something that implements a trait:
+We can also use the `impl Trait` syntax in the return position to return a
+value of some type that implements a trait, as shown here:
 
 ```rust,ignore
-fn returns_summarizable() -> impl Summary {
-    Tweet {
-        username: String::from("horse_ebooks"),
-        content: String::from("of course, as you probably already know, people"),
-        reply: false,
-        retweet: false,
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
 ```
 
-This signature says, “I’m going to return something that implements the
-`Summary` trait, but I’m not going to tell you the exact type.” In our case,
-we’re returning a `Tweet`, but the caller doesn’t know that.
+By using `impl Summary` for the return type, we specify that the
+`returns_summarizable` function returns some type that implements the `Summary`
+trait without naming the concrete type. In this case, `returns_summarizable`
+returns a `Tweet`, but the code calling this function doesn’t know that.
 
-Why is this useful? In chapter 13, we’re going to learn about two features
-that rely heavily on traits: closures, and iterators. These features create
-types that only the compiler knows, or types that are very, very long.
-`impl  Trait` lets you simply say “this returns an `Iterator`” without
-needing to write out a really long type.
+The ability to return a type that is only specified by the trait it implements
+is especially useful in the context of closures and iterators, which we cover
+in Chapter 13. Closures and iterators create types that only the compiler knows
+or types that are very long to specify. The `impl Trait` syntax lets you
+concisely specify that a function returns some type that implements the
+`Iterator` trait without needing to write out a very long type.
 
-This only works if you have a single type that you’re returning, however.
-For example, this would *not* work:
+However, you can only use `impl Trait` if you’re returning a single type. For
+example, this code that returns either a `NewsArticle` or a `Tweet` with the
+return type specified as `impl Summary` wouldn’t work:
 
 ```rust,ignore,does_not_compile
-fn returns_summarizable(switch: bool) -> impl Summary {
-    if switch {
-        NewsArticle {
-            headline: String::from("Penguins win the Stanley Cup Championship!"),
-            location: String::from("Pittsburgh, PA, USA"),
-            author: String::from("Iceburgh"),
-            content: String::from("The Pittsburgh Penguins once again are the best
-            hockey team in the NHL."),
-        }
-    } else {
-        Tweet {
-            username: String::from("horse_ebooks"),
-            content: String::from("of course, as you probably already know, people"),
-            reply: false,
-            retweet: false,
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-06-impl-trait-returns-one-type/src/lib.rs:here}}
 ```
 
-Here, we try to return either a `NewsArticle` or a `Tweet`. This cannot work,
-due to restrictions around how `impl Trait` works. To write this code, you’ll
-have to wait until the [“Using Trait Objects That Allow for Values of Different
+Returning either a `NewsArticle` or a `Tweet` isn’t allowed due to restrictions
+around how the `impl Trait` syntax is implemented in the compiler. We’ll cover
+how to write a function with this behavior in the [“Using Trait Objects That
+Allow for Values of Different
 Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
 ignore --> section of Chapter 17.
 
@@ -417,13 +343,7 @@ the `largest` function that uses a generic type parameter! Last time we tried
 to run that code, we received this error:
 
 ```text
-error[E0369]: binary operation `>` cannot be applied to type `T`
- --> src/main.rs:5:12
-  |
-5 |         if item > largest {
-  |            ^^^^^^^^^^^^^^
-  |
-  = note: an implementation of `std::cmp::PartialOrd` might be missing for `T`
+{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
 ```
 
 In the body of `largest` we wanted to compare two values of type `T` using the
@@ -435,40 +355,25 @@ into scope because it’s in the prelude. Change the signature of `largest` to
 look like this:
 
 ```rust,ignore
-fn largest<T: PartialOrd>(list: &[T]) -> T {
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-fixing-listing-10-05/src/main.rs:here}}
 ```
 
 This time when we compile the code, we get a different set of errors:
 
 ```text
-error[E0508]: cannot move out of type `[T]`, a non-copy slice
- --> src/main.rs:2:23
-  |
-2 |     let mut largest = list[0];
-  |                       ^^^^^^^
-  |                       |
-  |                       cannot move out of here
-  |                       help: consider using a reference instead: `&list[0]`
-
-error[E0507]: cannot move out of borrowed content
- --> src/main.rs:4:9
-  |
-4 |     for &item in list.iter() {
-  |         ^----
-  |         ||
-  |         |hint: to prevent move, use `ref item` or `ref mut item`
-  |         cannot move out of borrowed content
+{{#include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-fixing-listing-10-05/output.txt}}
 ```
 
 The key line in this error is `cannot move out of type [T], a non-copy slice`.
 With our non-generic versions of the `largest` function, we were only trying to
-find the largest `i32` or `char`. As discussed in the [“Stack-Only Data: Copy”]
-[stack-only-data-copy]<!-- ignore --> section in Chapter 4, types like `i32`
-and `char` that have a known size can be stored on the stack, so they implement
-the `Copy` trait. But when we made the `largest` function generic, it became
-possible for the `list` parameter to have types in it that don’t implement the
-`Copy` trait. Consequently, we wouldn’t be able to move the value out of
-`list[0]` and into the `largest` variable, resulting in this error.
+find the largest `i32` or `char`. As discussed in the [“Stack-Only Data:
+Copy”][stack-only-data-copy]<!-- ignore --> section in Chapter 4, types like
+`i32` and `char` that have a known size can be stored on the stack, so they
+implement the `Copy` trait. But when we made the `largest` function generic,
+it became possible for the `list` parameter to have types in it that don’t
+implement the `Copy` trait. Consequently, we wouldn’t be able to move the
+value out of `list[0]` and into the `largest` variable, resulting in this
+error.
 
 To call this code with only those types that implement the `Copy` trait, we can
 add `Copy` to the trait bounds of `T`! Listing 10-15 shows the complete code of
@@ -479,29 +384,7 @@ values in the slice that we pass into the function implement the `PartialOrd`
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
-    let mut largest = list[0];
-
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest(&char_list);
-    println!("The largest char is {}", result);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-15: A working definition of the `largest`
@@ -531,32 +414,10 @@ traits. For example, the type `Pair<T>` in Listing 10-16 always implements the
 inner type `T` implements the `PartialOrd` trait that enables comparison *and*
 the `Display` trait that enables printing.
 
+<span class="filename">Filename: src/lib.rs</span>
+
 ```rust
-use std::fmt::Display;
-
-struct Pair<T> {
-    x: T,
-    y: T,
-}
-
-impl<T> Pair<T> {
-    fn new(x: T, y: T) -> Self {
-        Self {
-            x,
-            y,
-        }
-    }
-}
-
-impl<T: Display + PartialOrd> Pair<T> {
-    fn cmp_display(&self) {
-        if self.x >= self.y {
-            println!("The largest member is x = {}", self.x);
-        } else {
-            println!("The largest member is y = {}", self.y);
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/lib.rs}}
 ```
 
 <span class="caption">Listing 10-16: Conditionally implement methods on a
@@ -592,12 +453,12 @@ reduce duplication but also specify to the compiler that we want the generic
 type to have particular behavior. The compiler can then use the trait bound
 information to check that all the concrete types used with our code provide the
 correct behavior. In dynamically typed languages, we would get an error at
-runtime if we called a method on a type that the type didn’t implement. But
-Rust moves these errors to compile time so we’re forced to fix the problems
-before our code is even able to run. Additionally, we don’t have to write code
-that checks for behavior at runtime because we’ve already checked at compile
-time. Doing so improves performance without having to give up the flexibility
-of generics.
+runtime if we called a method on a type which didn’t implement the type which
+defines the method. But Rust moves these errors to compile time so we’re forced
+to fix the problems before our code is even able to run. Additionally, we don’t
+have to write code that checks for behavior at runtime because we’ve already
+checked at compile time. Doing so improves performance without having to give
+up the flexibility of generics.
 
 Another kind of generic that we’ve already been using is called *lifetimes*.
 Rather than ensuring that a type has the behavior we want, lifetimes ensure

@@ -48,9 +48,7 @@ have an `Err` variant, it’s perfectly acceptable to call `unwrap`. Here’s an
 example:
 
 ```rust
-use std::net::IpAddr;
-
-let home: IpAddr = "127.0.0.1".parse().unwrap();
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
 ```
 
 We’re creating an `IpAddr` instance by parsing a hardcoded string. We can see
@@ -81,7 +79,7 @@ bug in their code so they can fix it during development. Similarly, `panic!` is
 often appropriate if you’re calling external code that is out of your control
 and it returns an invalid state that you have no way of fixing.
 
-However, when failure is expected, it is more appropriate to return a `Result`
+However, when failure is expected, it’s more appropriate to return a `Result`
 than to make a `panic!` call. Examples include a parser being given malformed
 data or an HTTP request returning a status that indicates you have hit a rate
 limit. In these cases, returning a `Result` indicates that failure is an
@@ -115,6 +113,8 @@ even compile, so your function doesn’t have to check for that case at runtime.
 Another example is using an unsigned integer type such as `u32`, which ensures
 the parameter is never negative.
 
+### Creating Custom Types for Validation
+
 Let’s take the idea of using Rust’s type system to ensure we have a valid value
 one step further and look at creating a custom type for validation. Recall the
 guessing game in Chapter 2 in which our code asked the user to guess a number
@@ -131,22 +131,7 @@ One way to do this would be to parse the guess as an `i32` instead of only a
 number being in range, like so:
 
 ```rust,ignore
-loop {
-    // --snip--
-
-    let guess: i32 = match guess.trim().parse() {
-        Ok(num) => num,
-        Err(_) => continue,
-    };
-
-    if guess < 1 || guess > 100 {
-        println!("The secret number will be between 1 and 100.");
-        continue;
-    }
-
-    match guess.cmp(&secret_number) {
-    // --snip--
-}
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
 ```
 
 The `if` expression checks whether our value is out of range, tells the user
@@ -165,35 +150,22 @@ an instance of the type rather than repeating the validations everywhere. That
 way, it’s safe for functions to use the new type in their signatures and
 confidently use the values they receive. Listing 9-10 shows one way to define a
 `Guess` type that will only create an instance of `Guess` if the `new` function
-receives a value between 1 and 100:
+receives a value between 1 and 100.
+
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file requires the `rand` crate. We do want to include it for reader
+experimentation purposes, but don't want to include it for rustdoc testing
+purposes. -->
 
 ```rust
-pub struct Guess {
-    value: i32,
-}
-
-impl Guess {
-    pub fn new(value: i32) -> Guess {
-        if value < 1 || value > 100 {
-            panic!("Guess value must be between 1 and 100, got {}.", value);
-        }
-
-        Guess {
-            value
-        }
-    }
-
-    pub fn value(&self) -> i32 {
-        self.value
-    }
-}
+{{#include ../listings/ch09-error-handling/listing-09-10/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 9-10: A `Guess` type that will only continue with
 values between 1 and 100</span>
 
 First, we define a struct named `Guess` that has a field named `value` that
-holds a `i32`. This is where the number will be stored.
+holds an `i32`. This is where the number will be stored.
 
 Then we implement an associated function named `new` on `Guess` that creates
 instances of `Guess` values. The `new` function is defined to have one
@@ -210,7 +182,7 @@ of a `panic!` in the API documentation that you create in Chapter 14. If
 to the `value` parameter and return the `Guess`.
 
 Next, we implement a method named `value` that borrows `self`, doesn’t have any
-other parameters, and returns a `i32`. This kind of method is sometimes called
+other parameters, and returns an `i32`. This kind of method is sometimes called
 a *getter*, because its purpose is to get some data from its fields and return
 it. This public method is necessary because the `value` field of the `Guess`
 struct is private. It’s important that the `value` field be private so code
@@ -220,7 +192,7 @@ the module *must* use the `Guess::new` function to create an instance of
 hasn’t been checked by the conditions in the `Guess::new` function.
 
 A function that has a parameter or returns only numbers between 1 and 100 could
-then declare in its signature that it takes or returns a `Guess` rather than a
+then declare in its signature that it takes or returns a `Guess` rather than an
 `i32` and wouldn’t need to do any additional checks in its body.
 
 ## Summary
@@ -237,4 +209,3 @@ situations will make your code more reliable in the face of inevitable problems.
 Now that you’ve seen useful ways that the standard library uses generics with
 the `Option` and `Result` enums, we’ll talk about how generics work and how you
 can use them in your code.
-

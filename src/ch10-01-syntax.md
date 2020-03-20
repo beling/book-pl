@@ -18,43 +18,7 @@ both find the largest value in a slice.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn largest_i32(list: &[i32]) -> i32 {
-    let mut largest = list[0];
-
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn largest_char(list: &[char]) -> char {
-    let mut largest = list[0];
-
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest_i32(&number_list);
-    println!("The largest number is {}", result);
-#    assert_eq!(result, 100);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest_char(&char_list);
-    println!("The largest char is {}", result);
-#    assert_eq!(result, 'y');
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 10-4: Two functions that differ only in their
@@ -95,29 +59,7 @@ compile yet, but we’ll fix it later in this chapter.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn largest<T>(list: &[T]) -> T {
-    let mut largest = list[0];
-
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest(&char_list);
-    println!("The largest char is {}", result);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-5: A definition of the `largest` function that
@@ -126,13 +68,7 @@ uses generic type parameters but doesn’t compile yet</span>
 If we compile this code right now, we’ll get this error:
 
 ```text
-error[E0369]: binary operation `>` cannot be applied to type `T`
- --> src/main.rs:5:12
-  |
-5 |         if item > largest {
-  |            ^^^^^^^^^^^^^^
-  |
-  = note: an implementation of `std::cmp::PartialOrd` might be missing for `T`
+{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
 ```
 
 The note mentions `std::cmp::PartialOrd`, which is a *trait*. We’ll talk about
@@ -142,8 +78,9 @@ to compare values of type `T` in the body, we can only use types whose values
 can be ordered. To enable comparisons, the standard library has the
 `std::cmp::PartialOrd` trait that you can implement on types (see Appendix C
 for more on this trait). You’ll learn how to specify that a generic type has a
-particular trait in the [“Trait Bounds”][trait-bounds]<!-- ignore --> section,
-but let’s first explore other ways of using generic type parameters.
+particular trait in the [“Traits as Parameters”][traits-as-parameters]<!--
+ignore --> section, but let’s first explore other ways of using generic type
+parameters.
 
 ### In Struct Definitions
 
@@ -154,15 +91,7 @@ struct to hold `x` and `y` coordinate values of any type.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point<T> {
-    x: T,
-    y: T,
-}
-
-fn main() {
-    let integer = Point { x: 5, y: 10 };
-    let float = Point { x: 1.0, y: 4.0 };
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-6: A `Point<T>` struct that holds `x` and `y`
@@ -183,14 +112,7 @@ Listing 10-7, our code won’t compile.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-struct Point<T> {
-    x: T,
-    y: T,
-}
-
-fn main() {
-    let wont_work = Point { x: 5, y: 4.0 };
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-7: The fields `x` and `y` must be the same
@@ -202,15 +124,7 @@ compiler know that the generic type `T` will be an integer for this instance of
 same type as `x`, we’ll get a type mismatch error like this:
 
 ```text
-error[E0308]: mismatched types
- --> src/main.rs:7:38
-  |
-7 |     let wont_work = Point { x: 5, y: 4.0 };
-  |                                      ^^^ expected integral variable, found
-floating-point variable
-  |
-  = note: expected type `{integer}`
-             found type `{float}`
+{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/output.txt}}
 ```
 
 To define a `Point` struct where `x` and `y` are both generics but could have
@@ -221,16 +135,7 @@ Listing 10-8, we can change the definition of `Point` to be generic over types
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point<T, U> {
-    x: T,
-    y: U,
-}
-
-fn main() {
-    let both_integer = Point { x: 5, y: 10 };
-    let both_float = Point { x: 1.0, y: 4.0 };
-    let integer_and_float = Point { x: 5, y: 4.0 };
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-8: A `Point<T, U>` generic over two types so
@@ -293,22 +198,7 @@ struct we defined in Listing 10-6 with a method named `x` implemented on it.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point<T> {
-    x: T,
-    y: T,
-}
-
-impl<T> Point<T> {
-    fn x(&self) -> &T {
-        &self.x
-    }
-}
-
-fn main() {
-    let p = Point { x: 5, y: 10 };
-
-    println!("p.x = {}", p.x());
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-9: Implementing a method named `x` on the
@@ -327,17 +217,10 @@ We could, for example, implement methods only on `Point<f32>` instances rather
 than on `Point<T>` instances with any generic type. In Listing 10-10 we use the
 concrete type `f32`, meaning we don’t declare any types after `impl`.
 
+<span class="filename">Filename: src/main.rs</span>
+
 ```rust
-# struct Point<T> {
-#     x: T,
-#     y: T,
-# }
-#
-impl Point<f32> {
-    fn distance_from_origin(&self) -> f32 {
-        (self.x.powi(2) + self.y.powi(2)).sqrt()
-    }
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 10-10: An `impl` block that only applies to a
@@ -352,7 +235,7 @@ operations that are available only for floating point types.
 Generic type parameters in a struct definition aren’t always the same as those
 you use in that struct’s method signatures. For example, Listing 10-11 defines
 the method `mixup` on the `Point<T, U>` struct from Listing 10-8. The method
-takes another `Point` as a parameter, which might have different types than the
+takes another `Point` as a parameter, which might have different types from the
 `self` `Point` we’re calling `mixup` on. The method creates a new `Point`
 instance with the `x` value from the `self` `Point` (of type `T`) and the `y`
 value from the passed-in `Point` (of type `W`).
@@ -360,32 +243,11 @@ value from the passed-in `Point` (of type `W`).
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust
-struct Point<T, U> {
-    x: T,
-    y: U,
-}
-
-impl<T, U> Point<T, U> {
-    fn mixup<V, W>(self, other: Point<V, W>) -> Point<T, W> {
-        Point {
-            x: self.x,
-            y: other.y,
-        }
-    }
-}
-
-fn main() {
-    let p1 = Point { x: 5, y: 10.4 };
-    let p2 = Point { x: "Hello", y: 'c'};
-
-    let p3 = p1.mixup(p2);
-
-    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-11: A method that uses different generic types
-than its struct’s definition</span>
+from its struct’s definition</span>
 
 In `main`, we’ve defined a `Point` that has an `i32` for `x` (with value `5`)
 and an `f64` for `y` (with value `10.4`). The `p2` variable is a `Point` struct
@@ -461,4 +323,4 @@ performs just as it would if we had duplicated each definition by hand. The
 process of monomorphization makes Rust’s generics extremely efficient at
 runtime.
 
-[trait-bounds]: ch10-02-traits.html#trait-bounds
+[traits-as-parameters]: ch10-02-traits.html#traits-as-parameters

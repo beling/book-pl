@@ -19,12 +19,11 @@ it will be to keep track of the purpose of each. It’s best to group the
 configuration variables into one structure to make their purpose clear.
 
 The third problem is that we’ve used `expect` to print an error message when
-reading the file fails, but the error message just prints
-`something went wrong`. Reading a file can fail in a number of ways: for
-example, the file could be missing, or we might not have permission to open
-it. Right now, regardless of the situation, we’d print the
-`something went wrong` error message, which wouldn’t give the user any
-information!
+reading the file fails, but the error message just prints `Something went wrong
+reading the file`. Reading a file can fail in a number of ways: for example,
+the file could be missing, or we might not have permission to open it. Right
+now, regardless of the situation, we’d print the `Something went wrong reading
+the file` error message, which wouldn’t give the user any information!
 
 Fourth, we use `expect` repeatedly to handle different errors, and if the user
 runs our program without specifying enough arguments, they’ll get an `index out
@@ -50,13 +49,14 @@ process has the following steps:
   *main.rs*.
 * When the command line parsing logic starts getting complicated, extract it
   from *main.rs* and move it to *lib.rs*.
-* The responsibilities that remain in the `main` function after this process
-  should be limited to the following:
 
-  * Calling the command line parsing logic with the argument values
-  * Setting up any other configuration
-  * Calling a `run` function in *lib.rs*
-  * Handling the error if `run` returns an error
+The responsibilities that remain in the `main` function after this process
+should be limited to the following:
+
+* Calling the command line parsing logic with the argument values
+* Setting up any other configuration
+* Calling a `run` function in *lib.rs*
+* Handling the error if `run` returns an error
 
 This pattern is about separating concerns: *main.rs* handles running the
 program, and *lib.rs* handles all the logic of the task at hand. Because you
@@ -75,28 +75,15 @@ function `parse_config`, which we’ll define in *src/main.rs* for the moment.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let (query, filename) = parse_config(&args);
-
-    // --snip--
-}
-
-fn parse_config(args: &[String]) -> (&str, &str) {
-    let query = &args[1];
-    let filename = &args[2];
-
-    (query, filename)
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-5: Extracting a `parse_config` function from
 `main`</span>
 
 We’re still collecting the command line arguments into a vector, but instead of
-assigning the argument value at index `1` to the variable `query` and the
-argument value at index `2` to the variable `filename` within the `main`
+assigning the argument value at index 1 to the variable `query` and the
+argument value at index 2 to the variable `filename` within the `main`
 function, we pass the whole vector to the `parse_config` function. The
 `parse_config` function then holds the logic that determines which argument
 goes in which variable and passes the values back to `main`. We still create
@@ -128,54 +115,25 @@ other and what their purpose is.
 > Note: Using primitive values when a complex type would be more appropriate is
 > an anti-pattern known as *primitive obsession*.
 
-Listing 12-6 shows the addition of a struct named `Config` defined to have
-fields named `query` and `filename`. We’ve also changed the `parse_config`
-function to return an instance of the `Config` struct and updated `main` to use
-the struct fields rather than having separate variables:
+Listing 12-6 shows the improvements to the `parse_config` function.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic
-# use std::env;
-# use std::fs;
-#
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = parse_config(&args);
-
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.filename);
-
-    let contents = fs::read_to_string(config.filename)
-        .expect("Something went wrong reading the file");
-
-    // --snip--
-}
-
-struct Config {
-    query: String,
-    filename: String,
-}
-
-fn parse_config(args: &[String]) -> Config {
-    let query = args[1].clone();
-    let filename = args[2].clone();
-
-    Config { query, filename }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-6: Refactoring `parse_config` to return an
 instance of a `Config` struct</span>
 
-The signature of `parse_config` now indicates that it returns a `Config` value.
-In the body of `parse_config`, where we used to return string slices that
-reference `String` values in `args`, we now define `Config` to contain owned
-`String` values. The `args` variable in `main` is the owner of the argument
-values and is only letting the `parse_config` function borrow them, which means
-we’d violate Rust’s borrowing rules if `Config` tried to take ownership of the
-values in `args`.
+We’ve added a struct named `Config` defined to have fields named `query` and
+`filename`. The signature of `parse_config` now indicates that it returns a
+`Config` value. In the body of `parse_config`, where we used to return string
+slices that reference `String` values in `args`, we now define `Config` to
+contain owned `String` values. The `args` variable in `main` is the owner of
+the argument values and is only letting the `parse_config` function borrow
+them, which means we’d violate Rust’s borrowing rules if `Config` tried to take
+ownership of the values in `args`.
 
 We could manage the `String` data in a number of different ways, but the
 easiest, though somewhat inefficient, route is to call the `clone` method on
@@ -189,14 +147,15 @@ trade-off.
 > ### The Trade-Offs of Using `clone`
 >
 > There’s a tendency among many Rustaceans to avoid using `clone` to fix
-> ownership problems because of its runtime cost. In Chapter 13, you’ll learn
-> how to use more efficient methods in this type of situation. But for now,
-> it’s okay to copy a few strings to continue making progress because you’ll
-> make these copies only once and your filename and query string are very
-> small. It’s better to have a working program that’s a bit inefficient than to
-> try to hyperoptimize code on your first pass. As you become more experienced
-> with Rust, it’ll be easier to start with the most efficient solution, but for
-> now, it’s perfectly acceptable to call `clone`.
+> ownership problems because of its runtime cost. In
+> [Chapter 13][ch13]<!-- ignore -->, you’ll learn how to use more efficient
+> methods in this type of situation. But for now, it’s okay to copy a few
+> strings to continue making progress because you’ll make these copies only
+> once and your filename and query string are very small. It’s better to have
+> a working program that’s a bit inefficient than to try to hyperoptimize code
+> on your first pass. As you become more experienced with Rust, it’ll be
+> easier to start with the most efficient solution, but for now, it’s
+> perfectly acceptable to call `clone`.
 
 We’ve updated `main` so it places the instance of `Config` returned by
 `parse_config` into a variable named `config`, and we updated the code that
@@ -224,36 +183,12 @@ will make the code more idiomatic. We can create instances of types in the
 standard library, such as `String`, by calling `String::new`. Similarly, by
 changing `parse_config` into a `new` function associated with `Config`, we’ll
 be able to create instances of `Config` by calling `Config::new`. Listing 12-7
-shows the changes we need to make:
+shows the changes we need to make.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic
-# use std::env;
-#
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::new(&args);
-
-    // --snip--
-}
-
-# struct Config {
-#     query: String,
-#     filename: String,
-# }
-#
-// --snip--
-
-impl Config {
-    fn new(args: &[String]) -> Config {
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Config { query, filename }
-    }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-7: Changing `parse_config` into
@@ -267,18 +202,12 @@ compiling this code again to make sure it works.
 ### Fixing the Error Handling
 
 Now we’ll work on fixing our error handling. Recall that attempting to access
-the values in the `args` vector at index `1` or index `2` will cause the
-program to panic if the vector contains fewer than three items. Try running the
-program without any arguments; it will look like this:
+the values in the `args` vector at index 1 or index 2 will cause the program to
+panic if the vector contains fewer than three items. Try running the program
+without any arguments; it will look like this:
 
 ```text
-$ cargo run
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
-     Running `target/debug/minigrep`
-thread 'main' panicked at 'index out of bounds: the len is 1
-but the index is 1', src/main.rs:29:21
-note: Run with `RUST_BACKTRACE=1` for a backtrace.
+{{#include ../listings/ch12-an-io-project/listing-12-07/output.txt}}
 ```
 
 The line `index out of bounds: the len is 1 but the index is 1` is an error
@@ -288,51 +217,41 @@ happened and what they should do instead. Let’s fix that now.
 #### Improving the Error Message
 
 In Listing 12-8, we add a check in the `new` function that will verify that the
-slice is long enough before accessing index `1` and `2`. If the slice isn’t
-long enough, the program panics and displays a better error message than the
-`index out of bounds` message.
+slice is long enough before accessing index 1 and 2. If the slice isn’t long
+enough, the program panics and displays a better error message than the `index
+out of bounds` message.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-// --snip--
-fn new(args: &[String]) -> Config {
-    if args.len() < 3 {
-        panic!("not enough arguments");
-    }
-    // --snip--
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-08/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-8: Adding a check for the number of
 arguments</span>
 
-This code is similar to the `Guess::new` function we wrote in Listing 9-10, where
-we called `panic!` when the `value` argument was out of the range of valid
-values. Instead of checking for a range of values here, we’re checking that the
-length of `args` is at least `3` and the rest of the function can operate under
-the assumption that this condition has been met. If `args` has fewer than three
-items, this condition will be true, and we call the `panic!` macro to end the
-program immediately.
+This code is similar to [the `Guess::new` function we wrote in Listing
+9-10][ch9-custom-types]<!-- ignore -->, where we called `panic!` when the
+`value` argument was out of the range of valid values. Instead of checking for
+a range of values here, we’re checking that the length of `args` is at least 3
+and the rest of the function can operate under the assumption that this
+condition has been met. If `args` has fewer than three items, this condition
+will be true, and we call the `panic!` macro to end the program immediately.
 
 With these extra few lines of code in `new`, let’s run the program without any
 arguments again to see what the error looks like now:
 
 ```text
-$ cargo run
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
-     Running `target/debug/minigrep`
-thread 'main' panicked at 'not enough arguments', src/main.rs:30:12
-note: Run with `RUST_BACKTRACE=1` for a backtrace.
+{{#include ../listings/ch12-an-io-project/listing-12-08/output.txt}}
 ```
 
 This output is better: we now have a reasonable error message. However, we also
 have extraneous information we don’t want to give to our users. Perhaps using
 the technique we used in Listing 9-10 isn’t the best to use here: a call to
-`panic!` is more appropriate for a programming problem rather than a usage
-problem, as discussed in Chapter 9. Instead, we can use the other technique you
-learned about in Chapter 9—returning a `Result` that indicates either success
-or an error.
+`panic!` is more appropriate for a programming problem than a usage problem,
+[as discussed in Chapter 9][ch9-error-guidelines]<!-- ignore -->. Instead, we
+can use the other technique you learned about in Chapter 9—[returning a
+`Result`][ch9-result]<!-- ignore --> that indicates either success or an error.
 
 #### Returning a `Result` from `new` Instead of Calling `panic!`
 
@@ -351,18 +270,7 @@ next listing.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-impl Config {
-    fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("not enough arguments");
-        }
-
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Ok(Config { query, filename })
-    }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-9: Returning a `Result` from
@@ -395,17 +303,7 @@ program that the program exited with an error state.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-use std::process;
-
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {}", err);
-        process::exit(1);
-    });
-
-    // --snip--
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-10: Exiting with an error code if creating a
@@ -418,11 +316,12 @@ handling. If the `Result` is an `Ok` value, this method’s behavior is similar
 to `unwrap`: it returns the inner value `Ok` is wrapping. However, if the value
 is an `Err` value, this method calls the code in the *closure*, which is an
 anonymous function we define and pass as an argument to `unwrap_or_else`. We’ll
-cover closures in more detail in Chapter 13. For now, you just need to know
-that `unwrap_or_else` will pass the inner value of the `Err`, which in this
-case is the static string `not enough arguments` that we added in Listing 12-9,
-to our closure in the argument `err` that appears between the vertical pipes.
-The code in the closure can then use the `err` value when it runs.
+cover closures in more detail in [Chapter 13][ch13]<!-- ignore -->. For now,
+you just need to know that `unwrap_or_else` will pass the inner value of the
+`Err`, which in this case is the static string `not enough arguments` that we
+added in Listing 12-9, to our closure in the argument `err` that appears
+between the vertical pipes. The code in the closure can then use the `err`
+value when it runs.
 
 We’ve added a new `use` line to bring `process` from the standard library into
 scope. The code in the closure that will be run in the error case is only two
@@ -433,11 +332,7 @@ number that was passed as the exit status code. This is similar to the
 extra output. Let’s try it:
 
 ```text
-$ cargo run
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48 secs
-     Running `target/debug/minigrep`
-Problem parsing arguments: not enough arguments
+{{#include ../listings/ch12-an-io-project/listing-12-10/output.txt}}
 ```
 
 Great! This output is much friendlier for our users.
@@ -459,23 +354,7 @@ defining the function in *src/main.rs*.
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    // --snip--
-
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.filename);
-
-    run(config);
-}
-
-fn run(config: Config) {
-    let contents = fs::read_to_string(config.filename)
-        .expect("something went wrong reading the file");
-
-    println!("With text:\n{}", contents);
-}
-
-// --snip--
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-11: Extracting a `run` function containing the
@@ -493,22 +372,12 @@ Instead of allowing the program to panic by calling `expect`, the `run`
 function will return a `Result<T, E>` when something goes wrong. This will let
 us further consolidate into `main` the logic around handling errors in a
 user-friendly way. Listing 12-12 shows the changes we need to make to the
-signature and body of `run`:
+signature and body of `run`.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-use std::error::Error;
-
-// --snip--
-
-fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
-
-    println!("With text:\n{}", contents);
-
-    Ok(())
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 12-12: Changing the `run` function to return
@@ -521,16 +390,17 @@ returned the unit type, `()`, and we keep that as the value returned in the
 
 For the error type, we used the *trait object* `Box<dyn Error>` (and we’ve
 brought `std::error::Error` into scope with a `use` statement at the top).
-We’ll cover trait objects in Chapter 17. For now, just know that `Box<dyn
-Error>` means the function will return a type that implements the `Error`
-trait, but we don’t have to specify what particular type the return value
-will be. This gives us flexibility to return error values that may be of
-different types in different error cases. This is what the `dyn` means, it’s
-short for “dynamic.”
+We’ll cover trait objects in [Chapter 17][ch17]<!-- ignore -->. For now, just
+know that `Box<dyn Error>` means the function will return a type that
+implements the `Error` trait, but we don’t have to specify what particular type
+the return value will be. This gives us flexibility to return error values that
+may be of different types in different error cases. The `dyn` keyword is short
+for “dynamic.”
 
-Second, we’ve removed the call to `expect` in favor of `?`, as we talked about
-in Chapter 9. Rather than `panic!` on an error, `?` will return the error value
-from the current function for the caller to handle.
+Second, we’ve removed the call to `expect` in favor of the `?` operator, as we
+talked about in [Chapter 9][ch9-question-mark]<!-- ignore -->. Rather than
+`panic!` on an error, `?` will return the error value from the current function
+for the caller to handle.
 
 Third, the `run` function now returns an `Ok` value in the success case. We’ve
 declared the `run` function’s success type as `()` in the signature, which
@@ -542,18 +412,13 @@ it doesn’t return a value we need.
 When you run this code, it will compile but will display a warning:
 
 ```text
-warning: unused `std::result::Result` which must be used
-  --> src/main.rs:18:5
-   |
-18 |     run(config);
-   |     ^^^^^^^^^^^^
-= note: #[warn(unused_must_use)] on by default
+{{#include ../listings/ch12-an-io-project/listing-12-12/output.txt}}
 ```
 
 Rust tells us that our code ignored the `Result` value and the `Result` value
 might indicate that an error occurred. But we’re not checking to see whether or
 not there was an error, and the compiler reminds us that we probably meant to
-have some error handling code here! Let’s rectify that problem now.
+have some error-handling code here! Let’s rectify that problem now.
 
 #### Handling Errors Returned from `run` in `main`
 
@@ -563,18 +428,7 @@ with `Config::new` in Listing 12-10, but with a slight difference:
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    // --snip--
-
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.filename);
-
-    if let Err(e) = run(config) {
-        println!("Application error: {}", e);
-
-        process::exit(1);
-    }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
 ```
 
 We use `if let` rather than `unwrap_or_else` to check whether `run` returns an
@@ -603,28 +457,12 @@ Let’s move all the code that isn’t the `main` function from *src/main.rs* to
 
 The contents of *src/lib.rs* should have the signatures shown in Listing 12-13
 (we’ve omitted the bodies of the functions for brevity). Note that this won’t
-compile until we modify *src/main.rs* in the listing after this one.
+compile until we modify *src/main.rs* in Listing 12-14.
 
 <span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore
-use std::error::Error;
-use std::fs;
-
-pub struct Config {
-    pub query: String,
-    pub filename: String,
-}
-
-impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
-        // --snip--
-    }
-}
-
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    // --snip--
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 12-13: Moving `Config` and `run` into
@@ -635,33 +473,22 @@ We’ve made liberal use of the `pub` keyword: on `Config`, on its fields and it
 public API that we can test!
 
 Now we need to bring the code we moved to *src/lib.rs* into the scope of the
-binary crate in *src/main.rs*, as shown in Listing 12-14:
+binary crate in *src/main.rs*, as shown in Listing 12-14.
 
 <span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
-use std::env;
-use std::process;
-
-use minigrep;
-use minigrep::Config;
-
-fn main() {
-    // --snip--
-    if let Err(e) = minigrep::run(config) {
-        // --snip--
-    }
-}
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 12-14: Bringing the `minigrep` crate into the
-scope of *src/main.rs*</span>
+<span class="caption">Listing 12-14: Using the `minigrep` library crate in
+*src/main.rs*</span>
 
-To bring the library crate into the binary crate, we use `use minigrep`.
-Then we add a `use minigrep::Config` line to bring the `Config` type
-into scope as well, and we prefix the `run` function with our crate name. Now
-all the functionality should be connected and should work. Run the program with
-`cargo run` and make sure everything works correctly.
+We add a `use minigrep::Config` line to bring the `Config` type from the
+library crate into the binary crate’s scope, and we prefix the `run` function
+with our crate name. Now all the functionality should be connected and should
+work. Run the program with `cargo run` and make sure everything works
+correctly.
 
 Whew! That was a lot of work, but we’ve set ourselves up for success in the
 future. Now it’s much easier to handle errors, and we’ve made the code more
@@ -672,3 +499,9 @@ have been difficult with the old code but is easy with the new code: we’ll
 write some tests!
 
 [the-static-lifetime]: ch10-03-lifetime-syntax.html#the-static-lifetime
+[ch13]: ch13-00-functional-features.html
+[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#creating-custom-types-for-validation
+[ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#guidelines-for-error-handling
+[ch9-result]: ch09-02-recoverable-errors-with-result.html
+[ch17]: ch17-00-oop.html
+[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
