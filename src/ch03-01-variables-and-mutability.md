@@ -10,36 +10,24 @@ czasem możesz chcieć zrezygnować z tej własciwości.
 
 Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy,
 nie możesz później zmienić tej wartości. Aby to zobrazować, utwórzmy nowy
-projekt o nazwie *variables* w folderze *projects* korzystając z komendy
-`cargo new --bin variables`.
+projekt o nazwie *zmienne* w folderze *projects* korzystając z komendy
+`cargo new --bin zmienne`.
 
-Następnie w nowo utworzonym folderze *variables*, odnajdź i otwórz *src/main.rs*,
+Następnie w nowo utworzonym folderze *zmienne*, odnajdź i otwórz *src/main.rs*,
 zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się
 poprawnie:
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    let x = 5;
-    println!("The value of x is: {}", x);
-    x = 6;
-    println!("The value of x is: {}", x);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/src/main.rs}}
 ```
 
 Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś otrzymać
 następujący komunikat o błędzie:
 
 ```text
-error[E0384]: cannot assign twice to immutable variable `x`
- --> src/main.rs:4:5
-  |
-2 |     let x = 5;
-  |         — first assignment to `x`
-3 |     println!("The value of x is: {}", x);
-4 |     x = 6;
-  |     ^^^^^ cannot assign twice to immutable variable
+{{#include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/output.txt}}
 ```
 
 Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich
@@ -69,7 +57,7 @@ nie musisz ciągle sprawdzać gdzie i jak wartość może się zmienić. W zwią
 z tym tworzony przez ciebie kod staje się łatwiejszy do zrozumienia.
 
 Jednak modyfikowalność może być też bardzo użyteczna. Zmienne są tylko
-domyślnie niemodyfikowalne; tak jak zrobiłeś to w rozdziale 2, możesz uczynić
+domyślnie niemodyfikowalne; tak jak zrobiłeś(-aś) to w rozdziale 2, możesz uczynić
 je modyfikowalnymi, dodając `mut` przed nazwą zmiennej. Poza tym, że dzięki
 dodaniu `mut` możliwa jest modyfikacja wartości zmiennej, jest ono też wyraźnym
 sygnałem dla osób, które będą czytały kod w przyszłości — informuje, że inne
@@ -80,23 +68,13 @@ Na przykład, zmieńmy kod w *src/main.rs* na poniższy:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let mut x = 5;
-    println!("The value of x is: {}", x);
-    x = 6;
-    println!("The value of x is: {}", x);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/src/main.rs}}
 ```
 
 Gdy teraz uruchomimy program, otrzymamy:
 
 ```text
-$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.30 secs
-     Running `target/debug/variables`
-The value of x is: 5
-The value of x is: 6
+{{#include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/output.txt}}
 ```
 
 Możemy zmienić wartość, do której odwołuje się `x` z `5` na `6`, dzięki
@@ -112,7 +90,7 @@ tworzenie nowych instancji i zapisywanie ich bardziej w stylu programowania
 funkcyjnego może pomóc w łatwiejszym zrozumieniu działania kodu, które z kolei
 może okazać się satysfakcjonującą rekompensatą za zmniejszenie wydajności.
 
-### Różnice między Zmiennymi i Stałymi
+### Różnice między zmiennymi i stałymi
 
 Brak możliwości modyfikacji wartości zmiennej może przypominać ci inne
 rozwiązanie programistyczne, które wykorzystuje wiele języków programowania:
@@ -125,8 +103,8 @@ niemodyfikowalne — są zawsze niemodyfikowalne.
 
 Do deklaracji stałej wykorzystujesz słowo kluczowe `const` zamiast `let`
 i *zawsze* musisz określić typ wartości. Typy danych i ich adnotacje omówimy
-już niedługo, w następnym podrozdziale "Typy Danych", więc nie przejmuj się
-na razie szczegółami. Po prostu zapamiętaj, że zawsze musisz nadać stałej
+już niedługo, w następnym podrozdziale ["Typy Danych"][data-types]<!-- ignore-->,
+więc nie przejmuj się na razie szczegółami. Po prostu zapamiętaj, że zawsze musisz nadać stałej
 typ danych.
 
 Stałe mogą być deklarowane w każdym zakresie, włączając w to zakres globalny,
@@ -138,9 +116,9 @@ zwracane przez funkcje lub też inne wartości wytworzone podczas działania
 programu.
 
 Oto przykład deklaracji stałej, nazwa stałej to `MAX_POINTS`, a jej wartość
-została ustawiona na 100,000. (Konwencja nazewnicza Rusta dla stałych
+została ustawiona na 100,000. Konwencja nazewnicza Rusta dla stałych
 zobowiązuje do wykorzystywanie tylko dużych liter z podkreśleniami między
-słowami):
+słowami:
 
 ```rust
 const MAX_POINTS: u32 = 100_000;
@@ -160,7 +138,8 @@ miejscu i ułatwia ich późniejsze uaktualnianie.
 ### Przesłanianie
 
 Tak jak już pewnie zauważyłeś/aś w poradniku do gry zgadywanki w sekcji
-"Porównywanie odpowiedzi gracza z sekretnym numerem" w rozdziale 2, mogłeś/aś
+["Porównywanie odpowiedzi gracza z sekretnym numerem"][comparing-the-guess-to-the-secret-number]<!-- ignore -->
+w rozdziale 2, mogłeś(-aś)
 zadeklarować nową zmienną o takiej samej nazwie, jak dawna zmienna, a nowa
 zmienna przesłania dawną zmienną. Rustowcy powiedzą, że pierwsza zmienna jest
 *przesłoniona* przez drugą, co oznacza, że przy wywołaniu zmiennej otrzymujemy
@@ -170,15 +149,7 @@ samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = 5;
-
-    let x = x + 1;
-
-    let x = x * 2;
-
-    println!("The value of x is: {}", x);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
 ```
 
 Ten program najpierw przypisuje zmiennej `x` wartość `5`. Następnie
@@ -189,11 +160,7 @@ deklaracji `let` po raz trzeci również przesłania `x`, poprzednia wartość
 uruchomimy ten program, otrzymamy:
 
 ```text
-$ cargo run
-   Compiling variables v0.1.0 (file:///projects/variables)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31 secs
-     Running `target/debug/variables`
-The value of x is: 12
+{{#include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/output.txt}}
 ```
 
 To nie to samo, co nadanie `mut` zmiennej, gdyż jeżeli przypadkowo spróbujemy
@@ -209,8 +176,7 @@ ma zostać umieszczona między jakimś tekstem, poprzez wpisanie tych spacji,
 ale my tak naprawdę chcemy przechowywać tę wartość jako liczbę:
 
 ```rust
-let spaces = "   ";
-let spaces = spaces.len();
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-04-shadowing-can-change-types/src/main.rs:here}}
 ```
 
 Powyższa konstrukcja jest dozwolona, gdyż pierwsza zmienna `spaces` typu
@@ -220,23 +186,20 @@ dwóch różnych nazw np. `spaces_str` i `spaces_num`; zamiast tego, ponownie
 korzystamy z prostszej nazwy `spaces`. Jednak, jeżeli spróbowalibyśmy użyć
 `mut` dla tej zmiennej otrzymalibyśmy błąd kompilacji:
 
-```rust,ignore
-let mut spaces = "   ";
-spaces = spaces.len();
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/src/main.rs:here}}
 ```
 
 Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 
 ```text
-error[E0308]: mismatched types
- --> src/main.rs:3:14
-  |
-3 |     spaces = spaces.len();
-  |              ^^^^^^^^^^^^ expected &str, found usize
-  |
-  = note: expected type `&str`
-             found type `usize`
+{{#include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/output.txt}}
+
 ```
 
 Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom
 danych, jakich mogą być zmienne.
+
+[comparing-the-guess-to-the-secret-number]:
+ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+[data-types]: ch03-02-data-types.html#data-types
