@@ -30,7 +30,7 @@ the metadata we’ve seen in other *Cargo.toml* files. Instead, it will start
 with a `[workspace]` section that will allow us to add members to the workspace
 by specifying the path to our binary crate; in this case, that path is *adder*:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-01-workspace-with-adder-crate/add/Cargo.toml}}
@@ -81,7 +81,7 @@ Next, let’s create another member crate in the workspace and call it `add-one`
 Change the top-level *Cargo.toml* to specify the *add-one* path in the
 `members` list:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/Cargo.toml}}
@@ -119,7 +119,7 @@ Your *add* directory should now have these directories and files:
 
 In the *add-one/src/lib.rs* file, let’s add an `add_one` function:
 
-<span class="filename">Filename: add-one/src/lib.rs</span>
+<span class="filename">Plik: add-one/src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/add-one/src/lib.rs}}
@@ -129,7 +129,7 @@ Now that we have a library crate in the workspace, we can have the binary crate
 `adder` depend on the library crate `add-one`. First, we’ll need to add a path
 dependency on `add-one` to *adder/Cargo.toml*.
 
-<span class="filename">Filename: adder/Cargo.toml</span>
+<span class="filename">Plik: adder/Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-02-workspace-with-two-crates/add/adder/Cargo.toml:7:9}}
@@ -141,9 +141,9 @@ we need to be explicit about the dependency relationships between the crates.
 Next, let’s use the `add_one` function from the `add-one` crate in the `adder`
 crate. Open the *adder/src/main.rs* file and add a `use` line at the top to
 bring the new `add-one` library crate into scope. Then change the `main`
-function to call the `add_one` function, as in Listing 14-7.
+function to call the `add_one` function, as in listing 14-7.
 
-<span class="filename">Filename: adder/src/main.rs</span>
+<span class="filename">Plik: adder/src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-07/add/adder/src/main.rs}}
@@ -206,7 +206,7 @@ crate:
 * ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
 -->
 
-<span class="filename">Filename: add-one/Cargo.toml</span>
+<span class="filename">Plik: add-one/Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch14-more-about-cargo/no-listing-03-workspace-with-external-dependency/add/add-one/Cargo.toml:7:8}}
@@ -270,7 +270,7 @@ compatible with each other.
 For another enhancement, let’s add a test of the `add_one::add_one` function
 within the `add_one` crate:
 
-<span class="filename">Filename: add-one/src/lib.rs</span>
+<span class="filename">Plik: add-one/src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/no-listing-04-workspace-with-tests/add/add-one/src/lib.rs}}

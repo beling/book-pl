@@ -121,7 +121,7 @@ Usually, there is no good reason to write code like this, but it is possible.
 memory address</span>
 
 Recall that we can create raw pointers in safe code, but we can’t *dereference*
-raw pointers and read the data being pointed to. In Listing 19-3, we use the
+raw pointers and read the data being pointed to. In listing 19-3, we use the
 dereference operator `*` on a raw pointer that requires an `unsafe` block.
 
 ```rust,unsafe
@@ -134,7 +134,7 @@ dereference operator `*` on a raw pointer that requires an `unsafe` block.
 Creating a pointer does no harm; it’s only when we try to access the value that
 it points at that we might end up dealing with an invalid value.
 
-Note also that in Listing 19-1 and 19-3, we created `*const i32` and `*mut i32`
+Note also that in listing 19-1 and 19-3, we created `*const i32` and `*mut i32`
 raw pointers that both pointed to the same memory location, where `num` is
 stored. If we instead tried to create an immutable and a mutable reference to
 `num`, the code would not have compiled because Rust’s ownership rules don’t
@@ -203,7 +203,7 @@ argument. Listing 19-4 shows how to use `split_at_mut`.
 function</span>
 
 We can’t implement this function using only safe Rust. An attempt might look
-something like Listing 19-5, which won’t compile. For simplicity, we’ll
+something like listing 19-5, which won’t compile. For simplicity, we’ll
 implement `split_at_mut` as a function rather than a method and only for slices
 of `i32` values rather than for a generic type `T`.
 
@@ -224,7 +224,7 @@ Then we return two mutable slices in a tuple: one from the start of the
 original slice to the `mid` index and another from `mid` to the end of the
 slice.
 
-When we try to compile the code in Listing 19-5, we’ll get an error.
+When we try to compile the code in listing 19-5, we’ll get an error.
 
 ```text
 {{#include ../listings/ch19-advanced-features/listing-19-05/output.txt}}
@@ -277,7 +277,7 @@ abstraction to the unsafe code with an implementation of the function that uses
 `unsafe` code in a safe way, because it creates only valid pointers from the
 data this function has access to.
 
-In contrast, the use of `slice::from_raw_parts_mut` in Listing 19-7 would
+In contrast, the use of `slice::from_raw_parts_mut` in listing 19-7 would
 likely crash when the slice is used. This code takes an arbitrary memory
 location and creates a slice 10,000 items long.
 
@@ -306,7 +306,7 @@ always unsafe to call from Rust code. The reason is that other languages don’t
 enforce Rust’s rules and guarantees, and Rust can’t check them, so
 responsibility falls on the programmer to ensure safety.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,unsafe
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-08/src/main.rs}}
@@ -356,7 +356,7 @@ In Rust, global variables are called *static* variables. Listing 19-9 shows an
 example declaration and use of a static variable with a string slice as a
 value.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-09/src/main.rs}}
@@ -385,7 +385,7 @@ variables can be mutable. Accessing and modifying mutable static variables is
 *unsafe*. Listing 19-10 shows how to declare, access, and modify a mutable
 static variable named `COUNTER`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,unsafe
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-10/src/main.rs}}
@@ -412,7 +412,7 @@ The final action that works only with `unsafe` is implementing an unsafe trait.
 A trait is unsafe when at least one of its methods has some invariant that the
 compiler can’t verify. We can declare that a trait is `unsafe` by adding the
 `unsafe` keyword before `trait` and marking the implementation of the trait as
-`unsafe` too, as shown in Listing 19-11.
+`unsafe` too, as shown in listing 19-11.
 
 ```rust,unsafe
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-11/src/main.rs}}

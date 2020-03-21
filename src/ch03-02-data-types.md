@@ -9,7 +9,7 @@ co oznacza, że podczas kompilacji musi znać typy danych wszystkich zmiennych
 obecnych w kodzie. Zazwyczaj kompilator może wywnioskować typ danych, którego
 chcemy użyć na podstawie użytej wartość i sposobu jej wykorzystywania.
 W przypadku gdy wiele typów danych spełnia dane założenia, przykładowo gdy
-w Rozdziale 2 w sekcji "Porównywanie odpowiedzi gracza z sekretnym numerem"
+w rozdziale 2 w sekcji "Porównywanie odpowiedzi gracza z sekretnym numerem"
 konwertowaliśmy `String` do typu numerycznego wykorzystując funkcję `parse`
 musimy dodać adnotację typu danych:
 
@@ -44,7 +44,7 @@ jak działają w Ruście.
 #### Typy całkowite
 
 *Liczba całkowita* to liczba nieposiadająca części ułamkowej.
-Wykorzystywaliśmy jeden z typów całkowitych — `u32` — w Rozdziale 2. Ten typ
+Wykorzystywaliśmy jeden z typów całkowitych — `u32` — w rozdziale 2. Ten typ
 danych określa, że wartość, do której się odnosi, jest liczbą całkowitą bez
 znaku (typy całkowite ze znakiem zaczynają się od `i` zamiast `u`), która
 zajmuje 32 bity pamięci. Tabela 3-1 pokazuje typy całkowite wbudowane w Rusta.
@@ -233,7 +233,7 @@ Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do
 `U+10FFFF` włącznie. Jednak “znak” nie jest na prawdę ideą w Unikodzie,
 więc twój intuicyjny sposób postrzegania tego, czym jest “znak” może nie
 być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo
-omówimy ten temat w "Ciągach znaków" w Rozdziale 8.
+omówimy ten temat w "Ciągach znaków" w rozdziale 8.
 
 ### Typy złożone
 
@@ -323,7 +323,7 @@ fn main() {
 ```
 
 Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie
-(Stos i stertę omówimy w Rozdziale 4) lub gdy chcesz mieć pewność, że ilość
+(Stos i stertę omówimy w rozdziale 4) lub gdy chcesz mieć pewność, że ilość
 elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna,
 jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez
 bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
@@ -402,7 +402,7 @@ niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany,
 a skorzystanie z niepoprawnego indeksu, może skutkować uzyskaniem dostępu do
 niewłaściwego bloku pamięci. Rust chroni cię przed takimi błędami. Zamiast
 pozwolić ci na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
-program. W Rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
+program. W rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
 
 [comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
 [control-flow]: ch03-05-control-flow.html#control-flow

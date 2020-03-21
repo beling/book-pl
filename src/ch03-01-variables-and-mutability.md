@@ -1,6 +1,6 @@
 ## Zmienne i ich Modyfikowalność
 
-Tak jak wspomniano w Rozdziale 2, zmienne są domyślnie niemodyfikowalne
+Tak jak wspomniano w rozdziale 2, zmienne są domyślnie niemodyfikowalne
 (*immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do
 tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty
 współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
@@ -69,7 +69,7 @@ nie musisz ciągle sprawdzać gdzie i jak wartość może się zmienić. W zwią
 z tym tworzony przez ciebie kod staje się łatwiejszy do zrozumienia.
 
 Jednak modyfikowalność może być też bardzo użyteczna. Zmienne są tylko
-domyślnie niemodyfikowalne; tak jak zrobiłeś to w Rozdziale 2, możesz uczynić
+domyślnie niemodyfikowalne; tak jak zrobiłeś to w rozdziale 2, możesz uczynić
 je modyfikowalnymi, dodając `mut` przed nazwą zmiennej. Poza tym, że dzięki
 dodaniu `mut` możliwa jest modyfikacja wartości zmiennej, jest ono też wyraźnym
 sygnałem dla osób, które będą czytały kod w przyszłości — informuje, że inne
@@ -160,7 +160,7 @@ miejscu i ułatwia ich późniejsze uaktualnianie.
 ### Przesłanianie
 
 Tak jak już pewnie zauważyłeś/aś w poradniku do gry zgadywanki w sekcji
-"Porównywanie odpowiedzi gracza z sekretnym numerem" w Rozdziale 2, mogłeś/aś
+"Porównywanie odpowiedzi gracza z sekretnym numerem" w rozdziale 2, mogłeś/aś
 zadeklarować nową zmienną o takiej samej nazwie, jak dawna zmienna, a nowa
 zmienna przesłania dawną zmienną. Rustowcy powiedzą, że pierwsza zmienna jest
 *przesłoniona* przez drugą, co oznacza, że przy wywołaniu zmiennej otrzymujemy

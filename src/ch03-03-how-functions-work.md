@@ -9,7 +9,7 @@ Rust code uses *snake case* as the conventional style for function and variable
 names. In snake case, all letters are lowercase and underscores separate words.
 Here’s a program that contains an example function definition:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -64,7 +64,7 @@ call a function.
 The following rewritten version of `another_function` shows what parameters
 look like in Rust:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -99,7 +99,7 @@ the code to figure out what you mean.
 When you want a function to have multiple parameters, separate the parameter
 declarations with commas, like this:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -148,9 +148,9 @@ instructions that perform some action and do not return a value. *Expressions*
 evaluate to a resulting value. Let’s look at some examples.
 
 Creating a variable and assigning a value to it with the `let` keyword is a
-statement. In Listing 3-1, `let y = 6;` is a statement.
+statement. In listing 3-1, `let y = 6;` is a statement.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -166,7 +166,7 @@ statement in itself.
 Statements do not return values. Therefore, you can’t assign a `let` statement
 to another variable, as the following code tries to do; you’ll get an error:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {
@@ -197,12 +197,12 @@ languages, you can write `x = y = 6` and have both `x` and `y` have the value
 Expressions evaluate to something and make up most of the rest of the code that
 you’ll write in Rust. Consider a simple math operation, such as `5 + 6`, which
 is an expression that evaluates to the value `11`. Expressions can be part of
-statements: in Listing 3-1, the `6` in the statement `let y = 6;` is an
+statements: in listing 3-1, the `6` in the statement `let y = 6;` is an
 expression that evaluates to the value `6`. Calling a function is an
 expression. Calling a macro is an expression. The block that we use to create
 new scopes, `{}`, is an expression, for example:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -243,7 +243,7 @@ using the `return` keyword and specifying a value, but most functions return
 the last expression implicitly. Here’s an example of a function that returns a
 value:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn five() -> i32 {
@@ -286,7 +286,7 @@ because it’s an expression whose value we want to return.
 
 Let’s look at another example:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -304,7 +304,7 @@ Running this code will print `The value of x is: 6`. But if we place a
 semicolon at the end of the line containing `x + 1`, changing it from an
 expression to a statement, we’ll get an error.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {

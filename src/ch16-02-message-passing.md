@@ -29,11 +29,11 @@ use channels to implement a chat system or a system where many threads perform
 parts of a calculation and send the parts to one thread that aggregates the
 results.
 
-First, in Listing 16-6, we’ll create a channel but not do anything with it.
+First, in listing 16-6, we’ll create a channel but not do anything with it.
 Note that this won’t compile yet because Rust can’t tell what type of values we
 want to send over the channel.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-06/src/main.rs}}
@@ -65,7 +65,7 @@ string so the spawned thread is communicating with the main thread, as shown in
 Listing 16-7. This is like putting a rubber duck in the river upstream or
 sending a chat message from one thread to another.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-07/src/main.rs}}
@@ -86,11 +86,11 @@ will return an error. In this example, we’re calling `unwrap` to panic in case
 of an error. But in a real application, we would handle it properly: return to
 Chapter 9 to review strategies for proper error handling.
 
-In Listing 16-8, we’ll get the value from the receiving end of the channel in
+In listing 16-8, we’ll get the value from the receiving end of the channel in
 the main thread. This is like retrieving the rubber duck from the water at the
 end of the river or like getting a chat message.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
@@ -118,7 +118,7 @@ We’ve used `recv` in this example for simplicity; we don’t have any other wo
 for the main thread to do other than wait for messages, so blocking the main
 thread is appropriate.
 
-When we run the code in Listing 16-8, we’ll see the value printed from the main
+When we run the code in listing 16-8, we’ll see the value printed from the main
 thread:
 
 <!-- Not extracting output because changes to this output aren't significant;
@@ -138,10 +138,10 @@ write safe, concurrent code. Preventing errors in concurrent programming is the
 advantage of thinking about ownership throughout your Rust programs. Let’s do
 an experiment to show how channels and ownership work together to prevent
 problems: we’ll try to use a `val` value in the spawned thread *after* we’ve
-sent it down the channel. Try compiling the code in Listing 16-9 to see why
+sent it down the channel. Try compiling the code in listing 16-9 to see why
 this code isn’t allowed:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
@@ -155,7 +155,7 @@ Allowing this would be a bad idea: once the value has been sent to another
 thread, that thread could modify or drop it before we try to use the value
 again. Potentially, the other thread’s modifications could cause errors or
 unexpected results due to inconsistent or nonexistent data. However, Rust gives
-us an error if we try to compile the code in Listing 16-9:
+us an error if we try to compile the code in listing 16-9:
 
 ```text
 {{#include ../listings/ch16-fearless-concurrency/listing-16-09/output.txt}}
@@ -168,13 +168,13 @@ after sending it; the ownership system checks that everything is okay.
 
 ### Sending Multiple Values and Seeing the Receiver Waiting
 
-The code in Listing 16-8 compiled and ran, but it didn’t clearly show us that
-two separate threads were talking to each other over the channel. In Listing
-16-10 we’ve made some modifications that will prove the code in Listing 16-8 is
+The code in listing 16-8 compiled and ran, but it didn’t clearly show us that
+two separate threads were talking to each other over the channel. In listing
+16-10 we’ve made some modifications that will prove the code in listing 16-8 is
 running concurrently: the spawned thread will now send multiple messages and
 pause for a second between each message.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
@@ -192,7 +192,7 @@ In the main thread, we’re not calling the `recv` function explicitly anymore:
 instead, we’re treating `rx` as an iterator. For each value received, we’re
 printing it. When the channel is closed, iteration will end.
 
-When running the code in Listing 16-10, you should see the following output
+When running the code in listing 16-10, you should see the following output
 with a 1-second pause in between each line:
 
 <!-- Not extracting output because changes to this output aren't significant;
@@ -213,11 +213,11 @@ the spawned thread.
 ### Creating Multiple Producers by Cloning the Transmitter
 
 Earlier we mentioned that `mpsc` was an acronym for *multiple producer,
-single consumer*. Let’s put `mpsc` to use and expand the code in Listing 16-10
+single consumer*. Let’s put `mpsc` to use and expand the code in listing 16-10
 to create multiple threads that all send values to the same receiver. We can do
-so by cloning the transmitting half of the channel, as shown in Listing 16-11:
+so by cloning the transmitting half of the channel, as shown in listing 16-11:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}

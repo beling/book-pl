@@ -38,7 +38,7 @@ the text to search for the query in, and it will return only the lines from the
 text that contain the query. Listing 12-15 shows this test, which won’t compile
 yet.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-15/src/lib.rs:here}}
@@ -54,11 +54,11 @@ from the `search` function contains only the line we expect.
 We aren’t able to run this test and watch it fail because the test doesn’t even
 compile: the `search` function doesn’t exist yet! So now we’ll add just enough
 code to get the test to compile and run by adding a definition of the `search`
-function that always returns an empty vector, as shown in Listing 12-16. Then
+function that always returns an empty vector, as shown in listing 12-16. Then
 the test should compile and fail because an empty vector doesn’t match a vector
 containing the line `"safe, fast, productive."`
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
@@ -124,10 +124,10 @@ Let’s work through each step, starting with iterating through lines.
 #### Iterating Through Lines with the `lines` Method
 
 Rust has a helpful method to handle line-by-line iteration of strings,
-conveniently named `lines`, that works as shown in Listing 12-17. Note this
+conveniently named `lines`, that works as shown in listing 12-17. Note this
 won’t compile yet.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-17/src/lib.rs:here}}
@@ -148,7 +148,7 @@ Fortunately, strings have a helpful method named `contains` that does this for
 us! Add a call to the `contains` method in the `search` function, as shown in
 Listing 12-18. Note this still won’t compile yet.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-18/src/lib.rs:here}}
@@ -162,9 +162,9 @@ line contains the string in `query`</span>
 We also need a way to store the lines that contain our query string. For that,
 we can make a mutable vector before the `for` loop and call the `push` method
 to store a `line` in the vector. After the `for` loop, we return the vector, as
-shown in Listing 12-19.
+shown in listing 12-19.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-19/src/lib.rs:here}}
@@ -196,7 +196,7 @@ from our `run` function. We need to pass the `config.query` value and the
 `contents` that `run` reads from the file to the `search` function. Then `run`
 will print each line returned from `search`:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/src/lib.rs:here}}

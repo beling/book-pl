@@ -15,7 +15,7 @@ of code. If the condition is not met, do not run this block of code.”
 Create a new project called *branches* in your *projects* directory to explore
 the `if` expression. In the *src/main.rs* file, input the following:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -76,7 +76,7 @@ It’s also worth noting that the condition in this code *must* be a `bool`. If
 the condition isn’t a `bool`, we’ll get an error. For example, try running the
 following code:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {
@@ -109,7 +109,7 @@ convert non-Boolean types to a Boolean. You must be explicit and always provide
 only when a number is not equal to `0`, for example, we can change the `if`
 expression to the following:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -128,7 +128,7 @@ Running this code will print `number was something other than zero`.
 You can have multiple conditions by combining `if` and `else` in an `else if`
 expression. For example:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -171,9 +171,9 @@ Rust branching construct called `match` for these cases.
 #### Using `if` in a `let` Statement
 
 Because `if` is an expression, we can use it on the right side of a `let`
-statement, as in Listing 3-2.
+statement, as in listing 3-2.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -206,11 +206,11 @@ Remember that blocks of code evaluate to the last expression in them, and
 numbers by themselves are also expressions. In this case, the value of the
 whole `if` expression depends on which block of code executes. This means the
 values that have the potential to be results from each arm of the `if` must be
-the same type; in Listing 3-2, the results of both the `if` arm and the `else`
+the same type; in listing 3-2, the results of both the `if` arm and the `else`
 arm were `i32` integers. If the types are mismatched, as in the following
 example, we’ll get an error:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {
@@ -272,7 +272,7 @@ forever or until you explicitly tell it to stop.
 As an example, change the *src/main.rs* file in your *loops* directory to look
 like this:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 fn main() {
@@ -357,7 +357,7 @@ for it, called a `while` loop. Listing 3-3 uses `while`: the program loops
 three times, counting down each time, and then, after the loop, it prints
 another message and exits.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -383,9 +383,9 @@ true, the code runs; otherwise, it exits the loop.
 #### Looping Through a Collection with `for`
 
 You could use the `while` construct to loop over the elements of a collection,
-such as an array. For example, let’s look at Listing 3-4.
+such as an array. For example, let’s look at listing 3-4.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -430,9 +430,9 @@ code to perform the conditional check on every element on every iteration
 through the loop.
 
 As a more concise alternative, you can use a `for` loop and execute some code
-for each item in a collection. A `for` loop looks like the code in Listing 3-5.
+for each item in a collection. A `for` loop looks like the code in listing 3-5.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -447,12 +447,12 @@ fn main() {
 <span class="caption">Listing 3-5: Looping through each element of a collection
 using a `for` loop</span>
 
-When we run this code, we’ll see the same output as in Listing 3-4. More
+When we run this code, we’ll see the same output as in listing 3-4. More
 importantly, we’ve now increased the safety of the code and eliminated the
 chance of bugs that might result from going beyond the end of the array or not
 going far enough and missing some items.
 
-For example, in the code in Listing 3-4, if you removed an item from the `a`
+For example, in the code in listing 3-4, if you removed an item from the `a`
 array but forgot to update the condition to `while index < 4`, the code would
 panic. Using the `for` loop, you wouldn’t need to remember to change any other
 code if you changed the number of values in the array.
@@ -460,7 +460,7 @@ code if you changed the number of values in the array.
 The safety and conciseness of `for` loops make them the most commonly used loop
 construct in Rust. Even in situations in which you want to run some code a
 certain number of times, as in the countdown example that used a `while` loop
-in Listing 3-3, most Rustaceans would use a `for` loop. The way to do that
+in listing 3-3, most Rustaceans would use a `for` loop. The way to do that
 would be to use a `Range`, which is a type provided by the standard library
 that generates all numbers in sequence starting from one number and ending
 before another number.
@@ -468,7 +468,7 @@ before another number.
 Here’s what the countdown would look like using a `for` loop and another method
 we’ve not yet talked about, `rev`, to reverse the range:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {

@@ -2,7 +2,7 @@
 
 The `if let` syntax lets you combine `if` and `let` into a less verbose way to
 handle values that match one pattern while ignoring the rest. Consider the
-program in Listing 6-6 that matches on an `Option<u8>` value but only wants to
+program in listing 6-6 that matches on an `Option<u8>` value but only wants to
 execute code if the value is 3.
 
 ```rust
@@ -18,7 +18,7 @@ have to add `_ => ()` after processing just one variant, which is a lot of
 boilerplate code to add.
 
 Instead, we could write this in a shorter way using `if let`. The following
-code behaves the same as the `match` in Listing 6-6:
+code behaves the same as the `match` in listing 6-6:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
@@ -40,7 +40,7 @@ runs code when the value matches one pattern and then ignores all other values.
 We can include an `else` with an `if let`. The block of code that goes with the
 `else` is the same as the block of code that would go with the `_` case in the
 `match` expression that is equivalent to the `if let` and `else`. Recall the
-`Coin` enum definition in Listing 6-4, where the `Quarter` variant also held a
+`Coin` enum definition in listing 6-4, where the `Quarter` variant also held a
 `UsState` value. If we wanted to count all non-quarter coins we see while also
 announcing the state of the quarters, we could do that with a `match`
 expression like this:

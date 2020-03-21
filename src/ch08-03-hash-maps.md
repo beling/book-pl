@@ -51,7 +51,7 @@ of collection types, including `HashMap`. For example, if we had the team names
 and initial scores in two separate vectors, we could use the `zip` method to
 create a vector of tuples where “Blue” is paired with 10, and so forth. Then we
 could use the `collect` method to turn that vector of tuples into a hash map,
-as shown in Listing 8-21.
+as shown in listing 8-21.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
@@ -64,15 +64,15 @@ The type annotation `HashMap<_, _>` is needed here because it’s possible to
 `collect` into many different data structures and Rust doesn’t know which you
 want unless you specify. For the parameters for the key and value types,
 however, we use underscores, and Rust can infer the types that the hash map
-contains based on the types of the data in the vectors. In Listing 8-21, the
+contains based on the types of the data in the vectors. In listing 8-21, the
 key type will be `String` and the value type will be `i32`, just as the types
-were in Listing 8-20.
+were in listing 8-20.
 
 ### Hash Maps and Ownership
 
 For types that implement the `Copy` trait, like `i32`, the values are copied
 into the hash map. For owned values like `String`, the values will be moved and
-the hash map will be the owner of those values, as demonstrated in Listing 8-22.
+the hash map will be the owner of those values, as demonstrated in listing 8-22.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
@@ -94,7 +94,7 @@ Chapter 10.
 ### Accessing Values in a Hash Map
 
 We can get a value out of the hash map by providing its key to the `get`
-method, as shown in Listing 8-23.
+method, as shown in listing 8-23.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
@@ -138,7 +138,7 @@ of these!
 
 If we insert a key and a value into a hash map and then insert that same key
 with a different value, the value associated with that key will be replaced.
-Even though the code in Listing 8-24 calls `insert` twice, the hash map will
+Even though the code in listing 8-24 calls `insert` twice, the hash map will
 only contain one key/value pair because we’re inserting the value for the Blue
 team’s key both times.
 
@@ -176,7 +176,7 @@ inserts the parameter as the new value for this key and returns a mutable
 reference to the new value. This technique is much cleaner than writing the
 logic ourselves and, in addition, plays more nicely with the borrow checker.
 
-Running the code in Listing 8-25 will print `{"Yellow": 50, "Blue": 10}`. The
+Running the code in listing 8-25 will print `{"Yellow": 50, "Blue": 10}`. The
 first call to `entry` will insert the key for the Yellow team with the value
 50 because the Yellow team doesn’t have a value already. The second call to
 `entry` will not change the hash map because the Blue team already has the
@@ -185,7 +185,7 @@ value 10.
 #### Updating a Value Based on the Old Value
 
 Another common use case for hash maps is to look up a key’s value and then
-update it based on the old value. For instance, Listing 8-26 shows code that
+update it based on the old value. For instance, listing 8-26 shows code that
 counts how many times each word appears in some text. We use a hash map with
 the words as keys and increment the value to keep track of how many times we’ve
 seen that word. If it’s the first time we’ve seen a word, we’ll first insert

@@ -75,7 +75,7 @@ because we wouldn’t know the number or type of values up front.
 
 Listing 19-28 shows a slightly simplified definition of the `vec!` macro.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-28/src/lib.rs}}
@@ -172,7 +172,7 @@ to eliminate in the future. Using procedural macros looks like the code in
 Listing 19-29, where `some_attribute` is a placeholder for using a specific
 macro.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 use proc_macro;
@@ -208,9 +208,9 @@ types, we’ll provide a procedural macro so users can annotate their type with
 function. The default implementation will print `Hello, Macro! My name is
 TypeName!` where `TypeName` is the name of the type on which this trait has
 been defined. In other words, we’ll write a crate that enables another
-programmer to write code like Listing 19-30 using our crate.
+programmer to write code like listing 19-30 using our crate.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-30/src/main.rs}}
@@ -228,7 +228,7 @@ $ cargo new hello_macro --lib
 
 Next, we’ll define the `HelloMacro` trait and its associated function:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-20-impl-hellomacro-for-pancakes/hello_macro/src/lib.rs}}
@@ -277,17 +277,17 @@ We’ll also need functionality from the `syn` and `quote` crates, as you’ll s
 in a moment, so we need to add them as dependencies. Add the following to the
 *Cargo.toml* file for `hello_macro_derive`:
 
-<span class="filename">Filename: hello_macro_derive/Cargo.toml</span>
+<span class="filename">Plik: hello_macro_derive/Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch19-advanced-features/listing-19-31/hello_macro/hello_macro_derive/Cargo.toml:7:12}}
 ```
 
-To start defining the procedural macro, place the code in Listing 19-31 into
+To start defining the procedural macro, place the code in listing 19-31 into
 your *src/lib.rs* file for the `hello_macro_derive` crate. Note that this code
 won’t compile until we add a definition for the `impl_hello_macro` function.
 
-<span class="filename">Filename: hello_macro_derive/src/lib.rs</span>
+<span class="filename">Plik: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-31/hello_macro/hello_macro_derive/src/lib.rs}}
@@ -353,7 +353,7 @@ DeriveInput {
 ```
 
 <span class="caption">Listing 19-32: The `DeriveInput` instance we get when
-parsing the code that has the macro’s attribute in Listing 19-30</span>
+parsing the code that has the macro’s attribute in listing 19-30</span>
 
 The fields of this struct show that the Rust code we’ve parsed is a unit struct
 with the `ident` (identifier, meaning the name) of `Pancakes`. There are more
@@ -379,9 +379,9 @@ about what went wrong by using `panic!` or `expect`.
 
 Now that we have the code to turn the annotated Rust code from a `TokenStream`
 into a `DeriveInput` instance, let’s generate the code that implements the
-`HelloMacro` trait on the annotated type, as shown in Listing 19-33.
+`HelloMacro` trait on the annotated type, as shown in listing 19-33.
 
-<span class="filename">Filename: hello_macro_derive/src/lib.rs</span>
+<span class="filename">Plik: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-33/hello_macro/hello_macro_derive/src/lib.rs:here}}
@@ -391,10 +391,10 @@ into a `DeriveInput` instance, let’s generate the code that implements the
 the parsed Rust code</span>
 
 We get an `Ident` struct instance containing the name (identifier) of the
-annotated type using `ast.ident`. The struct in Listing 19-32 shows that when
-we run the `impl_hello_macro` function on the code in Listing 19-30, the
+annotated type using `ast.ident`. The struct in listing 19-32 shows that when
+we run the `impl_hello_macro` function on the code in listing 19-30, the
 `ident` we get will have the `ident` field with a value of `"Pancakes"`. Thus,
-the `name` variable in Listing 19-33 will contain an `Ident` struct instance
+the `name` variable in listing 19-33 will contain an `Ident` struct instance
 that, when printed, will be the string `"Pancakes"`, the name of the struct in
 Listing 19-30.
 
@@ -426,7 +426,7 @@ expression to print literally, so we use `stringify!`. Using `stringify!` also
 saves an allocation by converting `#name` to a string literal at compile time.
 
 At this point, `cargo build` should complete successfully in both `hello_macro`
-and `hello_macro_derive`. Let’s hook up these crates to the code in Listing
+and `hello_macro_derive`. Let’s hook up these crates to the code in listing
 19-30 to see the procedural macro in action! Create a new binary project in
 your *projects* directory using `cargo new pancakes`. We need to add
 `hello_macro` and `hello_macro_derive` as dependencies in the `pancakes`
@@ -438,7 +438,7 @@ dependencies; if not, you can specify them as `path` dependencies as follows:
 {{#include ../listings/ch19-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:7:9}}
 ```
 
-Put the code in Listing 19-30 into *src/main.rs*, and run `cargo run`: it
+Put the code in listing 19-30 into *src/main.rs*, and run `cargo run`: it
 should print `Hello, Macro! My name is Pancakes!` The implementation of the
 `HelloMacro` trait from the procedural macro was included without the
 `pancakes` crate needing to implement it; the `#[derive(HelloMacro)]` added the

@@ -72,7 +72,7 @@ We’ll extract the functionality for parsing arguments into a function that
 *src/lib.rs*. Listing 12-5 shows the new start of `main` that calls a new
 function `parse_config`, which we’ll define in *src/main.rs* for the moment.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-05/src/main.rs:here}}
@@ -117,7 +117,7 @@ other and what their purpose is.
 
 Listing 12-6 shows the improvements to the `parse_config` function.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-06/src/main.rs:here}}
@@ -185,7 +185,7 @@ changing `parse_config` into a `new` function associated with `Config`, we’ll
 be able to create instances of `Config` by calling `Config::new`. Listing 12-7
 shows the changes we need to make.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-07/src/main.rs:here}}
@@ -216,12 +216,12 @@ happened and what they should do instead. Let’s fix that now.
 
 #### Improving the Error Message
 
-In Listing 12-8, we add a check in the `new` function that will verify that the
+In listing 12-8, we add a check in the `new` function that will verify that the
 slice is long enough before accessing index 1 and 2. If the slice isn’t long
 enough, the program panics and displays a better error message than the `index
 out of bounds` message.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-08/src/main.rs:here}}
@@ -230,7 +230,7 @@ out of bounds` message.
 <span class="caption">Listing 12-8: Adding a check for the number of
 arguments</span>
 
-This code is similar to [the `Guess::new` function we wrote in Listing
+This code is similar to [the `Guess::new` function we wrote in listing
 9-10][ch9-custom-types]<!-- ignore -->, where we called `panic!` when the
 `value` argument was out of the range of valid values. Instead of checking for
 a range of values here, we’re checking that the length of `args` is at least 3
@@ -247,7 +247,7 @@ arguments again to see what the error looks like now:
 
 This output is better: we now have a reasonable error message. However, we also
 have extraneous information we don’t want to give to our users. Perhaps using
-the technique we used in Listing 9-10 isn’t the best to use here: a call to
+the technique we used in listing 9-10 isn’t the best to use here: a call to
 `panic!` is more appropriate for a programming problem than a usage problem,
 [as discussed in Chapter 9][ch9-error-guidelines]<!-- ignore -->. Instead, we
 can use the other technique you learned about in Chapter 9—[returning a
@@ -267,7 +267,7 @@ Listing 12-9 shows the changes we need to make to the return value of
 that this won’t compile until we update `main` as well, which we’ll do in the
 next listing.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-09/src/main.rs:here}}
@@ -300,7 +300,7 @@ tool with a nonzero error code from `panic!` and implement it by hand. A
 nonzero exit status is a convention to signal to the process that called our
 program that the program exited with an error state.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-10/src/main.rs:here}}
@@ -319,7 +319,7 @@ anonymous function we define and pass as an argument to `unwrap_or_else`. We’l
 cover closures in more detail in [Chapter 13][ch13]<!-- ignore -->. For now,
 you just need to know that `unwrap_or_else` will pass the inner value of the
 `Err`, which in this case is the static string `not enough arguments` that we
-added in Listing 12-9, to our closure in the argument `err` that appears
+added in listing 12-9, to our closure in the argument `err` that appears
 between the vertical pipes. The code in the closure can then use the `err`
 value when it runs.
 
@@ -328,7 +328,7 @@ scope. The code in the closure that will be run in the error case is only two
 lines: we print the `err` value and then call `process::exit`. The
 `process::exit` function will stop the program immediately and return the
 number that was passed as the exit status code. This is similar to the
-`panic!`-based handling we used in Listing 12-8, but we no longer get all the
+`panic!`-based handling we used in listing 12-8, but we no longer get all the
 extra output. Let’s try it:
 
 ```text
@@ -351,7 +351,7 @@ Listing 12-11 shows the extracted `run` function. For now, we’re just making
 the small, incremental improvement of extracting the function. We’re still
 defining the function in *src/main.rs*.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-11/src/main.rs:here}}
@@ -367,14 +367,14 @@ argument.
 #### Returning Errors from the `run` Function
 
 With the remaining program logic separated into the `run` function, we can
-improve the error handling, as we did with `Config::new` in Listing 12-9.
+improve the error handling, as we did with `Config::new` in listing 12-9.
 Instead of allowing the program to panic by calling `expect`, the `run`
 function will return a `Result<T, E>` when something goes wrong. This will let
 us further consolidate into `main` the logic around handling errors in a
 user-friendly way. Listing 12-12 shows the changes we need to make to the
 signature and body of `run`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-12/src/main.rs:here}}
@@ -423,9 +423,9 @@ have some error-handling code here! Let’s rectify that problem now.
 #### Handling Errors Returned from `run` in `main`
 
 We’ll check for errors and handle them using a technique similar to one we used
-with `Config::new` in Listing 12-10, but with a slight difference:
+with `Config::new` in listing 12-10, but with a slight difference:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/no-listing-01-handling-errors-in-main/src/main.rs:here}}
@@ -455,11 +455,11 @@ Let’s move all the code that isn’t the `main` function from *src/main.rs* to
 * The definition of `Config`
 * The `Config::new` function definition
 
-The contents of *src/lib.rs* should have the signatures shown in Listing 12-13
+The contents of *src/lib.rs* should have the signatures shown in listing 12-13
 (we’ve omitted the bodies of the functions for brevity). Note that this won’t
-compile until we modify *src/main.rs* in Listing 12-14.
+compile until we modify *src/main.rs* in listing 12-14.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-13/src/lib.rs:here}}
@@ -473,9 +473,9 @@ We’ve made liberal use of the `pub` keyword: on `Config`, on its fields and it
 public API that we can test!
 
 Now we need to bring the code we moved to *src/lib.rs* into the scope of the
-binary crate in *src/main.rs*, as shown in Listing 12-14.
+binary crate in *src/main.rs*, as shown in listing 12-14.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-14/src/main.rs:here}}

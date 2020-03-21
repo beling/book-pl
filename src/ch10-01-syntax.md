@@ -12,10 +12,10 @@ signature of the function where we would usually specify the data types of the
 parameters and return value. Doing so makes our code more flexible and provides
 more functionality to callers of our function while preventing code duplication.
 
-Continuing with our `largest` function, Listing 10-4 shows two functions that
+Continuing with our `largest` function, listing 10-4 shows two functions that
 both find the largest value in a slice.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
@@ -24,7 +24,7 @@ both find the largest value in a slice.
 <span class="caption">Listing 10-4: Two functions that differ only in their
 names and the types in their signatures</span>
 
-The `largest_i32` function is the one we extracted in Listing 10-3 that finds
+The `largest_i32` function is the one we extracted in listing 10-3 that finds
 the largest `i32` in a slice. The `largest_char` function finds the largest
 `char` in a slice. The function bodies have the same code, so let’s eliminate
 the duplication by introducing a generic type parameter in a single function.
@@ -56,7 +56,7 @@ data type in its signature. The listing also shows how we can call the function
 with either a slice of `i32` values or `char` values. Note that this code won’t
 compile yet, but we’ll fix it later in this chapter.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
@@ -88,7 +88,7 @@ We can also define structs to use a generic type parameter in one or more
 fields using the `<>` syntax. Listing 10-6 shows how to define a `Point<T>`
 struct to hold `x` and `y` coordinate values of any type.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
@@ -109,7 +109,7 @@ the fields `x` and `y` are *both* that same type, whatever that type may be. If
 we create an instance of a `Point<T>` that has values of different types, as in
 Listing 10-7, our code won’t compile.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
@@ -132,7 +132,7 @@ different types, we can use multiple generic type parameters. For example, in
 Listing 10-8, we can change the definition of `Point` to be generic over types
 `T` and `U` where `x` is of type `T` and `y` is of type `U`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
@@ -181,7 +181,7 @@ The `Result` enum is generic over two types, `T` and `E`, and has two variants:
 `E`. This definition makes it convenient to use the `Result` enum anywhere we
 have an operation that might succeed (return a value of some type `T`) or fail
 (return an error of some type `E`). In fact, this is what we used to open a
-file in Listing 9-3, where `T` was filled in with the type `std::fs::File` when
+file in listing 9-3, where `T` was filled in with the type `std::fs::File` when
 the file was opened successfully and `E` was filled in with the type
 `std::io::Error` when there were problems opening the file.
 
@@ -193,9 +193,9 @@ avoid duplication by using generic types instead.
 
 We can implement methods on structs and enums (as we did in Chapter 5) and use
 generic types in their definitions, too. Listing 10-9 shows the `Point<T>`
-struct we defined in Listing 10-6 with a method named `x` implemented on it.
+struct we defined in listing 10-6 with a method named `x` implemented on it.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
@@ -214,10 +214,10 @@ generic type after `impl`, Rust can identify that the type in the angle
 brackets in `Point` is a generic type rather than a concrete type.
 
 We could, for example, implement methods only on `Point<f32>` instances rather
-than on `Point<T>` instances with any generic type. In Listing 10-10 we use the
+than on `Point<T>` instances with any generic type. In listing 10-10 we use the
 concrete type `f32`, meaning we don’t declare any types after `impl`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
@@ -233,14 +233,14 @@ point is from the point at coordinates (0.0, 0.0) and uses mathematical
 operations that are available only for floating point types.
 
 Generic type parameters in a struct definition aren’t always the same as those
-you use in that struct’s method signatures. For example, Listing 10-11 defines
-the method `mixup` on the `Point<T, U>` struct from Listing 10-8. The method
+you use in that struct’s method signatures. For example, listing 10-11 defines
+the method `mixup` on the `Point<T, U>` struct from listing 10-8. The method
 takes another `Point` as a parameter, which might have different types from the
 `self` `Point` we’re calling `mixup` on. The method creates a new `Point`
 instance with the `x` value from the `self` `Point` (of type `T`) and the `y`
 value from the passed-in `Point` (of type `W`).
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
@@ -276,7 +276,7 @@ code into specific code by filling in the concrete types that are used when
 compiled.
 
 In this process, the compiler does the opposite of the steps we used to create
-the generic function in Listing 10-5: the compiler looks at all the places
+the generic function in listing 10-5: the compiler looks at all the places
 where generic code is called and generates code for the concrete types the
 generic code is called with.
 
@@ -298,7 +298,7 @@ the specific ones.
 The monomorphized version of the code looks like the following. The generic
 `Option<T>` is replaced with the specific definitions created by the compiler:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 enum Option_i32 {

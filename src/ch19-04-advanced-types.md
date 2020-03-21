@@ -47,7 +47,7 @@ keyword. For example, we can create the alias `Kilometers` to `i32` like so:
 ```
 
 Now, the alias `Kilometers` is a *synonym* for `i32`; unlike the `Millimeters`
-and `Meters` types we created in Listing 19-15, `Kilometers` is not a separate,
+and `Meters` types we created in listing 19-15, `Kilometers` is not a separate,
 new type. Values that have the type `Kilometers` will be treated the same as
 values of type `i32`:
 
@@ -69,7 +69,7 @@ Box<dyn Fn() + Send + 'static>
 
 Writing this lengthy type in function signatures and as type annotations all
 over the code can be tiresome and error prone. Imagine having a project full of
-code like that in Listing 19-24.
+code like that in listing 19-24.
 
 ```rust
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-24/src/main.rs:here}}
@@ -142,7 +142,7 @@ never are called *diverging functions*. We can’t create values of the type `!`
 so `bar` can never possibly return.
 
 But what use is a type you can never create values for? Recall the code from
-Listing 2-5; we’ve reproduced part of it here in Listing 19-26.
+Listing 2-5; we’ve reproduced part of it here in listing 19-26.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:ch19}}
@@ -163,7 +163,7 @@ for example, the following code doesn’t work:
 The type of `guess` in this code would have to be an integer *and* a string,
 and Rust requires that `guess` have only one type. So what does `continue`
 return? How were we allowed to return a `u32` from one arm and have another arm
-that ends with `continue` in Listing 19-26?
+that ends with `continue` in listing 19-26?
 
 As you might have guessed, `continue` has a `!` value. That is, when Rust
 computes the type of `guess`, it looks at both match arms, the former with a
@@ -184,7 +184,7 @@ is its definition:
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-09-unwrap-definition/src/lib.rs:here}}
 ```
 
-In this code, the same thing happens as in the `match` in Listing 19-26: Rust
+In this code, the same thing happens as in the `match` in listing 19-26: Rust
 sees that `val` has the type `T` and `panic!` has the type `!`, so the result
 of the overall `match` expression is `T`. This code works because `panic!`
 doesn’t produce a value; it ends the program. In the `None` case, we won’t be

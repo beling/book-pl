@@ -128,7 +128,7 @@ tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
 
 Po drugie, tekst `println!` wywołuje w Ruście makro. Gdyby wywoływana była
 funkcja, wpisana byłaby jako `println` (bez `!`). Makra będą szerzej opisane w
-Rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
+rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
 makro zamiast zwykłej funkcji.
 
 Po trzecie, w programie widzimy łańcuch znaków (*string*) `"Hello, world!"`.

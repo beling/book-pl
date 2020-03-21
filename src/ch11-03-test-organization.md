@@ -35,7 +35,7 @@ included in the compiled result.
 Recall that when we generated the new `adder` project in the first section of
 this chapter, Cargo generated this code for us:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs:here}}
@@ -56,9 +56,9 @@ There’s debate within the testing community about whether or not private
 functions should be tested directly, and other languages make it difficult or
 impossible to test private functions. Regardless of which testing ideology you
 adhere to, Rust’s privacy rules do allow you to test private functions.
-Consider the code in Listing 11-12 with the private function `internal_adder`.
+Consider the code in listing 11-12 with the private function `internal_adder`.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs:here}}
@@ -89,11 +89,11 @@ to *src*. Cargo knows to look for integration test files in this directory. We
 can then make as many test files as we want to in this directory, and Cargo
 will compile each of the files as an individual crate.
 
-Let’s create an integration test. With the code in Listing 11-12 still in the
+Let’s create an integration test. With the code in listing 11-12 still in the
 *src/lib.rs* file, make a *tests* directory, create a new file named
-*tests/integration_test.rs*, and enter the code in Listing 11-13.
+*tests/integration_test.rs*, and enter the code in listing 11-13.
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Plik: tests/integration_test.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
@@ -164,7 +164,7 @@ create *tests/common.rs* and place a function named `setup` in it, we can add
 some code to `setup` that we want to call from multiple test functions in
 multiple test files:
 
-<span class="filename">Filename: tests/common.rs</span>
+<span class="filename">Plik: tests/common.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
@@ -195,14 +195,14 @@ After we’ve created *tests/common/mod.rs*, we can use it from any of the
 integration test files as a module. Here’s an example of calling the `setup`
 function from the `it_adds_two` test in *tests/integration_test.rs*:
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Plik: tests/integration_test.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
 ```
 
 Note that the `mod common;` declaration is the same as the module declaration
-we demonstrated in Listing 7-21. Then in the test function, we can call the
+we demonstrated in listing 7-21. Then in the test function, we can call the
 `common::setup()` function.
 
 #### Integration Tests for Binary Crates

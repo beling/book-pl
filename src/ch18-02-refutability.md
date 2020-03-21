@@ -51,7 +51,7 @@ To fix the problem where we have a refutable pattern where an irrefutable
 pattern is needed, we can change the code that uses the pattern: instead of
 using `let`, we can use `if let`. Then if the pattern doesn’t match, the code
 will just skip the code in the curly brackets, giving it a way to continue
-validly. Listing 18-9 shows how to fix the code in Listing 18-8.
+validly. Listing 18-9 shows how to fix the code in listing 18-8.
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-09/src/main.rs:here}}
@@ -62,7 +62,7 @@ patterns instead of `let`</span>
 
 We’ve given the code an out! This code is perfectly valid, although it means we
 cannot use an irrefutable pattern without receiving an error. If we give `if
-let` a pattern that will always match, such as `x`, as shown in Listing 18-10,
+let` a pattern that will always match, such as `x`, as shown in listing 18-10,
 the compiler will give a warning.
 
 ```rust

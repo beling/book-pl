@@ -1,6 +1,6 @@
 ## Referencje i Pożyczanie
 
-Z rozwiązaniem z krotką zastosowanym na Listingu 4-5 związana jest taka niedogodność,
+Z rozwiązaniem z krotką zastosowanym na listingu 4-5 związana jest taka niedogodność,
 że musieliśmy zwrócić `String` do funkcji wywołującej, by ta mogła dalej z niego korzystać
 (po wywołaniu `calculate_length`). Było tak dlatego że wspomniany `String` był przenoszony do `calculate_length`.
 
@@ -69,7 +69,7 @@ I jak w prawdziwym życiu, jeśli ktoś coś posiada, możemy to od niego pożyc
 W końcu jednak musimy mu to także oddać.
 
 Co więc się stanie gdy spróbujemy zmodyfikować coś, co pożyczyliśmy?
-Wypróbujmy kod z Listingu 4-6. Uwaga: on nie zadziała!
+Wypróbujmy kod z listingu 4-6. Uwaga: on nie zadziała!
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -227,7 +227,7 @@ reference to the data does.
 Let’s try to create a dangling reference, which Rust will prevent with a
 compile-time error:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {

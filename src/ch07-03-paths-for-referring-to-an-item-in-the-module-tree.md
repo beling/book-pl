@@ -14,9 +14,9 @@ A path can take two forms:
 Both absolute and relative paths are followed by one or more identifiers
 separated by double colons (`::`).
 
-Let’s return to the example in Listing 7-1. How do we call the
+Let’s return to the example in listing 7-1. How do we call the
 `add_to_waitlist` function? This is the same as asking, what’s the path of the
-`add_to_waitlist` function? In Listing 7-3, we simplified our code a bit by
+`add_to_waitlist` function? In listing 7-3, we simplified our code a bit by
 removing some of the modules and functions. We’ll show two ways to call the
 `add_to_waitlist` function from a new function `eat_at_restaurant` defined in
 the crate root. The `eat_at_restaurant` function is part of our library crate’s
@@ -25,7 +25,7 @@ the `pub` Keyword”][pub]<!-- ignore --> section, we’ll go into more detail
 about `pub`. Note that this example won’t compile just yet; we’ll explain why
 in a bit.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
@@ -64,8 +64,8 @@ separately into a module named `dining`, the absolute path to the
 be updated. Our preference is to specify absolute paths because it’s more
 likely to move code definitions and item calls independently of each other.
 
-Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The
-error we get is shown in Listing 7-4.
+Let’s try to compile listing 7-3 and find out why it won’t compile yet! The
+error we get is shown in listing 7-4.
 
 ```text
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
@@ -102,12 +102,12 @@ keyword to make an item public.
 
 ### Exposing Paths with the `pub` Keyword
 
-Let’s return to the error in Listing 7-4 that told us the `hosting` module is
+Let’s return to the error in listing 7-4 that told us the `hosting` module is
 private. We want the `eat_at_restaurant` function in the parent module to have
 access to the `add_to_waitlist` function in the child module, so we mark the
-`hosting` module with the `pub` keyword, as shown in Listing 7-5.
+`hosting` module with the `pub` keyword, as shown in listing 7-5.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs}}
@@ -116,7 +116,7 @@ access to the `add_to_waitlist` function in the child module, so we mark the
 <span class="caption">Listing 7-5: Declaring the `hosting` module as `pub` to
 use it from `eat_at_restaurant`</span>
 
-Unfortunately, the code in Listing 7-5 still results in an error, as shown in
+Unfortunately, the code in listing 7-5 still results in an error, as shown in
 Listing 7-6.
 
 ```text
@@ -132,14 +132,14 @@ access `hosting`. But the *contents* of `hosting` are still private; making the
 module public doesn’t make its contents public. The `pub` keyword on a module
 only lets code in its ancestor modules refer to it.
 
-The errors in Listing 7-6 say that the `add_to_waitlist` function is private.
+The errors in listing 7-6 say that the `add_to_waitlist` function is private.
 The privacy rules apply to structs, enums, functions, and methods as well as
 modules.
 
 Let’s also make the `add_to_waitlist` function public by adding the `pub`
-keyword before its definition, as in Listing 7-7.
+keyword before its definition, as in listing 7-7.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs:here}}
@@ -177,12 +177,12 @@ We can also construct relative paths that begin in the parent module by using
 `super` at the start of the path. This is like starting a filesystem path with
 the `..` syntax. Why would we want to do this?
 
-Consider the code in Listing 7-8 that models the situation in which a chef
+Consider the code in listing 7-8 that models the situation in which a chef
 fixes an incorrect order and personally brings it out to the customer. The
 function `fix_incorrect_order` calls the function `serve_order` by specifying
 the path to `serve_order` starting with `super`:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs:here}}
@@ -205,7 +205,7 @@ gets moved to a different module.
 We can also use `pub` to designate structs and enums as public, but there are a
 few extra details. If we use `pub` before a struct definition, we make the
 struct public, but the struct’s fields will still be private. We can make each
-field public or not on a case-by-case basis. In Listing 7-9, we’ve defined a
+field public or not on a case-by-case basis. In listing 7-9, we’ve defined a
 public `back_of_house::Breakfast` struct with a public `toast` field but a
 private `seasonal_fruit` field. This models the case in a restaurant where the
 customer can pick the type of bread that comes with a meal, but the chef
@@ -213,7 +213,7 @@ decides which fruit accompanies the meal based on what’s in season and in
 stock. The available fruit changes quickly, so customers can’t choose the fruit
 or even see which fruit they’ll get.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
@@ -236,9 +236,9 @@ have such a function, we couldn’t create an instance of `Breakfast` in
 `seasonal_fruit` field in `eat_at_restaurant`.
 
 In contrast, if we make an enum public, all of its variants are then public. We
-only need the `pub` before the `enum` keyword, as shown in Listing 7-10.
+only need the `pub` before the `enum` keyword, as shown in listing 7-10.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}

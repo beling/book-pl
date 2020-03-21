@@ -1,6 +1,6 @@
 ## Definiowanie i tworzenie instancji struktur
 
-Struktury są podobne do krotek, które omawiane były w Rozdziale 3. 
+Struktury są podobne do krotek, które omawiane były w rozdziale 3. 
 Podobnie do krotek, poszczególne części struktur mogą różnić się typami.
 W odróżnieniu od krotek, każdy fragment danych musisz nazwać,
 aby jasne było co każdy oznacza. W wyniku tego nazewnictwa struktury są bardziej
@@ -13,7 +13,7 @@ Nazwa struktury powinna odzwierciedlać znaczenie grupy danych
 znajdujących się w danej strukturze.
 Następnie, w nawiasach klamrowych definiujemy nazwy i typy fragmentów danych,
 które nazywamy *atrybutami*. 
-Na przykład, w Listingu 5-1 widzimy strukturę,
+Na przykład, w listingu 5-1 widzimy strukturę,
 w której znajdują się przykładowe dane profilu użytkownika.
 
 ```rust
@@ -36,7 +36,7 @@ Nie musimy podawać atrybutów w tej samej kolejności w jakiej zostały one zde
 podczas deklaracji struktury.
 Innymi słowy, definicja struktury jest ogólnym szablonem, a instancje jakby wypełniają
 dany szablon jakimiś danymi tworząc wartości typu struktury.
-Przykładowa deklaracja użytkownika pokazana jest w Listingu 5-2.
+Przykładowa deklaracja użytkownika pokazana jest w listingu 5-2.
 
 ```rust
 # struct User {
@@ -123,10 +123,10 @@ byłoby jeszcze bardziej męczące. Na szczęście, istnieje wygodny skrótowiec
 ### Używanie skrótowej inicjalizacji atrybutów gdy atrybut i wartość mają taką samą nazwę
 
 Ponieważ nazwy parametrów i atrybutów struktury są takie same, w
-Listingu 5-4 możemy użyć składni tzw. *skrótowej inicjializacji atrybutów*
+listingu 5-4 możemy użyć składni tzw. *skrótowej inicjializacji atrybutów*
 (ang. field init shorthand), aby zmienić funkcję `build_user`,
 tak aby nie zmieniać jej zachowania, ale też nie powtarzając
-`email` i `username`. Taki zabieg widzimy w Listingu 5-5.
+`email` i `username`. Taki zabieg widzimy w listingu 5-5.
 
 ```rust
 # struct User {
@@ -164,7 +164,7 @@ Do tego celu zastosujemy *składnię zmiany struktury*.
 
 Listing 5-6 obrazuje tworzenie instancji struktury `User` zapisanej do zmiennej `user2`
 bez użycia naszej nowej składni. Nadajemy nowe wartości atrybutom `email` i `username`, ale poza tym
-zostawiamy te same wartości w instancji `user1`, które przypisaliśmy w Listingu 5-2.
+zostawiamy te same wartości w instancji `user1`, które przypisaliśmy w listingu 5-2.
 
 ```rust
 # struct User {
@@ -193,7 +193,7 @@ let user2 = User {
 niektóre wartości z instancji struktury `user1`</span>
 
 Przy użyciu składni zmiany struktury możemy osiągnąć ten sam efekt mniejszym nakładem kodu,
-co widzimy w Listingu 5-7. Składnia `..` oznacza, że pozostałym atrybutom, którym nie oznaczyliśmy ręcznie
+co widzimy w listingu 5-7. Składnia `..` oznacza, że pozostałym atrybutom, którym nie oznaczyliśmy ręcznie
 wartości przypisane zostaną wartości z danej, oznaczonej instancji.
 
 ```rust
@@ -222,7 +222,7 @@ let user2 = User {
 nowych wartości atrybutom `email` oraz `username` z instancji struktury `User`,
 jednocześnie pozostawiając wartości atrybutów ze zmiennej `user1`</span>
 
-Kod przedstawiony w Listingu 5-7 tworzy też instancję w zmiennej `user2`, która
+Kod przedstawiony w listingu 5-7 tworzy też instancję w zmiennej `user2`, która
 zmienia wartości w atrybutach `email` i `username`, ale pozostawia wartości
 z atrybutów `active` i `sign_in_count` ze zmiennej `user1`.
 
@@ -262,17 +262,17 @@ uzyskać do niego dostęp.
 Możesz także definiować struktury nie posiadające żadnych atrybutów!
 Są to tzw. *struktury-jednostki* (ang. unit-like structs), bo zachowują się podobnie do `()`, czyli jednostki.
 Struktury-jednostki mogą być przydatne, kiedy chciałbyś zaimplementować cechę w typie,
-ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w Rozdziale 10.
+ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w rozdziale 10.
 
 > ### System własności danych struktury
 >
-> W definicji struktury `User` w Listingu 5-1 użyliśmy posiadanego typu `String`a
+> W definicji struktury `User` w listingu 5-1 użyliśmy posiadanego typu `String`a
 > zamiast wycinka *stringowego* typu `&str`. To świadomy wybór, gdyż chcemy, aby instancje struktury posiadały wszystkie
 > swoje dane oraz żeby te dane były nienaruszone, jeśli sama struktura jest nienaruszona.
 >
 > Struktury mogą przechowywać referencje do danych należących do czegoś innego,
 > ale do tego potrzebne byłyby informacje o *długości życia* zmiennych (ang. lifetime).
-> Jest to funkcja Rusta, o której powiemy więcej w Rozdziale 10. 
+> Jest to funkcja Rusta, o której powiemy więcej w rozdziale 10. 
 > Długość życia gwarantuje nam, że dane wskazywane przez referencję
 > są nienaruszone dopóty, dopóki struktura istnieje.
 > Załóżmy, że próbujesz przechować referencję do struktury bez podania informacji
@@ -314,6 +314,6 @@ ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w Rozd
 >   |            ^ expected lifetime parameter
 > ```
 >
-> W Rozdziale 10 pokażemy jak pozbyć się tych błędów, aby przechować
+> W rozdziale 10 pokażemy jak pozbyć się tych błędów, aby przechować
 > referencje do innych struktur, ale póki co pozbędziemy się ich po prostu
 > używając posiadanych typów, takich jak `String` zamiast referencji typu `&str`.

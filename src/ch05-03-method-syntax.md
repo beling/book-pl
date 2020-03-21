@@ -12,9 +12,9 @@ instance of the struct the method is being called on.
 
 Let’s change the `area` function that has a `Rectangle` instance as a parameter
 and instead make an `area` method defined on the `Rectangle` struct, as shown
-in Listing 5-13.
+in listing 5-13.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 #[derive(Debug)]
@@ -124,10 +124,10 @@ Let’s practice using methods by implementing a second method on the `Rectangle
 struct. This time, we want an instance of `Rectangle` to take another instance
 of `Rectangle` and return `true` if the second `Rectangle` can fit completely
 within `self`; otherwise it should return `false`. That is, we want to be able
-to write the program shown in Listing 5-14, once we’ve defined the `can_hold`
+to write the program shown in listing 5-14, once we’ve defined the `can_hold`
 method.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 fn main() {
@@ -164,9 +164,9 @@ calling the `can_hold` method. The return value of `can_hold` will be a
 Boolean, and the implementation will check whether the width and height of
 `self` are both greater than the width and height of the other `Rectangle`,
 respectively. Let’s add the new `can_hold` method to the `impl` block from
-Listing 5-13, shown in Listing 5-15.
+Listing 5-13, shown in listing 5-15.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 # #[derive(Debug)]
@@ -189,7 +189,7 @@ impl Rectangle {
 <span class="caption">Listing 5-15: Implementing the `can_hold` method on
 `Rectangle` that takes another `Rectangle` instance as a parameter</span>
 
-When we run this code with the `main` function in Listing 5-14, we’ll get our
+When we run this code with the `main` function in listing 5-14, we’ll get our
 desired output. Methods can take multiple parameters that we add to the
 signature after the `self` parameter, and those parameters work just like
 parameters in functions.
@@ -209,7 +209,7 @@ that would have one dimension parameter and use that as both width and height,
 thus making it easier to create a square `Rectangle` rather than having to
 specify the same value twice:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 # #[derive(Debug)]
@@ -232,8 +232,8 @@ namespaces created by modules. We’ll discuss modules in Chapter 7.
 
 ### Multiple `impl` Blocks
 
-Each struct is allowed to have multiple `impl` blocks. For example, Listing
-5-15 is equivalent to the code shown in Listing 5-16, which has each method
+Each struct is allowed to have multiple `impl` blocks. For example, listing
+5-15 is equivalent to the code shown in listing 5-16, which has each method
 in its own `impl` block.
 
 ```rust
@@ -256,7 +256,7 @@ impl Rectangle {
 }
 ```
 
-<span class="caption">Listing 5-16: Rewriting Listing 5-15 using multiple `impl`
+<span class="caption">Listing 5-16: Rewriting listing 5-15 using multiple `impl`
 blocks</span>
 
 There’s no reason to separate these methods into multiple `impl` blocks here,

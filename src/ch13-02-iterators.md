@@ -17,11 +17,11 @@ useful.
 
 <span class="caption">Listing 13-13: Creating an iterator</span>
 
-Once we’ve created an iterator, we can use it in a variety of ways. In Listing
+Once we’ve created an iterator, we can use it in a variety of ways. In listing
 3-5 in Chapter 3, we used iterators with `for` loops to execute some code on
 each item, although we glossed over what the call to `iter` did until now.
 
-The example in Listing 13-14 separates the creation of the iterator from the
+The example in listing 13-14 separates the creation of the iterator from the
 use of the iterator in the `for` loop. The iterator is stored in the `v1_iter`
 variable, and no iteration takes place at that time. When the `for` loop is
 called using the iterator in `v1_iter`, each element in the iterator is used in
@@ -71,11 +71,11 @@ The `Iterator` trait only requires implementors to define one method: the
 `next` method, which returns one item of the iterator at a time wrapped in
 `Some` and, when iteration is over, returns `None`.
 
-We can call the `next` method on iterators directly; Listing 13-15 demonstrates
+We can call the `next` method on iterators directly; listing 13-15 demonstrates
 what values are returned from repeated calls to `next` on the iterator created
 from the vector.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/lib.rs:here}}
@@ -114,7 +114,7 @@ consuming the iterator. As it iterates through, it adds each item to a running
 total and returns the total when iteration is complete. Listing 13-16 has a
 test illustrating a use of the `sum` method:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs:here}}
@@ -139,7 +139,7 @@ which takes a closure to call on each item to produce a new iterator. The
 closure here creates a new iterator in which each item from the vector has been
 incremented by 1. However, this code produces a warning:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,not_desired_behavior
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-17/src/main.rs:here}}
@@ -154,19 +154,19 @@ The warning we get is this:
 {{#include ../listings/ch13-functional-features/listing-13-17/output.txt}}
 ```
 
-The code in Listing 13-17 doesn’t do anything; the closure we’ve specified
+The code in listing 13-17 doesn’t do anything; the closure we’ve specified
 never gets called. The warning reminds us why: iterator adaptors are lazy, and
 we need to consume the iterator here.
 
 To fix this and consume the iterator, we’ll use the `collect` method, which we
-used in Chapter 12 with `env::args` in Listing 12-1. This method consumes the
+used in Chapter 12 with `env::args` in listing 12-1. This method consumes the
 iterator and collects the resulting values into a collection data type.
 
-In Listing 13-18, we collect the results of iterating over the iterator that’s
+In listing 13-18, we collect the results of iterating over the iterator that’s
 returned from the call to `map` into a vector. This vector will end up
 containing each item from the original vector incremented by 1.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-18/src/main.rs:here}}
@@ -190,11 +190,11 @@ the iterator and returns a Boolean. If the closure returns `true`, the value
 will be included in the iterator produced by `filter`. If the closure returns
 `false`, the value won’t be included in the resulting iterator.
 
-In Listing 13-19, we use `filter` with a closure that captures the `shoe_size`
+In listing 13-19, we use `filter` with a closure that captures the `shoe_size`
 variable from its environment to iterate over a collection of `Shoe` struct
 instances. It will return only shoes that are the specified size.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-19/src/lib.rs}}
@@ -239,7 +239,7 @@ that implementation.
 Listing 13-20 has the definition of the `Counter` struct and an associated
 `new` function to create instances of `Counter`:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-20/src/lib.rs}}
@@ -257,9 +257,9 @@ always starting new instances with a value of 0 in the `count` field.
 
 Next, we’ll implement the `Iterator` trait for our `Counter` type by defining
 the body of the `next` method to specify what we want to happen when this
-iterator is used, as shown in Listing 13-21:
+iterator is used, as shown in listing 13-21:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-21/src/lib.rs:here}}
@@ -280,12 +280,12 @@ will increment `count` and return the current value wrapped in `Some`. Once
 
 #### Using Our `Counter` Iterator’s `next` Method
 
-Once we’ve implemented the `Iterator` trait, we have an iterator! Listing 13-22
+Once we’ve implemented the `Iterator` trait, we have an iterator! listing 13-22
 shows a test demonstrating that we can use the iterator functionality of our
 `Counter` struct by calling the `next` method on it directly, just as we did
-with the iterator created from a vector in Listing 13-15.
+with the iterator created from a vector in listing 13-15.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-22/src/lib.rs:here}}
@@ -308,9 +308,9 @@ For example, if for some reason we wanted to take the values produced by an
 instance of `Counter`, pair them with values produced by another `Counter`
 instance after skipping the first value, multiply each pair together, keep only
 those results that are divisible by 3, and add all the resulting values
-together, we could do so, as shown in the test in Listing 13-23:
+together, we could do so, as shown in the test in listing 13-23:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-23/src/lib.rs:here}}

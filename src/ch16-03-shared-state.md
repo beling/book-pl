@@ -49,9 +49,9 @@ system and ownership rules, you can’t get locking and unlocking wrong.
 #### The API of `Mutex<T>`
 
 As an example of how to use a mutex, let’s start by using a mutex in a
-single-threaded context, as shown in Listing 16-12:
+single-threaded context, as shown in listing 16-12:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-12/src/main.rs}}
@@ -92,11 +92,11 @@ to change the inner `i32` to 6.
 
 Now, let’s try to share a value between multiple threads using `Mutex<T>`.
 We’ll spin up 10 threads and have them each increment a counter value by 1, so
-the counter goes from 0 to 10. The next example in Listing 16-13 will have
+the counter goes from 0 to 10. The next example in listing 16-13 will have
 a compiler error, and we’ll use that error to learn more about using
 `Mutex<T>` and how Rust helps us use it correctly.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-13/src/main.rs}}
@@ -106,14 +106,14 @@ a compiler error, and we’ll use that error to learn more about using
 guarded by a `Mutex<T>`</span>
 
 We create a `counter` variable to hold an `i32` inside a `Mutex<T>`, as we
-did in Listing 16-12. Next, we create 10 threads by iterating over a range
+did in listing 16-12. Next, we create 10 threads by iterating over a range
 of numbers. We use `thread::spawn` and give all the threads the same closure,
 one that moves the counter into the thread, acquires a lock on the `Mutex<T>`
 by calling the `lock` method, and then adds 1 to the value in the mutex. When a
 thread finishes running its closure, `num` will go out of scope and release the
 lock so another thread can acquire it.
 
-In the main thread, we collect all the join handles. Then, as we did in Listing
+In the main thread, we collect all the join handles. Then, as we did in listing
 16-2, we call `join` on each handle to make sure all the threads finish. At
 that point, the main thread will acquire the lock and print the result of this
 program.
@@ -133,12 +133,12 @@ multiple-ownership method we discussed in Chapter 15.
 
 In Chapter 15, we gave a value multiple owners by using the smart pointer
 `Rc<T>` to create a reference counted value. Let’s do the same here and see
-what happens. We’ll wrap the `Mutex<T>` in `Rc<T>` in Listing 16-14 and clone
+what happens. We’ll wrap the `Mutex<T>` in `Rc<T>` in listing 16-14 and clone
 the `Rc<T>` before moving ownership to the thread. Now that we’ve seen the
 errors, we’ll also switch back to using the `for` loop, and we’ll keep the
 `move` keyword with the closure.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-14/src/main.rs}}
@@ -189,9 +189,9 @@ guarantees atomics provide.
 
 Let’s return to our example: `Arc<T>` and `Rc<T>` have the same API, so we fix
 our program by changing the `use` line, the call to `new`, and the call to
-`clone`. The code in Listing 16-15 will finally compile and run:
+`clone`. The code in listing 16-15 will finally compile and run:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-15/src/main.rs}}

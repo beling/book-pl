@@ -37,7 +37,7 @@ information on `rustfmt`, see [its documentation][rustfmt].
 If you’ve written code in Rust, you’ve probably seen compiler warnings. For
 example, consider this code:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn do_something() {}
@@ -81,7 +81,7 @@ $ cargo fix
 If we look at *src/main.rs* again, we’ll see that `cargo fix` has changed the
 code:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn do_something() {}
@@ -123,7 +123,7 @@ $ cargo clippy
 For example, if you write a program that uses an approximation of a
 mathematical constant such as pi, as this program does:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -150,7 +150,7 @@ This lets you know that Rust has this constant defined more precisely, and that
 your program would be more correct if you used the constant instead. This code
 doesn’t result in any errors or warnings from `clippy`:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {

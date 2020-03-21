@@ -107,7 +107,7 @@ zostaje usunięta.
 
 ### Zasięg zmiennych
 
-W Rozdziale 2 przebrnęliśmy przez przykład programu napisanego w Ruście. Teraz,
+W rozdziale 2 przebrnęliśmy przez przykład programu napisanego w Ruście. Teraz,
 kiedy znamy już podstawy składni, nie będziemy umieszczać w treści przykładów
 kodu `fn main() {`. Jeśli zatem przepisujesz kod na bieżąco, musisz ręcznie
 umieszczać zaprezentowane dalej fragmenty wewnątrz funkcji `main`. Dzięki temu, 
@@ -151,7 +151,7 @@ nowy typ danych: `String` (*łańcuch znaków*).
 
 Aby zilustrować zasady systemu własności, potrzebujemy typu danych, który jest
 bardziej złożony od tych, które omawiane były w sekcji
-[„Typy danych”][data-types]<!-- ignore --> w Rozdziale 3. Wszystkie opisane tam
+[„Typy danych”][data-types]<!-- ignore --> w rozdziale 3. Wszystkie opisane tam
 typy przechowywane są na stosie i są z niego zdejmowane, kiedy skończy się ich
 zasięg. Potrzebny jest nam natomiast typ przechowujący zawarte w nim dane na
 stercie . Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
@@ -159,7 +159,7 @@ stercie . Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
 W przykładzie użyjemy typu `String`, koncentrując się na tych jego elementach,
 które odnoszą się do systemu własności. Te same elementy mają znaczenie dla
 innych złożonych typów, które dostarcza biblioteka standardowa oraz tych, które
-stworzysz sam. Typ `String` omawiany będzie dogłębnie w Rozdziale 8.
+stworzysz sam. Typ `String` omawiany będzie dogłębnie w rozdziale 8.
 
 Widzieliśmy już literały znakowe, których dane na stałe umieszczone są w treści
 programu. Takie zmienne są wygodne w użyciu, ale nieprzydatne w wielu
@@ -180,9 +180,9 @@ Podwójny dwukropek (`::`) jest operatorem umożliwiającym wykorzystanie funkcj
 `from` z przestrzeni nazw typu `String`, zamiast konieczności utworzenia
 ogólnej funkcji o przykładowej nazwie `string_from`. Ten rodzaj składni będzie
 szerzej omawiany w sekcji [„Składnia metod”][method-syntax]<!-- ignore --> w
-Rozdziale 5 oraz podczas rozważań o przestrzeniach nazw modułów w sekcji
+rozdziale 5 oraz podczas rozważań o przestrzeniach nazw modułów w sekcji
 [„Ścieżki odnoszenia się do elementów w hierarchii modułów”][paths-module-tree]<!-- ignore -->
-w Rozdziale 7.
+w rozdziale 7.
 
 Ten rodzaj łańcucha znaków *można* modyfikować:
 
@@ -263,7 +263,7 @@ danej, alokowanej na stercie. Zbadajmy teraz kilka takich sytuacji.
 #### Metody interakcji między zmiennymi a danymi: Move (*przeniesienie*)
 
 Kilka zmiennych może w Ruście odnosić się do tej samej danej na różne sposoby.
-Spójrzmy na przykład w Listingu 4-2, z wykorzystaniem liczby całkowitej:
+Spójrzmy na przykład w listingu 4-2, z wykorzystaniem liczby całkowitej:
 
 ```rust
 let x = 5;
@@ -391,7 +391,7 @@ proces kopiowania nie będzie drogą operacją w sensie czasu jej trwania.
 
 W przypadku jeśli *chcemy* wykonać głęboką kopię danych ze sterty dla typu
 `String`, a nie tylko danych ze stosu, możemy skorzystać z często stosowanej
-metody o nazwie `clone` (*klonuj*). Składnia metod będzie omawiana w Rozdziale
+metody o nazwie `clone` (*klonuj*). Składnia metod będzie omawiana w rozdziale
 5, ale ponieważ metody są popularnymi funkcjonalnościami wielu języków, zapewne
 już je wcześniej widziałeś.
 
@@ -413,7 +413,7 @@ operacja będzie kosztowna czasowo.
 #### Dane przechowywane wyłącznie na stosie: Copy (*kopiowanie*)
 
 Jest jeszcze jeden szczegół, którego nie omówiliśmy. Kod korzystający z liczb
-całkowitych, którego treść pokazano na Listingu 4-2, działa i jest prawidłowy:
+całkowitych, którego treść pokazano na listingu 4-2, działa i jest prawidłowy:
 
 ```rust
 let x = 5;
@@ -435,7 +435,7 @@ od zwykłego płytkiego kopiowania i można je zatem pominąć.
 
 Rust zawiera specjalną adnotację zwaną „cechą `Copy`”, którą można
 zaimplementować dla typów przechowywanych na stosie, takich jak liczby
-całkowite (więcej o cechach będzie w Rozdziale 10). Jeśli dany typ ma
+całkowite (więcej o cechach będzie w rozdziale 10). Jeśli dany typ ma
 zaimplementowaną cechę `Copy`, zmienną, którą przypisano do innej zmiennej,
 można dalej używać po tej operacji. Rust nie pozwoli zaimplementować cechy
 `Copy` dla żadnego typu, dla którego całości lub jakiejkolwiek jego części
@@ -464,7 +464,7 @@ do zmiennej. Przekazanie zmiennej do funkcji przeniesie ją lub skopiuje, tak ja
 przy przypisywaniu. Listing 4-3 ukazuje przykład z kilkoma adnotacjami
 ilustrującymi, kiedy zaczynają się lub kończą zasięgi zmiennych:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -504,9 +504,9 @@ tego zabraniają.
 ### Wartości zwracane i ich zasięg
 
 Wartości zwracane mogą również przenosić własność. Listing 4-4 ilustruje
-przykład z podobnymi komentarzami do tych z Listingu 4-3:
+przykład z podobnymi komentarzami do tych z listingu 4-3:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -559,7 +559,7 @@ które być może także chcielibyśmy zwrócić.
 Z funkcji można zwrócić kilka wartości za pomocą krotki. Listing 4-5 ilustruje
 ten przypadek:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn main() {

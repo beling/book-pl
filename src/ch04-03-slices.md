@@ -19,9 +19,9 @@ Funkcja `pierwsze_slowo`, jako argument przyjmuje typ `&String`. Nie chcemy
 przejmować własności, więc wszystko jest w porządku. Ale co powinniśmy zwrócić?
 Nie znamy tak naprawdę metody na odniesienie się do *części* łańcucha.
 Moglibyśmy za to zwrócić pozycję, na której znajduje się koniec słowa. Naszą
-próbę ilustruje Listing 4-7.
+próbę ilustruje listing 4-7.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn pierwsze_slowo(s: &String) -> usize {
@@ -54,7 +54,7 @@ Następnie tworzymy iterator po tablicy bajtów, przy użyciu metody `iter`:
 for (i, &item) in bajty.iter().enumerate() {
 ```
 
-Iteratory będziemy omawiać szczegółowo w Rozdziale 13. Na razie zapamiętaj, że
+Iteratory będziemy omawiać szczegółowo w rozdziale 13. Na razie zapamiętaj, że
 `iter` jest metodą, która zwraca kolejno każdy element w kolekcji, a `enumerate`
 opakowuje wynik metody `iter` i zwraca każdy element jako część krotki. Pierwszy
 wyraz krotki zwróconej przez `enumerate` to pozycja / indeks, a drugi jest
@@ -84,10 +84,10 @@ We now have a way to find out the index of the end of the first word in the
 string, but there’s a problem. We’re returning a `usize` on its own, but it’s
 only a meaningful number in the context of the `&String`. In other words,
 because it’s a separate value from the `String`, there’s no guarantee that it
-will still be valid in the future. Consider the program in Listing 4-8 that
-uses the `pierwsze_slowo` function from Listing 4-7.
+will still be valid in the future. Consider the program in listing 4-8 that
+uses the `pierwsze_slowo` function from listing 4-7.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 # fn pierwsze_slowo(s: &String) -> usize {
@@ -212,7 +212,7 @@ let slice = &s[..];
 With all this information in mind, let’s rewrite `pierwsze_slowo` to return a
 slice. The type that signifies “string slice” is written as `&str`:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 fn pierwsze_slowo(s: &String) -> &str {
@@ -228,7 +228,7 @@ fn pierwsze_slowo(s: &String) -> &str {
 }
 ```
 
-We get the index for the end of the word in the same way as we did in Listing
+We get the index for the end of the word in the same way as we did in listing
 4-7, by looking for the first occurrence of a space. When we find a space, we
 return a string slice using the start of the string and the index of the space
 as the starting and ending indices.
@@ -245,7 +245,7 @@ fn second_word(s: &String) -> &str {
 
 We now have a straightforward API that’s much harder to mess up, because the
 compiler will ensure the references into the `String` remain valid. Remember
-the bug in the program in Listing 4-8, when we got the index to the end of the
+the bug in the program in listing 4-8, when we got the index to the end of the
 first word but then cleared the string so our index was invalid? That code was
 logically incorrect but didn’t show any immediate errors. The problems would
 show up later if we kept trying to use the first word index with an emptied
@@ -253,7 +253,7 @@ string. Slices make this bug impossible and let us know we have a problem with
 our code much sooner. Using the slice version of `pierwsze_slowo` will throw a
 compile-time error:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 fn main() {
@@ -311,7 +311,7 @@ one more improvement on `pierwsze_slowo`, and that’s its signature:
 fn pierwsze_slowo(s: &String) -> &str {
 ```
 
-A more experienced Rustacean would write the signature shown in Listing 4-9
+A more experienced Rustacean would write the signature shown in listing 4-9
 instead because it allows us to use the same function on both `String` values
 and `&str` values.
 
@@ -327,7 +327,7 @@ can pass a slice of the entire `String`. Defining a function to take a string
 slice instead of a reference to a `String` makes our API more general and useful
 without losing any functionality:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 # fn pierwsze_slowo(s: &str) -> &str {

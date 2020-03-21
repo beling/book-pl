@@ -58,7 +58,7 @@ Możesz zmienić to zachowanie używając komendy `cargo new --vcs=git`.
 > dostępne opcje.
 
 Otwórz plik *Cargo.toml* w wybranym przez siebie edytorze tekstu. Zawartość
-powinna wyglądać podobnie do kodu z Listingu 1-2:
+powinna wyglądać podobnie do kodu z listingu 1-2:
 
 <span class="filename">Plik: Cargo.toml</span>
 
@@ -66,7 +66,7 @@ powinna wyglądać podobnie do kodu z Listingu 1-2:
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
+authors = ["Twoje imię i nazwisko <you@example.com>"]
 edition = "2018"
 
 [dependencies]
@@ -108,7 +108,7 @@ fn main() {
 ```
 
 Cargo wygenerował za ciebie program „Hello World!”, taki sam jak ten, który
-napisaliśmy w Listingu 1-1! Jak na razie, różnice między naszym poprzednim
+napisaliśmy w listingu 1-1! Jak na razie, różnice między naszym poprzednim
 projektem, a tym wygenerowanym przez Cargo są takie, że w Cargo kod źródłowy
 trafia do podkatalogu *src*, a w katalogu głównym pozostaje plik
 konfiguracyjny *Cargo.toml*.

@@ -44,7 +44,7 @@ API documentation for more about how to use them and when each is appropriate.
 ### Creating a New String
 
 Many of the same operations available with `Vec<T>` are available with `String`
-as well, starting with the `new` function to create a string, shown in Listing
+as well, starting with the `new` function to create a string, shown in listing
 8-11.
 
 ```rust
@@ -69,7 +69,7 @@ two examples.
 This code creates a string containing `initial contents`.
 
 We can also use the function `String::from` to create a `String` from a string
-literal. The code in Listing 8-13 is equivalent to the code from Listing 8-12
+literal. The code in listing 8-13 is equivalent to the code from listing 8-12
 that uses `to_string`.
 
 ```rust
@@ -85,7 +85,7 @@ redundant, but they all have their place! In this case, `String::from` and
 `to_string` do the same thing, so which you choose is a matter of style.
 
 Remember that strings are UTF-8 encoded, so we can include any properly encoded
-data in them, as shown in Listing 8-14.
+data in them, as shown in listing 8-14.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
@@ -105,7 +105,7 @@ use the `+` operator or the `format!` macro to concatenate `String` values.
 #### Appending to a String with `push_str` and `push`
 
 We can grow a `String` by using the `push_str` method to append a string slice,
-as shown in Listing 8-15.
+as shown in listing 8-15.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
@@ -116,7 +116,7 @@ using the `push_str` method</span>
 
 After these two lines, `s` will contain `foobar`. The `push_str` method takes a
 string slice because we don’t necessarily want to take ownership of the
-parameter. For example, the code in Listing 8-16 shows that it would be
+parameter. For example, the code in listing 8-16 shows that it would be
 unfortunate if we weren’t able to use `s2` after appending its contents to `s1`.
 
 ```rust
@@ -145,7 +145,7 @@ As a result of this code, `s` will contain `lol`.
 #### Concatenation with the `+` Operator or the `format!` Macro
 
 Often, you’ll want to combine two existing strings. One way is to use the `+`
-operator, as shown in Listing 8-18.
+operator, as shown in listing 8-18.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
@@ -175,7 +175,7 @@ First, `s2` has an `&`, meaning that we’re adding a *reference* of the second
 string to the first string because of the `s` parameter in the `add` function:
 we can only add a `&str` to a `String`; we can’t add two `String` values
 together. But wait—the type of `&s2` is `&String`, not `&str`, as specified in
-the second parameter to `add`. So why does Listing 8-18 compile?
+the second parameter to `add`. So why does listing 8-18 compile?
 
 The reason we’re able to use `&s2` in the call to `add` is that the compiler
 can *coerce* the `&String` argument into a `&str`. When we call the `add`
@@ -185,7 +185,7 @@ not take ownership of the `s` parameter, `s2` will still be a valid `String`
 after this operation.
 
 Second, we can see in the signature that `add` takes ownership of `self`,
-because `self` does *not* have an `&`. This means `s1` in Listing 8-18 will be
+because `self` does *not* have an `&`. This means `s1` in listing 8-18 will be
 moved into the `add` call and no longer be valid after that. So although `let
 s3 = s1 + &s2;` looks like it will copy both strings and create a new one, this
 statement actually takes ownership of `s1`, appends a copy of the contents of
@@ -218,7 +218,7 @@ easier to read and doesn’t take ownership of any of its parameters.
 In many other programming languages, accessing individual characters in a
 string by referencing them by index is a valid and common operation. However,
 if you try to access parts of a `String` using indexing syntax in Rust, you’ll
-get an error. Consider the invalid code in Listing 8-19.
+get an error. Consider the invalid code in listing 8-19.
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
@@ -240,7 +240,7 @@ memory.
 #### Internal Representation
 
 A `String` is a wrapper over a `Vec<u8>`. Let’s look at some of our properly
-encoded UTF-8 example strings from Listing 8-14. First, this one:
+encoded UTF-8 example strings from listing 8-14. First, this one:
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}

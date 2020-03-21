@@ -27,7 +27,7 @@ need a summary from each type, and we need to request that summary by calling a
 `summarize` method on an instance. Listing 10-12 shows the definition of a
 `Summary` trait that expresses this behavior.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
@@ -60,7 +60,7 @@ headline, the author, and the location to create the return value of
 followed by the entire text of the tweet, assuming that tweet content is
 already limited to 280 characters.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
@@ -89,7 +89,7 @@ This code prints `1 new tweet: horse_ebooks: of course, as you probably already
 know, people`.
 
 Note that because we defined the `Summary` trait and the `NewsArticle` and
-`Tweet` types in the same *lib.rs* in Listing 10-13, they’re all in the same
+`Tweet` types in the same *lib.rs* in listing 10-13, they’re all in the same
 scope. Let’s say this *lib.rs* is for a crate we’ve called `aggregator` and
 someone else wants to use our crate’s functionality to implement the `Summary`
 trait on a struct defined within their library’s scope. They would need to
@@ -97,7 +97,7 @@ bring the trait into their scope first. They would do so by specifying `use
 aggregator::Summary;`, which then would enable them to implement `Summary` for
 their type. The `Summary` trait would also need to be a public trait for
 another crate to implement it, which it is because we put the `pub` keyword
-before `trait` in Listing 10-12.
+before `trait` in listing 10-12.
 
 One restriction to note with trait implementations is that we can implement a
 trait on a type only if either the trait or the type is local to our crate.
@@ -126,9 +126,9 @@ each method’s default behavior.
 
 Listing 10-14 shows how to specify a default string for the `summarize` method
 of the `Summary` trait instead of only defining the method signature, as we did
-in Listing 10-12.
+in listing 10-12.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
@@ -153,7 +153,7 @@ the `summarize` method on an instance of `NewsArticle`, like this:
 This code prints `New article available! (Read more...)`.
 
 Creating a default implementation for `summarize` doesn’t require us to change
-anything about the implementation of `Summary` on `Tweet` in Listing 10-13. The
+anything about the implementation of `Summary` on `Tweet` in listing 10-13. The
 reason is that the syntax for overriding a default implementation is the same
 as the syntax for implementing a trait method that doesn’t have a default
 implementation.
@@ -197,7 +197,7 @@ overriding implementation of that same method.
 Now that you know how to define and implement traits, we can explore how to use
 traits to define functions that accept many different types.
 
-For example, in Listing 10-13, we implemented the `Summary` trait on the
+For example, in listing 10-13, we implemented the `Summary` trait on the
 `NewsArticle` and `Tweet` types. We can define a `notify` function that calls
 the `summarize` method on its `item` parameter, which is of some type that
 implements the `Summary` trait. To do this, we can use the `impl Trait`
@@ -338,7 +338,7 @@ ignore --> section of Chapter 17.
 ### Fixing the `largest` Function with Trait Bounds
 
 Now that you know how to specify the behavior you want to use using the generic
-type parameter’s bounds, let’s return to Listing 10-5 to fix the definition of
+type parameter’s bounds, let’s return to listing 10-5 to fix the definition of
 the `largest` function that uses a generic type parameter! Last time we tried
 to run that code, we received this error:
 
@@ -376,12 +376,12 @@ value out of `list[0]` and into the `largest` variable, resulting in this
 error.
 
 To call this code with only those types that implement the `Copy` trait, we can
-add `Copy` to the trait bounds of `T`! Listing 10-15 shows the complete code of
+add `Copy` to the trait bounds of `T`! listing 10-15 shows the complete code of
 a generic `largest` function that will compile as long as the types of the
 values in the slice that we pass into the function implement the `PartialOrd`
 *and* `Copy` traits, like `i32` and `char` do.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/main.rs}}
@@ -409,12 +409,12 @@ avoid heap allocations. Try implementing these alternate solutions on your own!
 
 By using a trait bound with an `impl` block that uses generic type parameters,
 we can implement methods conditionally for types that implement the specified
-traits. For example, the type `Pair<T>` in Listing 10-16 always implements the
+traits. For example, the type `Pair<T>` in listing 10-16 always implements the
 `new` function. But `Pair<T>` only implements the `cmp_display` method if its
 inner type `T` implements the `PartialOrd` trait that enables comparison *and*
 the `Display` trait that enables printing.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/lib.rs}}

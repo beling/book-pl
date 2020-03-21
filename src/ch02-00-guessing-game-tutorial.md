@@ -478,7 +478,7 @@ używając prefiksu `rand::`.
 
 Następnie dodajemy kolejną linię z `use`: `use rand::Rng`. `Rng` to cecha (ang. *trait*),
 która definiuje metody implementowane przez generator liczb losowych,
-i cecha ta musi być widoczna w zakresie, gdzie chcemy tych metod używać. rozdział 10 omówi cechy szczegółowo.
+i cecha ta musi być widoczna w zakresie, gdzie chcemy tych metod używać. Rozdział 10 omówi cechy szczegółowo.
 
 Dodajemy również dwie linie w funkcji main. Funkcja `rand::thread_rng` dostarczy nam do użycia konkretny generator liczb losowych:
 taki, który jest lokalny dla wątku wywołującego i seedowany z systemu operacyjnego. 
@@ -831,7 +831,7 @@ Jesteś zwycięzcą!
 
 Wspaniale! Jeszcze jedna drobna poprawka i nasza gra w zgadywankę będzie już skończona.
 Program wciąż wyświetla sekretny numer. To było przydatne podczas testów, ale na dłuższą metę psułoby zabawę.
-Usuńmy `println!` odpowiedzialną za wyświetlanie sekretnego numeru. listing 2-6 pokazuje końcową wersję programu.
+Usuńmy `println!` odpowiedzialną za wyświetlanie sekretnego numeru. Listing 2-6 pokazuje końcową wersję programu.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -848,10 +848,10 @@ Właśnie udało ci się zbudować grę w zgadywankę. Gratulacje!
 Ten projekt w praktyczny sposób zapoznał cię z wieloma konceptami Rusta:
 `let`, `match`, metodami, funkcjami powiązanymi, używaniem zewnętrznych skrzyń,
 i innymi. W najbliższych rozdziałach koncepty te będą omówione bardziej szczegółowo.
-rozdział 3 omawia koncepty obecne w większości języków programowania, takie jak zmienne,
+Rozdział 3 omawia koncepty obecne w większości języków programowania, takie jak zmienne,
 typy danych czy funkcje, i prezentuje jak należy w nich korzystać w Ruście.
-rozdział 4 odkrywa system własności, mechanizm który wyróżna Rusta spośród innych języków.
-rozdział 5 omawia składnię struktur i metod, a rozdział 6 wyjaśnia, jak działają typy numeryczne.
+Rozdział 4 odkrywa system własności, mechanizm który wyróżna Rusta spośród innych języków.
+Rozdział 5 omawia składnię struktur i metod, a rozdział 6 wyjaśnia, jak działają typy numeryczne.
 
 
 [variables-and-mutability]:

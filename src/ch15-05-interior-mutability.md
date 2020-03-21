@@ -122,7 +122,7 @@ email, send a text message, or something else. The library doesn’t need to kno
 that detail. All it needs is something that implements a trait we’ll provide
 called `Messenger`. Listing 15-20 shows the library code:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-20/src/lib.rs}}
@@ -149,7 +149,7 @@ mock object, call the `set_value` method on `LimitTracker`, and then check that
 the mock object has the messages we expect. Listing 15-21 shows an attempt to
 implement a mock object to do just that, but the borrow checker won’t allow it:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-21/src/lib.rs:here}}
@@ -193,7 +193,7 @@ This is a situation in which interior mutability can help! We’ll store the
 able to modify `sent_messages` to store the messages we’ve seen. Listing 15-22
 shows what that looks like:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-22/src/lib.rs:here}}
@@ -242,7 +242,7 @@ Listing 15-22. We’re deliberately trying to create two mutable borrows active
 for the same scope to illustrate that `RefCell<T>` prevents us from doing this
 at runtime.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,panics
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-23/src/lib.rs:here}}
@@ -254,7 +254,7 @@ same scope to see that `RefCell<T>` will panic</span>
 We create a variable `one_borrow` for the `RefMut<T>` smart pointer returned
 from `borrow_mut`. Then we create another mutable borrow in the same way in the
 variable `two_borrow`. This makes two mutable references in the same scope,
-which isn’t allowed. When we run the tests for our library, the code in Listing
+which isn’t allowed. When we run the tests for our library, the code in listing
 15-23 will compile without any errors, but the test will fail:
 
 ```text
@@ -282,7 +282,7 @@ A common way to use `RefCell<T>` is in combination with `Rc<T>`. Recall that
 access to that data. If you have an `Rc<T>` that holds a `RefCell<T>`, you can
 get a value that can have multiple owners *and* that you can mutate!
 
-For example, recall the cons list example in Listing 15-18 where we used
+For example, recall the cons list example in listing 15-18 where we used
 `Rc<T>` to allow multiple lists to share ownership of another list. Because
 `Rc<T>` holds only immutable values, we can’t change any of the values in the
 list once we’ve created them. Let’s add in `RefCell<T>` to gain the ability to
@@ -290,7 +290,7 @@ change the values in the lists. Listing 15-24 shows that by using a
 `RefCell<T>` in the `Cons` definition, we can modify the value stored in all
 the lists:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-24/src/main.rs}}
@@ -307,7 +307,7 @@ than transferring ownership from `value` to `a` or having `a` borrow from
 `value`.
 
 We wrap the list `a` in an `Rc<T>` so when we create lists `b` and `c`, they
-can both refer to `a`, which is what we did in Listing 15-18.
+can both refer to `a`, which is what we did in listing 15-18.
 
 After we’ve created the lists in `a`, `b`, and `c`, we add 10 to the value in
 `value`. We do this by calling `borrow_mut` on `value`, which uses the

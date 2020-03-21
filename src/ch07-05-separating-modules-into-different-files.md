@@ -4,13 +4,13 @@ So far, all the examples in this chapter defined multiple modules in one file.
 When modules get large, you might want to move their definitions to a separate
 file to make the code easier to navigate.
 
-For example, let’s start from the code in Listing 7-17 and move the
+For example, let’s start from the code in listing 7-17 and move the
 `front_of_house` module to its own file *src/front_of_house.rs* by changing the
-crate root file so it contains the code shown in Listing 7-21. In this case,
+crate root file so it contains the code shown in listing 7-21. In this case,
 the crate root file is *src/lib.rs*, but this procedure also works with binary
 crates whose crate root file is *src/main.rs*.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
@@ -20,9 +20,9 @@ crates whose crate root file is *src/main.rs*.
 body will be in *src/front_of_house.rs*</span>
 
 And *src/front_of_house.rs* gets the definitions from the body of the
-`front_of_house` module, as shown in Listing 7-22.
+`front_of_house` module, as shown in listing 7-22.
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
@@ -37,7 +37,7 @@ the module. To continue with our example and extract the `hosting` module to
 its own file as well, we change *src/front_of_house.rs* to contain only the
 declaration of the `hosting` module:
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
 ```
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
@@ -47,7 +47,7 @@ Then we create a *src/front_of_house* directory and a file
 *src/front_of_house/hosting.rs* to contain the definitions made in the
 `hosting` module:
 
-<span class="filename">Filename: src/front_of_house/hosting.rs</span>
+<span class="filename">Plik: src/front_of_house/hosting.rs</span>
 
 ```
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}

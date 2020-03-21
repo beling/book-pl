@@ -24,7 +24,7 @@ store. This is an important point. Vectors are implemented using generics;
 we’ll cover how to use generics with your own types in Chapter 10. For now,
 know that the `Vec<T>` type provided by the standard library can hold any type,
 and when a specific vector holds a specific type, the type is specified within
-angle brackets. In Listing 8-1, we’ve told Rust that the `Vec<T>` in `v` will
+angle brackets. In listing 8-1, we’ve told Rust that the `Vec<T>` in `v` will
 hold elements of the `i32` type.
 
 In more realistic code, Rust can often infer the type of value you want to
@@ -50,7 +50,7 @@ to modify a vector.
 ### Updating a Vector
 
 To create a vector and then add elements to it, we can use the `push` method,
-as shown in Listing 8-3.
+as shown in listing 8-3.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
@@ -67,7 +67,7 @@ we don’t need the `Vec<i32>` annotation.
 ### Dropping a Vector Drops Its Elements
 
 Like any other `struct`, a vector is freed when it goes out of scope, as
-annotated in Listing 8-4.
+annotated in listing 8-4.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
@@ -108,7 +108,7 @@ Rust has two ways to reference an element so you can choose how the program
 behaves when you try to use an index value that the vector doesn’t have an
 element for. As an example, let’s see what a program will do if it has a vector
 that holds five elements and then tries to access an element at index 100, as
-shown in Listing 8-6.
+shown in listing 8-6.
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
@@ -136,7 +136,7 @@ When the program has a valid reference, the borrow checker enforces the
 ownership and borrowing rules (covered in Chapter 4) to ensure this reference
 and any other references to the contents of the vector remain valid. Recall the
 rule that states you can’t have mutable and immutable references in the same
-scope. That rule applies in Listing 8-7, where we hold an immutable reference to
+scope. That rule applies in listing 8-7, where we hold an immutable reference to
 the first element in a vector and try to add an element to the end, which won’t
 work.
 
@@ -153,7 +153,7 @@ Compiling this code will result in this error:
 {{#include ../listings/ch08-common-collections/listing-08-07/output.txt}}
 ```
 
-The code in Listing 8-7 might look like it should work: why should a reference
+The code in listing 8-7 might look like it should work: why should a reference
 to the first element care about what changes at the end of the vector? This
 error is due to the way vectors work: adding a new element onto the end of the
 vector might require allocating new memory and copying the old elements to the
@@ -180,7 +180,7 @@ in a vector of `i32` values and print them.
 iterating over the elements using a `for` loop</span>
 
 We can also iterate over mutable references to each element in a mutable vector
-in order to make changes to all the elements. The `for` loop in Listing 8-9
+in order to make changes to all the elements. The `for` loop in listing 8-9
 will add `50` to each element.
 
 ```rust
@@ -209,7 +209,7 @@ some of the columns in the row contain integers, some floating-point numbers,
 and some strings. We can define an enum whose variants will hold the different
 value types, and then all the enum variants will be considered the same type:
 that of the enum. Then we can create a vector that holds that enum and so,
-ultimately, holds different types. We’ve demonstrated this in Listing 8-10.
+ultimately, holds different types. We’ve demonstrated this in listing 8-10.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}

@@ -26,7 +26,7 @@ Markdown notation for formatting the text. Place documentation comments just
 before the item they’re documenting. Listing 14-1 shows documentation comments
 for an `add_one` function in a crate named `my_crate`:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-01/src/lib.rs}}
@@ -55,7 +55,7 @@ function</span>
 
 #### Commonly Used Sections
 
-We used the `# Examples` Markdown heading in Listing 14-1 to create a section
+We used the `# Examples` Markdown heading in listing 14-1 to create a section
 in the HTML with the title “Examples.” Here are some other sections that crate
 authors commonly use in their documentation:
 
@@ -82,7 +82,7 @@ test` will run the code examples in your documentation as tests! Nothing is
 better than documentation with examples. But nothing is worse than examples
 that don’t work because the code has changed since the documentation was
 written. If we run `cargo test` with the documentation for the `add_one`
-function from Listing 14-1, we will see a section in the test results like this:
+function from listing 14-1, we will see a section in the test results like this:
 
 <!-- manual-regeneration
 cd listings/ch14-more-about-cargo/listing-14-01/
@@ -114,9 +114,9 @@ module as a whole.
 For example, if we want to add documentation that describes the purpose of the
 `my_crate` crate that contains the `add_one` function, we can add documentation
 comments that start with `//!` to the beginning of the *src/lib.rs* file, as
-shown in Listing 14-2:
+shown in listing 14-2:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-02/src/lib.rs:here}}
@@ -172,9 +172,9 @@ defined in the other location instead.
 For example, say we made a library named `art` for modeling artistic concepts.
 Within this library are two modules: a `kinds` module containing two enums
 named `PrimaryColor` and `SecondaryColor` and a `utils` module containing a
-function named `mix`, as shown in Listing 14-3:
+function named `mix`, as shown in listing 14-3:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-03/src/lib.rs:here}}
@@ -200,7 +200,7 @@ bring the items from `art` into scope, specifying the module structure that’s
 currently defined. Listing 14-4 shows an example of a crate that uses the
 `PrimaryColor` and `mix` items from the `art` crate:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
@@ -209,7 +209,7 @@ currently defined. Listing 14-4 shows an example of a crate that uses the
 <span class="caption">Listing 14-4: A crate using the `art` crate’s items with
 its internal structure exported</span>
 
-The author of the code in Listing 14-4, which uses the `art` crate, had to
+The author of the code in listing 14-4, which uses the `art` crate, had to
 figure out that `PrimaryColor` is in the `kinds` module and `mix` is in the
 `utils` module. The module structure of the `art` crate is more relevant to
 developers working on the `art` crate than to developers using the `art` crate.
@@ -221,10 +221,10 @@ where to look, and the structure is inconvenient because developers must
 specify the module names in the `use` statements.
 
 To remove the internal organization from the public API, we can modify the
-`art` crate code in Listing 14-3 to add `pub use` statements to re-export the
-items at the top level, as shown in Listing 14-5:
+`art` crate code in listing 14-3 to add `pub use` statements to re-export the
+items at the top level, as shown in listing 14-5:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-05/src/lib.rs:here}}
@@ -242,11 +242,11 @@ and link re-exports on the front page, as shown in Figure 14-4, making the
 <span class="caption">Figure 14-4: The front page of the documentation for `art`
 that lists the re-exports</span>
 
-The `art` crate users can still see and use the internal structure from Listing
-14-3 as demonstrated in Listing 14-4, or they can use the more convenient
-structure in Listing 14-5, as shown in Listing 14-6:
+The `art` crate users can still see and use the internal structure from listing
+14-3 as demonstrated in listing 14-4, or they can use the more convenient
+structure in listing 14-5, as shown in listing 14-6:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-06/src/main.rs:here}}
@@ -302,7 +302,7 @@ want to use on the site. If the name has been used by another crate, you will
 need to find another name and edit the `name` field in the *Cargo.toml* file
 under the `[package]` section to use the new name for publishing, like so:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 [package]
@@ -341,7 +341,7 @@ the `MIT` identifier:
 
 [spdx]: http://spdx.org/licenses/
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 [package]
@@ -364,13 +364,13 @@ With a unique name, the version, the author details that `cargo new` added
 when you created the crate, your description, and a license added, the
 *Cargo.toml* file for a project that is ready to publish might look like this:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 [package]
 name = "guessing_game"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
+authors = ["Twoje imię i nazwisko <you@example.com>"]
 edition = "2018"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"
