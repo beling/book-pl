@@ -25,7 +25,7 @@ $ cargo --version
 ```
 
 Jeżeli widzisz numer wersji, Cargo jest zainstalowane! Jeśli natomiast pojawia
-się błąd z rodzaju `komendy nie znaleziono`, powinieneś(-aś) zajrzeć do dokumentacji
+się błąd z rodzaju `komendy nie znaleziono`, powinieneś/powinnaś zajrzeć do dokumentacji
 swojej metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
 
 ### Tworzenie projektu z Cargo
@@ -247,7 +247,7 @@ Jeśli chcesz przyjrzeć się narzędziu Cargo bliżej, sprawdź [jego dokumenta
 ## Podsumowanie
 
 Jesteś już na dobrej drodze do rozpoczęcia podróży z Rustem! W tym rozdziale
-nauczyłeś się, jak:
+nauczyłeś(-aś) się, jak:
 
 * Zainstalować najnowszą, stabilną wersję Rusta z użyciem `rustup`,
 * Uaktualnić Rusta do nowszej wersji,

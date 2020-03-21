@@ -55,7 +55,7 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > przechować go na stosie. Jednak gdy chcemy dostać się do właściwych danych,
 > musimy podążyć za wskaźnikiem.
 >
-> Pomyśl o byciu rozsadzanym w restauracji. Przy wejściu podajesz ilość osób
+> Pomyśl o byciu rozsadzanym(-ą) w restauracji. Przy wejściu podajesz ilość osób
 > w swojej grupie, a pracownik znajduje pusty stolik, przy którym wszyscy się
 > pomieszczą i prowadzi ich na miejsce. Jeśli ktoś z twojej grupy sie spóźni,
 > aby was znaleźć, może zapytać, gdzie was posadzono.
@@ -253,7 +253,7 @@ Rusta automatycznie, przy zamykającej kod klamrze.
 > Uwaga: W C++ schemat dealokacji zasobów przy końcu czasu życia jakiegoś
 > elementu jest czasem nazywany *Inicjowaniem Przy Pozyskaniu Zasobu* (*Resource
 > Acquisition Is Initialization (RAII)*). Funkcja `drop` z Rusta może wydać ci
-> się znajoma, jeśli miałeś styczność ze schematami RAII.
+> się znajoma, jeśli miałeś(-aś) styczność ze schematami RAII.
 
 Schemat ten ma ogromny wpływ na sposób pisania kodu w Ruście. Na tym etapie może
 wydawać się to proste, ale program może zachować się niespodziewanie w bardziej
@@ -393,7 +393,7 @@ W przypadku jeśli *chcemy* wykonać głęboką kopię danych ze sterty dla typu
 `String`, a nie tylko danych ze stosu, możemy skorzystać z często stosowanej
 metody o nazwie `clone` (*klonuj*). Składnia metod będzie omawiana w rozdziale
 5, ale ponieważ metody są popularnymi funkcjonalnościami wielu języków, zapewne
-już je wcześniej widziałeś.
+już je wcześniej widziałeś(-aś).
 
 Oto przykład działania metody `clone`:
 

@@ -23,7 +23,7 @@ poprawnie:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/src/main.rs}}
 ```
 
-Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś otrzymać
+Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś/Powinnaś otrzymać
 następujący komunikat o błędzie:
 
 ```text
@@ -34,12 +34,12 @@ Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich
 programach. Mimo że błędy zwracane przez kompilator mogą być denerwujące,
 świadczą jedynie o tym, że twój program jeszcze nie działa prawidłowo — nie
 wykonuje w bezpieczny sposób tego, co chcesz, by robił; *nie* oznaczają,
-że nie jesteś dobrym programistą! Nawet doświadczeni Rustowcy nadal napotykają
+że nie jesteś dobrym programistą(-tką)! Nawet doświadczeni Rustowcy nadal napotykają
 błędy podczas kompilacji.
 
 Powyższy komunikat informuje cię, że przyczyną zaistniałego błędu jest to,
 że `nie możesz dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej x`,
-ponieważ próbowałeś po raz kolejny przypisać wartość do niemodyfikowalnej
+ponieważ próbowałeś(-aś) po raz kolejny przypisać wartość do niemodyfikowalnej
 zmiennej `x`.
 
 To ważne, że napotykamy błędy w trakcie kompilacji, gdy próbujemy zmienić

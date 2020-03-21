@@ -70,7 +70,7 @@ Można to porównać do zapisywania liczb na kartce, gdy znak ma znaczenie,
 zapisujemy go — odpowiednio plus lub minus przed liczbą, ale gdy liczba jest
 dodatnia i w danym kontekście nie jest to konieczne, pomijamy znak. Liczby
 całkowite ze znakiem przechowywane są z pomocą dwóch uzupełniających się
-reprezentacji (jeżeli nie jesteś pewien, co to oznacza, możesz poszukać
+reprezentacji (jeżeli nie jesteś pewien/pewna, co to oznacza, możesz poszukać
 informacji w internecie; wyjaśnienie jest poza zakresem materiału zawartego
 w tej książce).
 
@@ -100,7 +100,7 @@ przyrostka, np. `57u8` i wizualnego separatora `_`, np. `1_000`.
 | Bajt (tylko `u8`) | `b'A'`        |
 
 W takim razie skąd masz wiedzieć, którego typu całkowitego użyć? Jeżeli nie
-jesteś pewien, typy domyślnie wykorzystywane przez Rusta są w większości
+jesteś pewien/pewna, typy domyślnie wykorzystywane przez Rusta są w większości
 przypadków dobrym wyborem, dla liczb całkowitych to `i32`; ogólnie ten typ
 jest najszybszy, nawet na 64-bitowych systemach. Z typów `isize` i `usize`
 skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
@@ -327,8 +327,8 @@ Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie
 elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna,
 jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez
 bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
-Jeżeli nie jesteś pewien czy użyć wektora, czy tablicy, prawdopodobnie
-powinieneś użyć wektora. Rozdział 8 szczegółowo opisuje wektory i ich działanie.
+Jeżeli nie jesteś pewien/pewna czy użyć wektora, czy tablicy, prawdopodobnie
+powinieneś/powinnaś użyć wektora. Rozdział 8 szczegółowo opisuje wektory i ich działanie.
 
 Przykładowa sytuacja, w której lepiej użyć tablicy niz wektora ma miejsce,
 gdy nasz program potrzebuje znać nazwy wszystkich miesięcy. Jest bardzo mało

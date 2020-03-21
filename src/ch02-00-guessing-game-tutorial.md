@@ -94,7 +94,7 @@ Tak jak mówiliśmy już w rozdziale 1, każdy program rozpoczyna wykonanie w fu
 `fn` deklaruje nową funkcję, `()` informuje, że funkcja ta nie przyjmuje żadnych parametrów,
 a `{` otwiera ciało funkcji.
 
-W rozdziale 1 nauczyłeś się również, że `println!` jest makrem, które wyświetla zawartość stringa
+W rozdziale 1 nauczyłeś(-aś) się również, że `println!` jest makrem, które wyświetla zawartość stringa
 na ekranie:
 
 
@@ -240,7 +240,7 @@ Celem typów `Result` jest zakodowanie informacji o błędach. Obiekty typu `Res
 mają zdefiniowane dla siebie metody. Instancja `io::Result` ma metodę [`expect`][expect]<!-- ignore -->,
 którą możesz wywołać. Jeśli dana instancja `io::Result` będzie miała wartość `Err`,
 wywołanie metody `expect` spowoduje zawieszenie się programu i wyświetlenie na ekranie wiadomości,
-którą podałeś jako argument do `expect`. Sytuacje, gdy metoda `read_line` zwraca `Err`, najprawdopodobniej
+którą podałeś(-aś) jako argument do `expect`. Sytuacje, gdy metoda `read_line` zwraca `Err`, najprawdopodobniej
 są wynikiem błędu pochodzącego z systemu operacyjnego. Gdy zaś zwrócony `io::Result` ma wartość `Ok`,
 `expect` odczyta wartość właściwą, przechowywaną przez `Ok`, i zwróci tę wartość, gotową do użycia w programie.
 W tym przypadku wartość ta odpowiada liczbie bajtów, które użytkownik wprowadził na wejście standardowe.
@@ -385,8 +385,8 @@ ponieważ `rand` jest od nich zależny. Po ich ściągnięciu Rust je kompiluje,
 niezbędne zależności, kompiluje projekt.
 
 Gdybyś teraz bez wprowadzania jakichkolwiek zmian wywołał ponownie `cargo build`, nie zobaczyłbyś żadnego outputu.
-Cargo wie, że zależności są już ściągnięte i skompilowane, i że nie zmieniałeś nic w ich kwestii w pliku *Cargo.toml*. 
-Cargo również wie, że nie zmieniałeś nic w swoim kodzie, więc jego też nie rekompiluje. Nie ma nic do zrobienia, 
+Cargo wie, że zależności są już ściągnięte i skompilowane, i że nie zmieniałeś(-aś) nic w ich kwestii w pliku *Cargo.toml*. 
+Cargo również wie, że nie zmieniałeś(-aś) nic w swoim kodzie, więc jego też nie rekompiluje. Nie ma nic do zrobienia, 
 więc po prostu kończy swoje działanie. Jeśli wprowadzisz jakąś trywialną zmianę w pliku *src/main.rs*, zapiszesz,
 a następnie ponownie zbudujesz projekt, zobaczysz jedynie dwie linijki na wyjściu:
 
@@ -413,7 +413,7 @@ Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `
 ale jednocześnie wprowadza regresję, która zepsuje twój kod?
 
 Odpowiedzią na ten problem jest plik *Cargo.lock*, który został stworzony w momencie,
-gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *gra_zgadywanka*.
+gdy po raz pierwszy wywołałeś(-aś) `cargo build`. Znajduje się on teraz w twoim folderze *gra_zgadywanka*.
 Kiedy po raz pierwszy budujesz dany projekt, Cargo sprawdza wersje każdej z zależności, tak by kryteria były spełnione,
 i wynik zapisuje w pliku *Cargo.lock*. Od tego czasu przy każdym kolejnym budowaniu, Cargo widząc, że plik *Cargo.lock*
 istnieje, będzie pobierało z niego wersje zależności do pobrania, zamiast na nowo próbować je określać.
@@ -526,7 +526,7 @@ Podaj swoją liczbę:
 Wybrana przez ciebie liczba: 5
 ```
 
-Za każdym razem powinieneś otrzymać inny sekretny numer, jednak zawsze z zakresu od 1 do 100. Dobra robota!
+Za każdym razem powinieneś/powinnaś otrzymać inny sekretny numer, jednak zawsze z zakresu od 1 do 100. Dobra robota!
 
 
 ## Porównywanie odpowiedzi gracza z sekretnym numerem
@@ -697,7 +697,7 @@ graczowi więcej szans na odgadnięcie liczby:
 
 Jak widzisz, przenieślismy do pętli cały kod następujący po zachęcie gracza do odgadnięcia liczby.
 Pamiętaj, żeby zwiększyć wcięcia linii wewnątrz pętli o kolejne cztery spacje, następnie uruchom program
-ponownie. Zapewne zauważyłeś nowy problem - program robi dokładnie to, o co go poprosiliśmy: pyta o wprowadzenie
+ponownie. Zapewne zauważyłeś(-aś) nowy problem - program robi dokładnie to, o co go poprosiliśmy: pyta o wprowadzenie
 odgadniętej liczby w nieskończoność! Wygląda na to, że użytkownik nie może wyjść z tego programu!
 
 Użytkownik może zawsze zatrzymać program używając skrótu klawiszowego <span class="keystroke">ctrl-c</span>. Lecz
