@@ -9,12 +9,12 @@ co oznacza, że podczas kompilacji musi znać typy danych wszystkich zmiennych
 obecnych w kodzie. Zazwyczaj kompilator może wywnioskować typ danych, którego
 chcemy użyć na podstawie użytej wartość i sposobu jej wykorzystywania.
 W przypadku gdy wiele typów danych spełnia dane założenia, przykładowo gdy
-w rozdziale 2 w sekcji "Porównywanie odpowiedzi gracza z sekretnym numerem"
+w rozdziale 2 w sekcji ["Porównywanie odpowiedzi gracza z sekretnym numerem"][comparing-the-guess-to-the-secret-number]<!-- ignore -->
 konwertowaliśmy `String` do typu numerycznego wykorzystując funkcję `parse`
 musimy dodać adnotację typu danych:
 
 ```rust
-let guess: u32 = "42".parse().expect("Not a number!");
+let guess: u32 = "42".parse().expect("To nie liczba!");
 ```
 
 Jeżeli w powyższym kodzie nie dodalibyśmy adnotacji typu danych, Rust
@@ -22,14 +22,7 @@ wyświeliłby następujący komunikat o błędzie, mówiący o tym, że kompilat
 potrzebuje więcej informacji, aby określić, jakiego typu danych chcemy użyć:
 
 ```text
-error[E0282]: type annotations needed
- --> src/main.rs:2:9
-  |
-2 |     let guess = "42".parse().expect("Not a number!");
-  |         ^^^^^
-  |         |
-  |         cannot infer type for `_`
-  |         consider giving `guess` a type
+{{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
 ```
 
 Spotkasz się z odpowiednimi zapisami dla poszczególnych typów danych.
@@ -69,8 +62,8 @@ być ujemna, czy tylko dodatnia — inaczej mówiąc, czy liczba musi posiadać 
 Można to porównać do zapisywania liczb na kartce, gdy znak ma znaczenie,
 zapisujemy go — odpowiednio plus lub minus przed liczbą, ale gdy liczba jest
 dodatnia i w danym kontekście nie jest to konieczne, pomijamy znak. Liczby
-całkowite ze znakiem przechowywane są z pomocą dwóch uzupełniających się
-reprezentacji (jeżeli nie jesteś pewien/pewna, co to oznacza, możesz poszukać
+całkowite ze znakiem przechowywane są z pomocą *[Kodu uzupełnień do dwóch](https://en.wikipedia.org/wiki/Two%27s_complement)
+(jeżeli nie jesteś pewien/pewna, co to oznacza, możesz poszukać
 informacji w internecie; wyjaśnienie jest poza zakresem materiału zawartego
 w tej książce).
 
@@ -117,7 +110,7 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > zmuszą twój program do spanikowania (*panic*). Rust wykorzystuje termin 
 > "panikowania" programu wtedy, gdy program kończy działaniem zwracając błąd;
 > panikowanie szczegółowiej omówimy w sekcji [“Nieodwracalne błędy z `panic!`”][unrecoverable-errors-with-panic]<!-- ignore -->
-> w Rodziale 9.
+> w rozdziale 9.
 >
 > Kiedy kompilujesz program w trybie produkcyjnym z włączoną flagą `--release`,
 > Rust *nie* dołącza do programu mechanizmów wykrywających przekroczenia 
@@ -129,7 +122,7 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > na 0, 257 na 1 itd. Program nie spanikuje, ale zmiennym zostaną przypisane 
 > inne wartości niż byś tego oczekiwał. Poleganie na zwinięciu uzupełnia do 
 > dwóch jest uważane za błąd. Jeżeli chcesz jawnie zwijać, może skorzystać 
-> z typu danych z biblioteki standardowej o nazwie `Wrapping`.
+> z typu danych z biblioteki standardowej o nazwie [`Wrapping`][wrapping].
 
 #### Typy zmiennoprzecinkowe
 
@@ -144,11 +137,7 @@ Oto przykład pokazujący liczby zmiennoprzecinkowe w akcji:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = 2.0; // f64
-
-    let y: f32 = 3.0; // f32
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-06-floating-point/src/main.rs}}
 ```
 
 Liczby zmiennoprzecinkowe są reprezentowane zgodnie ze standardem IEEE-754.
@@ -165,22 +154,7 @@ w połączeniu z instrukcją `let`:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    // dodawanie
-    let sum = 5 + 10;
-
-    // odejmowanie
-    let difference = 95.5 - 4.3;
-
-    // mnożenie
-    let product = 4 * 30;
-
-    // dzielenie
-    let quotient = 56.7 / 32.2;
-
-    // reszta z dzielenia
-    let remainder = 43 % 5;
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
 ```
 
 Każde z wyrażeń w tych instrukcjach korzysta z operatora matematycznego
@@ -191,17 +165,13 @@ przez Rusta znajdziesz w Dodatku B.
 #### Typ logiczny (Boolean)
 
 W Ruście, podobnie jak w wielu innych językach programowania, typ Boolean może
-przyjąć jedną z dwóch wartości: `true` lub `false`. Typ logiczny w Ruście jest
-deklarowany z pomocą `bool`. Na przykład:
+przyjąć jedną z dwóch wartości: `true` lub `false`. Boolean ma wielkość jednego bajta.
+Typ logiczny w Ruście jest deklarowany z pomocą `bool`. Na przykład:
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let t = true;
-
-    let f: bool = false; // z jawną adnotacją typu danych
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-08-boolean/src/main.rs}}
 ```
 
 Jednym z głównych zastosowań typu Boolean są wyrażenia logiczne, takie jak `if`.
@@ -218,22 +188,18 @@ do ciągów znaków, które korzystają z podwójnego cudzysłowia)
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-   let c = 'z';
-   let z = 'ℤ';
-   let heart_eyed_cat = '😻';
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
 ```
 
-Typ `char` w Ruście reprezentuje Skalarną Wartość Unikod, co oznacza, że
-można w nim przedstawić dużo więcej niż tylko znaki ASCII. Litery akcentowane;
-Chińskie, japońskie i koreańskie symbole; emoji; pola o zerowej długości
-to wszystko poprawne wartości dla typu `char` w Ruście. Skalarne Wartości
-Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do
+Typ `char` w Ruście ma wielkość czterech bajtów i reprezentuje Skalarną Wartość Unikod,
+co oznacza, że można w nim przedstawić dużo więcej niż tylko znaki ASCII.
+Litery akcentowane; Chińskie, japońskie i koreańskie symbole; emoji;
+pola o zerowej długości to wszystko poprawne wartości dla typu `char` w Ruście.
+Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do
 `U+10FFFF` włącznie. Jednak “znak” nie jest na prawdę ideą w Unikodzie,
 więc twój intuicyjny sposób postrzegania tego, czym jest “znak” może nie
 być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo
-omówimy ten temat w "Ciągach znaków" w rozdziale 8.
+omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
 
 ### Typy złożone
 
@@ -253,9 +219,7 @@ opcjonalne adnotacje typów danych:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let tup: (i32, f64, u8) = (500, 6.4, 1);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-10-tuples/src/main.rs}}
 ```
 
 Zmienna `tup` odnosi się do całej krotki, gdyż krotka jest traktowana jak
@@ -266,13 +230,7 @@ tak jak poniżej:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let tup = (500, 6.4, 1);
-
-    let (x, y, z) = tup;
-
-    println!("The value of y is: {}", y);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-11-destructuring-tuples/src/main.rs}}
 ```
 
 Powyższy program najpierw tworzy krotkę i przypisuje ją do zmiennej `tup`.
@@ -288,15 +246,7 @@ indeks wartości, do której chcemy uzyskać dostęp.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x: (i32, f64, u8) = (500, 6.4, 1);
-
-    let five_hundred = x.0;
-
-    let six_point_four = x.1;
-
-    let one = x.2;
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-12-tuple-indexing/src/main.rs}}
 ```
 
 Powyższy program tworzy krotkę `x`, a następnie — po jednej zmiennej dla każdego
@@ -317,9 +267,7 @@ przecinkami, wewnątrz nawiasów kwadratowych:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let a = [1, 2, 3, 4, 5];
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
 ```
 
 Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie
@@ -336,11 +284,34 @@ prawdopodobne, by trzeba było dodać lub usunąć miesiąc, więc możemy
 skorzystać z tablicy, ponieważ wiemy, że zawsze będzie zawierać 12 pozycji.
 
 ```rust
-let months = ["January", "February", "March", "April", "May", "June", "July",
-              "August", "September", "October", "November", "December"];
+let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec",
+              "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 ```
 
-##### Uzyskiwanie dostępu do elementów Tablicy
+Typ tablicy zapisać możesz używając nawiasów kwadratowych, wewnątrz których
+umieszczone zostaną typy każdego elementu, po nim średnik, a następnie ilość elementów
+w tablicy, tak jak poniżej:
+
+```rust
+let a: [i32; 5] = [1, 2, 3, 4, 5];
+```
+
+Powyżej `i32` to typ każdego elementu. Po średniku liczba `5` oznacza, że w tej
+tablicy znajdzie się pięć elementów.
+
+Zapisywanie typu tablicy w ten sposób może wyglądać podobnie do składni alternatywnej
+składni inicjalizacji tablicy: jeśli chcesz stworzyć tablicę mającą te same wartości
+dla każdego elementu, możesz zdefiniować tą wartość, a po niej średnik oraz ilość 
+elementów - to wszystko w nawiasach kwadratowych, jak pokazano poniżej:
+
+```rust
+let a = [3; 5];
+```
+
+Tablica `a` będzie zawierać `5` elementów, a każdy z nich początkowo przyjmie wartość `3`.
+Taki sam rezultat osiągnąłby taki zapis: `let a = [3, 3, 3, 3, 3];`, ale ten pierwszy jest krótszy.
+
+##### Uzyskiwanie dostępu do elementów tablicy
 
 Tablica to obszar pamięci ulokowany na stosie. Możesz uzyskać dostęp
 do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
@@ -348,19 +319,14 @@ do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let a = [1, 2, 3, 4, 5];
-
-    let first = a[0];
-    let second = a[1];
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-14-array-indexing/src/main.rs}}
 ```
 
 W tym przykładzie, zmienna o nazwie `first` otrzyma wartość `1`, ponieważ taka
 wartość znajduje się w tablicy na miejscu o indeksie `[0]`. Zmienna o nazwie
 `second` otrzyma wartość `2` od pozycji w tablicy o indeksie `[1]`.
 
-##### Próba uzyskania dostępu do niepoprawnego elementu Tablicy
+##### Próba uzyskania dostępu do niepoprawnego elementu tablicy
 
 Co się stanie, jeśli spróbujesz uzyskać dostęp do elementu, który jest poza
 tablicą? Powiedzmy, że zmienisz wcześniejszy przykład na poniższy kod, który
@@ -369,26 +335,13 @@ poprawnie skompiluje się, ale próba uruchomienia, zakończy się błędem:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    let a = [1, 2, 3, 4, 5];
-    let index = 10;
-
-    let element = a[index];
-
-    println!("The value of element is: {}", element);
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
 Rezultatem uruchomienia tego kodu przy pomocy `cargo run` będzie:
 
 ```text
-$ cargo run
-   Compiling arrays v0.1.0 (file:///projects/arrays)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31 secs
-     Running `target/debug/arrays`
-thread '<main>' panicked at 'index out of bounds: the len is 5 but the index is
- 10', src/main.rs:6
-note: Run with `RUST_BACKTRACE=1` for a backtrace.
+{{#include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/output.txt}}
 ```
 
 Nie wystąpiły żadne błędy w trakcie kompilacji, ale uruchomienie programu
@@ -404,7 +357,7 @@ niewłaściwego bloku pamięci. Rust chroni cię przed takimi błędami. Zamiast
 pozwolić ci na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
 program. W rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
 
-[comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+[comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
 [control-flow]: ch03-05-control-flow.html#control-flow
 [strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html

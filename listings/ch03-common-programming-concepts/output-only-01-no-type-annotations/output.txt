@@ -1,0 +1,14 @@
+$ cargo build
+   Compiling brak_adnotacji_typow v0.1.0 (file:///projects/brak_adnotacji_typow)
+error[E0282]: type annotations needed
+ --> src/main.rs:2:9
+  |
+2 |     let guess = "42".parse().expect("To nie liczba!");
+  |         ^^^^^ consider giving `guess` a type
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0282`.
+error: could not compile `brak_adnotacji_typow`.
+
+To learn more, run the command again with --verbose.
