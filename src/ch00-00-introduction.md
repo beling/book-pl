@@ -210,7 +210,7 @@ na [GitHubie][book].
 W niniejszej książce znajdziesz wiele przykładów programów oraz wycinki kodu,
 w których: łańcuchy znaków w makrach `println!`, komentarze, a czasem nawet
 nazwy projektów Cargo; zostały przetłumaczone. Jest to zabieg tłumaczy mający
-na celu jak największe usunięcie przeszkody języka angielskiego w zrozumieniu
+na celu jak największe usunięcie bariery jaką stwarza użycie języka angielskiego w zrozumieniu
 pojęć zawartych w tej książce. Prosimy, abyś rozważył(a) użycie języka angielskiego, kiedy
 zdecydujesz się na udostępnienie swojego kodu, zarówno w przypadku Rusta przy udostępnianiu własnych skrzyń,
-ale także w przypadku wszelkich innych języków programowania.
+jak i w przypadku wszelkich innych języków programowania.
