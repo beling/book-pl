@@ -204,3 +204,13 @@ Pliki źródłowe, z których wygenerowana została niniejsza książka, można 
 na [GitHubie][book].
 
 [book]: https://github.com/paytchoo/book-pl/tree/master/src
+
+## Informacje od tłumaczy
+
+W niniejszej książce znajdziesz wiele przykładów programów oraz wycinki kodu,
+w których: łańcuchy znaków w makrach `println!`, komentarze, a czasem nawet
+nazwy projektów Cargo; zostały przetłumaczone. Jest to zabieg tłumaczy mający
+na celu jak największe usunięcie przeszkody języka angielskiego w zrozumieniu
+pojęć zawartych w tej książce. Prosimy, abyś rozważył(a) użycie języka angielskiego, kiedy
+zdecydujesz się na udostępnienie swojego kodu, zarówno w przypadku Rusta przy udostępnianiu własnych skrzyń,
+ale także w przypadku wszelkich innych języków programowania.
