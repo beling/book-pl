@@ -1,0 +1,9 @@
+$ cargo run
+   Compiling petle v0.1.0 (file:///projects/petle)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.32s
+     Running `target/debug/petle`
+wartość wynosi: 10
+wartość wynosi: 20
+wartość wynosi: 30
+wartość wynosi: 40
+wartość wynosi: 50
