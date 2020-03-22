@@ -103,7 +103,7 @@ Otwórz teraz plik *src/main.rs* i przyjrzyj się zawartości:
 
 ```rust
 fn main() {
-    println!("Hello, world!");
+    println!("Witaj, świecie!");
 }
 ```
 
@@ -142,10 +142,10 @@ następującym poleceniem:
 
 ```text
 $ ./target/debug/hello_cargo # lub .\target\debug\hello_cargo.exe pod Windowsem
-Hello, world!
+Witaj, świecie!
 ```
 
-Jeśli wszystko przebiegło prawidłowo, `Hello, world!` powinno ponownie
+Jeśli wszystko przebiegło prawidłowo, `Witaj, świecie!` powinno ponownie
 wyświetlić się w oknie terminala. Uruchomienie `cargo build` za pierwszym razem
 powoduje dodatkowo utworzenie przez Cargo nowego pliku w katalogu głównym o
 nazwie *Cargo.lock*, który wykorzystywany jest do śledzenia dokładnych wersji
@@ -161,7 +161,7 @@ i uruchomić program za jednym rzutem:
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
-Hello, world!
+Witaj, świecie!
 ```
 
 Zauważ, że tym razem nie wyświetliła się informacja o tym, że Cargo kompilował
@@ -175,7 +175,7 @@ $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
      Running `target/debug/hello_cargo`
-Hello, world!
+Witaj, świecie!
 ```
 
 Mamy jeszcze do dyspozycji `cargo check`. To polecenie szybko sprawdzi twój kod,
@@ -252,7 +252,7 @@ nauczyłeś(-aś) się, jak:
 * Zainstalować najnowszą, stabilną wersję Rusta z użyciem `rustup`,
 * Uaktualnić Rusta do nowszej wersji,
 * Otwierać lokalną kopię dokumentacji,
-* Napisać program „Hello, world!” używając bezpośrednio `rustc`,
+* Napisać program „Witaj, świecie!” używając bezpośrednio `rustc`,
 * Stworzyć i uruchomić nowy projekt używając konwencji Cargo.
 
 To świetna pora na stworzenie poważniejszego programu, aby przyzwyczaić się do

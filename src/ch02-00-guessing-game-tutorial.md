@@ -35,7 +35,7 @@ W tagu `authors` Cargo automatycznie wpisało dane uzyskane z twojego środowisk
 Jeśli te informacje są błędne, popraw je i zapisz plik.
 
 Jak już widziałeś(-aś) w rozdziale 1, `cargo new` tworzy dla ciebie program 
-“Hello, world!”. Otwórz plik *src/main.rs*:
+“Witaj, świecie!”. Otwórz plik *src/main.rs*:
 
 <span class="filename">Plik: src/main.rs</span>
 
