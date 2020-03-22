@@ -9,7 +9,7 @@ czytających kod.
 Oto prosty komentarz:
 
 ```rust
-// Hello, world
+// Witaj, świecie
 ```
 
 W Ruście, komentarze muszą rozpoczynać się dwoma ukośnikami i ciągną się
@@ -27,9 +27,7 @@ Komentarze mogą być też umieszczone na końcu linii zawierającej kod:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let lucky_number = 7; // Czuję, że sprzyja mi dziś szczęście
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-24-comments-end-of-line/src/main.rs}}
 ```
 
 Jednak częściej spotkasz się z zapisem, w którym komentarz znajduje się
@@ -45,4 +43,4 @@ fn main() {
 ```
 
 Rust posiada też wbudowany inny typ komentarzy, komentarze dokumentacji,
-które omówimy w rozdziale 14.
+które omówimy w sekcji "Publikacja skrzyni w Crates.io" rozdziału 14.
