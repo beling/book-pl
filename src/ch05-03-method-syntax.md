@@ -12,31 +12,12 @@ instance of the struct the method is being called on.
 
 Let’s change the `area` function that has a `Rectangle` instance as a parameter
 and instead make an `area` method defined on the `Rectangle` struct, as shown
-in listing 5-13.
+in Listing 5-13.
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-}
-
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-
-    println!(
-        "The area of the rectangle is {} square pixels.",
-        rect1.area()
-    );
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-13: Defining an `area` method on the
@@ -90,6 +71,7 @@ provide.
 > automatically adds in `&`, `&mut`, or `*` so `object` matches the signature of
 > the method. In other words, the following are the same:
 >
+<!-- CAN'T EXTRACT SEE BUG TODO -->
 > ```rust
 > # #[derive(Debug,Copy,Clone)]
 > # struct Point {
@@ -124,20 +106,13 @@ Let’s practice using methods by implementing a second method on the `Rectangle
 struct. This time, we want an instance of `Rectangle` to take another instance
 of `Rectangle` and return `true` if the second `Rectangle` can fit completely
 within `self`; otherwise it should return `false`. That is, we want to be able
-to write the program shown in listing 5-14, once we’ve defined the `can_hold`
+to write the program shown in Listing 5-14, once we’ve defined the `can_hold`
 method.
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-    let rect2 = Rectangle { width: 10, height: 40 };
-    let rect3 = Rectangle { width: 60, height: 45 };
-
-    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
-    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-14: Using the as-yet-unwritten `can_hold`
@@ -164,32 +139,18 @@ calling the `can_hold` method. The return value of `can_hold` will be a
 Boolean, and the implementation will check whether the width and height of
 `self` are both greater than the width and height of the other `Rectangle`,
 respectively. Let’s add the new `can_hold` method to the `impl` block from
-Listing 5-13, shown in listing 5-15.
+Listing 5-13, shown in Listing 5-15.
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# #[derive(Debug)]
-# struct Rectangle {
-#     width: u32,
-#     height: u32,
-# }
-#
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-15: Implementing the `can_hold` method on
 `Rectangle` that takes another `Rectangle` instance as a parameter</span>
 
-When we run this code with the `main` function in listing 5-14, we’ll get our
+When we run this code with the `main` function in Listing 5-14, we’ll get our
 desired output. Methods can take multiple parameters that we add to the
 signature after the `self` parameter, and those parameters work just like
 parameters in functions.
@@ -212,17 +173,7 @@ specify the same value twice:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# #[derive(Debug)]
-# struct Rectangle {
-#     width: u32,
-#     height: u32,
-# }
-#
-impl Rectangle {
-    fn square(size: u32) -> Rectangle {
-        Rectangle { width: size, height: size }
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
 To call this associated function, we use the `::` syntax with the struct name;
@@ -232,31 +183,15 @@ namespaces created by modules. We’ll discuss modules in Chapter 7.
 
 ### Multiple `impl` Blocks
 
-Each struct is allowed to have multiple `impl` blocks. For example, listing
-5-15 is equivalent to the code shown in listing 5-16, which has each method
+Each struct is allowed to have multiple `impl` blocks. For example, Listing
+5-15 is equivalent to the code shown in Listing 5-16, which has each method
 in its own `impl` block.
 
 ```rust
-# #[derive(Debug)]
-# struct Rectangle {
-#     width: u32,
-#     height: u32,
-# }
-#
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-}
-
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-16: Rewriting listing 5-15 using multiple `impl`
+<span class="caption">Listing 5-16: Rewriting Listing 5-15 using multiple `impl`
 blocks</span>
 
 There’s no reason to separate these methods into multiple `impl` blocks here,
