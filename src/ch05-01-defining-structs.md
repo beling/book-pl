@@ -17,12 +17,7 @@ Na przykład, w listingu 5-1 widzimy strukturę,
 w której znajdują się przykładowe dane profilu użytkownika.
 
 ```rust
-struct User {
-    username: String,
-    email: String,
-    sign_in_count: u64,
-    active: bool,
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-01/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-1: `User` definicja struktury</span>
@@ -39,19 +34,7 @@ dany szablon jakimiś danymi tworząc wartości typu struktury.
 Przykładowa deklaracja użytkownika pokazana jest w listingu 5-2.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-let user1 = User {
-    email: String::from("someone@example.com"),
-    username: String::from("someusername123"),
-    active: true,
-    sign_in_count: 1,
-};
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-02/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-2: Tworzenie instancji struktury `User`</span>
@@ -64,21 +47,7 @@ kropki aby uzyskać daną wartości i ją zmienić.
 Listing 5-3 pokazuje jak zmienić atrybut `email` w mutowalnej instancji struktury `User`.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-let mut user1 = User {
-    email: String::from("someone@example.com"),
-    username: String::from("someusername123"),
-    active: true,
-    sign_in_count: 1,
-};
-
-user1.email = String::from("anotheremail@example.com");
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-03/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-3: Zmiana atrybutu `email` instancji struktury `User`.
@@ -95,21 +64,7 @@ Atrybutowi `active` przypisana jest wartość `true`,
 a atrybutowi `sign_in_count` przypisana jest wartość `1`.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-fn build_user(email: String, username: String) -> User {
-    User {
-        email: email,
-        username: username,
-        active: true,
-        sign_in_count: 1,
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-04/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-4: Funkcja `build_user`, która jako argument 
@@ -129,21 +84,7 @@ tak aby nie zmieniać jej zachowania, ale też nie powtarzając
 `email` i `username`. Taki zabieg widzimy w listingu 5-5.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-fn build_user(email: String, username: String) -> User {
-    User {
-        email,
-        username,
-        active: true,
-        sign_in_count: 1,
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-05/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-5: Funkcja `build_user`
@@ -167,26 +108,7 @@ bez użycia naszej nowej składni. Nadajemy nowe wartości atrybutom `email` i `
 zostawiamy te same wartości w instancji `user1`, które przypisaliśmy w listingu 5-2.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-# let user1 = User {
-#     email: String::from("someone@example.com"),
-#     username: String::from("someusername123"),
-#     active: true,
-#     sign_in_count: 1,
-# };
-#
-let user2 = User {
-    email: String::from("another@example.com"),
-    username: String::from("anotherusername567"),
-    active: user1.active,
-    sign_in_count: user1.sign_in_count,
-};
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-06/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-6: Tworzenie nowej instancji struktury `User` pozostawiając
@@ -197,25 +119,7 @@ co widzimy w listingu 5-7. Składnia `..` oznacza, że pozostałym atrybutom, kt
 wartości przypisane zostaną wartości z danej, oznaczonej instancji.
 
 ```rust
-# struct User {
-#     username: String,
-#     email: String,
-#     sign_in_count: u64,
-#     active: bool,
-# }
-#
-# let user1 = User {
-#     email: String::from("someone@example.com"),
-#     username: String::from("someusername123"),
-#     active: true,
-#     sign_in_count: 1,
-# };
-#
-let user2 = User {
-    email: String::from("another@example.com"),
-    username: String::from("anotherusername567"),
-    ..user1
-};
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-07/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 5-7: Użycie składni zmiany struktury w celu przypisania
@@ -240,11 +144,7 @@ a następnie typy twojej nowej krotki.
 Dla przykładu, tutaj pokazane są działania na dwóch strukturach-krotkach, tj. `Color` i `Point`:
 
 ```rust
-struct Color(i32, i32, i32);
-struct Point(i32, i32, i32);
-
-let black = Color(0, 0, 0);
-let origin = Point(0, 0, 0);
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-01-tuple-structs/src/main.rs:here}}
 ```
 
 Zauważ, że `black` i `origin` mają różne typy, bo są instancjami różnych struktur-krotek.
@@ -280,6 +180,8 @@ ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w rozd
 >
 > <span class="filename">Nazwa pliku: src/main.rs</span>
 >
+> <!-- CAN'T EXTRACT SEE https://github.com/rust-lang/mdBook/issues/1127 -->
+>
 > ```rust,ignore,does_not_compile
 > struct User {
 >     username: &str,
@@ -290,8 +192,8 @@ ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w rozd
 >
 > fn main() {
 >     let user1 = User {
->         email: "someone@example.com",
->         username: "someusername123",
+>         email: "ktos@example.com",
+>         username: "jakisusername123",
 >         active: true,
 >         sign_in_count: 1,
 >     };
@@ -301,19 +203,36 @@ ale sama struktura nie zawiera w sobie żadnych danych. Więcej o cechach w rozd
 > Kompilator da ci znać, że potrzebuje specyfikatoru długości życia:
 >
 > ```text
+> $ cargo run
+>    Compiling struktury v0.1.0 (file:///projects/struktury)
 > error[E0106]: missing lifetime specifier
->  -->
+>  --> src/main.rs:2:15
 >   |
 > 2 |     username: &str,
 >   |               ^ expected lifetime parameter
 >
 > error[E0106]: missing lifetime specifier
->  -->
+>  --> src/main.rs:3:12
 >   |
 > 3 |     email: &str,
 >   |            ^ expected lifetime parameter
+>
+> error: aborting due to 2 previous errors
+>
+> For more information about this error, try `rustc --explain E0106`.
+> error: could not compile `struktury`.
+>
+> To learn more, run the command again with --verbose.
 > ```
+
 >
 > W rozdziale 10 pokażemy jak pozbyć się tych błędów, aby przechować
 > referencje do innych struktur, ale póki co pozbędziemy się ich po prostu
 > używając posiadanych typów, takich jak `String` zamiast referencji typu `&str`.
+
+<!-- manual-regeneration
+for the error above
+after running update-rustc.sh:
+pbcopy < listings/ch05-using-structs-to-structure-related-data/no-listing-02-reference-in-struct/output.txt
+paste above
+add `> ` before every line -->
