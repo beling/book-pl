@@ -1,4 +1,4 @@
-## Zmienne i ich Modyfikowalność
+## Zmienne i ich modyfikowalność
 
 Tak jak wspomniano w rozdziale 2, zmienne są domyślnie niemodyfikowalne
 (*immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do

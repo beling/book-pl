@@ -154,7 +154,7 @@ operator, as shown in listing 8-18.
 <span class="caption">Listing 8-18: Using the `+` operator to combine two
 `String` values into a new `String` value</span>
 
-The string `s3` will contain `Hello, world!` as a result of this code. The
+The string `s3` will contain `Witaj, świecie!` as a result of this code. The
 reason `s1` is no longer valid after the addition and the reason we used a
 reference to `s2` has to do with the signature of the method that gets called
 when we use the `+` operator. The `+` operator uses the `add` method, whose
@@ -272,7 +272,7 @@ encoded in UTF-8, the first byte of `З` is `208` and the second is `151`, so
 own. Returning `208` is likely not what a user would want if they asked for the
 first letter of this string; however, that’s the only data that Rust has at
 byte index 0. Users generally don’t want the byte value returned, even if the
-string contains only Latin letters: if `&"hello"[0]` were valid code that
+string contains only Latin letters: if `&"witaj"[0]` were valid code that
 returned the byte value, it would return `104`, not `h`. To avoid returning an
 unexpected value and causing bugs that might not be discovered immediately,
 Rust doesn’t compile this code at all and prevents misunderstandings early in

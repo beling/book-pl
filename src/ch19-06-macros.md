@@ -28,7 +28,7 @@ some additional powers that functions don’t.
 
 A function signature must declare the number and type of parameters the
 function has. Macros, on the other hand, can take a variable number of
-parameters: we can call `println!("hello")` with one argument or
+parameters: we can call `println!("witaj")` with one argument or
 `println!("hello {}", name)` with two arguments. Also, macros are expanded
 before the compiler interprets the meaning of the code, so a macro can, for
 example, implement a trait on a given type. A function can’t, because it gets

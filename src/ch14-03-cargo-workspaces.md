@@ -182,7 +182,7 @@ copy output below; the output updating script doesn't handle subdirectories in p
 $ cargo run -p adder
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
-Hello, world! 10 plus one is 11!
+Witaj, świecie! 10 plus one is 11!
 ```
 
 This runs the code in *adder/src/main.rs*, which depends on the `add-one` crate.
