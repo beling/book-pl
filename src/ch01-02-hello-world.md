@@ -46,7 +46,7 @@ W Windows CMD, wpisz to:
 Następnie utwórz nowy plik źródłowy i nazwij go *main.rs*. Pliki języka Rust
 zawsze zakończone są rozszerzeniem *.rs*. Jeśli w nazwie pliku znajduje się
 więcej niż jedno słowo, użyj znaku podkreślenia jako separatora. Na przykład,
-powinieneś(-aś) napisać *hello_world.rs* zamiast *helloworld.rs*.
+powinieneś/powinnnaś napisać *hello_world.rs* zamiast *helloworld.rs*.
 
 Otwórz plik *main.rs*, który właśnie utworzyłeś i wprowadź kod podany w
 Listingu 1-1:
