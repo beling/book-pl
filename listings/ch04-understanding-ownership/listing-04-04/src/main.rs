@@ -2,7 +2,7 @@ fn main() {
     let s1 = daje_wlasnosc();       // daje_wlasnosc przenosi zwracaną
                                     // wartość do s1.
 
-    let s2 = String::from("hello"); // Rozpoczyna się zakres s2.
+    let s2 = String::from("witaj"); // Rozpoczyna się zakres s2.
 
     let s3 = bierze_i_oddaje(s2);   // s2 zostaje przeniesiona do
                                     // bierze_i_oddaje, która jednocześnie
@@ -15,7 +15,7 @@ fn daje_wlasnosc() -> String {                // daje_wlasnosc przenosi jej
                                               // wartość zwracaną do funkcji,
                                               // która ją wywołała.
 
-    let jakis_string = String::from("hello"); // Początek zasięgu jakis_string.
+    let jakis_string = String::from("witaj"); // Początek zasięgu jakis_string.
 
     jakis_string                              // jakis_string jest zwracany i
                                               // przeniesiony do funkcji
