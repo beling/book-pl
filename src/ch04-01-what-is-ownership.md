@@ -60,9 +60,10 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > pomieszczą i prowadzi ich na miejsce. Jeśli ktoś z twojej grupy sie spóźni,
 > aby was znaleźć, może zapytać, gdzie was posadzono.
 >
-> Odkładanie na stosie jest szybsze od alokacji na stercie, ponieważ nigdy nie
-> trzeba szukać miejsca na dodanie nowych danych; to miejsce znajduje się zawsze
-> na szczycie stosu. Alokacja na stercie natomiast wymaga więcej pracy, ponieważ
+> Odkładanie na stosie jest szybsze od alokacji na stercie, ponieważ system 
+> operacyjny nigdy nie musi szukać miejsca na dodanie nowych danych;
+> to miejsce znajduje się zawsze na szczycie stosu.
+> Alokacja na stercie natomiast wymaga więcej pracy, ponieważ
 > system operacyjny musi w pierwszej kolejności znaleźć wystarczająco dużo
 > miejsca, aby dane się zmieściły. a następnie przeprowadzić niezbędne operacje,
 > by przygotować się na następną alokację.
@@ -119,7 +120,7 @@ zmiennych. Zasięgiem elementu nazywamy obszar programu, wewnątrz którego dany
 element zachowuje ważność. Powiedzmy, że mamy zmienną, która wygląda tak:
 
 ```rust
-let s = "hello";
+let s = "witaj";
 ```
 
 Zmienna `s` odnosi się do literału znakowego, którego wartość jest ustalona w
@@ -128,11 +129,7 @@ zadeklarowano, do końca bieżącego *zasięgu*. Listing 4-1 zawiera komentarze
 wyjaśniające, gdzie zmienna `s` zachowuje ważność:
 
 ```rust
-{                      // s nie jest tu ważna - jeszcze jej nie zadeklarowano
-    let s = "hello";   // od tego momentu s jest ważna
-
-    // jakieś operacje na s
-}                      // bieżący zasięg się kończy - s traci ważność
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-01/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 4-1: Zmienna, oraz zasięg, w którym zachowuje ona
@@ -173,7 +170,7 @@ przekształcić niemodyfikowalny literał znakowy w zmienną typu `String` za po
 funkcji `from`. Wygląda to tak:
 
 ```rust
-let s = String::from("hello");
+let s = String::from("witaj");
 ```
 
 Podwójny dwukropek (`::`) jest operatorem umożliwiającym wykorzystanie funkcji
@@ -187,11 +184,7 @@ w rozdziale 7.
 Ten rodzaj łańcucha znaków *można* modyfikować:
 
 ```rust
-let mut s = String::from("hello");
-
-s.push_str(", world!"); // push_str() dodaje literał do zmiennej String
-
-println!("{}", s); // To spowoduje wyświetlenie tekstu: `hello, world!`
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-01-can-mutate-string/src/main.rs:here}}
 ```
 
 Jaka jest zatem różnica? Dlaczego `String` może być modyfikowalny, a literał
@@ -235,12 +228,7 @@ kiedy skończy się zasięg zmiennej, będącej jej właścicielem. Oto wersja n
 przykładu z listingu 4-1, który używa typu `String` zamiast literału:
 
 ```rust
-{
-    let s = String::from("hello"); // s jest ważna od tego momentu
-
-    // jakieś operacje na s
-}                                  // bieżący zasięg się kończy - s traci
-                                   // ważność
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
 ```
 
 Istnieje oczywisty moment, w którym możemy zwrócić pamięć wykorzystywaną przez
@@ -266,8 +254,7 @@ Kilka zmiennych może w Ruście odnosić się do tej samej danej na różne spos
 Spójrzmy na przykład w listingu 4-2, z wykorzystaniem liczby całkowitej:
 
 ```rust
-let x = 5;
-let y = x;
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-02/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 4-2: Przypisanie całkowitej wartości zmiennej `x`
@@ -282,8 +269,7 @@ znanym, ustalonym rozmiarze, więc obie wartości `5` zostają odłożone na sto
 Teraz przyjrzyjmy się wersji z typem `String`:
 
 ```rust
-let s1 = String::from("hello");
-let s2 = s1;
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-03-string-move/src/main.rs:here}}
 ```
 
 Wygląda to bardzo podobnie do wcześniejszego kodu, więc możemy zakładać, że jego
@@ -300,7 +286,7 @@ stercie, który zawiera tekst.
 <img alt="String w pamięci" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Rysunek 4-1: Reprezentacja pamięci dla typu `String`
-przechowującego wartość `"hello"` przypisaną do `s1`</span>
+przechowującego wartość `"witaj"` przypisaną do `s1`</span>
 
 Znacznik `length` wskazuje, ile bajtów pamięci zajmuje bieżący ciąg znaków w
 zmiennej typu `String`, natomiast `capacity` przechowuje dane o całkowitej
@@ -344,27 +330,14 @@ zasięg `s1` się kończy. Zobacz, co stanie się przy próbie użycia zmiennej 
 po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
 
 ```rust,ignore,does_not_compile
-let s1 = String::from("hello");
-let s2 = s1;
-
-println!("{}, world!", s1);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}
 ```
 
 Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów
 przy użyciu nieważnych zmiennych:
 
 ```text
-error[E0382]: use of moved value: `s1`
- --> src/main.rs:5:28
-  |
-3 |     let s2 = s1;
-  |         -- value moved here
-4 |
-5 |     println!("{}, world!", s1);
-  |                            ^^ value used here after move
-  |
-  = note: move occurs because `s1` has type `std::string::String`, which does
-  not implement the `Copy` trait
+{{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
 ```
 
 Jeśli zdarzyło ci się słyszeć terminy „płytka kopia” oraz „głęboka kopia” przy
@@ -398,10 +371,7 @@ już je wcześniej widziałeś(-aś).
 Oto przykład działania metody `clone`:
 
 ```rust
-let s1 = String::from("hello");
-let s2 = s1.clone();
-
-println!("s1 = {}, s2 = {}", s1, s2);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-05-clone/src/main.rs:here}}
 ```
 
 Ten przykład działa bez problemu i ilustruje on celowe odtworzenie zachowania
@@ -416,10 +386,7 @@ Jest jeszcze jeden szczegół, którego nie omówiliśmy. Kod korzystający z li
 całkowitych, którego treść pokazano na listingu 4-2, działa i jest prawidłowy:
 
 ```rust
-let x = 5;
-let y = x;
-
-println!("x = {}, y = {}", x, y);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-06-copy/src/main.rs:here}}
 ```
 
 Zdaje się on przeczyć temu, czego przed chwilą się nauczyliśmy: nie mamy
@@ -467,29 +434,7 @@ ilustrującymi, kiedy zaczynają się lub kończą zasięgi zmiennych:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let s = String::from("hello");  // s comes into scope.
-
-    bierze_na_wlasnosc(s);      // Wartość zmiennej s przenosi się do funkcji...
-                                // ...i w tym miejscu zmienna jest już nieważna.
-
-    let x = 5;                  // Zaczyna się zasięg zmiennej x.
-
-    robi_kopie(x);              // Wartość x przeniosłaby się do funkcji, ale
-                                // typ i32 ma cechę Copy, więc w dalszym ciągu
-                                // można używać zmiennej x.
-
-} // Tu kończy sie zasięg zmiennych x, a potem s. Ale ponieważ wartość s
-  // została przeniesiona, nie dzieje się nic szczególnego.
-
-fn bierze_na_wlasnosc(jakis_string: String) { // Zaczyna się zasięg some_string.
-    println!("{}", jakis_string);
-} // Tu kończy się zasięg jakis_string i wywołana zostaje funkcja `drop`.
-  // Zajmowana pamięć zostaje zwolniona.
-
-fn robi_kopie(jakas_calkowita: i32) { // Zaczyna się zasięg jakas_calkowita.
-    println!("{}", jakas_calkowita);
-} // Tu kończy się zasięg jakas_calkowita. Nic szczególnego się nie dzieje.
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-03/src/main.rs}}
 ```
 
 <span class="caption">Listing 4-3: Funkcje z adnotacjami dotyczącymi własności i
@@ -509,36 +454,7 @@ przykład z podobnymi komentarzami do tych z listingu 4-3:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let s1 = daje_wlasnosc();       // daje_wlasnosc przenosi zwracaną
-                                    // wartość do s1.
-
-    let s2 = String::from("hello"); // Rozpoczyna się zakres s2.
-
-    let s3 = bierze_i_oddaje(s2);   // s2 zostaje przeniesiona do
-                                    // bierze_i_oddaje, która jednocześnie
-                                    // przenosi swoją wartość zwracaną do s3.
-} // Tutaj kończy się zasięg s3 i jej dane zostają usunięte. Zasięg s2 też, ale
-  // ponieważ jej dane przeniesiono, nic się nie dziejej. Zasięg s1 kończy się,
-  // a jej dane zostają usunięte.
-
-fn daje_wlasnosc() -> String {                // daje_wlasnosc przenosi jej
-                                              // wartość zwracaną do funkcji,
-                                              // która ją wywołała.
-
-    let jakis_string = String::from("hello"); // Początek zasięgu jakis_string.
-
-    jakis_string                              // jakis_string jest zwracany i
-                                              // przeniesiony do funkcji
-                                              // wywołującej.
-}
-
-// bierze_i_oddaje pobiera dane w zmiennej String i zwraca je w innej.
-fn bierze_i_oddaje(a_string: String) -> String { // Rozpoczyna się zasięg
-                                                 // zmiennej a_string.
-
-    a_string // a_string zostaje zwrócona i przeniesiona do funkcji wywołującej.
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-04/src/main.rs}}
 ```
 
 <span class="caption">Listing 4-4: Przenoszenie własności wartości
@@ -562,19 +478,7 @@ ten przypadek:
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let s1 = String::from("hello");
-
-    let (s2, len) = oblicz_dlugosc(s1);
-
-    println!("Długość '{}' wynosi {}.", s2, len);
-}
-
-fn oblicz_dlugosc(s: String) -> (String, usize) {
-    let dlugosc = s.len(); // len() zwraca długość łańcucha znaków.
-
-    (s, dlugosc)
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-05/src/main.rs}}
 ```
 
 <span class="caption">Listing 4-5: Zwracanie własności przez argumenty</span>
@@ -583,7 +487,7 @@ Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest
 powszechnie. Na szczęście dla nas, Rust wyposażony jest w funkcjonalność
 obsługującą takie przypadki, zwaną *referencje*.
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html#typy-danych
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#method-syntax
+[method-syntax]: ch05-03-method-syntax.html#method-syntax 
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
