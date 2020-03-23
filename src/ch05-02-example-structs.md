@@ -12,19 +12,7 @@ w jaki możemy to wykonać.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let width1 = 30;
-    let height1 = 50;
-
-    println!(
-        "Pole prostokąta wynosi {} pikseli kwadratowych."
-        area(width1, height1)
-    );
-}
-
-fn area(width: u32, height: u32) -> u32 {
-    height * width
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
 ```
 
 <span class="caption">Listing 5-8: Obliczanie pola prostokąta o szerokości i wysokości
@@ -33,7 +21,7 @@ podanych jako osobne argumenty</span>
 Uruchommy program komendą `cargo run`:
 
 ```text
-Pole prostokąta wynosi 1500 pikseli kwadratowych.
+{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
 ```
 
 Pomimo że program z listingu 5-8 wygląda dobrze i poprawnie oblicza pole prostokąta
@@ -43,7 +31,7 @@ Szerokość i wysokość są blisko ze sobą spokrewnione, bo razem opisują pew
 Problem w tym kodzie widnieje w sygnaturze funkcji `area`:
 
 ```rust,ignore
-fn area(width: u32, height: u32) -> u32 {
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:here}}
 ```
 
 Funkcja `area` ma wyliczyć pole jakiegoś prostokąta, ale przecież
@@ -62,18 +50,7 @@ Listing 5-9 pokazuje jeszcze jedną wersję programu wykorzystującego krotki.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let rect1 = (30, 50);
-
-    println!(
-        "Pole prostokąta wynosi {} pikseli kwadratowych."
-        area(rect1)
-    );
-}
-
-fn area(dimensions: (u32, u32)) -> u32 {
-    dimensions.0 * dimensions.1
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-09/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-9: Określenie szerokości i wysokości prostokąta
@@ -103,23 +80,7 @@ całość jak i pojedyncze jej części, tak jak w listingu 5-10.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-
-    println!(
-        "Pole prostokąta wynosi {} pikseli kwadratowych."
-        area(&rect1)
-    );
-}
-
-fn area(rectangle: &Rectangle) -> u32 {
-    rectangle.width * rectangle.height
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-10/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-10: Definicja struktury `Rectangle`.
@@ -158,24 +119,15 @@ To jednakowoż nie zadziała.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-
-    println!("rect1 to {}", rect1);
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-11: Próba wyświetlenia instancji `Rectangle` </span>
 
-Podczas próby uruchomienia tego kodu wyświetlany jest błąd z poniższym komunikatem:
+Podczas próby kompilacji tego kodu wyświetlany jest błąd z poniższym komunikatem:
 
 ```text
-error[E0277]: the trait bound `Rectangle: std::fmt::Display` is not satisfied
+{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:3}}
 ```
 
 Makro `println!` może formatować na wiele sposobów, a domyślnie para nawiasów klamrowych
@@ -195,8 +147,7 @@ więc z tego powodu struktury nie implementują automatycznie cechy `Display`.
 Jeśli będziemy czytać dalej znajdziemy taką przydatną informację:
 
 ```text
-`Rectangle` cannot be formatted with the default formatter; try using
-`:?` instead if you are using a format string
+{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
 ```
 
 Jesteśmy poinformowani, że podana przez nas struktura nie może być użyta
@@ -208,17 +159,16 @@ przekazuje `println!`, że chcemy użyć formatu wyjścia o nazwie `Debug`.
 Cecha Debug pozwala nam wypisać strukturę w sposób użyteczny dla deweloperów,
 pozwalając nam na obejrzenie jej wartości podczas debugowania kodu.
 
-Uruchommy kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
+Skompilujmy kod z tymi zmianami. A niech to! Nadal pojawia się komunikat o błędzie:
 
 ```text
-error[E0277]: the trait bound `Rectangle: std::fmt::Debug` is not satisfied
+{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:3}}
 ```
 
 Ale kompilator ponownie daje nam pomocny komunikat:
 
 ```text
-`Rectangle` cannot be formatted using `:?`; if it is defined in your
-crate, add `#[derive(Debug)]` or manually implement it
+{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
 ```
 
 Powyższy komunikat informuje nas, że cecha `Debug` nie jest zaimplementowana dla
@@ -232,17 +182,7 @@ struktury, jak w listingu 5-12.
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-fn main() {
-    let rect1 = Rectangle { width: 30, height: 50 };
-
-    println!("rect1 to {}", rect1);
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/src/main.rs}}
 ```
 
 <span class="caption">Listing 5-12: Dodanie adnotacji nadającą cechę `Debug`
@@ -252,7 +192,7 @@ Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
 ukaże się poniższy tekst:
 
 ```text
-rect1 to Rectangle { width: 30, height: 50 }
+{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
 ```
 
 No nieźle! Nie jest to może najpiękniejsza reprezentacja, ale spełnia swoje zadanie i
@@ -263,10 +203,7 @@ w takich sytuacjach możemy użyć `{:#?}` zamiast `{:?}` w makrze `println!`.
 Użycie stylu `{:#?}` w tym przypadku wyglądało będzie tak:
 
 ```text
-rect1 to Rectangle {
-    width: 30,
-    height: 50
-}
+{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
 ```
 
 Rust oddaje nam do użytku cały szereg cech, które możemy nadać za pomocą adnotacji `derive`,
