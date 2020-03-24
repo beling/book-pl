@@ -135,12 +135,12 @@ Uwaga: zakres życia referencji zaczyna się w miejscu jej utworzenia, kończy 
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
 ```
 
-Zakres życia niemutowalnych referencji `r1` i `r2` kończy się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
+Zakresy życia niemutowalnych referencji `r1` i `r2` kończą się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
 
 Błędy kompilacji związane z pożyczaniem mogą być czasami frustrujące. Pamiętajmy jednak, że nierzadko wskazują one potencjalne błędy, dokładnie wskazując problem, i to na wczesnym etapie, w czasie kompilacji, a nie wykonywania programu.
 Dzięki nim nie musimy odkrywać, dlaczego nasze dane są inne niż się spodziewaliśmy.
 
-### Dangling References
+### Wiszące referencje
 
 In languages with pointers, it’s easy to erroneously create a *dangling
 pointer*, a pointer that references a location in memory that may have been
