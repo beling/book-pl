@@ -114,7 +114,7 @@ wiele mutowalnych referencji, ale nie *równocześnie*:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
 ```
 
-Podobne ograniczenie dotyczy mieszania mutowalnych i niemutowalnych referencji. Następujący kod nie skompiluje się:
+Podobne ograniczenie dotyczy mieszania referencji mutowalnych z niemutowalnymi. Następujący kod nie skompiluje się:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/src/main.rs:here}}
@@ -126,24 +126,16 @@ Kompilator wyświetli następujący komunikat błędu:
 {{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
 ```
 
-Whew! We *also* cannot have a mutable reference while we have an immutable one.
-Users of an immutable reference don’t expect the values to suddenly change out
-from under them! However, multiple immutable references are okay because no one
-who is just reading the data has the ability to affect anyone else’s reading of
-the data.
+Fiu, fiu! Mutowalnej referencji nie możemy mieć *także* gdy mamy niemutowalną.
+Użytkownicy niemutowalnej referencji nie spodziewają się, że wartość do której ta referencja się odnosi, może się nagle zmienić! Jednakże, istnienie wielu niemutowalnych referencji niczemu nie zagraża, bo nie dają one możliwość zmiany danych i wpłynięcia na to, co odczytają inni.
 
-Note that a reference’s scope starts from where it is introduced and continues
-through the last time that reference is used. For instance, this code will
-compile because the last usage of the immutable references occurs before the
-mutable reference is introduced:
+Uwaga: zakres życia referencji zaczyna się w miejscu jej utworzenia, kończy się zaś w miejscu jej ostatniego użycia. Przykładowo, następujący kod skompiluje się, bo ostatnie użycie niemutowalnej referencji występuje przed wprowadzeniem mutowalnej:
 
 ```rust,edition2018
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
 ```
 
-The scopes of the immutable references `r1` and `r2` end after the `println!`
-where they are last used, which is before the mutable reference `r3` is
-created. These scopes don’t overlap, so this code is allowed.
+Zakres życia niemutowalnych referencji `r1` i `r2` kończy się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
 
 Even though borrowing errors may be frustrating at times, remember that it’s the
 Rust compiler pointing out a potential bug early (at compile time rather than
