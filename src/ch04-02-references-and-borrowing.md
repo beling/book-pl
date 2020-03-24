@@ -137,10 +137,8 @@ Uwaga: zakres życia referencji zaczyna się w miejscu jej utworzenia, kończy 
 
 Zakres życia niemutowalnych referencji `r1` i `r2` kończy się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
 
-Even though borrowing errors may be frustrating at times, remember that it’s the
-Rust compiler pointing out a potential bug early (at compile time rather than
-at runtime) and showing you exactly where the problem is. Then you don’t have
-to track down why your data isn’t what you thought it was.
+Błędy kompilacji związane z pożyczaniem mogą być czasami frustrujące. Pamiętajmy jednak, że nierzadko wskazują one potencjalne błędy, dokładnie wskazując problem, i to na wczesnym etapie, w czasie kompilacji, a nie wykonywania programu.
+Dzięki nim nie musimy odkrywać, dlaczego nasze dane są inne niż się spodziewaliśmy.
 
 ### Dangling References
 
