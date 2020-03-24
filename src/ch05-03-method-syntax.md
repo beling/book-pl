@@ -59,8 +59,9 @@ pożyczyć `self` niemutowalnie, lub pożyczyć `self` mutowalnie,
 tak jakby to był jakikolwiek inny parametr.
 
 W tym wypadku użyliśmy `&self` z tego samego powodu, co `&Rectangle`
-w wersji z funkcją. Otóż nie chcemy zostać właścicielem, ale nadal powinniśmy móc odczytać dane
-ze struktury, nie potrzebujemy jednak jej zmieniać. Jeśli chcielibyśmy zmienić dane instancji w trakcie wywoływania
+w wersji z funkcją. Nie chcemy ani zostać właścicielem struktury, 
+ani do niej pisać, a jedynie z niej czytać.
+Jeśli chcielibyśmy zmienić dane instancji w trakcie wywoływania
 metody użylibyśmy `&mut self` jako pierwszego parametru. 
 Tworzenie metody która wchodzi w posiadanie instancji przy użyciu `self`
 jest dość rzadkie; tej techniki używamy głównie jedynie, kiedy metoda przeobraża `self`
