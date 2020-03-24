@@ -3,8 +3,8 @@
 Cargo jest menedżerem paczek i systemem budowania Rusta. Większość Rustowców
 używa tego narzędzia do zarządzania swoimi projektami, ponieważ Cargo potrafi
 wykonać za nich wiele zadań, takich jak budowanie kodu oraz ściąganie i
-budowanie bibliotek, od których kod jest zależny. (Biblioteki, których wymaga
-twój kod nazywamy *zależnościami* (*dependencies*).)
+budowanie bibliotek, od których kod jest zależny. Biblioteki, których wymaga
+twój kod nazywamy *zależnościami* (*dependencies*).
 
 Najprostsze programy w Ruście, takie jak ten, który właśnie napisaliśmy, nie
 mają żadnych zależności, więc gdybyśmy zbudowali projekt Hello World za pomocą
@@ -14,10 +14,10 @@ zależności i jeśli swój projekt rozpoczniesz z użyciem Cargo, będzie to
 o wiele łatwiejsze do zrobienia.
 
 Jako że przeważająca większość projektów w Ruście używa Cargo, w dalszym ciągu
-książki założymy, że ty również go używasz. Jeśli korzystałeś z oficjalnych
+książki założymy, że ty również go używasz. Jeśli korzystałeś(-aś) z oficjalnych
 instalatorów, zgodnie z opisem w sekcji
 [„Instalacja”][installation]<!-- ignore -->, Cargo zainstalował się razem z
-Rustem. Jeżeli instalowałeś Rusta w inny sposób, możesz sprawdzić, czy Cargo
+Rustem. Jeżeli instalowałeś(-aś) Rusta w inny sposób, możesz sprawdzić, czy Cargo
 jest zainstalowany, przez wprowadzenie w terminalu następującej komendy:
 
 ```text
@@ -25,14 +25,14 @@ $ cargo --version
 ```
 
 Jeżeli widzisz numer wersji, Cargo jest zainstalowane! Jeśli natomiast pojawia
-się błąd z rodzaju `komendy nie znaleziono`, powinieneś zajrzeć do dokumentacji
+się błąd z rodzaju `komendy nie znaleziono`, powinieneś/powinnaś zajrzeć do dokumentacji
 swojej metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
 
 ### Tworzenie projektu z Cargo
 
 Stwórzmy nowy projekt z pomocą Cargo i przyjrzyjmy się, czym różni się on od
 naszego pierwotnego projektu Hello World. Przejdź z powrotem do swojego
-katalogu *projects* (lub innego, w którym zdecydowałeś się trzymać swój kod) i
+katalogu *projects* (lub innego, w którym zdecydowałeś(-aś) się trzymać swój kod) i
 bez względu na posiadany system operacyjny wprowadź polecenie:
 
 ```text
@@ -44,10 +44,13 @@ Tworzy to nowy katalog o nazwie `hello_cargo`. Ponieważ nadaliśmy naszemu
 projektowi nazwę `hello_cargo`, Cargo tworzy jego pliki źródłowe w katalogu o
 tej samej nazwie.
 
-Wejdź do katalogu *hello_cargo* i wyświetl listę plików. Powinieneś zobaczyć, że
+Wejdź do katalogu *hello_cargo* i wyświetl listę plików. Powinieneś(-aś) zobaczyć, że
 Cargo utworzył dla nas dwa pliki i jeden podkatalog: plik *Cargo.toml* oraz
 katalog *src* z plikiem *main.rs* wewnątrz. Zainicjował również nowe
 repozytorium Gita, w komplecie z plikiem *.gitignore*.
+Gdybyś jednak wykonał(a) komendę `cargo new` w folderze, w którym istnieje już
+repozytorium Gita, to pliki związane z Gitem nie zostałyby stworzone.
+Możesz zmienić to zachowanie używając komendy `cargo new --vcs=git`.
 
 > Uwaga: Git jest często stosowanym systemem kontroli wersji. Możesz zlecić
 > `cargo new` zastosowanie innego systemu kontroli wersji lub też nie stosowanie
@@ -55,7 +58,7 @@ repozytorium Gita, w komplecie z plikiem *.gitignore*.
 > dostępne opcje.
 
 Otwórz plik *Cargo.toml* w wybranym przez siebie edytorze tekstu. Zawartość
-powinna wyglądać podobnie do kodu z Listingu 1-2:
+powinna wyglądać podobnie do kodu z listingu 1-2:
 
 <span class="filename">Plik: Cargo.toml</span>
 
@@ -63,7 +66,7 @@ powinna wyglądać podobnie do kodu z Listingu 1-2:
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
+authors = ["Twoje imię i nazwisko <you@example.com>"]
 edition = "2018"
 
 [dependencies]
@@ -82,7 +85,7 @@ Pierwsza linia, `[package]`, jest nagłówkiem sekcji, której kolejne wyrażeni
 konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też inne
 sekcje.
 
-Następne cztery  linie ustalają informacje konfiguracyjne, których Cargo
+Następne cztery linie ustalają informacje konfiguracyjne, których Cargo
 potrzebuje do kompilacji twojego programu: nazwę, wersję, dane o autorze i
 używanej edycji Rusta. Cargo pobiera twoje imię i adres email z twojego
 środowiska, więc jeśli nie są one prawidłowe, popraw je śmiało i zapisz plik. O
@@ -100,12 +103,12 @@ Otwórz teraz plik *src/main.rs* i przyjrzyj się zawartości:
 
 ```rust
 fn main() {
-    println!("Hello, world!");
+    println!("Witaj, świecie!");
 }
 ```
 
 Cargo wygenerował za ciebie program „Hello World!”, taki sam jak ten, który
-napisaliśmy w Listingu 1-1! Jak na razie, różnice między naszym poprzednim
+napisaliśmy w listingu 1-1! Jak na razie, różnice między naszym poprzednim
 projektem, a tym wygenerowanym przez Cargo są takie, że w Cargo kod źródłowy
 trafia do podkatalogu *src*, a w katalogu głównym pozostaje plik
 konfiguracyjny *Cargo.toml*.
@@ -116,7 +119,7 @@ pliki konfiguracyjne i wszystko inne, co nie jest kodem. Używanie Cargo pomaga
 utrzymać ci własne projekty w należytym porządku. Na wszystko jest miejsce i
 wszystko jest na swoim miejscu.
 
-Jeżeli zacząłeś jakiś projekt bez użycia Cargo, taki jak nasz poprzedni z
+Jeżeli zacząłeś(-aś) jakiś projekt bez użycia Cargo, taki jak nasz poprzedni z
 katalogu *hello_world*, możesz przekonwertować go na wersję kompatybilną z
 Cargo, przenosząc kod źródłowy do podkatalogu *src* i tworząc odpowiedni
 plik *Cargo.toml*.
@@ -124,7 +127,7 @@ plik *Cargo.toml*.
 ### Budowanie i uruchamianie projektu z Cargo
 
 Przyjrzyjmy się teraz, jakie są różnice w budowaniu i uruchamianiu programu
-Hello World poprzez Cargo. Aby Zbudować swój projekt, z poziomu głównego
+"Hello World" poprzez Cargo. Aby zbudować swój projekt, z poziomu głównego
 katalogu *hello_cargo* wprowadź polecenie:
 
 ```text
@@ -139,10 +142,10 @@ następującym poleceniem:
 
 ```text
 $ ./target/debug/hello_cargo # lub .\target\debug\hello_cargo.exe pod Windowsem
-Hello, world!
+Witaj, świecie!
 ```
 
-Jeśli wszystko przebiegło prawidłowo, `Hello, world!` powinno ponownie
+Jeśli wszystko przebiegło prawidłowo, `Witaj, świecie!` powinno ponownie
 wyświetlić się w oknie terminala. Uruchomienie `cargo build` za pierwszym razem
 powoduje dodatkowo utworzenie przez Cargo nowego pliku w katalogu głównym o
 nazwie *Cargo.lock*, który wykorzystywany jest do śledzenia dokładnych wersji
@@ -158,7 +161,7 @@ i uruchomić program za jednym rzutem:
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
-Hello, world!
+Witaj, świecie!
 ```
 
 Zauważ, że tym razem nie wyświetliła się informacja o tym, że Cargo kompilował
@@ -172,7 +175,7 @@ $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
      Running `target/debug/hello_cargo`
-Hello, world!
+Witaj, świecie!
 ```
 
 Mamy jeszcze do dyspozycji `cargo check`. To polecenie szybko sprawdzi twój kod,
@@ -244,12 +247,12 @@ Jeśli chcesz przyjrzeć się narzędziu Cargo bliżej, sprawdź [jego dokumenta
 ## Podsumowanie
 
 Jesteś już na dobrej drodze do rozpoczęcia podróży z Rustem! W tym rozdziale
-nauczyłeś się, jak:
+nauczyłeś(-aś) się, jak:
 
 * Zainstalować najnowszą, stabilną wersję Rusta z użyciem `rustup`,
 * Uaktualnić Rusta do nowszej wersji,
 * Otwierać lokalną kopię dokumentacji,
-* Napisać program „Hello, world!” używając bezpośrednio `rustc`,
+* Napisać program „Witaj, świecie!” używając bezpośrednio `rustc`,
 * Stworzyć i uruchomić nowy projekt używając konwencji Cargo.
 
 To świetna pora na stworzenie poważniejszego programu, aby przyzwyczaić się do

@@ -12,96 +12,35 @@ item in the cycle will never reach 0, and the values will never be dropped.
 ### Creating a Reference Cycle
 
 Let’s look at how a reference cycle might happen and how to prevent it,
-starting with the definition of the `List` enum and a `tail` method in Listing
+starting with the definition of the `List` enum and a `tail` method in listing
 15-25:
 
-<span class="filename">Filename: src/main.rs</span>
-
-<!-- Hidden fn main is here to disable the automatic wrapping in fn main that
-doc tests do; the `use List` fails if this listing is put within a main -->
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# fn main() {}
-use std::rc::Rc;
-use std::cell::RefCell;
-use List::{Cons, Nil};
-
-#[derive(Debug)]
-enum List {
-    Cons(i32, RefCell<Rc<List>>),
-    Nil,
-}
-
-impl List {
-    fn tail(&self) -> Option<&RefCell<Rc<List>>> {
-        match self {
-            Cons(_, item) => Some(item),
-            Nil => None,
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-25/src/main.rs}}
 ```
 
 <span class="caption">Listing 15-25: A cons list definition that holds a
 `RefCell<T>` so we can modify what a `Cons` variant is referring to</span>
 
-We’re using another variation of the `List` definition in Listing 15-25. The
+We’re using another variation of the `List` definition from listing 15-5. The
 second element in the `Cons` variant is now `RefCell<Rc<List>>`, meaning that
-instead of having the ability to modify the `i32` value as we did in Listing
+instead of having the ability to modify the `i32` value as we did in listing
 15-24, we want to modify which `List` value a `Cons` variant is pointing to.
 We’re also adding a `tail` method to make it convenient for us to access the
 second item if we have a `Cons` variant.
 
-In Listing 15-26, we’re adding a `main` function that uses the definitions in
+In listing 15-26, we’re adding a `main` function that uses the definitions in
 Listing 15-25. This code creates a list in `a` and a list in `b` that points to
 the list in `a`. Then it modifies the list in `a` to point to `b`, creating a
 reference cycle. There are `println!` statements along the way to show what the
 reference counts are at various points in this process.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use List::{Cons, Nil};
-# use std::rc::Rc;
-# use std::cell::RefCell;
-# #[derive(Debug)]
-# enum List {
-#     Cons(i32, RefCell<Rc<List>>),
-#     Nil,
-# }
-#
-# impl List {
-#     fn tail(&self) -> Option<&RefCell<Rc<List>>> {
-#         match self {
-#             Cons(_, item) => Some(item),
-#             Nil => None,
-#         }
-#     }
-# }
-#
-fn main() {
-    let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));
-
-    println!("a initial rc count = {}", Rc::strong_count(&a));
-    println!("a next item = {:?}", a.tail());
-
-    let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&a))));
-
-    println!("a rc count after b creation = {}", Rc::strong_count(&a));
-    println!("b initial rc count = {}", Rc::strong_count(&b));
-    println!("b next item = {:?}", b.tail());
-
-    if let Some(link) = a.tail() {
-        *link.borrow_mut() = Rc::clone(&b);
-    }
-
-    println!("b rc count after changing a = {}", Rc::strong_count(&b));
-    println!("a rc count after changing a = {}", Rc::strong_count(&a));
-
-    // Uncomment the next line to see that we have a cycle;
-    // it will overflow the stack
-    // println!("a next item = {:?}", a.tail());
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-26/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 15-26: Creating a reference cycle of two `List`
@@ -122,19 +61,13 @@ When we run this code, keeping the last `println!` commented out for the
 moment, we’ll get this output:
 
 ```text
-a initial rc count = 1
-a next item = Some(RefCell { value: Nil })
-a rc count after b creation = 2
-b initial rc count = 1
-b next item = Some(RefCell { value: Cons(5, RefCell { value: Nil }) })
-b rc count after changing a = 2
-a rc count after changing a = 2
+{{#include ../listings/ch15-smart-pointers/listing-15-26/output.txt}}
 ```
 
 The reference count of the `Rc<List>` instances in both `a` and `b` are 2
 after we change the list in `a` to point to `b`. At the end of `main`, Rust
-will try to drop `b` first, which will decrease the count in each of the
-`Rc<List>` instances in `a` and `b` by 1.
+will try to drop `b` first, which will decrease the count of the `Rc<List>`
+instance in `b` by 1.
 
 However, because `a` is still referencing the `Rc<List>` that was in `b`, that
 `Rc<List>` has a count of 1 rather than 0, so the memory the `Rc<List>` has on
@@ -169,7 +102,7 @@ Another solution for avoiding reference cycles is reorganizing your data
 structures so that some references express ownership and some references don’t.
 As a result, you can have cycles made up of some ownership relationships and
 some non-ownership relationships, and only the ownership relationships affect
-whether or not a value can be dropped. In Listing 15-25, we always want `Cons`
+whether or not a value can be dropped. In listing 15-25, we always want `Cons`
 variants to own their list, so reorganizing the data structure isn’t possible.
 Let’s look at an example using graphs made up of parent nodes and child nodes
 to see when non-ownership relationships are an appropriate way to prevent
@@ -198,9 +131,9 @@ anything with the value that a `Weak<T>` is pointing to, you must make sure the
 value still exists. Do this by calling the `upgrade` method on a `Weak<T>`
 instance, which will return an `Option<Rc<T>>`. You’ll get a result of `Some`
 if the `Rc<T>` value has not been dropped yet and a result of `None` if the
-`Rc<T>` value has been dropped. Because `upgrade` returns an `Option<T>`, Rust
-will ensure that the `Some` case and the `None` case are handled, and there
-won’t be an invalid pointer.
+`Rc<T>` value has been dropped. Because `upgrade` returns an `Option<Rc<T>>`,
+Rust will ensure that the `Some` case and the `None` case are handled, and
+there won’t be an invalid pointer.
 
 As an example, rather than using a list whose items know only about the next
 item, we’ll create a tree whose items know about their children items *and*
@@ -212,17 +145,10 @@ To start, we’ll build a tree with nodes that know about their child nodes.
 We’ll create a struct named `Node` that holds its own `i32` value as well as
 references to its children `Node` values:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-use std::rc::Rc;
-use std::cell::RefCell;
-
-#[derive(Debug)]
-struct Node {
-    value: i32,
-    children: RefCell<Vec<Rc<Node>>>,
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:here}}
 ```
 
 We want a `Node` to own its children, and we want to share that ownership with
@@ -233,31 +159,12 @@ modify which nodes are children of another node, so we have a `RefCell<T>` in
 
 Next, we’ll use our struct definition and create one `Node` instance named
 `leaf` with the value 3 and no children, and another instance named `branch`
-with the value 5 and `leaf` as one of its children, as shown in Listing 15-27:
+with the value 5 and `leaf` as one of its children, as shown in listing 15-27:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::rc::Rc;
-# use std::cell::RefCell;
-#
-# #[derive(Debug)]
-# struct Node {
-#     value: i32,
-#    children: RefCell<Vec<Rc<Node>>>,
-# }
-#
-fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        children: RefCell::new(vec![]),
-    });
-
-    let branch = Rc::new(Node {
-        value: 5,
-        children: RefCell::new(vec![Rc::clone(&leaf)]),
-    });
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-27/src/main.rs:there}}
 ```
 
 <span class="caption">Listing 15-27: Creating a `leaf` node with no children
@@ -288,63 +195,27 @@ So instead of `Rc<T>`, we’ll make the type of `parent` use `Weak<T>`,
 specifically a `RefCell<Weak<Node>>`. Now our `Node` struct definition looks
 like this:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-use std::rc::{Rc, Weak};
-use std::cell::RefCell;
-
-#[derive(Debug)]
-struct Node {
-    value: i32,
-    parent: RefCell<Weak<Node>>,
-    children: RefCell<Vec<Rc<Node>>>,
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:here}}
 ```
 
 A node will be able to refer to its parent node but doesn’t own its parent.
-In Listing 15-28, we update `main` to use this new definition so the `leaf`
+In listing 15-28, we update `main` to use this new definition so the `leaf`
 node will have a way to refer to its parent, `branch`:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::rc::{Rc, Weak};
-# use std::cell::RefCell;
-#
-# #[derive(Debug)]
-# struct Node {
-#     value: i32,
-#     parent: RefCell<Weak<Node>>,
-#     children: RefCell<Vec<Rc<Node>>>,
-# }
-#
-fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![]),
-    });
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-
-    let branch = Rc::new(Node {
-        value: 5,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![Rc::clone(&leaf)]),
-    });
-
-    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:there}}
 ```
 
 <span class="caption">Listing 15-28: A `leaf` node with a weak reference to its
 parent node `branch`</span>
 
 Creating the `leaf` node looks similar to how creating the `leaf` node looked
-in Listing 15-27 with the exception of the `parent` field: `leaf` starts out
+in listing 15-27 with the exception of the `parent` field: `leaf` starts out
 without a parent, so we create a new, empty `Weak<Node>` reference instance.
 
 At this point, when we try to get a reference to the parent of `leaf` by using
@@ -385,63 +256,12 @@ Let’s look at how the `strong_count` and `weak_count` values of the `Rc<Node>`
 instances change by creating a new inner scope and moving the creation of
 `branch` into that scope. By doing so, we can see what happens when `branch` is
 created and then dropped when it goes out of scope. The modifications are shown
-in Listing 15-29:
+in listing 15-29:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::rc::{Rc, Weak};
-# use std::cell::RefCell;
-#
-# #[derive(Debug)]
-# struct Node {
-#     value: i32,
-#     parent: RefCell<Weak<Node>>,
-#     children: RefCell<Vec<Rc<Node>>>,
-# }
-#
-fn main() {
-    let leaf = Rc::new(Node {
-        value: 3,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![]),
-    });
-
-    println!(
-        "leaf strong = {}, weak = {}",
-        Rc::strong_count(&leaf),
-        Rc::weak_count(&leaf),
-    );
-
-    {
-        let branch = Rc::new(Node {
-            value: 5,
-            parent: RefCell::new(Weak::new()),
-            children: RefCell::new(vec![Rc::clone(&leaf)]),
-        });
-
-        *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
-
-        println!(
-            "branch strong = {}, weak = {}",
-            Rc::strong_count(&branch),
-            Rc::weak_count(&branch),
-        );
-
-        println!(
-            "leaf strong = {}, weak = {}",
-            Rc::strong_count(&leaf),
-            Rc::weak_count(&leaf),
-        );
-    }
-
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-    println!(
-        "leaf strong = {}, weak = {}",
-        Rc::strong_count(&leaf),
-        Rc::weak_count(&leaf),
-    );
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-29/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 15-29: Creating `branch` in an inner scope and
@@ -476,7 +296,7 @@ and memory leaks.
 ## Summary
 
 This chapter covered how to use smart pointers to make different guarantees and
-trade-offs than those Rust makes by default with regular references. The
+trade-offs from those Rust makes by default with regular references. The
 `Box<T>` type has a known size and points to data allocated on the heap. The
 `Rc<T>` type keeps track of the number of references to data on the heap so
 that data can have multiple owners. The `RefCell<T>` type with its interior
@@ -492,7 +312,7 @@ If this chapter has piqued your interest and you want to implement your own
 smart pointers, check out [“The Rustonomicon”][nomicon] for more useful
 information.
 
-[nomicon]: https://doc.rust-lang.org/stable/nomicon/
-
 Next, we’ll talk about concurrency in Rust. You’ll even learn about a few new
 smart pointers.
+
+[nomicon]: ../nomicon/index.html

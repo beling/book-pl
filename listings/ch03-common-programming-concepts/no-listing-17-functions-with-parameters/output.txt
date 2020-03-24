@@ -1,0 +1,5 @@
+$ cargo run
+   Compiling funkcje v0.1.0 (file:///projects/funkcje)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.21s
+     Running `target/debug/funkcje`
+Wartość x wynosi: 5

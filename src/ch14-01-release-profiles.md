@@ -12,11 +12,18 @@ and the `release` profile has good defaults for release builds.
 
 These profile names might be familiar from the output of your builds:
 
+<!-- manual-regeneration
+anywhere, run:
+cargo build
+cargo build --release
+and ensure output below is accurate
+-->
+
 ```text
 $ cargo build
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
 $ cargo build --release
-    Finished release [optimized] target(s) in 0.0 secs
+    Finished release [optimized] target(s) in 0.0s
 ```
 
 The `dev` and `release` shown in this build output indicate that the compiler
@@ -28,7 +35,7 @@ aren’t any `[profile.*]` sections in the project’s *Cargo.toml* file. By add
 any subset of the default settings. For example, here are the default values
 for the `opt-level` setting for the `dev` and `release` profiles:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 [profile.dev]
@@ -53,7 +60,7 @@ You can override any default setting by adding a different value for it in
 development profile, we can add these two lines to our project’s *Cargo.toml*
 file:
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 [profile.dev]
@@ -66,4 +73,4 @@ Cargo will use the defaults for the `dev` profile plus our customization to
 optimizations than the default, but not as many as in a release build.
 
 For the full list of configuration options and defaults for each profile, see
-[Cargo’s documentation](https://doc.rust-lang.org/cargo/).
+[Cargo’s documentation](https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections).

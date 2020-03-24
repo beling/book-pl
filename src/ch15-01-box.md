@@ -35,13 +35,10 @@ interact with values stored within a `Box<T>`.
 
 Listing 15-1 shows how to use a box to store an `i32` value on the heap:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let b = Box::new(5);
-    println!("b = {}", b);
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-01/src/main.rs}}
 ```
 
 <span class="caption">Listing 15-1: Storing an `i32` value on the heap using a
@@ -106,13 +103,10 @@ Listing 15-2 contains an enum definition for a cons list. Note that this code
 won’t compile yet because the `List` type doesn’t have a known size, which
 we’ll demonstrate.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-enum List {
-    Cons(i32, List),
-    Nil,
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-02/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 15-2: The first attempt at defining an enum to
@@ -126,14 +120,10 @@ represent a cons list data structure of `i32` values</span>
 Using the `List` type to store the list `1, 2, 3` would look like the code in
 Listing 15-3:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
-```rust,ignore
-use List::{Cons, Nil};
-
-fn main() {
-    let list = Cons(1, Cons(2, Cons(3, Nil)));
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-03/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 15-3: Using the `List` enum to store the list `1,
@@ -144,20 +134,11 @@ another `Cons` value that holds `2` and another `List` value. This `List` value
 is one more `Cons` value that holds `3` and a `List` value, which is finally
 `Nil`, the non-recursive variant that signals the end of the list.
 
-If we try to compile the code in Listing 15-3, we get the error shown in
+If we try to compile the code in listing 15-3, we get the error shown in
 Listing 15-4:
 
 ```text
-error[E0072]: recursive type `List` has infinite size
- --> src/main.rs:1:1
-  |
-1 | enum List {
-  | ^^^^^^^^^ recursive type has infinite size
-2 |     Cons(i32, List),
-  |               ----- recursive without indirection
-  |
-  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to
-  make `List` representable
+{{#include ../listings/ch15-smart-pointers/listing-15-03/output.txt}}
 ```
 
 <span class="caption">Listing 15-4: The error we get when attempting to define
@@ -172,16 +153,11 @@ type.
 
 #### Computing the Size of a Non-Recursive Type
 
-Recall the `Message` enum we defined in Listing 6-2 when we discussed enum
+Recall the `Message` enum we defined in listing 6-2 when we discussed enum
 definitions in Chapter 6:
 
 ```rust
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(i32, i32, i32),
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
 ```
 
 To determine how much space to allocate for a `Message` value, Rust goes
@@ -192,7 +168,7 @@ used, the most space a `Message` value will need is the space it would take to
 store the largest of its variants.
 
 Contrast this with what happens when Rust tries to determine how much space a
-recursive type like the `List` enum in Listing 15-2 needs. The compiler starts
+recursive type like the `List` enum in listing 15-2 needs. The compiler starts
 by looking at the `Cons` variant, which holds a value of type `i32` and a value
 of type `List`. Therefore, `Cons` needs an amount of space equal to the size of
 an `i32` plus the size of a `List`. To figure out how much memory the `List`
@@ -208,12 +184,15 @@ variant. The `Cons` variant holds a value of type `i32` and a value of type
 #### Using `Box<T>` to Get a Recursive Type with a Known Size
 
 Rust can’t figure out how much space to allocate for recursively defined types,
-so the compiler gives the error in Listing 15-4. But the error does include
+so the compiler gives the error in listing 15-4. But the error does include
 this helpful suggestion:
 
+<!-- manual-regeneration
+after doing automatic regeneration, look at listings/ch15-smart-pointers/listing-15-03/output.txt and copy the relevant line
+-->
+
 ```text
-  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to
-  make `List` representable
+  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to make `List` representable
 ```
 
 In this suggestion, “indirection” means that instead of storing a value
@@ -229,25 +208,13 @@ Conceptually, we still have a list, created with lists “holding” other lists
 but this implementation is now more like placing the items next to one another
 rather than inside one another.
 
-We can change the definition of the `List` enum in Listing 15-2 and the usage
-of the `List` in Listing 15-3 to the code in Listing 15-5, which will compile:
+We can change the definition of the `List` enum in listing 15-2 and the usage
+of the `List` in listing 15-3 to the code in listing 15-5, which will compile:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-enum List {
-    Cons(i32, Box<List>),
-    Nil,
-}
-
-use List::{Cons, Nil};
-
-fn main() {
-    let list = Cons(1,
-        Box::new(Cons(2,
-            Box::new(Cons(3,
-                Box::new(Nil))))));
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-05/src/main.rs}}
 ```
 
 <span class="caption">Listing 15-5: Definition of `List` that uses `Box<T>` in

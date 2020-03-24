@@ -1,0 +1,5 @@
+$ cargo run
+   Compiling galezie v0.1.0 (file:///projects/galezie)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+     Running `target/debug/galezie`
+number jest podzielny przez 3

@@ -2,7 +2,7 @@
 
 Ponieważ Rust jest już zainstalowany, napiszmy twój pierwszy program. Przy
 poznawaniu nowego języka tradycją stało się tworzenie krótkiego programu, który
-wyświetla na ekranie tekst „Hello, world!” (*„Witaj, świecie!”*). Postąpimy tu
+wyświetla na ekranie tekst „Witaj, świecie!”. Postąpimy tu
 tak samo.
 
 > Uwaga: Książka zakłada u czytelnika podstawową znajomość wiersza poleceń. Sam
@@ -21,7 +21,7 @@ książki sugerujemy utworzenie katalogu *projects* w katalogu domowym i
 przechowywanie tam wszystkich swoich programów.
 
 Otwórz terminal i wprowadź następujące polecenia, aby utworzyć katalog
-*projects*, w którym umieścimy kolejny, pod projekt „Hello, world!”:
+*projects*, w którym umieścimy kolejny, pod projekt „Witaj, świecie!”:
 
 Pod Linuksem, macOS, lub w PowerShell pod Windowsem, wpisz to:
 
@@ -46,7 +46,7 @@ W Windows CMD, wpisz to:
 Następnie utwórz nowy plik źródłowy i nazwij go *main.rs*. Pliki języka Rust
 zawsze zakończone są rozszerzeniem *.rs*. Jeśli w nazwie pliku znajduje się
 więcej niż jedno słowo, użyj znaku podkreślenia jako separatora. Na przykład,
-powinieneś napisać *hello_world.rs* zamiast *helloworld.rs*.
+powinieneś/powinnnaś napisać *hello_world.rs* zamiast *helloworld.rs*.
 
 Otwórz plik *main.rs*, który właśnie utworzyłeś i wprowadź kod podany w
 Listingu 1-1:
@@ -55,11 +55,11 @@ Listingu 1-1:
 
 ```rust
 fn main() {
-    println!("Hello, world!");
+    println!("Witaj, świecie!");
 }
 ```
 
-<span class="caption">Listing 1-1: Program wyświetlający „Hello, world!”</span>
+<span class="caption">Listing 1-1: Program wyświetlający „Witaj, świecie!”</span>
 
 Zapisz plik i wróć do okna terminala. Pod Linuksem lub macOS, wprowadź podane
 polecenia, żeby skompilować i uruchomić program:
@@ -67,7 +67,7 @@ polecenia, żeby skompilować i uruchomić program:
 ```text
 $ rustc main.rs
 $ ./main
-Hello, world!
+Witaj, świecie!
 ```
 
 Pod Windowsem, uruchom `.\main.exe` zamiast `./main`. 
@@ -75,21 +75,21 @@ Pod Windowsem, uruchom `.\main.exe` zamiast `./main`.
 ```powershell
 > rustc main.rs
 > .\main.exe
-Hello, world!
+Witaj, świecie!
 ```
 
-Bez względu na posiadany system operacyjny, powinieneś zobaczyć w oknie
-terminala wyświetlony tekst `Hello, world!`. Jeśli nic takiego nie widzisz,
+Bez względu na posiadany system operacyjny, powinieneś/powinnaś zobaczyć w oknie
+terminala wyświetlony tekst `Witaj, świecie!`. Jeśli nic takiego nie widzisz,
 zajrzyj do sekcji [„Rozwiązywanie problemów”][troubleshooting]<!-- ignore --> w
 rozdziale poświęconym instalacji, po sposoby na otrzymanie pomocy.
 
-Jeśli widzisz tekst `Hello, world!`, to gratulacje! Właśnie oficjalnie napisałeś
+Jeśli widzisz tekst `Witaj, świecie!`, to gratulacje! Właśnie oficjalnie napisałeś
 program w Ruście, a to czyni z ciebie programistę Rusta - Witaj!
 
 ### Anatomia programu w Ruście
 
 Przyjrzyjmy się teraz dokładnie, co właściwie dzieje się w twoim programie
-„Hello, world!”. Oto pierwsza część układanki:
+„Witaj, świecie!”. Oto pierwsza część układanki:
 
 ```rust
 fn main() {
@@ -119,7 +119,7 @@ szczegółów znajdziesz w dokumentacji online.
 Wewnątrz funkcji `main` mamy następujący kod:
 
 ```rust
-    println!("Hello, world!");
+    println!("Witaj, świecie!");
 ```
 
 Ta linia wykonuje całą robotę w naszym krótkim programie: wyświetla tekst na
@@ -128,10 +128,10 @@ tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
 
 Po drugie, tekst `println!` wywołuje w Ruście makro. Gdyby wywoływana była
 funkcja, wpisana byłaby jako `println` (bez `!`). Makra będą szerzej opisane w
-Rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
+rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
 makro zamiast zwykłej funkcji.
 
-Po trzecie, w programie widzimy łańcuch znaków (*string*) `"Hello, world!"`.
+Po trzecie, w programie widzimy łańcuch znaków (*string*) `"Witaj, świecie!"`.
 Przekazujemy go jako argument do `println!`, którego ostatecznym efektem jest
 wyświetlenie łańcucha na ekranie.
 
@@ -185,8 +185,8 @@ lub *main.exe*, w taki sposób:
 $ ./main  # lub .\main.exe pod Windowsem
 ```
 
-Jeżeli *main.rs* jest twoim programem „Hello, world!”, wyświetli to w oknie
-terminala tekst `Hello, world!`.
+Jeżeli *main.rs* jest twoim programem „Witaj, świecie!”, wyświetli to w oknie
+terminala tekst `Witaj, świecie!`.
 
 Jeśli jesteś doświadczony w językach dynamicznych, takich jak Ruby, Python lub
 JavaScript, możesz nie być przyzwyczajony do traktowania kompilacji i

@@ -4,38 +4,28 @@ So far, all the examples in this chapter defined multiple modules in one file.
 When modules get large, you might want to move their definitions to a separate
 file to make the code easier to navigate.
 
-For example, let’s start from the code in Listing 7-17 and move the
+For example, let’s start from the code in listing 7-17 and move the
 `front_of_house` module to its own file *src/front_of_house.rs* by changing the
-crate root file so it contains the code shown in Listing 7-21. In this case,
+crate root file so it contains the code shown in listing 7-21. In this case,
 the crate root file is *src/lib.rs*, but this procedure also works with binary
 crates whose crate root file is *src/main.rs*.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore
-mod front_of_house;
-
-pub use crate::front_of_house::hosting;
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-}
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-21: Declaring the `front_of_house` module whose
 body will be in *src/front_of_house.rs*</span>
 
 And *src/front_of_house.rs* gets the definitions from the body of the
-`front_of_house` module, as shown in Listing 7-22.
+`front_of_house` module, as shown in listing 7-22.
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
-```rust
-pub mod hosting {
-    pub fn add_to_waitlist() {}
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 ```
 
 <span class="caption">Listing 7-22: Definitions inside the `front_of_house`
@@ -47,20 +37,20 @@ the module. To continue with our example and extract the `hosting` module to
 its own file as well, we change *src/front_of_house.rs* to contain only the
 declaration of the `hosting` module:
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
 ```
-pub mod hosting;
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
 
 Then we create a *src/front_of_house* directory and a file
 *src/front_of_house/hosting.rs* to contain the definitions made in the
 `hosting` module:
 
-<span class="filename">Filename: src/front_of_house/hosting.rs</span>
+<span class="filename">Plik: src/front_of_house/hosting.rs</span>
 
 ```
-pub fn add_to_waitlist() {}
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
 ```
 
 The module tree remains the same, and the function calls in `eat_at_restaurant`
@@ -76,7 +66,7 @@ that module.
 
 ## Summary
 
-Rust lets you organize your packages into crates and your crates into modules
+Rust lets you split a package into multiple crates and a crate into modules
 so you can refer to items defined in one module from another module. You can do
 this by specifying absolute or relative paths. These paths can be brought into
 scope with a `use` statement so you can use a shorter path for multiple uses of

@@ -80,12 +80,12 @@ Z poziomu Windowsa, odwiedź stronę
 instalacji Rusta. W którymś momencie procesu otrzymasz komunikat informujący, że
 będziesz również potrzebować narzędzi budowania C++ dla Visual Studio 2013 lub
 nowszego. Najprościej jest w tym celu zainstalować
-[narzędzia budowania dla Visual Studio 2017][visualstudio], które można znaleźć
+[narzędzia budowania dla Visual Studio 2019][visualstudio], które można znaleźć
 w sekcji „Other Tools and Frameworks” (*inne narzędzia i platformy
 programistyczne).
 
 [install]: https://www.rust-lang.org/tools/install
-[visualstudio]: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017
+[visualstudio]: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019
 
 Dalsza część książki będzie zawierać polecenia działające zarówno w *cmd.exe*
 jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaśnione.
@@ -125,21 +125,19 @@ Jeśli widzisz coś takiego, Rust zainstalował się prawidłowo! Jeśli nie, a
 pracujesz pod Windowsem, sprawdź, czy Rust został dodany do zmiennej
 środowiskowej `%PATH%`. Jeżeli wciąż coś nie działa, jest kilka miejsc, w
 których możesz uzyskać pomoc. Najłatwiej na
-[kanale IRC #rust na irc.mozilla.org][irc]<!-- ignore -->, do którego możesz się
-podłączyć przez [Mibbit][mibbit]. Pod tym adresem można czatować z innymi
-Rustowcami (*Rustaceans - od angielskiego terminu
+[oficjalnym kanale Rusta na Discordzie][discord]. 
+Tam możesz czatować z innymi Rustowcami (*Rustaceans - od angielskiego terminu
 “crustaceans” - “skorupiaki” - przyp. tłum.*) (taką wspólną ksywką się
 określamy), którzy mogą ci pomóc. Do innych świetnych źródeł należy [forum
 użytkowników][users] oraz [Stack Overflow][stackoverflow].
 
-[irc]: irc://irc.mozilla.org/#rust
-[mibbit]: http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust
+[discord]: https://discord.gg/rust-lang
 [users]: https://users.rust-lang.org/
 [stackoverflow]: http://stackoverflow.com/questions/tagged/rust
 
 ### Lokalna dokumentacja
 
-Instalator dołącza również lokalną kopię dokumentacji, więc można ją czytać
+Instalacja dołącza również lokalną kopię dokumentacji, więc można ją czytać
 offline. Uruchom `rustup doc`, żeby otworzyć lokalną dokumentację w swojej
 przeglądarce.
 

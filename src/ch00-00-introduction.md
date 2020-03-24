@@ -118,21 +118,21 @@ Rozdział 1 wyjaśnia, jak zainstalować Rusta, jak napisać program „Hello,
 world!” oraz jak używać Cargo - menedżera paczek i narzędzie budowania Rusta.
 Rozdział 2 jest praktycznym wprowadzeniem do języka Rust. Poszczególne pojęcia
 omawiamy tu ogólnie, podczas gdy szczegóły zostaną wyjaśnione w późniejszych
-rozdziałach. Jeżeli chcesz od razu pobrudzić sobie ręce, Rozdział 2 jest do tego
-idealnym miejscem. W pierwszej chwili możesz zechcieć przeskoczyć do Rozdziału
+rozdziałach. Jeżeli chcesz od razu pobrudzić sobie ręce, rozdział 2 jest do tego
+idealnym miejscem. W pierwszej chwili możesz zechcieć przeskoczyć do rozdziału
 3, w którym omawiane są funkcje języka Rust podobne do tych z innych języków
-programowania, a następnie prosto do Rozdziału 4, aby nauczyć się systemu
+programowania, a następnie prosto do rozdziału 4, aby nauczyć się systemu
 własności w Ruście. Jeśli jednak należysz do szczególnie skrupulatnych
 czytelników, którzy wolą poznać każdy szczegół przed przejściem do kolejnych
-tematów, możesz wstępnie pominąć Rozdział 2 i przejść prosto do Rozdziału 3,
-po czym cofać się do Rozdziału 2 dopiero, gdy zechcesz wykorzystać w opisanym
+tematów, możesz wstępnie pominąć rozdział 2 i przejść prosto do rozdziału 3,
+po czym cofać się do rozdziału 2 dopiero, gdy zechcesz wykorzystać w opisanym
 tam projekcie rzeczy, których się nauczyłeś.
 
-Rozdział 5 omawia struktury i metody, a Rozdział 6 obejmuje typy wyliczeniowe
+Rozdział 5 omawia struktury i metody, a rozdział 6 obejmuje typy wyliczeniowe
 `enum`, wyrażenia `match` oraz konstrukcję `if let`. Struktury i typy
 wyliczeniowe stosowane są w Ruście do tworzenia własnych typów.
 
-W Rozdziale 7 dowiadujemy się o systemie modułów w Ruście oraz o zasadach
+W rozdziale 7 dowiadujemy się o systemie modułów w Ruście oraz o zasadach
 prywatności przy organizacji kodu oraz jego publicznego Interfejsu Programowania
 Aplikacji (API). Rozdział 8 omawia niektóre popularne struktury danych kolekcji
 dostarczone przez bibliotekę standardową, takie jak wektory, ciągi znaków
@@ -143,18 +143,18 @@ Rozdział 10 wchodzi w temat typów ogólnych, cech (*traits*) oraz trwałości
 (*lifetimes*), które dają ci możliwość definiowania kodu, odnoszącego się do
 wielu typów danych. Rozdział 11 jest w całości poświęcony testowaniu, które mimo
 gwarancji bezpieczeństwa Rusta nadal jest konieczne, by zapewnić prawidłową
-logikę wykonywania programów. W Rozdziale 12 budujemy natomiast własną
+logikę wykonywania programów. W rozdziale 12 budujemy natomiast własną
 implementację fragmentu funkcjonalności polecenia `grep`, które wyszukuje tekst
 w treści plików. Do tego celu będzie potrzebny cały szereg pojęć omówionych w
 poprzednich rozdziałach.
 
 Rozdział 13 omawia domknięcia (*closures*) oraz iteratory: cechy Rusta wywodzące
-się z języków funkcyjnych. W Rozdziale 14 głębiej przyglądamy się Cargo i mówimy
+się z języków funkcyjnych. W rozdziale 14 głębiej przyglądamy się Cargo i mówimy
 o najlepszych praktykach dotyczących dzielenia się swoimi bibliotekami z innymi
 programistami. Rozdział 15 omawia dostarczone w bibliotece standardowej
 inteligentne wskaźniki oraz cechy, które zapewniają im funkcjonalność.
 
-W Rozdziale 16 przechodzimy przez różne modele programowania współbieżnego oraz
+W rozdziale 16 przechodzimy przez różne modele programowania współbieżnego oraz
 tłumaczymy, jak Rust pomaga w programowaniu wielowątkowym bez obaw. Rozdział 17
 wyjaśnia z kolei, jak idiomy Rusta można porównać do zasad programowania
 obiektowego, z którym możesz być już zaznajomiony.
@@ -164,7 +164,7 @@ narzędzie do wyrażania myśli w programach pisanych w Ruście. Rozdział 19 je
 swoistym tyglem ciekawszych, zaawansowanych tematów, wliczając niebezpiecznego
 Rusta i więcej na temat trwałości, cech, typów, funkcji i domknięć.
 
-W Rozdziale 20 tworzymy projekt, w którym implementujemy wielowątkowy,
+W rozdziale 20 tworzymy projekt, w którym implementujemy wielowątkowy,
 niskopoziomowy serwer sieciowy!
 
 Na zakończenie, kilka dodatków zawiera przydatne informacje o języku w formacie
@@ -204,3 +204,13 @@ Pliki źródłowe, z których wygenerowana została niniejsza książka, można 
 na [GitHubie][book].
 
 [book]: https://github.com/paytchoo/book-pl/tree/master/src
+
+## Informacje od tłumaczy
+
+W niniejszej książce znajdziesz wiele przykładów programów oraz wycinki kodu,
+w których: łańcuchy znaków w makrach `println!`, komentarze, a czasem nawet
+nazwy projektów Cargo; zostały przetłumaczone. Jest to zabieg tłumaczy mający
+na celu jak największe usunięcie bariery jaką stwarza użycie języka angielskiego w zrozumieniu
+pojęć zawartych w tej książce. Prosimy, abyś rozważył(a) użycie języka angielskiego, kiedy
+zdecydujesz się na udostępnienie swojego kodu, zarówno w przypadku Rusta przy udostępnianiu własnych skrzyń,
+jak i w przypadku wszelkich innych języków programowania.

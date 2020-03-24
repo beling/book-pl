@@ -22,8 +22,8 @@ We’ll first define what we mean by the term *string*. Rust has only one string
 type in the core language, which is the string slice `str` that is usually seen
 in its borrowed form `&str`. In Chapter 4, we talked about *string slices*,
 which are references to some UTF-8 encoded string data stored elsewhere. String
-literals, for example, are stored in the binary output of the program and are
-therefore string slices.
+literals, for example, are stored in the program’s binary and are therefore
+string slices.
 
 The `String` type, which is provided by Rust’s standard library rather than
 coded into the core language, is a growable, mutable, owned, UTF-8 encoded
@@ -44,11 +44,11 @@ API documentation for more about how to use them and when each is appropriate.
 ### Creating a New String
 
 Many of the same operations available with `Vec<T>` are available with `String`
-as well, starting with the `new` function to create a string, shown in Listing
+as well, starting with the `new` function to create a string, shown in listing
 8-11.
 
 ```rust
-let mut s = String::new();
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-11: Creating a new, empty `String`</span>
@@ -60,12 +60,7 @@ that implements the `Display` trait, as string literals do. Listing 8-12 shows
 two examples.
 
 ```rust
-let data = "initial contents";
-
-let s = data.to_string();
-
-// the method also works on a literal directly:
-let s = "initial contents".to_string();
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-12: Using the `to_string` method to create a
@@ -74,11 +69,11 @@ let s = "initial contents".to_string();
 This code creates a string containing `initial contents`.
 
 We can also use the function `String::from` to create a `String` from a string
-literal. The code in Listing 8-13 is equivalent to the code from Listing 8-12
+literal. The code in listing 8-13 is equivalent to the code from listing 8-12
 that uses `to_string`.
 
 ```rust
-let s = String::from("initial contents");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-13: Using the `String::from` function to create
@@ -90,20 +85,10 @@ redundant, but they all have their place! In this case, `String::from` and
 `to_string` do the same thing, so which you choose is a matter of style.
 
 Remember that strings are UTF-8 encoded, so we can include any properly encoded
-data in them, as shown in Listing 8-14.
+data in them, as shown in listing 8-14.
 
 ```rust
-let hello = String::from("السلام عليكم");
-let hello = String::from("Dobrý den");
-let hello = String::from("Hello");
-let hello = String::from("שָׁלוֹם");
-let hello = String::from("नमस्ते");
-let hello = String::from("こんにちは");
-let hello = String::from("안녕하세요");
-let hello = String::from("你好");
-let hello = String::from("Olá");
-let hello = String::from("Здравствуйте");
-let hello = String::from("Hola");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-14: Storing greetings in different languages in
@@ -120,11 +105,10 @@ use the `+` operator or the `format!` macro to concatenate `String` values.
 #### Appending to a String with `push_str` and `push`
 
 We can grow a `String` by using the `push_str` method to append a string slice,
-as shown in Listing 8-15.
+as shown in listing 8-15.
 
 ```rust
-let mut s = String::from("foo");
-s.push_str("bar");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-15: Appending a string slice to a `String`
@@ -132,14 +116,11 @@ using the `push_str` method</span>
 
 After these two lines, `s` will contain `foobar`. The `push_str` method takes a
 string slice because we don’t necessarily want to take ownership of the
-parameter. For example, the code in Listing 8-16 shows that it would be
+parameter. For example, the code in listing 8-16 shows that it would be
 unfortunate if we weren’t able to use `s2` after appending its contents to `s1`.
 
 ```rust
-let mut s1 = String::from("foo");
-let s2 = "bar";
-s1.push_str(s2);
-println!("s2 is {}", s2);
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-16: Using a string slice after appending its
@@ -153,8 +134,7 @@ The `push` method takes a single character as a parameter and adds it to the
 the `push` method.
 
 ```rust
-let mut s = String::from("lo");
-s.push('l');
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-17: Adding one character to a `String` value
@@ -165,18 +145,16 @@ As a result of this code, `s` will contain `lol`.
 #### Concatenation with the `+` Operator or the `format!` Macro
 
 Often, you’ll want to combine two existing strings. One way is to use the `+`
-operator, as shown in Listing 8-18.
+operator, as shown in listing 8-18.
 
 ```rust
-let s1 = String::from("Hello, ");
-let s2 = String::from("world!");
-let s3 = s1 + &s2; // note s1 has been moved here and can no longer be used
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-18: Using the `+` operator to combine two
 `String` values into a new `String` value</span>
 
-The string `s3` will contain `Hello, world!` as a result of this code. The
+The string `s3` will contain `Witaj, świecie!` as a result of this code. The
 reason `s1` is no longer valid after the addition and the reason we used a
 reference to `s2` has to do with the signature of the method that gets called
 when we use the `+` operator. The `+` operator uses the `add` method, whose
@@ -197,7 +175,7 @@ First, `s2` has an `&`, meaning that we’re adding a *reference* of the second
 string to the first string because of the `s` parameter in the `add` function:
 we can only add a `&str` to a `String`; we can’t add two `String` values
 together. But wait—the type of `&s2` is `&String`, not `&str`, as specified in
-the second parameter to `add`. So why does Listing 8-18 compile?
+the second parameter to `add`. So why does listing 8-18 compile?
 
 The reason we’re able to use `&s2` in the call to `add` is that the compiler
 can *coerce* the `&String` argument into a `&str`. When we call the `add`
@@ -207,7 +185,7 @@ not take ownership of the `s` parameter, `s2` will still be a valid `String`
 after this operation.
 
 Second, we can see in the signature that `add` takes ownership of `self`,
-because `self` does *not* have an `&`. This means `s1` in Listing 8-18 will be
+because `self` does *not* have an `&`. This means `s1` in listing 8-18 will be
 moved into the `add` call and no longer be valid after that. So although `let
 s3 = s1 + &s2;` looks like it will copy both strings and create a new one, this
 statement actually takes ownership of `s1`, appends a copy of the contents of
@@ -219,11 +197,7 @@ If we need to concatenate multiple strings, the behavior of the `+` operator
 gets unwieldy:
 
 ```rust
-let s1 = String::from("tic");
-let s2 = String::from("tac");
-let s3 = String::from("toe");
-
-let s = s1 + "-" + &s2 + "-" + &s3;
+{{#rustdoc_include ../listings/ch08-common-collections/no-listing-01-concat-multiple-strings/src/main.rs:here}}
 ```
 
 At this point, `s` will be `tic-tac-toe`. With all of the `+` and `"`
@@ -231,11 +205,7 @@ characters, it’s difficult to see what’s going on. For more complicated stri
 combining, we can use the `format!` macro:
 
 ```rust
-let s1 = String::from("tic");
-let s2 = String::from("tac");
-let s3 = String::from("toe");
-
-let s = format!("{}-{}-{}", s1, s2, s3);
+{{#rustdoc_include ../listings/ch08-common-collections/no-listing-02-format/src/main.rs:here}}
 ```
 
 This code also sets `s` to `tic-tac-toe`. The `format!` macro works in the same
@@ -248,11 +218,10 @@ easier to read and doesn’t take ownership of any of its parameters.
 In many other programming languages, accessing individual characters in a
 string by referencing them by index is a valid and common operation. However,
 if you try to access parts of a `String` using indexing syntax in Rust, you’ll
-get an error. Consider the invalid code in Listing 8-19.
+get an error. Consider the invalid code in listing 8-19.
 
 ```rust,ignore,does_not_compile
-let s1 = String::from("hello");
-let h = s1[0];
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 8-19: Attempting to use indexing syntax with a
@@ -261,13 +230,7 @@ String</span>
 This code will result in the following error:
 
 ```text
-error[E0277]: the trait bound `std::string::String: std::ops::Index<{integer}>` is not satisfied
- -->
-  |
-3 |     let h = s1[0];
-  |             ^^^^^ the type `std::string::String` cannot be indexed by `{integer}`
-  |
-  = help: the trait `std::ops::Index<{integer}>` is not implemented for `std::string::String`
+{{#include ../listings/ch08-common-collections/listing-08-19/output.txt}}
 ```
 
 The error and the note tell the story: Rust strings don’t support indexing. But
@@ -277,10 +240,10 @@ memory.
 #### Internal Representation
 
 A `String` is a wrapper over a `Vec<u8>`. Let’s look at some of our properly
-encoded UTF-8 example strings from Listing 8-14. First, this one:
+encoded UTF-8 example strings from listing 8-14. First, this one:
 
 ```rust
-let len = String::from("Hola").len();
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}
 ```
 
 In this case, `len` will be 4, which means the vector storing the string “Hola”
@@ -289,7 +252,7 @@ what about the following line? (Note that this string begins with the capital
 Cyrillic letter Ze, not the Arabic number 3.)
 
 ```rust
-let len = String::from("Здравствуйте").len();
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:russian}}
 ```
 
 Asked how long the string is, you might say 12. However, Rust’s answer is 24:
@@ -309,7 +272,7 @@ encoded in UTF-8, the first byte of `З` is `208` and the second is `151`, so
 own. Returning `208` is likely not what a user would want if they asked for the
 first letter of this string; however, that’s the only data that Rust has at
 byte index 0. Users generally don’t want the byte value returned, even if the
-string contains only Latin letters: if `&"hello"[0]` were valid code that
+string contains only Latin letters: if `&"witaj"[0]` were valid code that
 returned the byte value, it would return `104`, not `h`. To avoid returning an
 unexpected value and causing bugs that might not be discovered immediately,
 Rust doesn’t compile this code at all and prevents misunderstandings early in
@@ -380,7 +343,7 @@ What would happen if we used `&hello[0..1]`? The answer: Rust would panic at
 runtime in the same way as if an invalid index were accessed in a vector:
 
 ```text
-thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/libcore/str/mod.rs:2188:4
+{{#include ../listings/ch08-common-collections/output-only-01-not-char-boundary/output.txt}}
 ```
 
 You should use ranges to create string slices with caution, because doing so
@@ -436,7 +399,7 @@ than 1 byte.
 
 Getting grapheme clusters from strings is complex, so this functionality is not
 provided by the standard library. Crates are available on
-[crates.io](https://crates.io) if this is the functionality you need.
+[crates.io](https://crates.io/) if this is the functionality you need.
 
 ### Strings Are Not So Simple
 

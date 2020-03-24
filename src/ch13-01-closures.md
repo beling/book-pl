@@ -23,21 +23,14 @@ few seconds. We want to call this algorithm only when we need to and only call
 it once so we don’t make the user wait more than necessary.
 
 We’ll simulate calling this hypothetical algorithm with the function
-`simulated_expensive_calculation` shown in Listing 13-1, which will print
+`simulated_expensive_calculation` shown in listing 13-1, which will print
 `calculating slowly...`, wait for two seconds, and then return whatever number
-we passed in:
+we passed in.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-use std::thread;
-use std::time::Duration;
-
-fn simulated_expensive_calculation(intensity: u32) -> u32 {
-    println!("calculating slowly...");
-    thread::sleep(Duration::from_secs(2));
-    intensity
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-01/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-1: A function to stand in for a hypothetical
@@ -57,21 +50,12 @@ The required inputs are these:
 * A random number that will generate some variety in the workout plans
 
 The output will be the recommended workout plan. Listing 13-2 shows the `main`
-function we’ll use:
+function we’ll use.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let simulated_user_specified_value = 10;
-    let simulated_random_number = 7;
-
-    generate_workout(
-        simulated_user_specified_value,
-        simulated_random_number
-    );
-}
-# fn generate_workout(intensity: u32, random_number: u32) {}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-02/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-2: A `main` function with hardcoded values to
@@ -85,59 +69,28 @@ example in Chapter 2. The `main` function calls a `generate_workout` function
 with the simulated input values.
 
 Now that we have the context, let’s get to the algorithm. The function
-`generate_workout` in Listing 13-3 contains the business logic of the
+`generate_workout` in listing 13-3 contains the business logic of the
 app that we’re most concerned with in this example. The rest of the code
 changes in this example will be made to this function.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-# fn simulated_expensive_calculation(num: u32) -> u32 {
-#     println!("calculating slowly...");
-#     thread::sleep(Duration::from_secs(2));
-#     num
-# }
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    if intensity < 25 {
-        println!(
-            "Today, do {} pushups!",
-            simulated_expensive_calculation(intensity)
-        );
-        println!(
-            "Next, do {} situps!",
-            simulated_expensive_calculation(intensity)
-        );
-    } else {
-        if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
-        } else {
-            println!(
-                "Today, run for {} minutes!",
-                simulated_expensive_calculation(intensity)
-            );
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-03/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-3: The business logic that prints the workout
 plans based on the inputs and calls to the `simulated_expensive_calculation`
 function</span>
 
-The code in Listing 13-3 has multiple calls to the slow calculation function.
+The code in listing 13-3 has multiple calls to the slow calculation function.
 The first `if` block calls `simulated_expensive_calculation` twice, the `if`
 inside the outer `else` doesn’t call it at all, and the code inside the
 second `else` case calls it once.
 
-<!-- NEXT PARAGRAPH WRAPPED WEIRD INTENTIONALLY SEE #199 -->
-
 The desired behavior of the `generate_workout` function is to first check
-whether the user wants a low-intensity workout (indicated by a number less
-than 25) or a high-intensity workout (a number of 25 or greater).
+whether the user wants a low-intensity workout (indicated by a number less than
+25) or a high-intensity workout (a number of 25 or greater).
 
 Low-intensity workout plans will recommend a number of push-ups and sit-ups
 based on the complex algorithm we’re simulating.
@@ -160,44 +113,12 @@ to call it if the result isn’t needed, and we still want to call it only once.
 
 We could restructure the workout program in many ways. First, we’ll try
 extracting the duplicated call to the `simulated_expensive_calculation`
-function into a variable, as shown in Listing 13-4:
+function into a variable, as shown in listing 13-4.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-# fn simulated_expensive_calculation(num: u32) -> u32 {
-#     println!("calculating slowly...");
-#     thread::sleep(Duration::from_secs(2));
-#     num
-# }
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_result =
-        simulated_expensive_calculation(intensity);
-
-    if intensity < 25 {
-        println!(
-            "Today, do {} pushups!",
-            expensive_result
-        );
-        println!(
-            "Next, do {} situps!",
-            expensive_result
-        );
-    } else {
-        if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
-        } else {
-            println!(
-                "Today, run for {} minutes!",
-                expensive_result
-            );
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-04/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-4: Extracting the calls to
@@ -217,22 +138,14 @@ code where we actually need the result. This is a use case for closures!
 
 Instead of always calling the `simulated_expensive_calculation` function before
 the `if` blocks, we can define a closure and store the *closure* in a variable
-rather than storing the result of the function call, as shown in Listing 13-5.
+rather than storing the result of the function call, as shown in listing 13-5.
 We can actually move the whole body of `simulated_expensive_calculation` within
-the closure we’re introducing here:
+the closure we’re introducing here.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-let expensive_closure = |num| {
-    println!("calculating slowly...");
-    thread::sleep(Duration::from_secs(2));
-    num
-};
-# expensive_closure(5);
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-05/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-5: Defining a closure and storing it in the
@@ -250,7 +163,7 @@ closure—these are optional if the closure body is a single expression. The end
 of the closure, after the curly brackets, needs a semicolon to complete the
 `let` statement. The value returned from the last line in the closure body
 (`num`) will be the value returned from the closure when it’s called, because
-that line doesn’t end in a semicolon; just like in function bodies.
+that line doesn’t end in a semicolon; just as in function bodies.
 
 Note that this `let` statement means `expensive_closure` contains the
 *definition* of an anonymous function, not the *resulting value* of calling the
@@ -262,41 +175,12 @@ With the closure defined, we can change the code in the `if` blocks to call the
 closure to execute the code and get the resulting value. We call a closure like
 we do a function: we specify the variable name that holds the closure
 definition and follow it with parentheses containing the argument values we
-want to use, as shown in Listing 13-6:
+want to use, as shown in listing 13-6.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_closure = |num| {
-        println!("calculating slowly...");
-        thread::sleep(Duration::from_secs(2));
-        num
-    };
-
-    if intensity < 25 {
-        println!(
-            "Today, do {} pushups!",
-            expensive_closure(intensity)
-        );
-        println!(
-            "Next, do {} situps!",
-            expensive_closure(intensity)
-        );
-    } else {
-        if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
-        } else {
-            println!(
-                "Today, run for {} minutes!",
-                expensive_closure(intensity)
-            );
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-06/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-6: Calling the `expensive_closure` we’ve
@@ -305,7 +189,7 @@ defined</span>
 Now the expensive calculation is called in only one place, and we’re only
 executing that code where we need the results.
 
-However, we’ve reintroduced one of the problems from Listing 13-3: we’re still
+However, we’ve reintroduced one of the problems from listing 13-3: we’re still
 calling the closure twice in the first `if` block, which will call the
 expensive code twice and make the user wait twice as long as they need to. We
 could fix this problem by creating a variable local to that `if` block to hold
@@ -335,20 +219,13 @@ available.
 
 As with variables, we can add type annotations if we want to increase
 explicitness and clarity at the cost of being more verbose than is strictly
-necessary. Annotating the types for the closure we defined in Listing 13-5
-would look like the definition shown in Listing 13-7:
+necessary. Annotating the types for the closure we defined in listing 13-5
+would look like the definition shown in listing 13-7.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-let expensive_closure = |num: u32| -> u32 {
-    println!("calculating slowly...");
-    thread::sleep(Duration::from_secs(2));
-    num
-};
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-07/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-7: Adding optional type annotations of the
@@ -372,23 +249,22 @@ The first line shows a function definition, and the second line shows a fully
 annotated closure definition. The third line removes the type annotations from
 the closure definition, and the fourth line removes the brackets, which are
 optional because the closure body has only one expression. These are all valid
-definitions that will produce the same behavior when they’re called.
+definitions that will produce the same behavior when they’re called. Calling
+the closures is required for `add_one_v3` and `add_one_v4` to be able to
+compile because the types will be inferred from their usage.
 
 Closure definitions will have one concrete type inferred for each of their
-parameters and for their return value. For instance, Listing 13-8 shows the
+parameters and for their return value. For instance, listing 13-8 shows the
 definition of a short closure that just returns the value it receives as a
 parameter. This closure isn’t very useful except for the purposes of this
 example. Note that we haven’t added any type annotations to the definition: if
 we then try to call the closure twice, using a `String` as an argument the
 first time and a `u32` the second time, we’ll get an error.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-let example_closure = |x| x;
-
-let s = example_closure(String::from("hello"));
-let n = example_closure(5);
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-08/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-8: Attempting to call a closure whose types
@@ -397,15 +273,7 @@ are inferred with two different types</span>
 The compiler gives us this error:
 
 ```text
-error[E0308]: mismatched types
- --> src/main.rs
-  |
-  | let n = example_closure(5);
-  |                         ^ expected struct `std::string::String`, found
-  integral variable
-  |
-  = note: expected type `std::string::String`
-             found type `{integer}`
+{{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
 ```
 
 The first time we call `example_closure` with the `String` value, the compiler
@@ -415,7 +283,7 @@ error if we try to use a different type with the same closure.
 
 ### Storing Closures Using Generic Parameters and the `Fn` Traits
 
-Let’s return to our workout generation app. In Listing 13-6, our code was still
+Let’s return to our workout generation app. In listing 13-6, our code was still
 calling the expensive calculation closure more times than it needed to. One
 option to solve this issue is to save the result of the expensive closure in a
 variable for reuse and use the variable in each place we need the result,
@@ -448,17 +316,12 @@ case, our closure has a parameter of type `u32` and returns a `u32`, so the
 trait bound we specify is `Fn(u32) -> u32`.
 
 Listing 13-9 shows the definition of the `Cacher` struct that holds a closure
-and an optional result value:
+and an optional result value.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-struct Cacher<T>
-    where T: Fn(u32) -> u32
-{
-    calculation: T,
-    value: Option<u32>,
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-09/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-9: Defining a `Cacher` struct that holds a
@@ -482,40 +345,13 @@ result within a `Some` variant in the `value` field. Then if the code asks for
 the result of the closure again, instead of executing the closure again, the
 `Cacher` will return the result held in the `Some` variant.
 
-The logic around the `value` field we’ve just described is defined in Listing
-13-10:
+The logic around the `value` field we’ve just described is defined in listing
+13-10.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# struct Cacher<T>
-#     where T: Fn(u32) -> u32
-# {
-#     calculation: T,
-#     value: Option<u32>,
-# }
-#
-impl<T> Cacher<T>
-    where T: Fn(u32) -> u32
-{
-    fn new(calculation: T) -> Cacher<T> {
-        Cacher {
-            calculation,
-            value: None,
-        }
-    }
-
-    fn value(&mut self, arg: u32) -> u32 {
-        match self.value {
-            Some(v) => v,
-            None => {
-                let v = (self.calculation)(arg);
-                self.value = Some(v);
-                v
-            },
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-10: The caching logic of `Cacher`</span>
@@ -541,70 +377,12 @@ If `self.value` is `None`, the code calls the closure stored in
 returns the value as well.
 
 Listing 13-11 shows how we can use this `Cacher` struct in the function
-`generate_workout` from Listing 13-6:
+`generate_workout` from listing 13-6.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-# use std::thread;
-# use std::time::Duration;
-#
-# struct Cacher<T>
-#     where T: Fn(u32) -> u32
-# {
-#     calculation: T,
-#     value: Option<u32>,
-# }
-#
-# impl<T> Cacher<T>
-#     where T: Fn(u32) -> u32
-# {
-#     fn new(calculation: T) -> Cacher<T> {
-#         Cacher {
-#             calculation,
-#             value: None,
-#         }
-#     }
-#
-#     fn value(&mut self, arg: u32) -> u32 {
-#         match self.value {
-#             Some(v) => v,
-#             None => {
-#                 let v = (self.calculation)(arg);
-#                 self.value = Some(v);
-#                 v
-#             },
-#         }
-#     }
-# }
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let mut expensive_result = Cacher::new(|num| {
-        println!("calculating slowly...");
-        thread::sleep(Duration::from_secs(2));
-        num
-    });
-
-    if intensity < 25 {
-        println!(
-            "Today, do {} pushups!",
-            expensive_result.value(intensity)
-        );
-        println!(
-            "Next, do {} situps!",
-            expensive_result.value(intensity)
-        );
-    } else {
-        if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
-        } else {
-            println!(
-                "Today, run for {} minutes!",
-                expensive_result.value(intensity)
-            );
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 13-11: Using `Cacher` in the `generate_workout`
@@ -616,7 +394,7 @@ call the `value` method on the `Cacher` instance. We can call the `value`
 method as many times as we want, or not call it at all, and the expensive
 calculation will be run a maximum of once.
 
-Try running this program with the `main` function from Listing 13-2. Change the
+Try running this program with the `main` function from listing 13-2. Change the
 values in the `simulated_user_specified_value` and `simulated_random_number`
 variables to verify that in all the cases in the various `if` and `else`
 blocks, `calculating slowly...` appears only once and only when needed. The
@@ -636,29 +414,19 @@ same value for the parameter `arg` to the `value` method. That is, this test of
 `Cacher` will fail:
 
 ```rust,ignore,panics
-#[test]
-fn call_with_different_values() {
-    let mut c = Cacher::new(|a| a);
-
-    let v1 = c.value(1);
-    let v2 = c.value(2);
-
-    assert_eq!(v2, 2);
-}
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/src/lib.rs:here}}
 ```
 
 This test creates a new `Cacher` instance with a closure that returns the value
 passed into it. We call the `value` method on this `Cacher` instance with an
 `arg` value of 1 and then an `arg` value of 2, and we expect the call to
-`value` with the `arg` value of 2 should return 2.
+`value` with the `arg` value of 2 to return 2.
 
-Run this test with the `Cacher` implementation in Listing 13-9 and Listing
+Run this test with the `Cacher` implementation in listing 13-9 and listing
 13-10, and the test will fail on the `assert_eq!` with this message:
 
 ```text
-thread 'call_with_different_values' panicked at 'assertion failed: `(left == right)`
-  left: `1`,
- right: `2`', src/main.rs
+{{#include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/output.txt}}
 ```
 
 The problem is that the first time we called `c.value` with 1, the `Cacher`
@@ -687,20 +455,12 @@ have: they can capture their environment and access variables from the scope in
 which they’re defined.
 
 Listing 13-12 has an example of a closure stored in the `equal_to_x` variable
-that uses the `x` variable from the closure’s surrounding environment:
+that uses the `x` variable from the closure’s surrounding environment.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = 4;
-
-    let equal_to_x = |z| z == x;
-
-    let y = 4;
-
-    assert!(equal_to_x(y));
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/main.rs}}
 ```
 
 <span class="caption">Listing 13-12: Example of a closure that refers to a
@@ -713,29 +473,16 @@ same scope that `equal_to_x` is defined in.
 We can’t do the same with functions; if we try with the following example, our
 code won’t compile:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn main() {
-    let x = 4;
-
-    fn equal_to_x(z: i32) -> bool { z == x }
-
-    let y = 4;
-
-    assert!(equal_to_x(y));
-}
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/src/main.rs}}
 ```
 
 We get an error:
 
 ```text
-error[E0434]: can't capture dynamic environment in a fn item; use the || { ...
-} closure form instead
- --> src/main.rs
-  |
-4 |     fn equal_to_x(z: i32) -> bool { z == x }
-  |                                          ^
+{{#include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/output.txt}}
 ```
 
 The compiler even reminds us that this only works with closures!
@@ -764,7 +511,7 @@ When you create a closure, Rust infers which trait to use based on how the
 closure uses the values from the environment. All closures implement `FnOnce`
 because they can all be called at least once. Closures that don’t move the
 captured variables also implement `FnMut`, and closures that don’t need mutable
-access to the captured variables also implement `Fn`. In Listing 13-12, the
+access to the captured variables also implement `Fn`. In listing 13-12, the
 `equal_to_x` closure borrows `x` immutably (so `equal_to_x` has the `Fn` trait)
 because the body of the closure only needs to read the value in `x`.
 
@@ -774,41 +521,21 @@ technique is mostly useful when passing a closure to a new thread to move the
 data so it’s owned by the new thread.
 
 We’ll have more examples of `move` closures in Chapter 16 when we talk about
-concurrency. For now, here’s the code from Listing 13-12 with the `move`
+concurrency. For now, here’s the code from listing 13-12 with the `move`
 keyword added to the closure definition and using vectors instead of integers,
 because integers can be copied rather than moved; note that this code will not
 yet compile.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn main() {
-    let x = vec![1, 2, 3];
-
-    let equal_to_x = move |z| z == x;
-
-    println!("can't use x here: {:?}", x);
-
-    let y = vec![1, 2, 3];
-
-    assert!(equal_to_x(y));
-}
+{{#rustdoc_include ../listings/ch13-functional-features/no-listing-03-move-closures/src/main.rs}}
 ```
 
 We receive the following error:
 
 ```text
-error[E0382]: use of moved value: `x`
- --> src/main.rs:6:40
-  |
-4 |     let equal_to_x = move |z| z == x;
-  |                      -------- value moved (into closure) here
-5 |
-6 |     println!("can't use x here: {:?}", x);
-  |                                        ^ value used here after move
-  |
-  = note: move occurs because `x` has type `std::vec::Vec<i32>`, which does not
-  implement the `Copy` trait
+{{#include ../listings/ch13-functional-features/no-listing-03-move-closures/output.txt}}
 ```
 
 The `x` value is moved into the closure when the closure is defined, because we
