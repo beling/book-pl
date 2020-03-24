@@ -114,14 +114,13 @@ wiele mutowalnych referencji, ale nie *równocześnie*:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
 ```
 
-A similar rule exists for combining mutable and immutable references. This code
-results in an error:
+Podobne ograniczenie dotyczy mieszania mutowalnych i niemutowalnych referencji. Następujący kod nie skompiluje się:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/src/main.rs:here}}
 ```
 
-Here’s the error:
+Kompilator wyświetli następujący komunikat błędu:
 
 ```text
 {{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
