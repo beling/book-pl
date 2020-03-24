@@ -1,6 +1,6 @@
 ## Wycinek
 
-Kolejnym typem danych, który nie przejmuje własności jest wycinek (ang. *slice*).
+Kolejnym typem danych, który nie przejmuje własności jest *wycinek* (ang. *slice*).
 Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w
 kolekcji, bez konieczności odnoszenia się do całej kolekcji.
 
