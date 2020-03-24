@@ -23,7 +23,7 @@ success or failure. The parser will need to borrow the `Context` to do the
 parsing. Listing 19-12 implements this parser code, except the code doesn’t
 have the required lifetime annotations, so it won’t compile.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 struct Context(&str);
@@ -64,14 +64,14 @@ lifetimes involved.
 To get this code to compile, we need to fill in the lifetime parameters for the
 string slice in `Context` and the reference to the `Context` in `Parser`. The
 most straightforward way to do this is to use the same lifetime name
-everywhere, as shown in Listing 19-13. Recall from the [“Lifetime Annotations
+everywhere, as shown in listing 19-13. Recall from the [“Lifetime Annotations
 in Struct Definitions”][lifetime-annotations-in-struct-definitions]<!-- ignore
 --> section in Chapter 10 that each of `struct Context<'a>`, `struct
 Parser<'a>`, and `impl<'a>` is declaring a new lifetime parameter. While their
 names happen to all be the same, the three lifetime parameters declared in this
 example aren’t related.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 struct Context<'a>(&'a str);
@@ -96,11 +96,11 @@ also lives as long as the reference to the `Context` in `Parser`. Rust’s
 compiler error message stated that lifetime parameters were required for these
 references, and we’ve now added lifetime parameters.
 
-Next, in Listing 19-14, we’ll add a function that takes an instance of
+Next, in listing 19-14, we’ll add a function that takes an instance of
 `Context`, uses a `Parser` to parse that context, and returns what `parse`
 returns. This code doesn’t quite work.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 fn parse_context(context: Context) -> Result<(), &str> {
@@ -158,7 +158,7 @@ references in this code to always be valid. The `Parser` we’re creating and th
 `context` parameter go out of scope at the end of the function, because
 `parse_context` takes ownership of `context`.
 
-To figure out why these errors occur, let’s look at the definitions in Listing
+To figure out why these errors occur, let’s look at the definitions in listing
 19-13 again, specifically the references in the signature of the `parse` method:
 
 ```rust,ignore
@@ -208,13 +208,13 @@ different lifetimes and that the return value of `parse_context` is tied to the
 lifetime of the string slice in `Context`.
 
 First, we’ll try giving `Parser` and `Context` different lifetime parameters,
-as shown in Listing 19-15. We’ll use `'s` and `'c` as lifetime parameter names
+as shown in listing 19-15. We’ll use `'s` and `'c` as lifetime parameter names
 to clarify which lifetime goes with the string slice in `Context` and which
 goes with the reference to `Context` in `Parser`. Note that this solution won’t
 completely fix the problem, but it’s a start. We’ll look at why this fix isn’t
 sufficient when we try to compile.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 struct Context<'s>(&'s str);
@@ -238,7 +238,7 @@ fn parse_context(context: Context) -> Result<(), &str> {
 for the references to the string slice and to `Context`</span>
 
 We’ve annotated the lifetimes of the references in all the same places that we
-annotated them in Listing 19-13. But this time we used different parameters
+annotated them in listing 19-13. But this time we used different parameters
 depending on whether the reference goes with the string slice or with
 `Context`. We’ve also added an annotation to the string slice part of the
 return value of `parse` to indicate that it goes with the lifetime of the
@@ -284,7 +284,7 @@ In our definition of `Parser`, to say that `'s` (the lifetime of the string
 slice) is guaranteed to live at least as long as `'c` (the lifetime of the
 reference to `Context`), we change the lifetime declarations to look like this:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
 # struct Context<'a>(&'a str);
@@ -317,9 +317,9 @@ As an example, consider a type that is a wrapper over references. Recall the
 Chapter 15: its `borrow` and `borrow_mut` methods return the types `Ref` and
 `RefMut`, respectively. These types are wrappers over references that keep
 track of the borrowing rules at runtime. The definition of the `Ref` struct is
-shown in Listing 19-16, without lifetime bounds for now.
+shown in listing 19-16, without lifetime bounds for now.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 struct Ref<'a, T>(&'a T);
@@ -374,7 +374,7 @@ type, but if it contains any references, the references must live at least as
 long as `'a`.
 
 We could solve this problem in a different way, as shown in the definition of a
-`StaticRef` struct in Listing 19-18, by adding the `'static` lifetime bound on
+`StaticRef` struct in listing 19-18, by adding the `'static` lifetime bound on
 `T`. This means if `T` contains any references, they must have the `'static`
 lifetime.
 
@@ -401,12 +401,12 @@ Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
 ignore --> section, we discussed trait objects, consisting of a trait behind a
 reference, that allow us to use dynamic dispatch. We haven’t yet discussed what
 happens if the type implementing the trait in the trait object has a lifetime
-of its own. Consider Listing 19-19 where we have a trait `Red` and a struct
+of its own. Consider listing 19-19 where we have a trait `Red` and a struct
 `Ball`. The `Ball` struct holds a reference (and thus has a lifetime parameter)
 and also implements trait `Red`. We want to use an instance of `Ball` as the
 trait object `Box<dyn Red>`.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 trait Red { }

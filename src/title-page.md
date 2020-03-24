@@ -4,7 +4,7 @@ Witaj na łamach książki „Język Programowania Rust”! Bieżąca wersja tek
 zakłada, że używasz wersji Rusta 1.31.0 lub nowszej, z wyrażeniem
 `edition="2018"` w pliku *Cargo.toml* wszystkich projektów, co pozwoli na użycie
 wszystkich idiomów właściwych dla Edycji 2018. Zajrzyj do [sekcji "Instalacja"
-w Rozdziale 1][install]<!-- ignore --> celem uzyskania informacji o sposobach
+w rozdziale 1][install]<!-- ignore --> celem uzyskania informacji o sposobach
 instalacji lub aktualizacji Rusta oraz do [Dodatku E][editions]<!-- ignore -->,
 żeby dowiedzieć się, czym charakteryzują się poszczególne edycje Rusta.
 

@@ -20,4 +20,6 @@ ci silne podstawy do dalszej nauki.
 > wykonywania różnych operacji w swoich programach; niektóre nie mają obecnie
 > jeszcze żadnego zastosowania, lecz zostały zarezerwowane dla funkcjonalności,
 > które mogą zostać dodane w przyszłości do Rusta. Listę słów kluczowych
-> znajdziesz w Dodatku A.
+> znajdziesz w [Dodatku A][appendix_a].
+
+[appendix_a]: appendix-01-keywords.md

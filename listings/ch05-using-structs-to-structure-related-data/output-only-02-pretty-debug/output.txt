@@ -1,0 +1,8 @@
+$ cargo run
+   Compiling struktury v0.1.0 (file:///projects/struktury)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/struktury`
+rect1 to Rectangle {
+    width: 30,
+    height: 50,
+}

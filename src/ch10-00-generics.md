@@ -38,23 +38,10 @@ recognize duplicated code that can use generics.
 Consider a short program that finds the largest number in a list, as shown in
 Listing 10-1.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let mut largest = number_list[0];
-
-    for number in number_list {
-        if number > largest {
-            largest = number;
-        }
-    }
-
-    println!("The largest number is {}", largest);
-#  assert_eq!(largest, 100);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-01/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 10-1: Code to find the largest number in a list
@@ -64,43 +51,19 @@ This code stores a list of integers in the variable `number_list` and places
 the first number in the list in a variable named `largest`. Then it iterates
 through all the numbers in the list, and if the current number is greater than
 the number stored in `largest`, it replaces the number in that variable.
-However, if the current number is less than the largest number seen so far, the
-variable doesn’t change, and the code moves on to the next number in the list.
-After considering all the numbers in the list, `largest` should hold the
-largest number, which in this case is 100.
+However, if the current number is less than or equal to the largest number seen
+so far, the variable doesn’t change, and the code moves on to the next number
+in the list. After considering all the numbers in the list, `largest` should
+hold the largest number, which in this case is 100.
 
 To find the largest number in two different lists of numbers, we can duplicate
-the code in Listing 10-1 and use the same logic at two different places in the
-program, as shown in Listing 10-2.
+the code in listing 10-1 and use the same logic at two different places in the
+program, as shown in listing 10-2.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let mut largest = number_list[0];
-
-    for number in number_list {
-        if number > largest {
-            largest = number;
-        }
-    }
-
-    println!("The largest number is {}", largest);
-
-    let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
-
-    let mut largest = number_list[0];
-
-    for number in number_list {
-        if number > largest {
-            largest = number;
-        }
-    }
-
-    println!("The largest number is {}", largest);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-02/src/main.rs}}
 ```
 
 <span class="caption">Listing 10-2: Code to find the largest number in *two*
@@ -114,39 +77,15 @@ function that operates on any list of integers given to it in a parameter. This
 solution makes our code clearer and lets us express the concept of finding the
 largest number in a list abstractly.
 
-In Listing 10-3, we extracted the code that finds the largest number into a
-function named `largest`. Unlike the code in Listing 10-1, which can find the
+In listing 10-3, we extracted the code that finds the largest number into a
+function named `largest`. Unlike the code in listing 10-1, which can find the
 largest number in only one particular list, this program can find the largest
 number in two different lists.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn largest(list: &[i32]) -> i32 {
-    let mut largest = list[0];
-
-    for &item in list.iter() {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
-#    assert_eq!(result, 100);
-
-    let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
-
-    let result = largest(&number_list);
-    println!("The largest number is {}", result);
-#    assert_eq!(result, 6000);
-}
+{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-03/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 10-3: Abstracted code to find the largest number
@@ -157,7 +96,7 @@ concrete slice of `i32` values that we might pass into the function. As a
 result, when we call the function, the code runs on the specific values that we
 pass in.
 
-In sum, here are the steps we took to change the code from Listing 10-2 to
+In sum, here are the steps we took to change the code from listing 10-2 to
 Listing 10-3:
 
 1. Identify duplicate code.

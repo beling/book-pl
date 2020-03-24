@@ -32,23 +32,10 @@ Listing 17-11 shows this workflow in code form: this is an example usage of the
 API we’ll implement in a library crate named `blog`. This won’t compile yet
 because we haven’t implemented the `blog` crate yet.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
-```rust,ignore
-use blog::Post;
-
-fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-    assert_eq!("", post.content());
-
-    post.request_review();
-    assert_eq!("", post.content());
-
-    post.approve();
-    assert_eq!("I ate a salad for lunch today", post.content());
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:all}}
 ```
 
 <span class="caption">Listing 17-11: Code that demonstrates the desired
@@ -81,33 +68,15 @@ make a mistake with the states, like publishing a post before it’s reviewed.
 Let’s get started on the implementation of the library! We know we need a
 public `Post` struct that holds some content, so we’ll start with the
 definition of the struct and an associated public `new` function to create an
-instance of `Post`, as shown in Listing 17-12. We’ll also make a private
+instance of `Post`, as shown in listing 17-12. We’ll also make a private
 `State` trait. Then `Post` will hold a trait object of `Box<dyn State>`
 inside an `Option<T>` in a private field named `state`. You’ll see why the
 `Option<T>` is necessary in a bit.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-pub struct Post {
-    state: Option<Box<dyn State>>,
-    content: String,
-}
-
-impl Post {
-    pub fn new() -> Post {
-        Post {
-            state: Some(Box::new(Draft {})),
-            content: String::new(),
-        }
-    }
-}
-
-trait State {}
-
-struct Draft {}
-
-impl State for Draft {}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-12/src/lib.rs}}
 ```
 
 <span class="caption">Listing 17-12: Definition of a `Post` struct and a `new`
@@ -133,22 +102,13 @@ Listing 17-11 showed that we want to be able to call a method named
 blog post. We implement this as a method rather than exposing the `content`
 field as `pub`. This means we can implement a method later that will control
 how the `content` field’s data is read. The `add_text` method is pretty
-straightforward, so let’s add the implementation in Listing 17-13 to the `impl
+straightforward, so let’s add the implementation in listing 17-13 to the `impl
 Post` block:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     content: String,
-# }
-#
-impl Post {
-    // --snip--
-    pub fn add_text(&mut self, text: &str) {
-        self.content.push_str(text);
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-13/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-13: Implementing the `add_text` method to add
@@ -166,32 +126,23 @@ support.
 
 Even after we’ve called `add_text` and added some content to our post, we still
 want the `content` method to return an empty string slice because the post is
-still in the draft state, as shown on line 8 of Listing 17-11. For now, let’s
+still in the draft state, as shown on line 7 of listing 17-11. For now, let’s
 implement the `content` method with the simplest thing that will fulfill this
 requirement: always returning an empty string slice. We’ll change this later
 once we implement the ability to change a post’s state so it can be published.
 So far, posts can only be in the draft state, so the post content should always
 be empty. Listing 17-14 shows this placeholder implementation:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     content: String,
-# }
-#
-impl Post {
-    // --snip--
-    pub fn content(&self) -> &str {
-        ""
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-14/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-14: Adding a placeholder implementation for
 the `content` method on `Post` that always returns an empty string slice</span>
 
-With this added `content` method, everything in Listing 17-11 up to line 8
+With this added `content` method, everything in listing 17-11 up to line 7
 works as intended.
 
 ### Requesting a Review of the Post Changes Its State
@@ -199,42 +150,10 @@ works as intended.
 Next, we need to add functionality to request a review of a post, which should
 change its state from `Draft` to `PendingReview`. Listing 17-15 shows this code:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     state: Option<Box<dyn State>>,
-#     content: String,
-# }
-#
-impl Post {
-    // --snip--
-    pub fn request_review(&mut self) {
-        if let Some(s) = self.state.take() {
-            self.state = Some(s.request_review())
-        }
-    }
-}
-
-trait State {
-    fn request_review(self: Box<Self>) -> Box<dyn State>;
-}
-
-struct Draft {}
-
-impl State for Draft {
-    fn request_review(self: Box<Self>) -> Box<dyn State> {
-        Box::new(PendingReview {})
-    }
-}
-
-struct PendingReview {}
-
-impl State for PendingReview {
-    fn request_review(self: Box<Self>) -> Box<dyn State> {
-        self
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-15/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-15: Implementing `request_review` methods on
@@ -280,73 +199,18 @@ state is responsible for its own rules.
 We’ll leave the `content` method on `Post` as is, returning an empty string
 slice. We can now have a `Post` in the `PendingReview` state as well as in the
 `Draft` state, but we want the same behavior in the `PendingReview` state.
-Listing 17-11 now works up to line 11!
+Listing 17-11 now works up to line 10!
 
 ### Adding the `approve` Method that Changes the Behavior of `content`
 
 The `approve` method will be similar to the `request_review` method: it will
 set `state` to the value that the current state says it should have when that
-state is approved, as shown in Listing 17-16:
+state is approved, as shown in listing 17-16:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     state: Option<Box<dyn State>>,
-#     content: String,
-# }
-#
-impl Post {
-    // --snip--
-    pub fn approve(&mut self) {
-        if let Some(s) = self.state.take() {
-            self.state = Some(s.approve())
-        }
-    }
-}
-
-trait State {
-    fn request_review(self: Box<Self>) -> Box<dyn State>;
-    fn approve(self: Box<Self>) -> Box<dyn State>;
-}
-
-struct Draft {}
-
-impl State for Draft {
-#     fn request_review(self: Box<Self>) -> Box<dyn State> {
-#         Box::new(PendingReview {})
-#     }
-#
-    // --snip--
-    fn approve(self: Box<Self>) -> Box<dyn State> {
-        self
-    }
-}
-
-struct PendingReview {}
-
-impl State for PendingReview {
-#     fn request_review(self: Box<Self>) -> Box<dyn State> {
-#         self
-#     }
-#
-    // --snip--
-    fn approve(self: Box<Self>) -> Box<dyn State> {
-        Box::new(Published {})
-    }
-}
-
-struct Published {}
-
-impl State for Published {
-    fn request_review(self: Box<Self>) -> Box<dyn State> {
-        self
-    }
-
-    fn approve(self: Box<Self>) -> Box<dyn State> {
-        self
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-16/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-16: Implementing the `approve` method on
@@ -364,26 +228,12 @@ the post should stay in the `Published` state in those cases.
 
 Now we need to update the `content` method on `Post`: if the state is
 `Published`, we want to return the value in the post’s `content` field;
-otherwise, we want to return an empty string slice, as shown in Listing 17-17:
+otherwise, we want to return an empty string slice, as shown in listing 17-17:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
-```rust
-# trait State {
-#     fn content<'a>(&self, post: &'a Post) -> &'a str;
-# }
-# pub struct Post {
-#     state: Option<Box<dyn State>>,
-#     content: String,
-# }
-#
-impl Post {
-    // --snip--
-    pub fn content(&self) -> &str {
-        self.state.as_ref().unwrap().content(&self)
-    }
-    // --snip--
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch17-oop/listing-17-17/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-17: Updating the `content` method on `Post` to
@@ -415,28 +265,10 @@ called on the type that implements the `State` trait. That means we need to add
 logic for what content to return depending on which state we have, as shown in
 Listing 17-18:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     content: String
-# }
-trait State {
-    // --snip--
-    fn content<'a>(&self, post: &'a Post) -> &'a str {
-        ""
-    }
-}
-
-// --snip--
-struct Published {}
-
-impl State for Published {
-    // --snip--
-    fn content<'a>(&self, post: &'a Post) -> &'a str {
-        &post.content
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-18/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-18: Adding the `content` method to the `State`
@@ -452,7 +284,7 @@ Chapter 10. We’re taking a reference to a `post` as an argument and returning 
 reference to part of that `post`, so the lifetime of the returned reference is
 related to the lifetime of the `post` argument.
 
-And we’re done—all of Listing 17-11 now works! We’ve implemented the state
+And we’re done—all of listing 17-11 now works! We’ve implemented the state
 pattern with the rules of the blog post workflow. The logic related to the
 rules lives in the state objects rather than being scattered throughout `Post`.
 
@@ -523,19 +355,12 @@ outside code has no knowledge of them, we’ll encode the states into different
 types. Consequently, Rust’s type checking system will prevent attempts to use
 draft posts where only published posts are allowed by issuing a compiler error.
 
-Let’s consider the first part of `main` in Listing 17-11:
+Let’s consider the first part of `main` in listing 17-11:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
-# use blog::Post;
-
-fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-    assert_eq!("", post.content());
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:here}}
 ```
 
 We still enable the creation of new posts in the draft state using `Post::new`
@@ -548,34 +373,10 @@ display draft post content in production, because that code won’t even compile
 Listing 17-19 shows the definition of a `Post` struct and a `DraftPost` struct,
 as well as methods on each:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-pub struct Post {
-    content: String,
-}
-
-pub struct DraftPost {
-    content: String,
-}
-
-impl Post {
-    pub fn new() -> DraftPost {
-        DraftPost {
-            content: String::new(),
-        }
-    }
-
-    pub fn content(&self) -> &str {
-        &self.content
-    }
-}
-
-impl DraftPost {
-    pub fn add_text(&mut self, text: &str) {
-        self.content.push_str(text);
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-19/src/lib.rs}}
 ```
 
 <span class="caption">Listing 17-19: A `Post` with a `content` method and a
@@ -606,40 +407,12 @@ pending review state should still not display any content. Let’s implement
 these constraints by adding another struct, `PendingReviewPost`, defining the
 `request_review` method on `DraftPost` to return a `PendingReviewPost`, and
 defining an `approve` method on `PendingReviewPost` to return a `Post`, as
-shown in Listing 17-20:
+shown in listing 17-20:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust
-# pub struct Post {
-#     content: String,
-# }
-#
-# pub struct DraftPost {
-#     content: String,
-# }
-#
-impl DraftPost {
-    // --snip--
-
-    pub fn request_review(self) -> PendingReviewPost {
-        PendingReviewPost {
-            content: self.content,
-        }
-    }
-}
-
-pub struct PendingReviewPost {
-    content: String,
-}
-
-impl PendingReviewPost {
-    pub fn approve(self) -> Post {
-        Post {
-            content: self.content,
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-20/src/lib.rs:here}}
 ```
 
 <span class="caption">Listing 17-20: A `PendingReviewPost` that gets created by
@@ -664,24 +437,12 @@ called on, so we need to add more `let post =` shadowing assignments to save
 the returned instances. We also can’t have the assertions about the draft and
 pending review post’s contents be empty strings, nor do we need them: we can’t
 compile code that tries to use the content of posts in those states any longer.
-The updated code in `main` is shown in Listing 17-21:
+The updated code in `main` is shown in listing 17-21:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
-use blog::Post;
-
-fn main() {
-    let mut post = Post::new();
-
-    post.add_text("I ate a salad for lunch today");
-
-    let post = post.request_review();
-
-    let post = post.approve();
-
-    assert_eq!("I ate a salad for lunch today", post.content());
-}
+{{#rustdoc_include ../listings/ch17-oop/listing-17-21/src/main.rs}}
 ```
 
 <span class="caption">Listing 17-21: Modifications to `main` to use the new
@@ -696,7 +457,7 @@ compile time! This ensures that certain bugs, such as display of the content of
 an unpublished post, will be discovered before they make it to production.
 
 Try the tasks suggested for additional requirements that we mentioned at the
-start of this section on the `blog` crate as it is after Listing 17-20 to see
+start of this section on the `blog` crate as it is after listing 17-20 to see
 what you think about the design of this version of the code. Note that some of
 the tasks might be completed already in this design.
 

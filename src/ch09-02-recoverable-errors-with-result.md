@@ -29,16 +29,12 @@ library has defined on it in many different situations where the successful
 value and error value we want to return may differ.
 
 Let’s call a function that returns a `Result` value because the function could
-fail. In Listing 9-3 we try to open a file.
+fail. In listing 9-3 we try to open a file.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
-use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt");
-}
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
 ```
 
 <span class="caption">Listing 9-3: Opening a file</span>
@@ -51,22 +47,14 @@ us that the types don’t match. The error message will then tell us what the
 type of `f` *is*. Let’s try it! We know that the return type of `File::open`
 isn’t of type `u32`, so let’s change the `let f` statement to this:
 
-```rust,ignore
-let f: u32 = File::open("hello.txt");
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-02-ask-compiler-for-type/src/main.rs:here}}
 ```
 
 Attempting to compile now gives us the following output:
 
 ```text
-error[E0308]: mismatched types
- --> src/main.rs:4:18
-  |
-4 |     let f: u32 = File::open("hello.txt");
-  |                  ^^^^^^^^^^^^^^^^^^^^^^^ expected u32, found enum
-`std::result::Result`
-  |
-  = note: expected type `u32`
-             found type `std::result::Result<std::fs::File, std::io::Error>`
+{{#include ../listings/ch09-error-handling/no-listing-02-ask-compiler-for-type/output.txt}}
 ```
 
 This tells us the return type of the `File::open` function is a `Result<T, E>`.
@@ -87,26 +75,15 @@ an instance of `Ok` that contains a file handle. In the case where it fails,
 the value in `f` will be an instance of `Err` that contains more information
 about the kind of error that happened.
 
-We need to add to the code in Listing 9-3 to take different actions depending
+We need to add to the code in listing 9-3 to take different actions depending
 on the value `File::open` returns. Listing 9-4 shows one way to handle the
 `Result` using a basic tool, the `match` expression that we discussed in
 Chapter 6.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,should_panic
-use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt");
-
-    let f = match f {
-        Ok(file) => file,
-        Err(error) => {
-            panic!("There was a problem opening the file: {:?}", error)
-        },
-    };
-}
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
 ```
 
 <span class="caption">Listing 9-4: Using a `match` expression to handle the
@@ -127,45 +104,28 @@ there’s no file named *hello.txt* in our current directory and we run this
 code, we’ll see the following output from the `panic!` macro:
 
 ```text
-thread 'main' panicked at 'There was a problem opening the file: Error { repr:
-Os { code: 2, message: "No such file or directory" } }', src/main.rs:9:12
+{{#include ../listings/ch09-error-handling/listing-09-04/output.txt}}
 ```
 
 As usual, this output tells us exactly what has gone wrong.
 
 ### Matching on Different Errors
 
-The code in Listing 9-4 will `panic!` no matter why `File::open` failed. What
+The code in listing 9-4 will `panic!` no matter why `File::open` failed. What
 we want to do instead is take different actions for different failure reasons:
 if `File::open` failed because the file doesn’t exist, we want to create the
 file and return the handle to the new file. If `File::open` failed for any
 other reason—for example, because we didn’t have permission to open the file—we
-still want the code to `panic!` in the same way as it did in Listing 9-4. Look
-at Listing 9-5, which adds an inner `match` expression:
+still want the code to `panic!` in the same way as it did in listing 9-4. Look
+at listing 9-5, which adds an inner `match` expression.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 <!-- ignore this test because otherwise it creates hello.txt which causes other
 tests to fail lol -->
 
 ```rust,ignore
-use std::fs::File;
-use std::io::ErrorKind;
-
-fn main() {
-    let f = File::open("hello.txt");
-
-    let f = match f {
-        Ok(file) => file,
-        Err(error) => match error.kind() {
-            ErrorKind::NotFound => match File::create("hello.txt") {
-                Ok(fc) => fc,
-                Err(e) => panic!("Tried to create file but there was a problem: {:?}", e),
-            },
-            other_error => panic!("There was a problem opening the file: {:?}", other_error),
-        },
-    };
-}
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-05/src/main.rs}}
 ```
 
 <span class="caption">Listing 9-5: Handling different kinds of errors in
@@ -177,43 +137,32 @@ has a method `kind` that we can call to get an `io::ErrorKind` value. The enum
 `io::ErrorKind` is provided by the standard library and has variants
 representing the different kinds of errors that might result from an `io`
 operation. The variant we want to use is `ErrorKind::NotFound`, which indicates
-the file we’re trying to open doesn’t exist yet. So we `match` on `f`, but we
-also have an inner `match` on `error.kind()`.
+the file we’re trying to open doesn’t exist yet. So we match on `f`, but we
+also have an inner match on `error.kind()`.
 
 The condition we want to check in the inner match is whether the value returned
 by `error.kind()` is the `NotFound` variant of the `ErrorKind` enum. If it is,
 we try to create the file with `File::create`. However, because `File::create`
 could also fail, we need a second arm in the inner `match` expression. When the
-file can’t be created, a different error message will be printed. The second
-arm of the outer `match` stays the same so the program panics on any error
-besides the missing file error.
+file can’t be created, a different error message is printed. The second arm of
+the outer `match` stays the same, so the program panics on any error besides
+the missing file error.
 
-That’s a lot of `match`! `match` is very powerful, but also very much a
-primitive. In Chapter 13, we’ll learn about closures. The `Result<T, E>` type
-has many methods that accept a closure, and are implemented as `match`
-expressions. A more seasoned Rustacean might write this:
+That’s a lot of `match`! The `match` expression is very useful but also very
+much a primitive. In Chapter 13, you’ll learn about closures; the `Result<T,
+E>` type has many methods that accept a closure and are implemented using
+`match` expressions. Using those methods will make your code more concise. A
+more seasoned Rustacean might write this code instead of listing 9-5:
 
 ```rust,ignore
-use std::fs::File;
-use std::io::ErrorKind;
-
-fn main() {
-    let f = File::open("hello.txt").map_err(|error| {
-        if error.kind() == ErrorKind::NotFound {
-            File::create("hello.txt").unwrap_or_else(|error| {
-                panic!("Tried to create file but there was a problem: {:?}", error);
-            })
-        } else {
-            panic!("There was a problem opening the file: {:?}", error);
-        }
-    });
-}
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-03-closures/src/main.rs}}
 ```
 
-Come back to this example after you’ve read Chapter 13, and look up what the
-`map_err` and `unwrap_or_else` methods do in the standard library
-documentation. There’s many more of these methods that can clean up huge nested
-`match` expressions when dealing with errors.
+Although this code has the same behavior as listing 9-5, it doesn’t contain any
+`match` expressions and is cleaner to read. Come back to this example after
+you’ve read Chapter 13, and look up the `unwrap_or_else` method in the standard
+library documentation. Many more of these methods can clean up huge nested
+`match` expressions when you’re dealing with errors.
 
 ### Shortcuts for Panic on Error: `unwrap` and `expect`
 
@@ -225,14 +174,10 @@ Listing 9-4. If the `Result` value is the `Ok` variant, `unwrap` will return
 the value inside the `Ok`. If the `Result` is the `Err` variant, `unwrap` will
 call the `panic!` macro for us. Here is an example of `unwrap` in action:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,should_panic
-use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt").unwrap();
-}
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
 ```
 
 If we run this code without a *hello.txt* file, we’ll see an error message from
@@ -249,14 +194,10 @@ Another method, `expect`, which is similar to `unwrap`, lets us also choose the
 error messages can convey your intent and make tracking down the source of a
 panic easier. The syntax of `expect` looks like this:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,should_panic
-use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt").expect("Failed to open hello.txt");
-}
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
 ```
 
 We use `expect` in the same way as `unwrap`: to return the file handle or call
@@ -284,32 +225,18 @@ error to the calling code so that it can decide what to do. This is known as
 might be more information or logic that dictates how the error should be
 handled than what you have available in the context of your code.
 
-For example, Listing 9-6 shows a function that reads a username from a file. If
+For example, listing 9-6 shows a function that reads a username from a file. If
 the file doesn’t exist or can’t be read, this function will return those errors
-to the code that called this function:
+to the code that called this function.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
+
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
 
 ```rust
-use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -> Result<String, io::Error> {
-    let f = File::open("hello.txt");
-
-    let mut f = match f {
-        Ok(file) => file,
-        Err(e) => return Err(e),
-    };
-
-    let mut s = String::new();
-
-    match f.read_to_string(&mut s) {
-        Ok(_) => Ok(s),
-        Err(e) => Err(e),
-    }
-}
+{{#include ../listings/ch09-error-handling/listing-09-06/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 9-6: A function that returns errors to the
@@ -317,10 +244,10 @@ calling code using `match`</span>
 
 This function can be written in a much shorter way, but we’re going to start by
 doing a lot of it manually in order to explore error handling; at the end,
-we’ll show the easy way. Let’s look at the return type of the function first:
+we’ll show the shorter way. Let’s look at the return type of the function first:
 `Result<String, io::Error>`. This means the function is returning a value of
 the type `Result<T, E>` where the generic parameter `T` has been filled in
-with the concrete type `String`, and the generic type `E` has been filled in
+with the concrete type `String` and the generic type `E` has been filled in
 with the concrete type `io::Error`. If this function succeeds without any
 problems, the code that calls this function will receive an `Ok` value that
 holds a `String`—the username that this function read from the file. If this
@@ -365,73 +292,64 @@ question mark operator `?` to make this easier.
 #### A Shortcut for Propagating Errors: the `?` Operator
 
 Listing 9-7 shows an implementation of `read_username_from_file` that has the
-same functionality as it had in Listing 9-6, but this implementation uses the
-question mark operator:
+same functionality as it had in listing 9-6, but this implementation uses the
+`?` operator.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
+
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
 
 ```rust
-use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -> Result<String, io::Error> {
-    let mut f = File::open("hello.txt")?;
-    let mut s = String::new();
-    f.read_to_string(&mut s)?;
-    Ok(s)
-}
+{{#include ../listings/ch09-error-handling/listing-09-07/src/main.rs:here}}
 ```
 
 <span class="caption">Listing 9-7: A function that returns errors to the
-calling code using `?`</span>
+calling code using the `?` operator</span>
 
 The `?` placed after a `Result` value is defined to work in almost the same way
-as the `match` expressions we defined to handle the `Result` values in Listing
+as the `match` expressions we defined to handle the `Result` values in listing
 9-6. If the value of the `Result` is an `Ok`, the value inside the `Ok` will
 get returned from this expression, and the program will continue. If the value
 is an `Err`, the `Err` will be returned from the whole function as if we had
 used the `return` keyword so the error value gets propagated to the calling
 code.
 
-There is a difference between what the `match` expression from Listing 9-6 and
-`?` do: error values taken by `?` go through the `from` function, defined in
-the `From` trait in the standard library, which is used to convert errors from
-one type into another. When `?` calls the `from` function, the error type
-received is converted into the error type defined in the return type of the
-current function. This is useful when a function returns one error type to
-represent all the ways a function might fail, even if parts might fail for many
-different reasons. As long as each error type implements the `from` function to
-define how to convert itself to the returned error type, `?` takes care of the
+There is a difference between what the `match` expression from listing 9-6 and
+the `?` operator do: error values that have the `?` operator called on them go
+through the `from` function, defined in the `From` trait in the standard
+library, which is used to convert errors from one type into another. When the
+`?` operator calls the `from` function, the error type received is converted
+into the error type defined in the return type of the current function. This is
+useful when a function returns one error type to represent all the ways a
+function might fail, even if parts might fail for many different reasons. As
+long as each error type implements the `from` function to define how to convert
+itself to the returned error type, the `?` operator takes care of the
 conversion automatically.
 
-In the context of Listing 9-7, the `?` at the end of the `File::open` call will
-return the value inside an `Ok` to the variable `f`. If an error occurs, `?`
-will return early out of the whole function and give any `Err` value to the
-calling code. The same thing applies to the `?` at the end of the
+In the context of listing 9-7, the `?` at the end of the `File::open` call will
+return the value inside an `Ok` to the variable `f`. If an error occurs, the
+`?` operator will return early out of the whole function and give any `Err`
+value to the calling code. The same thing applies to the `?` at the end of the
 `read_to_string` call.
 
 The `?` operator eliminates a lot of boilerplate and makes this function’s
 implementation simpler. We could even shorten this code further by chaining
-method calls immediately after the `?`, as shown in Listing 9-8:
+method calls immediately after the `?`, as shown in listing 9-8.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
+
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
 
 ```rust
-use std::io;
-use std::io::Read;
-use std::fs::File;
-
-fn read_username_from_file() -> Result<String, io::Error> {
-    let mut s = String::new();
-
-    File::open("hello.txt")?.read_to_string(&mut s)?;
-
-    Ok(s)
-}
+{{#include ../listings/ch09-error-handling/listing-09-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-8: Chaining method calls after `?`</span>
+<span class="caption">Listing 9-8: Chaining method calls after the `?`
+operator</span>
 
 We’ve moved the creation of the new `String` in `s` to the beginning of the
 function; that part hasn’t changed. Instead of creating a variable `f`, we’ve
@@ -439,86 +357,79 @@ chained the call to `read_to_string` directly onto the result of
 `File::open("hello.txt")?`. We still have a `?` at the end of the
 `read_to_string` call, and we still return an `Ok` value containing the
 username in `s` when both `File::open` and `read_to_string` succeed rather than
-returning errors. The functionality is again the same as in Listing 9-6 and
+returning errors. The functionality is again the same as in listing 9-6 and
 Listing 9-7; this is just a different, more ergonomic way to write it.
 
-Speaking of different ways to write this function, there’s a way to make this even
-shorter:
+Speaking of different ways to write this function, listing 9-9 shows that
+there’s a way to make this even shorter.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
+
+<!-- Deliberately not using rustdoc_include here; the `main` function in the
+file panics. We do want to include it for reader experimentation purposes, but
+don't want to include it for rustdoc testing purposes. -->
 
 ```rust
-use std::io;
-use std::fs;
-
-fn read_username_from_file() -> Result<String, io::Error> {
-    fs::read_to_string("hello.txt")
-}
+{{#include ../listings/ch09-error-handling/listing-09-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 9-9: Using `fs::read_to_string`</span>
+<span class="caption">Listing 9-9: Using `fs::read_to_string` instead of
+opening and then reading the file</span>
 
-Reading a file into a string is a fairly common operation, and so Rust
-provides a convenience function called `fs::read_to_string` that will
-open the file, create a new `String`, read the contents of the file,
-and put the contents into that `String`, and then return it. Of course,
-this doesn’t give us the opportunity to show off all of this error handling,
-so we did it the hard way at first.
+Reading a file into a string is a fairly common operation, so Rust provides the
+convenient `fs::read_to_string` function that opens the file, creates a new
+`String`, reads the contents of the file, puts the contents into that `String`,
+and returns it. Of course, using `fs::read_to_string` doesn’t give us the
+opportunity to explain all the error handling, so we did it the longer way
+first.
 
-#### The `?` Operator Can Only Be Used in Functions That Return `Result`
+#### The `?` Operator Can Be Used in Functions That Return `Result`
 
-The `?` operator can only be used in functions that have a return type of
+The `?` operator can be used in functions that have a return type of
 `Result`, because it is defined to work in the same way as the `match`
-expression we defined in Listing 9-6. The part of the `match` that requires a
+expression we defined in listing 9-6. The part of the `match` that requires a
 return type of `Result` is `return Err(e)`, so the return type of the function
-must be a `Result` to be compatible with this `return`.
+can be a `Result` to be compatible with this `return`.
 
-Let’s look at what happens if we use `?` in the `main` function, which you’ll
-recall has a return type of `()`:
+Let’s look at what happens if we use the `?` operator in the `main` function,
+which you’ll recall has a return type of `()`:
 
-```rust,ignore
-use std::fs::File;
-
-fn main() {
-    let f = File::open("hello.txt")?;
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-06-question-mark-in-main/src/main.rs}}
 ```
 
 When we compile this code, we get the following error message:
 
 ```text
-error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `std::ops::Try`)
- --> src/main.rs:4:13
-  |
-4 |     let f = File::open("hello.txt")?;
-  |             ^^^^^^^^^^^^^^^^^^^^^^^^ cannot use the `?` operator in a function that returns `()`
-  |
-  = help: the trait `std::ops::Try` is not implemented for `()`
-  = note: required by `std::ops::Try::from_error`
+{{#include ../listings/ch09-error-handling/no-listing-06-question-mark-in-main/output.txt}}
 ```
 
-This error points out that we’re only allowed to use `?` in a function that
-returns `Result<T, E>`. In functions that don’t return `Result<T, E>`, when
-you call other functions that return `Result<T, E>`, you’ll need to use a
-`match` or one of the `Result<T, E>` methods to handle the `Result<T, E>`
-instead of using `?` to potentially propagate the error to the calling code.
+This error points out that we’re only allowed to use the `?` operator in a
+function that returns `Result` or `Option` or another type that implements
+`std::ops::Try`. When you’re writing code in a function
+that doesn’t return one of these types, and you want to use `?` when you call other
+functions that return `Result<T, E>`, you have two choices to fix this problem.
+One technique is to change the return type of your function to be `Result<T,
+E>` if you have no restrictions preventing that. The other technique is to use
+a `match` or one of the `Result<T, E>` methods to handle the `Result<T, E>` in
+whatever way is appropriate.
 
-However, the `main` function can return a `Result<T, E>`:
+The `main` function is special, and there are restrictions on what its return
+type must be. One valid return type for main is `()`, and conveniently, another
+valid return type is `Result<T, E>`, as shown here:
 
 ```rust,ignore
-use std::error::Error;
-use std::fs::File;
-
-fn main() -> Result<(), Box<dyn Error>> {
-    let f = File::open("hello.txt")?;
-
-    Ok(())
-}
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-07-main-returning-result/src/main.rs}}
 ```
 
-The `Box<dyn Error>` is called a “trait object”, which we’ll talk about in Chapter 17.
-For now, you can read `Box<dyn Error>` to mean “any kind of error.”
+The `Box<dyn Error>` type is called a trait object, which we’ll talk about in
+the [“Using Trait Objects that Allow for Values of Different
+Types”][trait-objects]<!-- ignore --> section in Chapter 17. For now, you can
+read `Box<dyn Error>` to mean “any kind of error.” Using `?` in a `main`
+function with this return type is allowed.
 
 Now that we’ve discussed the details of calling `panic!` or returning `Result`,
 let’s return to the topic of how to decide which is appropriate to use in which
 cases.
+
+[trait-objects]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types

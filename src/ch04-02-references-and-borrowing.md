@@ -1,6 +1,6 @@
-## Referencje i Pożyczanie
+## Referencje i pożyczanie
 
-Z rozwiązaniem z krotką zastosowanym na Listingu 4-5 związana jest taka niedogodność,
+Z rozwiązaniem z krotką zastosowanym na listingu 4-5 związana jest taka niedogodność,
 że musieliśmy zwrócić `String` do funkcji wywołującej, by ta mogła dalej z niego korzystać
 (po wywołaniu `calculate_length`). Było tak dlatego że wspomniany `String` był przenoszony do `calculate_length`.
 
@@ -9,17 +9,7 @@ Funkcję `calculate_length` można by zdefiniować w następujący sposób, w kt
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let s1 = String::from("witaj");
-
-    let len = calculate_length(&s1);
-
-    println!("Długość '{}' wynosi {}.", s1, len);
-}
-
-fn calculate_length(s: &String) -> usize {
-    s.len()
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:all}}
 ```
 Po pierwsze proszę zauważyć, że krotki nie są nam już dalej potrzebne. Nie ma ich ani przy deklaracji zmiennej, ani w typie zwracanym przez funkcję `calculate_length`. Po drugie, proszę zwrócić uwagę, że przekazujemy do tej funkcji `&s1` oraz, że typ jej parametru został zmieniony z `String` na `&String`.
 
@@ -38,12 +28,7 @@ Jest to zilustrowane na Rysunku 4-5.
 Przyjrzyjmy się nieco bliżej temu wywołaniu funkcji:
 
 ```rust
-# fn calculate_length(s: &String) -> usize {
-#     s.len()
-# }
-let s1 = String::from("witaj");
-
-let len = calculate_length(&s1);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:here}}
 ```
 Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale
 nie posiada go na własność.
@@ -54,10 +39,7 @@ Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją.
 Poniżej dodano kilka komentarzy z wyjaśnieniami:
 
 ```rust
-fn calculate_length(s: &String) -> usize { // s jest referencją do Stringa
-    s.len()
-} // Tu kończy się zakres życia s. Ale ponieważ s nie posiada na własność tego
-  // na co wskazuje, nic się nie dzieje.
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-08-reference-with-annotations/src/main.rs:here}}
 ```
 Zakres, w którym zmienna `s` jest dostępna, jest taki sam jak zakres każdego innego parametru funkcji.
 Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zakres.
@@ -69,20 +51,12 @@ I jak w prawdziwym życiu, jeśli ktoś coś posiada, możemy to od niego pożyc
 W końcu jednak musimy mu to także oddać.
 
 Co więc się stanie gdy spróbujemy zmodyfikować coś, co pożyczyliśmy?
-Wypróbujmy kod z Listingu 4-6. Uwaga: on nie zadziała!
+Wypróbujmy kod z listingu 4-6. Uwaga: on nie zadziała!
 
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn main() {
-    let s = String::from("witaj");
-
-    change(&s);
-}
-
-fn change(some_string: &String) {
-    some_string.push_str(", świecie");
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-06/src/main.rs}}
 ```
 
 <span class="caption">Listing 4-6: Próba modyfikacji pożyczonej wartości</span>
@@ -90,13 +64,7 @@ fn change(some_string: &String) {
 Otrzymamy następujący błąd:
 
 ```text
-error[E0596]: cannot borrow immutable borrowed content `*some_string` as mutable
- --> error.rs:8:5
-  |
-7 | fn change(some_string: &String) {
-  |                        ------- use `&mut String` here to make mutable
-8 |     some_string.push_str(", świecie");
-  |     ^^^^^^^^^^^ cannot borrow as mutable
+{{#include ../listings/ch04-understanding-ownership/listing-04-06/output.txt}}
 ```
 
 Tak jak zmienne, referencje są domyślnie niemutowalne.
@@ -109,15 +77,7 @@ Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawk
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust
-fn main() {
-    let mut s = String::from("witaj");
-
-    change(&mut s);
-}
-
-fn change(some_string: &mut String) {
-    some_string.push_str(", świecie");
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-09-fixes-listing-04-06/src/main.rs}}
 ```
 
 Po pierwsze, zmieniliśmy `s` by było `mut`. Następnie, utworzyliśmy mutowalną referencję za pomocą `&mut s` i ją przyjęliśmy za pomocą `some_string: &mut String`.
@@ -127,26 +87,13 @@ Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zak
 <span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-let mut s = String::from("witaj");
-
-let r1 = &mut s;
-let r2 = &mut s;
-
-println!("{}, {}", r1, r2);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/src/main.rs:here}}
 ```
 
 Otrzymamy następujący błąd:
 
 ```text
-error[E0499]: cannot borrow `s` as mutable more than once at a time
- --> src/main.rs:5:10
-  |
-4 | let r1 = &mut s;
-  |          ------ first mutable borrow occurs here
-5 | let r2 = &mut s;
-  |          ^^^^^^ second mutable borrow occurs here
-6 | println!("{}, {}", r1, r2);
-  |                    -- borrow later used here
+{{#include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/output.txt}}
 ```
 
 To ograniczenie pozwala na mutowalność jedynie w bardzo kontrolowany sposób.
@@ -164,43 +111,20 @@ Oczywiście zawsze możemy użyć nawiasów klamrowych do stworzenia nowego zakr
 wiele mutowalnych referencji, ale nie *równocześnie*:
 
 ```rust
-let mut s = String::from("witaj");
-
-{
-    let r1 = &mut s;
-
-} // tu kończy się czas życia r1, więc odtąd możemy bez problemu utworzyć kolejną referencję
-
-let r2 = &mut s;
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
 ```
 
 A similar rule exists for combining mutable and immutable references. This code
 results in an error:
 
 ```rust,ignore,does_not_compile
-let mut s = String::from("hello");
-
-let r1 = &s; // no problem
-let r2 = &s; // no problem
-let r3 = &mut s; // BIG PROBLEM
-
-println!("{}, {}, and {}", r1, r2, r3);
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/src/main.rs:here}}
 ```
 
 Here’s the error:
 
 ```text
-error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --> src/main.rs:6:10
-  |
-4 | let r1 = &s; // no problem
-  |          -- immutable borrow occurs here
-5 | let r2 = &s; // no problem
-6 | let r3 = &mut s; // BIG PROBLEM
-  |          ^^^^^^ mutable borrow occurs here
-7 |
-8 | println!("{}, {}, and {}", r1, r2, r3);
-  |                            -- borrow later used here
+{{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
 ```
 
 Whew! We *also* cannot have a mutable reference while we have an immutable one.
@@ -209,7 +133,20 @@ from under them! However, multiple immutable references are okay because no one
 who is just reading the data has the ability to affect anyone else’s reading of
 the data.
 
-Even though these errors may be frustrating at times, remember that it’s the
+Note that a reference’s scope starts from where it is introduced and continues
+through the last time that reference is used. For instance, this code will
+compile because the last usage of the immutable references occurs before the
+mutable reference is introduced:
+
+```rust,edition2018
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
+```
+
+The scopes of the immutable references `r1` and `r2` end after the `println!`
+where they are last used, which is before the mutable reference `r3` is
+created. These scopes don’t overlap, so this code is allowed.
+
+Even though borrowing errors may be frustrating at times, remember that it’s the
 Rust compiler pointing out a potential bug early (at compile time rather than
 at runtime) and showing you exactly where the problem is. Then you don’t have
 to track down why your data isn’t what you thought it was.
@@ -227,32 +164,16 @@ reference to the data does.
 Let’s try to create a dangling reference, which Rust will prevent with a
 compile-time error:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-fn main() {
-    let reference_to_nothing = dangle();
-}
-
-fn dangle() -> &String {
-    let s = String::from("hello");
-
-    &s
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/src/main.rs}}
 ```
 
 Here’s the error:
 
 ```text
-error[E0106]: missing lifetime specifier
- --> main.rs:5:16
-  |
-5 | fn dangle() -> &String {
-  |                ^ expected lifetime parameter
-  |
-  = help: this function's return type contains a borrowed value, but there is
-  no value for it to be borrowed from
-  = help: consider giving it a 'static lifetime
+{{#include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/output.txt}}
 ```
 
 This error message refers to a feature we haven’t covered yet: lifetimes. We’ll
@@ -267,14 +188,10 @@ for it to be borrowed from.
 Let’s take a closer look at exactly what’s happening at each stage of our
 `dangle` code:
 
-```rust,ignore
-fn dangle() -> &String { // dangle returns a reference to a String
+<span class="filename">Plik: src/main.rs</span>
 
-    let s = String::from("hello"); // s is a new String
-
-    &s // we return a reference to the String, s
-} // Here, s goes out of scope, and is dropped. Its memory goes away.
-  // Danger!
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-15-dangling-reference-annotated/src/main.rs:here}}
 ```
 
 Because `s` is created inside `dangle`, when the code of `dangle` is finished,
@@ -285,11 +202,7 @@ won’t let us do this.
 The solution here is to return the `String` directly:
 
 ```rust
-fn no_dangle() -> String {
-    let s = String::from("hello");
-
-    s
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-16-no-dangle/src/main.rs:here}}
 ```
 
 This works without any problems. Ownership is moved out, and nothing is
