@@ -1,15 +1,15 @@
-## The Slice Type
+## Wycinek
 
-Another data type that does not have ownership is the *slice*. Slices let you
-reference a contiguous sequence of elements in a collection rather than the
-whole collection.
+Kolejnym typem danych, który nie przejmuje własności jest wycinek (ang. *slice*).
+Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w
+kolekcji, bez konieczności odnoszenia się do całej kolekcji.
 
-Here’s a small programming problem: write a function that takes a string and
-returns the first word it finds in that string. If the function doesn’t find a
-space in the string, the whole string must be one word, so the entire string
-should be returned.
+Spójrzmy na mały problem programistyczny: Napisz funkcję, która pobiera łańcuch
+znaków i zwraca pierwsze słowo, które się w nim znajdzie. Jeśli funkcja nie znajdzie
+znaku spacji w łańcuchu, załóż, że cały łańcuch stanowi jedno słowo i zwróć
+cały łańcuch.
 
-Let’s think about the signature of this function:
+Pomyślmy nad sygnaturą tej funkcji:
 
 ```rust,ignore
 fn first_word(s: &String) -> ?
