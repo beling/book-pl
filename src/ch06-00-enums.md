@@ -1,15 +1,17 @@
-# Enums and Pattern Matching
+# Wyliczenia i dopasowywanie wzorców
 
-In this chapter we’ll look at *enumerations*, also referred to as *enums*.
-Enums allow you to define a type by enumerating its possible *variants*. First,
-we’ll define and use an enum to show how an enum can encode meaning along with
-data. Next, we’ll explore a particularly useful enum, called `Option`, which
-expresses that a value can be either something or nothing. Then we’ll look at
-how pattern matching in the `match` expression makes it easy to run different
-code for different values of an enum. Finally, we’ll cover how the `if let`
-construct is another convenient and concise idiom available to you to handle
-enums in your code.
+W tym rozdziale przyjrzymy się *wyliczeniom* (*ang. enumerations*),
+czasem streszczanym także do samego: *enum*.
+Wyliczeniami możesz zdefiniować jakiś typ wymieniając wszystkie jego wartości. 
+Najpierw zdefiniujemy i wykorzystamy wyliczenia, pokazując że mogą one przekazywać zarówno
+znaczenie, jak i dane. Później omówimy szczególnie przydatne wyliczenie, mianowicie `Option`, które
+deklaruje, że dana wartość może być albo obecna lub nieobecna. 
+Po tym, zerkniemy na to,
+jak dopasowywanie wzorców w wyrażeniach `match` ułatwia wybór uruchomionego kodu
+dla różnych wartości wyliczeń. A na koniec, zajmiemy się wyrażeniem `if let`
+które jest kolejnym poręcznym i zwięzłym idiomem przydatnym do radzenia sobie
+z wyliczeniami.
 
-Enums are a feature in many languages, but their capabilities differ in each
-language. Rust’s enums are most similar to *algebraic data types* in functional
-languages, such as F#, OCaml, and Haskell.
+Wyliczenia istnieją w wielu językach, ale ich możliwości
+w każdym języku się od siebie różnią. Wyliczenia w Ruście są najbardziej zbliżone do *algebraicznych typów danych* w
+funkcjonalnych językach programowania, takich jak F#, OCaml i Haskell.

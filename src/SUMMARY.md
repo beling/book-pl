@@ -30,8 +30,8 @@
     - [Przykładowy program wykorzystujący struktury](ch05-02-example-structs.md)
     - [Method Syntax](ch05-03-method-syntax.md)
 
-- [Enums and Pattern Matching](ch06-00-enums.md)
-    - [Defining an Enum](ch06-01-defining-an-enum.md)
+- [Wyliczenia i dopasowywanie wzorców](ch06-00-enums.md)
+    - [Definiowanie wyliczeń](ch06-01-defining-an-enum.md)
     - [The `match` Control Flow Operator](ch06-02-match.md)
     - [Concise Control Flow with `if let`](ch06-03-if-let.md)
 

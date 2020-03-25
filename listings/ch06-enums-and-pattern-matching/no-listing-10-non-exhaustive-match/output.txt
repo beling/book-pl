@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling enums v0.1.0 (file:///projects/enums)
+   Compiling enumy v0.1.0 (file:///projects/enumy)
 error[E0004]: non-exhaustive patterns: `None` not covered
  --> src/main.rs:3:15
   |
@@ -11,6 +11,6 @@ error[E0004]: non-exhaustive patterns: `None` not covered
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0004`.
-error: could not compile `enums`.
+error: could not compile `enumy`.
 
 To learn more, run the command again with --verbose.

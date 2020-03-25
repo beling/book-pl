@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling enums v0.1.0 (file:///projects/enums)
+   Compiling enumy v0.1.0 (file:///projects/enumy)
 error[E0277]: cannot add `std::option::Option<i8>` to `i8`
  --> src/main.rs:5:17
   |
@@ -11,6 +11,6 @@ error[E0277]: cannot add `std::option::Option<i8>` to `i8`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `enums`.
+error: could not compile `enumy`.
 
 To learn more, run the command again with --verbose.
