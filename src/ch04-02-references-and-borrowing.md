@@ -142,16 +142,9 @@ Dzięki nim nie musimy odkrywać, dlaczego nasze dane są inne niż się spodzie
 
 ### Wiszące referencje
 
-In languages with pointers, it’s easy to erroneously create a *dangling
-pointer*, a pointer that references a location in memory that may have been
-given to someone else, by freeing some memory while preserving a pointer to
-that memory. In Rust, by contrast, the compiler guarantees that references will
-never be dangling references: if you have a reference to some data, the
-compiler will ensure that the data will not go out of scope before the
-reference to the data does.
+W językach ze wskaźnikami, łatwo jest błędnie stworzyć *wiszący wskaźnik*, t.j. taki, który odnosi się do miejsca w pamięci, które mogło być przekazane komuś innemu, poprzez zwolnienie  pamięci przy jednoczesnym zachowaniu wskaźnika do niej. W Ruście natomiast, kompilator gwarantuje, że referencje nigdy nie będą wiszące: kompilator zawsze dba o to, aby jakiekolwiek dane nie wyszły poza zakres wcześniej, niż referencje do tych danych.
 
-Let’s try to create a dangling reference, which Rust will prevent with a
-compile-time error:
+Spróbujmy utworzyć wiszącą referencję. Rust nam to uniemożliwi, zgłaszając następujący błąd kompilacji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -159,7 +152,7 @@ compile-time error:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/src/main.rs}}
 ```
 
-Here’s the error:
+Komunikat błędu:
 
 ```text
 {{#include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/output.txt}}
