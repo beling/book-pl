@@ -70,7 +70,7 @@ Otrzymamy następujący błąd:
 Tak jak zmienne, referencje są domyślnie niemutowalne.
 Nie możemy zmieniać czegoś do czego mamy referencję.
 
-### Mutowalne Referencje
+### Referencje mutowalne
 
 Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawkę:
 
@@ -162,13 +162,15 @@ This error message refers to a feature we haven’t covered yet: lifetimes. We�
 discuss lifetimes in detail in Chapter 10. But, if you disregard the parts
 about lifetimes, the message does contain the key to why this code is a problem:
 
+Ten komunikat odnosi się do czegoś, czego jeszcze nie omawialiśmy: czasów życia (ang. lifetimes).
+Będziemy omawiać je szczegółowo w rozdziale 10. Pomijając jednak części o czasie życia, wiadomość zawiera jasne wskazanie problemu związanego z naszym kodem:
+
 ```text
 this function's return type contains a borrowed value, but there is no value
 for it to be borrowed from.
 ```
 
-Let’s take a closer look at exactly what’s happening at each stage of our
-`dangle` code:
+Przyjrzyjmy się dokładnie temu, co dzieje się na każdym etapie kodu `dangle`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -176,26 +178,23 @@ Let’s take a closer look at exactly what’s happening at each stage of our
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-15-dangling-reference-annotated/src/main.rs:here}}
 ```
 
-Because `s` is created inside `dangle`, when the code of `dangle` is finished,
-`s` will be deallocated. But we tried to return a reference to it. That means
-this reference would be pointing to an invalid `String`. That’s no good! Rust
-won’t let us do this.
+Jako że `s` jest tworzony wewnątrz `dangle`, to jest on zwalniany wraz z końcem `dangle`.
+Jednocześnie próbujemy zwrócić referencję do `s`. Ta referencja wskazywałaby na nieprawidłowy `String`. To niedobre!
+Rust nie pozwoli nam tego zrobić.
 
-The solution here is to return the `String` directly:
+Rozwiązaniem jest zwrócenie `String`a bezpośrednio:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-16-no-dangle/src/main.rs:here}}
 ```
 
-This works without any problems. Ownership is moved out, and nothing is
-deallocated.
+To działa bez żadnych problemów. Własność jest przenoszona na zewnątrz i nic nie jest zwalniane.
 
-### The Rules of References
+### Zasady dotyczące referencji
 
-Let’s recap what we’ve discussed about references:
+Podsumujmy informacje na temat referencji:
 
-* At any given time, you can have *either* one mutable reference *or* any
-  number of immutable references.
-* References must always be valid.
+* W każdej chwili możesz mieć *albo* jedną referencję mutowalną *albo* dowolną liczbę referencji niemutowalnych.
+* Referencje zawsze muszą być poprawne.
 
-Next, we’ll look at a different kind of reference: slices.
+Wkrótce przyjrzymy się innemu rodzajowi referencji: wycinkowi (ang. slice).
