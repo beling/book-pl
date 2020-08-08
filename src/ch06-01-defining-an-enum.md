@@ -279,13 +279,13 @@ W większości przypadków pozwala to na pozbycie się
 jednego z najczęstszych problemów z nullem: zakładanie, że jakaś wartość istnieje, kiedy
 tak na prawdę nie istnieje.
 
-Nie martwiąc się tym, czy prawidłowo założyłymy że dana wartość nie jest pusta
-mamy pewność co do napisanego kodu. Aby mieć wartość mogącą nie istnieć musisz jawnie się na to zgodzić,
-definiując daną wartośc jako typ `Option<T>`.
-Następnie, kiedy będziesz używając tę wartość należało będzie wyraźnie
-powziąć inne kroki, kiedy ta wartość jest pusta.
+Nie martwiąc się tym, czy prawidłowo założymy, że dana wartość nie jest pusta
+mamy pewność co do napisanego kodu. Aby dana wartośc mogła nie istnieć musisz wyrazić na to zgodę
+definiując daną wartość jako typ `Option<T>`.
+Następnie używając tę wartość do twoich obowiązków należeć będzie powzięcie innych kroków, 
+dla przypadków kiedy ta wartość jest pusta.
 Gdziekolwiek, gdzie dany typ wartości nie jest typem `Option<T>`, możesz
-bezpiecznie założyć, że ta wartośc nie jest pusta.
+bezpiecznie założyć, że ta wartość nie jest pusta.
 To była przemyślana decyzja w konstrukcji Rusta mająca na celu ograniczenie wszechobecności
 nulla oraz zwiększenie bezpieczeństwa kodu napisanego w Ruście.
 
@@ -297,10 +297,10 @@ typu `Option<T>` będzie bardzo przydatne w twojej podróży z Rustem.
 [docs]: ../std/option/enum.Option.html
 
 Zwykle, aby użyć wartości typu `Option<T>`, musisz napisać kod sprawdzający oba warianty.
-Pewna część kodu musi być odpowiedzialna za wariant `Some(T)`, będzie ona miała
-dostęp do znajdującej się wewnątrz wariantu wartości typu `T`.
-Inna część będzie odpowiedzialna za wariant `None`, ten kod oczywiście nie będzie miał dostępu
-do wartości `T`. Wyrażenie `match` jest konstruktem umożliwiającym kontrolę przepływu (ang. control flow),
-pozwalającym na dokładnie to zachowanie w połączeniu z wyliczeniami. 
+Jedna część kodu będzie odpowiedzialna za wariant `Some(T)` - ta część będzie miała
+dostęp do wewnętrznej wartości typu `T`.
+Druga część będzie odpowiedzialna za wariant `None` - ten kod oczywiście nie będzie miał dostępu
+do wartości typu `T`. Wyrażenie `match` jest konstruktem umożliwiającym kontrolę przepływu (ang. control flow)
+pozwalającym na tego typu zachowanie. 
 Wyrażenie `match` uruchomi różny kod w zależności od tego,
-jakim wariantem jest dany enum. Ten kod będzie mógł użyć danych znajdujących się w danym enumie.
+jakim wariantem jest dany enum. Ten kod będzie będzie miał dostęp do danych znajdujących się w danym enumie.
