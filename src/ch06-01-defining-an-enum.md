@@ -1,7 +1,6 @@
 ## Definiowanie wyliczeń
 
-Weźmy na tapetę pewną sytuację, w której chcielibyśmy napisać kod, dzięki któremu zobaczymy
-że w tej sytuacji wyliczenia są przydatniejsze i bardziej odpowiednie niż struktury.
+Weźmy na tapetę pewną sytuację, w której wyliczenia są przydatniejsze i bardziej odpowiednie niż struktury.
 Załóżmy, że chcemy wykonywać operacje na adresach IP.
 Obecnie istnieją dwa standardy adresów IP: wersja czwarta i szósta.
 To jedyne możliwe typy adresów IP z jakimi napotka się nasz program:
@@ -12,10 +11,10 @@ Dany adres IP może być albo wersji czwartej albo szóstej, ale nigdy obiema na
 Ta właściwość adresów IP sprawia, że wyliczenia będą dobrym wyborem,
 skoro mogą przyjąć tylko jedną wartość ze wszystkich swoich wariantów.
 Zarówno adresy wersji czwartej, jak i wersji szóstej to nadal adresy IP,
-więc kod zajmujący się operacjami niezależnymi od typu adresu,
+więc kod zajmujący się operacjami niezależnymi od typu adresu
 powinien traktować oba adresy jakby były tym samym typem.
 
-Możemy wyrazić tą myśl w kodzie definując wyliczenie `IpAddrKind` i
+Możemy wyrazić tę myśl w kodzie definując wyliczenie `IpAddrKind` i
 wymieniając wszystkie możliwe typy adresów IP: `V4` oraz `V6`. To są warianty tego enuma:
 
 ```rust
@@ -69,9 +68,9 @@ ta wartość wynosi `V6`; oraz jako adres przypisany ma String `::1`.
 Tym samym użyliśmy struktury aby zgrupować wartości `kind` i `address`, dzięki czemu
 typ adresu i sam adres są ze sobą powiązane.
 
-Przy użyciu enuma jesteśmy w stanie wyrazić tą samą myśl w bardziej zwięzłej formie, niż
+Przy użyciu enuma jesteśmy w stanie wyrazić tę samą myśl w bardziej zwięzłej formie, niż
 wstawiając enuma do struktury, przez umieszczenie danych bezpośrednio w samym wariancie enuma.
-Ta nowa definicja enuma `IpAddr` zawiera zarówno w warianie `V4`jak i `V6`
+Ta nowa definicja enuma `IpAddr` zawiera zarówno w wariancie `V4` jak i `V6`
 nową wartość o typie `String`:
 
 ```rust
@@ -121,11 +120,11 @@ Jak demonstruje powyższy wycinek kodu, do wariantów enuma umieścić można
 każdy typ danych, np.: ciągi znaków (stringi), typy liczbowe, lub struktury.
 W enumie umieścić możesz nawet innego enuma!
 Ponadto, typy w standardowej bibliotece często nie są wcale bardziej skomplikowane
-od tego co wymyślisz sama/samemu.
+od tego co wymyślisz własnoręcznie.
 
-Mimo, że standardowa biblioteka definuje własny `IpAddr`, nadal możemy
+Mimo że standardowa biblioteka definuje własny `IpAddr`, nadal możemy
 stworzyć i używać własnej definicji bez żadnych konfliktów, bo nie zaimportowaliśmy
-definicji z bibliotekii standardowej do zakresu (ang. scope).
+definicji z biblioteki standardowej do zakresu (ang. scope).
 Więcej o importowaniu typów do zakresu w rozdziale 7.
 
 Spójrzmy na innego enuma, na przykładzie listingu 6-2: ten w swoich wariantach zawierał będzie
@@ -169,7 +168,7 @@ metody na wyliczeniach. Spójrzmy na metodę o nazwie `call` zdefinowaną na nas
 
 Ciało metody użyje wartości `self`, aby uzyskać wariant enuma, na którym ta metoda została wywołana.
 W tym przykładzie przypisaliśmy do zmiennej `m` wartość
-`Message::Write(String::from("witaj"))` równowartą parametrowi `self`,
+`Message::Write(String::from("witaj"))` równoważną parametrowi `self`,
 który znajduje się w ciele metody `call`, kiedy ta uruchomiona zostanie poprzez `m.call()`.
 
 Spójrzmy na kolejne wyliczenie z biblioteki standardowej,
@@ -204,8 +203,8 @@ Tony Hoare, wynalazca nulla, miał to do powiedzenia:
 > było to łatwe do zaimplementowania. Ta decyzja doprowadziła do tylu niezliczonych błędów, luk i awarii systemów,
 > że łącznie przez ostatnie czterdzieści lat pewnie spowodowała ból i szkody warte miliard dolarów.
 
-Problem z pustymi wartościami polega w tym, że kiedy spróbujesz użyć pustej wartości,
-mając pewność, że nie jest ona pusta, spowodujesz błąd.
+Problem z pustymi wartościami polega na tym, że kiedy spróbujesz użyć nulla,
+jak gdyby nie był nullem, spowodujesz błąd.
 Własność null i nie-null rozpowszechniła się tak szeroko, że
 popełnienie takiego błędu jest bardzo łatwe.
 
@@ -233,7 +232,7 @@ możesz użyć `Some` i `None`, bez używania prefiksu `Option::`.
 Enum `Option<T>` jest zwykłym wyliczeniem, a `Some(T)` oraz `None`
 to nadal zwykłe warianty `Option<T>`.
 
-Składnia `<T>` jest funkcjonalnośćią Rusta, której jeszcze nie omówiliśmy.
+Składnia `<T>` jest funkcjonalnością Rusta, której jeszcze nie omówiliśmy.
 Jest to tzw. parametr generyczny. Bardziej szczegółowo je omówimy w rozdziale 10.
 Póki co, wszystko co musisz o nich wiedzieć to, że `<T>` oznacza, że wariant `Some`
 enuma `Option` może zawierać w sobie jedną wartość dowolnego typu. Oto niektóre przykłady
@@ -280,15 +279,15 @@ W większości przypadków pozwala to na pozbycie się
 jednego z najczęstszych problemów z nullem: zakładanie, że jakaś wartość istnieje, kiedy
 tak na prawdę nie istnieje.
 
-Nie martwiąc się tym, czy prawidłowo założyłeś(-aś) że dana wartość nie jest pusta
-masz pewność co do swojego kodu. Aby mieć wartość mogącą nie istnieć musisz jawnie się na to zgodzić,
+Nie martwiąc się tym, czy prawidłowo założyłymy że dana wartość nie jest pusta
+mamy pewność co do napisanego kodu. Aby mieć wartość mogącą nie istnieć musisz jawnie się na to zgodzić,
 definiując daną wartośc jako typ `Option<T>`.
-Następnie, kiedy będziesz używał(a) tę wartość będziesz musiał(a) wyraźnie
+Następnie, kiedy będziesz używając tę wartość należało będzie wyraźnie
 powziąć inne kroki, kiedy ta wartość jest pusta.
-Gdziekolwiek, gdzie dany typ wartości nie jest typem `Option<T>` możesz
+Gdziekolwiek, gdzie dany typ wartości nie jest typem `Option<T>`, możesz
 bezpiecznie założyć, że ta wartośc nie jest pusta.
 To była przemyślana decyzja w konstrukcji Rusta mająca na celu ograniczenie wszechobecności
-nulla oraz zwiększenie bezpieczeństwa *zardzewiałego* kodu Rusta.
+nulla oraz zwiększenie bezpieczeństwa kodu napisanego w Ruście.
 
 Więc mając wartość typu `Option<T>`, jak można dostać się do wartości typu `T`
 znajdującej się w wariancie `Some`? Enum `Option<T>` ma wiele przydatnych metod odpowiednich dla różnych sytuacji;

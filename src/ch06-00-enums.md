@@ -14,4 +14,4 @@ z wyliczeniami.
 
 Wyliczenia istnieją w wielu językach, ale ich możliwości
 w każdym języku się od siebie różnią. Wyliczenia w Ruście są najbardziej zbliżone do *algebraicznych typów danych* w
-funkcjonalnych językach programowania, takich jak F#, OCaml i Haskell.
+funkcyjnych językach programowania, takich jak F#, OCaml i Haskell.
