@@ -272,13 +272,13 @@ are inferred with two different types</span>
 
 The compiler gives us this error:
 
-```text
+```console
 {{#include ../listings/ch13-functional-features/listing-13-08/output.txt}}
 ```
 
 The first time we call `example_closure` with the `String` value, the compiler
 infers the type of `x` and the return type of the closure to be `String`. Those
-types are then locked in to the closure in `example_closure`, and we get a type
+types are then locked into the closure in `example_closure`, and we get a type
 error if we try to use a different type with the same closure.
 
 ### Storing Closures Using Generic Parameters and the `Fn` Traits
@@ -425,13 +425,13 @@ passed into it. We call the `value` method on this `Cacher` instance with an
 Run this test with the `Cacher` implementation in listing 13-9 and listing
 13-10, and the test will fail on the `assert_eq!` with this message:
 
-```text
+```console
 {{#include ../listings/ch13-functional-features/no-listing-01-failing-cacher-test/output.txt}}
 ```
 
 The problem is that the first time we called `c.value` with 1, the `Cacher`
-instance saved `Some(1)` in `self.value`. Thereafter, no matter what we pass in
-to the `value` method, it will always return 1.
+instance saved `Some(1)` in `self.value`. Thereafter, no matter what we pass into
+the `value` method, it will always return 1.
 
 Try modifying `Cacher` to hold a hash map rather than a single value. The keys
 of the hash map will be the `arg` values that are passed in, and the values of
@@ -481,7 +481,7 @@ code won’t compile:
 
 We get an error:
 
-```text
+```console
 {{#include ../listings/ch13-functional-features/no-listing-02-functions-cant-capture/output.txt}}
 ```
 
@@ -520,6 +520,11 @@ environment, you can use the `move` keyword before the parameter list. This
 technique is mostly useful when passing a closure to a new thread to move the
 data so it’s owned by the new thread.
 
+> Note: `move` closures may still implement `Fn` or `FnMut`, even though
+> they capture variables by move. This is because the traits implemented by a
+> closure type are determined by what the closure does with captured values,
+> not how it captures them. The `move` keyword only specifies the latter.
+
 We’ll have more examples of `move` closures in Chapter 16 when we talk about
 concurrency. For now, here’s the code from listing 13-12 with the `move`
 keyword added to the closure definition and using vectors instead of integers,
@@ -534,7 +539,7 @@ yet compile.
 
 We receive the following error:
 
-```text
+```console
 {{#include ../listings/ch13-functional-features/no-listing-03-move-closures/output.txt}}
 ```
 

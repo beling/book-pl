@@ -26,7 +26,7 @@ poprawnie:
 Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś/Powinnaś otrzymać
 następujący komunikat o błędzie:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/output.txt}}
 ```
 
@@ -73,7 +73,7 @@ Na przykład, zmieńmy kod w *src/main.rs* na poniższy:
 
 Gdy teraz uruchomimy program, otrzymamy:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/output.txt}}
 ```
 
@@ -159,7 +159,7 @@ deklaracji `let` po raz trzeci również przesłania `x`, poprzednia wartość
 `x` zostaje pomnożona razy `2` aby finalnie nadać `x` wartość `12`. Gdy
 uruchomimy ten program, otrzymamy:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/output.txt}}
 ```
 
@@ -192,7 +192,7 @@ korzystamy z prostszej nazwy `spaces`. Jednak, jeżeli spróbowalibyśmy użyć
 
 Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-05-mut-cant-change-types/output.txt}}
 
 ```

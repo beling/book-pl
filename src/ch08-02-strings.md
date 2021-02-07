@@ -130,7 +130,7 @@ If the `push_str` method took ownership of `s2`, we wouldn’t be able to print
 its value on the last line. However, this code works as we’d expect!
 
 The `push` method takes a single character as a parameter and adds it to the
-`String`. Listing 8-17 shows code that adds the letter *l* to a `String` using
+`String`. Listing 8-17 shows code that adds the letter "l" to a `String` using
 the `push` method.
 
 ```rust
@@ -229,7 +229,7 @@ String</span>
 
 This code will result in the following error:
 
-```text
+```console
 {{#include ../listings/ch08-common-collections/listing-08-19/output.txt}}
 ```
 
@@ -342,7 +342,7 @@ Earlier, we mentioned that each of these characters was 2 bytes, which means
 What would happen if we used `&hello[0..1]`? The answer: Rust would panic at
 runtime in the same way as if an invalid index were accessed in a vector:
 
-```text
+```console
 {{#include ../listings/ch08-common-collections/output-only-01-not-char-boundary/output.txt}}
 ```
 

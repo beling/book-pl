@@ -101,14 +101,14 @@ possible I/O errors. Many of the functions in `std::io` will be returning
 `Result<T, E>` where the `E` is `std::io::Error`, such as these functions in
 the `Write` trait:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-05-write-trait/src/lib.rs}}
 ```
 
-The `Result<..., Error>` is repeated a lot. As such, `std::io` has this type of
+The `Result<..., Error>` is repeated a lot. As such, `std::io` has this type
 alias declaration:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-06-result-alias/src/lib.rs:here}}
 ```
 
@@ -117,7 +117,7 @@ qualified alias `std::io::Result<T>`—that is, a `Result<T, E>` with the `E`
 filled in as `std::io::Error`. The `Write` trait function signatures end up
 looking like this:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-06-result-alias/src/lib.rs:there}}
 ```
 
@@ -133,7 +133,7 @@ Rust has a special type named `!` that’s known in type theory lingo as the
 because it stands in the place of the return type when a function will never
 return. Here is an example:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-07-never-type/src/lib.rs:here}}
 ```
 

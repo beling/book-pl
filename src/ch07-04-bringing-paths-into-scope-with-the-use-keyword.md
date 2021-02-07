@@ -15,8 +15,8 @@ scope of the `eat_at_restaurant` function so we only have to specify
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-11: Bringing a module into scope with
@@ -34,8 +34,8 @@ Listing 7-11.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-12: Bringing a module into scope with `use` and
@@ -50,8 +50,8 @@ the `add_to_waitlist` function to achieve the same result, as in listing 7-13.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-13: Bringing the `add_to_waitlist` function
@@ -88,7 +88,7 @@ different parent modules and how to refer to them.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-15/src/lib.rs:here}}
 ```
 
@@ -109,7 +109,7 @@ code in listing 7-15 by renaming one of the two `Result` types using `as`.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-16/src/lib.rs:here}}
 ```
 
@@ -135,8 +135,8 @@ changed to `pub use`.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-17: Making a name available for any code to use
@@ -179,7 +179,7 @@ Adding `rand` as a dependency in *Cargo.toml* tells Cargo to download the
 make `rand` available to our project.
 
 Then, to bring `rand` definitions into the scope of our package, we added a
-`use` line starting with the name of the package, `rand`, and listed the items
+`use` line starting with the name of the crate, `rand`, and listed the items
 we wanted to bring into scope. Recall that in the [“Generating a Random
 Number”][rand]<!-- ignore --> section in Chapter 2, we brought the `Rng` trait
 into scope and called the `rand::thread_rng` function:
@@ -191,7 +191,7 @@ into scope and called the `rand::thread_rng` function:
 Members of the Rust community have made many packages available at
 [crates.io](https://crates.io/), and pulling any of them into your package
 involves these same steps: listing them in your package’s *Cargo.toml* file and
-using `use` to bring items into scope.
+using `use` to bring items from their crates into scope.
 
 Note that the standard library (`std`) is also a crate that’s external to our
 package. Because the standard library is shipped with the Rust language, we
@@ -208,8 +208,8 @@ crate.
 
 ### Using Nested Paths to Clean Up Large `use` Lists
 
-If we’re using multiple items defined in the same package or same module,
-Listing each item on its own line can take up a lot of vertical space in our
+If we’re using multiple items defined in the same crate or same module,
+listing each item on its own line can take up a lot of vertical space in our
 files. For example, these two `use` statements we had in the Guessing Game in
 Listing 2-4 bring items from `std` into scope:
 
@@ -233,7 +233,7 @@ differ, as shown in listing 7-18.
 <span class="caption">Listing 7-18: Specifying a nested path to bring multiple
 items with the same prefix into scope</span>
 
-In bigger programs, bringing many items into scope from the same package or
+In bigger programs, bringing many items into scope from the same crate or
 module using nested paths can reduce the number of separate `use` statements
 needed by a lot!
 
@@ -244,7 +244,7 @@ two `use` statements that share a subpath. For example, listing 7-19 shows two
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}
 ```
 
@@ -257,7 +257,7 @@ the nested path, as shown in listing 7-20.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
 ```
 

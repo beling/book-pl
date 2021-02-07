@@ -81,7 +81,7 @@ you can’t borrow it mutably. For example, this code won’t compile:
 
 If you tried to compile this code, you’d get the following error:
 
-```text
+```console
 {{#include ../listings/ch15-smart-pointers/no-listing-01-cant-borrow-immutable-as-mutable/output.txt}}
 ```
 
@@ -124,7 +124,7 @@ called `Messenger`. Listing 15-20 shows the library code:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-20/src/lib.rs}}
 ```
 
@@ -195,7 +195,7 @@ shows what that looks like:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-22/src/lib.rs:here}}
 ```
 
@@ -257,7 +257,7 @@ variable `two_borrow`. This makes two mutable references in the same scope,
 which isn’t allowed. When we run the tests for our library, the code in listing
 15-23 will compile without any errors, but the test will fail:
 
-```text
+```console
 {{#include ../listings/ch15-smart-pointers/listing-15-23/output.txt}}
 ```
 
@@ -320,7 +320,7 @@ on it and change the inner value.
 When we print `a`, `b`, and `c`, we can see that they all have the modified
 value of 15 rather than 5:
 
-```text
+```console
 {{#include ../listings/ch15-smart-pointers/listing-15-24/output.txt}}
 ```
 

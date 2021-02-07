@@ -67,7 +67,7 @@ likely to move code definitions and item calls independently of each other.
 Let’s try to compile listing 7-3 and find out why it won’t compile yet! The
 error we get is shown in listing 7-4.
 
-```text
+```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
 ```
 
@@ -97,7 +97,7 @@ see and do everything in the restaurant in which they operate.
 Rust chose to have the module system function this way so that hiding inner
 implementation details is the default. That way, you know which parts of the
 inner code you can change without breaking outer code. But you can expose inner
-parts of child modules code to outer ancestor modules by using the `pub`
+parts of child modules' code to outer ancestor modules by using the `pub`
 keyword to make an item public.
 
 ### Exposing Paths with the `pub` Keyword
@@ -119,7 +119,7 @@ use it from `eat_at_restaurant`</span>
 Unfortunately, the code in listing 7-5 still results in an error, as shown in
 Listing 7-6.
 
-```text
+```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
 ```
 
@@ -141,8 +141,8 @@ keyword before its definition, as in listing 7-7.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-7: Adding the `pub` keyword to `mod hosting`
@@ -184,8 +184,8 @@ the path to `serve_order` starting with `super`:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs:here}}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
 ```
 
 <span class="caption">Listing 7-8: Calling a function using a relative path
@@ -215,7 +215,7 @@ or even see which fruit they’ll get.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
 ```
 
@@ -240,7 +240,7 @@ only need the `pub` before the `enum` keyword, as shown in listing 7-10.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
 ```
 

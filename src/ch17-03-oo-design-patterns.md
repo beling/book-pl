@@ -75,7 +75,7 @@ inside an `Option<T>` in a private field named `state`. You’ll see why the
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-12/src/lib.rs}}
 ```
 
@@ -107,7 +107,7 @@ Post` block:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-13/src/lib.rs:here}}
 ```
 
@@ -135,7 +135,7 @@ be empty. Listing 17-14 shows this placeholder implementation:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-14/src/lib.rs:here}}
 ```
 
@@ -152,7 +152,7 @@ change its state from `Draft` to `PendingReview`. Listing 17-15 shows this code:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-15/src/lib.rs:here}}
 ```
 
@@ -209,7 +209,7 @@ state is approved, as shown in listing 17-16:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-16/src/lib.rs:here}}
 ```
 
@@ -267,7 +267,7 @@ Listing 17-18:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-18/src/lib.rs:here}}
 ```
 
@@ -375,7 +375,7 @@ as well as methods on each:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-19/src/lib.rs}}
 ```
 
@@ -411,7 +411,7 @@ shown in listing 17-20:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-20/src/lib.rs:here}}
 ```
 

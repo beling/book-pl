@@ -39,7 +39,7 @@ into an ungraceful shutdown.
 
 Here is the error we get when we compile this code:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/listing-20-22/output.txt}}
 ```
 
@@ -65,7 +65,7 @@ So we know we want to update the definition of `Worker` like this:
 Now let’s lean on the compiler to find the other places that need to change.
 Checking this code, we get two errors:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/no-listing-04-update-worker-definition/output.txt}}
 ```
 
@@ -112,7 +112,7 @@ variants.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-07-define-message-enum/src/lib.rs:here}}
 ```
 
@@ -210,7 +210,7 @@ copy output below
 Can't automate because the output depends on making requests
 -->
 
-```text
+```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
     Finished dev [unoptimized + debuginfo] target(s) in 1.0s
@@ -256,13 +256,13 @@ Here’s the full code for reference:
 <span class="filename">Plik: src/bin/main.rs</span>
 
 ```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-25/src/bin/main.rs:all}}
+{{#rustdoc_include ../listings/ch20-web-server/no-listing-08-final-code/src/bin/main.rs}}
 ```
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-25/src/lib.rs:here}}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-web-server/no-listing-08-final-code/src/lib.rs}}
 ```
 
 We could do more here! If you want to continue enhancing this project, here are

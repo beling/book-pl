@@ -77,7 +77,7 @@ Listing 19-28 shows a slightly simplified definition of the `vec!` macro.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-28/src/lib.rs}}
 ```
 
@@ -222,7 +222,7 @@ to write when using our procedural macro</span>
 This code will print `Hello, Macro! My name is Pancakes!` when we’re done. The
 first step is to make a new library crate, like this:
 
-```text
+```console
 $ cargo new hello_macro --lib
 ```
 
@@ -230,7 +230,7 @@ Next, we’ll define the `HelloMacro` trait and its associated function:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-20-impl-hellomacro-for-pancakes/hello_macro/src/lib.rs}}
 ```
 
@@ -257,7 +257,7 @@ follows: for a crate named `foo`, a custom derive procedural macro crate is
 called `foo_derive`. Let’s start a new crate called `hello_macro_derive` inside
 our `hello_macro` project:
 
-```text
+```console
 $ cargo new hello_macro_derive --lib
 ```
 

@@ -29,7 +29,7 @@ need a summary from each type, and we need to request that summary by calling a
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
 
@@ -62,7 +62,7 @@ already limited to 280 characters.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
 
@@ -130,7 +130,7 @@ in listing 10-12.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
 
@@ -166,7 +166,7 @@ a small part of it. For example, we could define the `Summary` trait to have a
 `summarize` method that has a default implementation that calls the
 `summarize_author` method:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-03-default-impl-calls-other-methods/src/lib.rs:here}}
 ```
 
@@ -222,7 +222,7 @@ syntax sugar for a longer form, which is called a *trait bound*; it looks like
 this:
 
 ```rust,ignore
-pub fn notify<T: Summary>(item: T) {
+pub fn notify<T: Summary>(item: &T) {
     println!("Breaking news! {}", item.summarize());
 }
 ```
@@ -237,7 +237,7 @@ example, we can have two parameters that implement `Summary`. Using the `impl
 Trait` syntax looks like this:
 
 ```rust,ignore
-pub fn notify(item1: impl Summary, item2: impl Summary) {
+pub fn notify(item1: &impl Summary, item2: &impl Summary) {
 ```
 
 If we wanted this function to allow `item1` and `item2` to have different
@@ -246,7 +246,7 @@ types, using `impl Trait` would be appropriate (as long as both types implement
 only possible to express using a trait bound, like this:
 
 ```rust,ignore
-pub fn notify<T: Summary>(item1: T, item2: T) {
+pub fn notify<T: Summary>(item1: &T, item2: &T) {
 ```
 
 The generic type `T` specified as the type of the `item1` and `item2`
@@ -261,13 +261,13 @@ the `notify` definition that `item` must implement both `Display` and
 `Summary`. We can do so using the `+` syntax:
 
 ```rust,ignore
-pub fn notify(item: impl Summary + Display) {
+pub fn notify(item: &(impl Summary + Display)) {
 ```
 
 The `+` syntax is also valid with trait bounds on generic types:
 
 ```rust,ignore
-pub fn notify<T: Summary + Display>(item: T) {
+pub fn notify<T: Summary + Display>(item: &T) {
 ```
 
 With the two trait bounds specified, the body of `notify` can call `summarize`
@@ -283,13 +283,13 @@ syntax for specifying trait bounds inside a `where` clause after the function
 signature. So instead of writing this:
 
 ```rust,ignore
-fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 ```
 
 we can use a `where` clause, like this:
 
 ```rust,ignore
-fn some_function<T, U>(t: T, u: U) -> i32
+fn some_function<T, U>(t: &T, u: &U) -> i32
     where T: Display + Clone,
           U: Clone + Debug
 {
@@ -360,7 +360,7 @@ look like this:
 
 This time when we compile the code, we get a different set of errors:
 
-```text
+```console
 {{#include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-fixing-listing-10-05/output.txt}}
 ```
 
@@ -416,7 +416,7 @@ the `Display` trait that enables printing.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-16/src/lib.rs}}
 ```
 
@@ -453,12 +453,12 @@ reduce duplication but also specify to the compiler that we want the generic
 type to have particular behavior. The compiler can then use the trait bound
 information to check that all the concrete types used with our code provide the
 correct behavior. In dynamically typed languages, we would get an error at
-runtime if we called a method on a type which didn’t implement the type which
-defines the method. But Rust moves these errors to compile time so we’re forced
-to fix the problems before our code is even able to run. Additionally, we don’t
-have to write code that checks for behavior at runtime because we’ve already
-checked at compile time. Doing so improves performance without having to give
-up the flexibility of generics.
+runtime if we called a method on a type which didn’t define the method. But Rust
+moves these errors to compile time so we’re forced to fix the problems before
+our code is even able to run. Additionally, we don’t have to write code that
+checks for behavior at runtime because we’ve already checked at compile time.
+Doing so improves performance without having to give up the flexibility of
+generics.
 
 Another kind of generic that we’ve already been using is called *lifetimes*.
 Rather than ensuring that a type has the behavior we want, lifetimes ensure

@@ -261,7 +261,7 @@ dodać wartość typu `i8` do typu `Option<i8>`:
 
 Uruchamiając ten kod, otrzymamy następujący komunikat o błędzie:
 
-```text
+```console
 {{#include ../listings/ch06-enums-and-pattern-matching/no-listing-07-cant-use-option-directly/output.txt}}
 ```
 

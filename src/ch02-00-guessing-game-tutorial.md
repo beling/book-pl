@@ -1,6 +1,6 @@
 # Gra w zgadywankę
 
-Rozpocznijmy zabawę z Rustem pisząc razem praktyczny program. Ten rozdział zapozna cię z niektórymi podstawowymi
+Rozpocznijmy zabawę z Rustem tworząc razem praktyczny projekt. Ten rozdział zapozna cię z kilkoma podstawowymi
 konceptami Rusta, prezentując ich użycie w prawdziwym programie. Dowiesz się, co oznaczają `let`, `match`, metoda,
 funkcja powiązana (*associated function*), nauczysz się, jak używać skrzyń (*crates*), i wielu innych rzeczy!
 Dokładniejsze omówienie tych tematów znajduje się w dalszych rozdziałach. W tym rozdziale przećwiczysz jedynie podstawy.
@@ -15,7 +15,7 @@ Gdy gracz odgadnie wylosowaną liczbę, program wyświetla gratulacje dla zwyci�
 Aby stworzyć nowy projekt, wejdź do folderu *projects* utworzonego w rozdziale 1 i za pomocą Cargo 
 wygeneruj szkielet projektu, w ten sposób:
 
-```text
+```console
 $ cargo new gra_zgadywanka
 $ cd gra_zgadywanka
 ```
@@ -34,7 +34,7 @@ Spójrz na wygenerowany plik *Cargo.toml*:
 W tagu `authors` Cargo automatycznie wpisało dane uzyskane z twojego środowiska.
 Jeśli te informacje są błędne, popraw je i zapisz plik.
 
-Jak już widziałeś(-aś) w rozdziale 1, `cargo new` tworzy dla ciebie program 
+Jak już widziałeś w rozdziale 1, `cargo new` tworzy dla ciebie program 
 “Witaj, świecie!”. Otwórz plik *src/main.rs*:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -46,7 +46,7 @@ Jak już widziałeś(-aś) w rozdziale 1, `cargo new` tworzy dla ciebie program
 Teraz skompilujemy i uruchomimy ten program w jednym kroku za pomocą komendy `cargo run`:
 
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
 ```
 
@@ -94,7 +94,7 @@ Tak jak mówiliśmy już w rozdziale 1, każdy program rozpoczyna wykonanie w fu
 `fn` deklaruje nową funkcję, `()` informuje, że funkcja ta nie przyjmuje żadnych parametrów,
 a `{` otwiera ciało funkcji.
 
-W rozdziale 1 nauczyłeś(-aś) się również, że `println!` jest makrem, które wyświetla zawartość stringa
+W rozdziale 1 nauczyłeś się również, że `println!` jest makrem, które wyświetla zawartość stringa
 na ekranie:
 
 
@@ -126,7 +126,7 @@ let foo = bar;
 
 W tej linii tworzona jest nowa zmienna o nazwie `foo`, do której przypisana jest wartość `bar`.
 W Ruście wszystkie zmienne są domyślnie niemutowalne (stałe). 
-oniższy przykład pokazuje, jak stawiając słowo kluczowe `mut` przed nazwą zmiennej
+Poniższy przykład pokazuje, jak stawiając słowo kluczowe `mut` przed nazwą zmiennej
 stworzyć zmienną mutowalną:
 
 
@@ -162,7 +162,7 @@ instancję danego typu.
 Podsumowując, linia `let mut guess = String::new();` stworzyła mutowalną zmienną,
 która jest obecnie przypisania do nowej, pustej instancji typu `String`. Wow!
 
-Przypominasz sobie, że załączyliśmy do programu obsługę wejścia/wyścia z biblioteki
+Przypominasz sobie, że załączyliśmy do programu obsługę wejścia/wyjścia z biblioteki
 standardowej przy pomocy linii `use std::io;`?
 Teraz wywołamy `stdin`, funkcję znajdującą się w module `io`:
 
@@ -196,8 +196,7 @@ Do dokończenia tego programu nie musisz znać wielu szczegółów na ten temat:
 wnikliwie. Póki co wszystko co musisz wiedzieć o referencjach to to, że podobnie jak zmienne, domyślnie są niemutowalne.
 Dlatego musimy napisać `&mut guess`, a nie `&guess`, aby dało się tę referencję modyfikować.
 
-To jeszcze nie wszystko, co jest w tej linii kodu. Pomimo tego że była to już cała linia tekstu,
-jest to jedynie pierwsza część pojedynczej, logicznej linii kodu. Drugą częścią jest metoda:
+Nie skończyliśmy jeszcze analizy tej linii kodu. Pomimo tego że doszliśmy już do trzeciej linii tekstu, wciąż jest to część pojedynczej, logicznej linii kodu. Kolejną częścią jest ta metoda:
 
 
 ```rust,ignore
@@ -212,12 +211,11 @@ linię i wprowadzić dodatkowe wcięcie, by poprawić czytelność długich wywo
 io::stdin().read_line(&mut guess).expect("Błąd wczytania linii");
 ```
 
-Jednakże taka długa linia jest trudna do czytania. Lepiej ją podzielić, umieszczając każde wywołanie metody w osobnej linii.
-Teraz omówimy, co te linie robią.
+Jednakże taka długa linia jest trudna do czytania, więc lepiej ją podzielić. Teraz omówimy, co ta linia robi.
 
 ### Obsługa potencjalnych błędów z użyciem typu `Result`
 
-Jak już wspomnieliśmy wcześniej, `read_line` wpisuje input użytkownika do stringa, którego przekazujemy jako argument,
+Jak już wspomnieliśmy wcześniej, `read_line` zapisuje tekst wpisany przez użytkownika do stringa przekazanego jako argument,
 ale również zwraca pewną wartość - w tym przypadku jest to [`io::Result`][ioresult]<!-- ignore -->.
 Rust ma w bibliotece standardowej wiele typów o nazwie `Result`: zarówno generyczny [`Result`][result]<!-- ignore --> jak
 i specyficzne wersje dla submodułów takich jak `io::Result`.
@@ -232,15 +230,14 @@ Dokładniejszy opis enumów znajduje się w rozdziale 6.
 
 [enums]: ch06-00-enums.html
 
-Możliwe wartości enuma `Result` to `Ok` i `Err`. `Ok` oznacza, że operacja powiodła się sukcesem,
-i wewnątrz obiektu `Ok` znajduje się poprawnie wygenerowana wartość. `Err` oznacza, że operacja nie powiodła się,
+Możliwe wartości enuma `Result` to `Ok` i `Err`. `Ok` oznacza, że operacja powiodła się sukcesem i wewnątrz obiektu `Ok` znajduje się poprawnie wygenerowana wartość. `Err` oznacza, że operacja nie powiodła się,
 i obiekt `Err` zawiera informację o przyczynach niepowodzenia.
 
 Celem typów `Result` jest zakodowanie informacji o błędach. Obiekty typu `Result`, tak jak obiekty innych typów,
 mają zdefiniowane dla siebie metody. Instancja `io::Result` ma metodę [`expect`][expect]<!-- ignore -->,
 którą możesz wywołać. Jeśli dana instancja `io::Result` będzie miała wartość `Err`,
 wywołanie metody `expect` spowoduje zawieszenie się programu i wyświetlenie na ekranie wiadomości,
-którą podałeś(-aś) jako argument do `expect`. Sytuacje, gdy metoda `read_line` zwraca `Err`, najprawdopodobniej
+którą podałeś jako argument do `expect`. Sytuacje, gdy metoda `read_line` zwraca `Err`, najprawdopodobniej
 są wynikiem błędu pochodzącego z systemu operacyjnego. Gdy zaś zwrócony `io::Result` ma wartość `Ok`,
 `expect` odczyta wartość właściwą, przechowywaną przez `Ok`, i zwróci tę wartość, gotową do użycia w programie.
 W tym przypadku wartość ta odpowiada liczbie bajtów, które użytkownik wprowadził na wejście standardowe.
@@ -249,13 +246,12 @@ W tym przypadku wartość ta odpowiada liczbie bajtów, które użytkownik wprow
 
 Gdybyśmy pominęli wywołanie `expect`, program skompilowałby się z warningiem:
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
 ```
 
 Rust ostrzega, że nie zrobiliśmy nic z wartością `Result` zwróconą z `read_line`, a co za tym idzie,
-program nie obsłużył potencjalnego błędu. Sposobem na pozbycie się tego warninga jest dopisanie obsługi błędów,
-jednak tutaj chcemy by program zawiesił się, gdy nie uda się odczytać odpowiedzi użytkownika,
+program nie obsłużył potencjalnego błędu. Sposobem na pozbycie się tego warninga jest dopisanie obsługi błędów. Tutaj jednak chcemy, by program zawiesił się, gdy nie uda się odczytać odpowiedzi użytkownika,
 więc możemy użyć `expect`. O wychodzeniu ze stanu błędu przeczytasz w rozdziale 9.
 
 ### Wypisywanie wartości z pomocą `println!` i placeholderów
@@ -268,8 +264,7 @@ Poza klamrą zamykającą program, w kodzie który dotychczas napisaliśmy zosta
 
 Ta linia wyświetla na ekranie string, w którym zapisaliśmy odpowiedź użytkownika.
 Klamry `{}` są *placeholderem*, który określa gdzie pojawi się wartość do wyświetlenia.
-Użycie klamr `{}` pozwala na wyświetlenie więcej niż jednej wartości: pierwsze klamry przyjmą pierwszą z 
-artości wymienionych po stringu formatującym, drugie klamry przyjmą drugą wartość, i tak dalej. 
+Użycie klamr `{}` pozwala na wyświetlenie więcej niż jednej wartości: pierwsze klamry przyjmą pierwszą z wartości wymienionych po stringu formatującym, drugie klamry przyjmą drugą wartość, i tak dalej. 
 Wyświetlanie wielu wartości w jednym wywołaniu `println!` wyglądałoby tak:
 
 ```rust
@@ -290,7 +285,7 @@ cargo clean
 cargo run
 input 6 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -306,7 +301,7 @@ W tym miejscu pierwsza część gry jest gotowa: wczytujemy odpowiedź użytkown
 ## Generowanie sekretnej liczby
 
 Następnie musimy wygenerować sekretną liczbę, którą gracz będzie próbował odgadnąć.
-Sekretna liczba powinna zmieniać się przy każdym uruchomieniu programu, aby gra była zabawna więcej niż raz.
+Sekretna liczba powinna zmieniać się przy każdym uruchomieniu programu, aby gra bawiła więcej niż raz.
 Użyjmy losowej liczby z przedziału od 1 do 100, żeby odgadnięcie jej nie było zbyt trudne.
 W bibliotece standardowej Rusta nie ma jeszcze obsługi liczb losowych, dlatego musimy sięgnąć do skrzyni
 [`rand`][randcrate].
@@ -319,8 +314,8 @@ Zapamiętaj: skrzynia (ang. *crate*) to paczka Rustowego kodu. Projekt, który b
 (*binary crate*), czyli plik wykonywalny. Skrzynia `rand` to *library crate*, czyli biblioteka stworzona do używania w
 innych programach.
 
-Z użyciem Cargo, dodawanie zewnętrznych bibliotek jest bajecznie proste. Aby móc używać `rand` w naszym kodzie,
-wystarczy zmodyfikować plik *Cargo.toml*, tak aby zaciągał skrzynię `rand` jako zależność do projektu.
+Z użyciem Cargo dodawanie zewnętrznych paczek jest bajecznie proste. Aby móc używać `rand` w naszym kodzie,
+wystarczy zmodyfikować plik *Cargo.toml* tak, aby zaciągał skrzynię `rand` jako zależność do projektu.
 Otwórz *Cargo.toml* i dodaj na końcu, pod nagłówkiem sekcji `[dependencies]`, poniższą linię:
 
 <!-- When updating the version of `rand` used, also update the version of
@@ -335,12 +330,9 @@ Otwórz *Cargo.toml* i dodaj na końcu, pod nagłówkiem sekcji `[dependencies]`
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Plik *Cargo.toml* podzielony jest na sekcje, których ciało zaczyna się po nagłówku i kończy się w miejscu,
-gdzie zaczyna się kolejna sekcja. W sekcji `[dependencies]` informujesz Cargo, jakich zewnętrznych skrzyń 
-i w której wersji wymaga twój projekt. Tutaj przy skrzyni `rand` znajduje się specyfikator wersji `0.5.5`.
-Cargo rozumie [Semantic Versioning][semver]<!-- ignore --> (nazywane tez czasem *SemVer*), które to jest 
-standardem zapisywania numeru wersji. Numer `0.5.5` jest właściwie skrótem do `^0.5.5`, które oznacza
-“jakakolwiek wersja, której API publiczne jest kompatybilne z wersją 0.5.5.”
+Plik *Cargo.toml* podzielony jest na sekcje, których ciało zaczyna się po nagłówku i kończy się w miejscu, gdzie zaczyna się kolejna sekcja. W sekcji `[dependencies]` informujesz Cargo, jakich zewnętrznych skrzyń i w której wersji wymaga twój projekt. Tutaj przy skrzyni `rand` znajduje się specyfikator wersji `0.5.5`.
+Cargo rozumie [Semantic Versioning][semver]<!-- ignore --> (nazywane tez czasem *SemVer*), które to jest standardem zapisywania numeru wersji. Numer `0.5.5` jest właściwie skrótem do `^0.5.5`, które oznacza wersję conajmniej `0.5.5`, ale poniżej `0.6.0`.
+Cargo uznaje te wersje za takie, których publiczne API jest kompatybilne z wersją `0.5.5`.
 
 [semver]: http://semver.org
 
@@ -351,7 +343,7 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 cargo clean
 cargo build -->
 
-```text
+```console
 $ cargo build
     Updating crates.io index
   Downloaded rand v0.5.5
@@ -370,8 +362,8 @@ $ cargo build
 
 <span class="caption">Listing 2-2: Wynik po wywołaniu `cargo build` po dodaniu zależności do skrzyni rand</span>
 
-Być może u siebie zobaczysz inne numery wersji (jednak wszystkie będą kompatybilne z kodem, dzięki SemVer!), 
-lub wydrukowane linie będą w innej kolejności.
+Być może u siebie zobaczysz inne numery wersji (jednak wszystkie będą kompatybilne z kodem, dzięki SemVer!), inne linie (zależnie od systemu operacyjnego),
+lub linie wydrukowane w innej kolejności.
 
 Teraz kiedy mamy już zdefiniowaną jakąś zewnętrzną zależność, Cargo ściąga najnowsze wersje wszystkich skrzyń z *rejestru*,
 który jest kopią danych z [Crates.io][cratesio]. Crates.io to miejsce, gdzie ludzie związani z Rustem publikują dla innych
@@ -385,8 +377,8 @@ ponieważ `rand` jest od nich zależny. Po ich ściągnięciu Rust je kompiluje,
 niezbędne zależności, kompiluje projekt.
 
 Gdybyś teraz bez wprowadzania jakichkolwiek zmian wywołał ponownie `cargo build`, nie zobaczyłbyś żadnego outputu.
-Cargo wie, że zależności są już ściągnięte i skompilowane, i że nie zmieniałeś(-aś) nic w ich kwestii w pliku *Cargo.toml*. 
-Cargo również wie, że nie zmieniałeś(-aś) nic w swoim kodzie, więc jego też nie rekompiluje. Nie ma nic do zrobienia, 
+Cargo wie, że zależności są już ściągnięte i skompilowane, i że nie zmieniałeś nic w ich kwestii w pliku *Cargo.toml*. 
+Cargo również wie, że nie zmieniałeś nic w swoim kodzie, więc jego też nie rekompiluje. Nie ma nic do zrobienia, 
 więc po prostu kończy swoje działanie. Jeśli wprowadzisz jakąś trywialną zmianę w pliku *src/main.rs*, zapiszesz,
 a następnie ponownie zbudujesz projekt, zobaczysz jedynie dwie linijki na wyjściu:
 
@@ -395,7 +387,7 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 touch src/main.rs
 cargo build -->
 
-```text
+```console
 $ cargo build
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -413,10 +405,10 @@ Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `
 ale jednocześnie wprowadza regresję, która zepsuje twój kod?
 
 Odpowiedzią na ten problem jest plik *Cargo.lock*, który został stworzony w momencie,
-gdy po raz pierwszy wywołałeś(-aś) `cargo build`. Znajduje się on teraz w twoim folderze *gra_zgadywanka*.
+gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *gra_zgadywanka*.
 Kiedy po raz pierwszy budujesz dany projekt, Cargo sprawdza wersje każdej z zależności, tak by kryteria były spełnione,
 i wynik zapisuje w pliku *Cargo.lock*. Od tego czasu przy każdym kolejnym budowaniu, Cargo widząc, że plik *Cargo.lock*
-istnieje, będzie pobierało z niego wersje zależności do pobrania, zamiast na nowo próbować je określać.
+istnieje, będzie odczytywać z niego wersje zależności do pobrania, zamiast na nowo próbować je określać.
 Dzięki temu twoje buildy będą reprodukowalne. Innymi słowy, twój projekt będzie wciąż używał wersji `0.5.5`, 
 do czasu aż sam jawnie nie podbijesz wersji do wyższej.
 
@@ -432,7 +424,7 @@ Jednak domyślnie Cargo będzie szukało jedynie wersji większej od `0.5.5` i m
 Jeśli skrzynia `rand` została wypuszczona w dwóch nowych wersjach, `0.5.6` i `0.6.0`,
 po uruchomieniu `cargo update` zobaczysz taki wynik:
 
-```text
+```console
 $ cargo update
     Updating registry `https://github.com/rust-lang/crates.io-index`
     Updating rand v0.5.5 -> v0.5.6
@@ -451,7 +443,7 @@ rand = "0.6.0"
 ```
 
 Następnym razem gdy wywołasz `cargo build`, Cargo zaktualizuje rejestr dostępnych skrzyń i 
-zastosuje nowe wymagania co do wersji skrzyni `rand`, zgodnie z tym co zamieściłeś(-aś) w pliku.
+zastosuje nowe wymagania co do wersji skrzyni `rand`, zgodnie z tym co zamieściłeś w pliku.
 
 Można by jeszcze wiele mówić o [Cargo][doccargo]<!-- ignore --> i [jego ekosystemie][doccratesio]<!-- ignore -->.
 Wrócimy do tego w rozdziale 14. Na razie wiesz wszystko, co musisz wiedzieć.
@@ -494,8 +486,7 @@ Kolejną przydatną komendą Cargo jest polecenie `cargo doc --open`, które lok
 dostarczaną przez wszystkie zależności, jakich używasz, i otworzy ją w przeglądarce.
 Gdyby, przykładowo, interesowały cię inne funkcjonalności ze skrzyni `rand`, wpisz `cargo doc --open` i wybierz `rand` z paska po lewej.
 
-Druga dodana przez nas linia wypisuje na ekranie sekretną liczbę. Jest to przydatne podczas tworzenia programu, aby móc go testować,
-i zostanie usunięte w finalnej wersji. Gra nie byłaby zbyt ekscytująca, gdyby program podawał sekretną liczbę od razu na starcie!
+Druga dodana przez nas linia wypisuje na ekranie sekretną liczbę. Jest to przydatne podczas implementowania do testowania programu i zostanie usunięte w finalnej wersji. Gra nie byłaby zbyt ekscytująca, gdyby program podawał sekretną liczbę od razu na starcie!
 
 Spróbuj uruchomić program kilka razy:
 
@@ -507,7 +498,7 @@ cargo run
 5
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -567,7 +558,7 @@ decydujemy, co zrobić dalej.
 
 [match]: ch06-02-match.html
 
-Wyrażenie `match` składa się z *gałęzi* (*ang. branch). Gałąź składa się ze *wzorca* i kodu, który ma się wykonać,
+Wyrażenie `match` składa się z *gałęzi* (*ang. branch*). Gałąź składa się ze *wzorca* i kodu, który ma się wykonać,
 jeśli wartość podana na początku wyrażenia `match` będzie pasowała do danego wzorca.
 Rust bierze wartość podaną do `match` i przegląda kolejno wzorce ze wszystkich gałęzi.
 Konstrukcja `match` i wzorce to potężne mechanizmy w Ruście,
@@ -587,7 +578,7 @@ Wyrażenie `match` kończy wykonanie, ponieważ nie ma potrzeby sprawdzać już 
 Niemniej, kod z listingu 2-4 jeszcze się nie skompiluje. Spróbujmy:
 
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
@@ -601,8 +592,7 @@ która spowoduje że Rust wybierze inny typ. Przyczyną błędu jest to, że Rus
 stringa z typem numerycznym.
 
 Ostatecznie musimy przekonwertować stringa, którego program wczytał jako wejście z klawiatury,
-do postaci typu numerycznego, który można porównać matematycznie do sekretnej liczby. Możemy to osiągnąć, dodając takie
-dwie linie do ciała funkcji `main`:
+do postaci typu numerycznego, który można porównać matematycznie do sekretnej liczby. Możemy to osiągnąć, dodając kolejną linię do ciała funkcji `main`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -610,11 +600,10 @@ dwie linie do ciała funkcji `main`:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
 ```
 
-Dodane linie to:
+Dodana linia to:
 
 ```rust,ignore
-let guess: u32 = guess.trim().parse()
-    .expect("Podaj liczbę!");
+let guess: u32 = guess.trim().parse().expect("Podaj liczbę!");
 ```
 
 Tworzymy tu zmienną o nazwie `guess`. Ale czekaj, czy program przypadkiem nie ma już
@@ -664,7 +653,7 @@ cargo run
   76
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
@@ -695,9 +684,9 @@ graczowi więcej szans na odgadnięcie liczby:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
 ```
 
-Jak widzisz, przenieślismy do pętli cały kod następujący po zachęcie gracza do odgadnięcia liczby.
+Jak widzisz, przenieśliśmy do pętli cały kod następujący po zachęcie gracza do odgadnięcia liczby.
 Pamiętaj, żeby zwiększyć wcięcia linii wewnątrz pętli o kolejne cztery spacje, następnie uruchom program
-ponownie. Zapewne zauważyłeś(-aś) nowy problem - program robi dokładnie to, o co go poprosiliśmy: pyta o wprowadzenie
+ponownie. Zapewne zauważyłeś nowy problem - program robi dokładnie to, o co go poprosiliśmy: pyta o wprowadzenie
 odgadniętej liczby w nieskończoność! Wygląda na to, że użytkownik nie może wyjść z tego programu!
 
 Użytkownik może zawsze zatrzymać program używając skrótu klawiszowego <span class="keystroke">ctrl-c</span>. Lecz
@@ -716,7 +705,7 @@ cargo run
 quit
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50 secs
@@ -737,8 +726,8 @@ Wybrana przez ciebie liczba: 59
 Jesteś zwycięzcą!
 Podaj swoją liczbę:
 quit
-thread 'main' panicked at 'Podaj liczbę!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:785
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+thread 'main' panicked at 'Podaj liczbę!: ParseIntError { kind: InvalidDigit }', src/main.rs:28:47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Wpisanie `quit` faktycznie spowodowało wyjście z programu, ale taki sam skutek miałoby wprowadzenie
@@ -807,10 +796,11 @@ foo
 (correct guess)
 -->
 
-```text
+```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
-     Running `target/debug/gra_zgadywanka`
+   Compiling gra_zgadywanka v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 4.45s
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 61
 Podaj swoją liczbę:

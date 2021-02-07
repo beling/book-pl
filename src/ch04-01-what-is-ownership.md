@@ -43,14 +43,14 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > danych nosi nazwę *odkładania na stos* (*pushing onto the stack*), a usuwanie
 > ich nazywane jest *zdejmowaniem ze stosu* (*popping off the stack*).
 >
-> Każda dana umieszczona na stosie musi mieć znany, ustalony z góry rozmiar.
-> Dane, których rozmiar jest nieznany na etapie kompilacji lub ulega zmianie,
+> Każda dana umieszczona na stosie musi mieć znany, stały rozmiar.
+> Dane, których rozmiar jest nieznany na etapie kompilacji lub może ulegać zmianie,
 > muszą być przechowywane na stercie. Sterta jest mniej zorganizowana: kiedy coś
 > się na niej umieszcza, należy poprosić o przydzielenie pewnego jej obszaru.
-> System operacyjny znajduje na stercie wolne, wystarczająco duże miejsce,
-> oznacza je jako będące w użyciu i zwraca *wskaźnik*, zawierający adres
+> Alokator pamięci znajduje na stercie wolne, wystarczająco duże miejsce,
+> oznacza je jako będące w użyciu i zwraca *wskaźnik* zawierający adres
 > wybranej lokalizacji. Proces ten nazywamy *alokacją na stercie* lub po prostu
-> „alokacją”. Umieszanie danych na stosie nie jest uznawane za alokację. Ze
+> *alokacją*. Umieszanie danych na stosie nie jest uznawane za alokację. Ze
 > względu na to, że zwrócony wskaźnik posiada znany, ustalony rozmiar, możemy
 > przechować go na stosie. Jednak gdy chcemy dostać się do właściwych danych,
 > musimy podążyć za wskaźnikiem.
@@ -60,8 +60,8 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 > pomieszczą i prowadzi ich na miejsce. Jeśli ktoś z twojej grupy sie spóźni,
 > aby was znaleźć, może zapytać, gdzie was posadzono.
 >
-> Odkładanie na stosie jest szybsze od alokacji na stercie, ponieważ system 
-> operacyjny nigdy nie musi szukać miejsca na dodanie nowych danych;
+> Odkładanie na stosie jest szybsze od alokacji na stercie, ponieważ alokator 
+> nigdy nie musi szukać miejsca na dodanie nowych danych;
 > to miejsce znajduje się zawsze na szczycie stosu.
 > Alokacja na stercie natomiast wymaga więcej pracy, ponieważ
 > system operacyjny musi w pierwszej kolejności znaleźć wystarczająco dużo
@@ -123,7 +123,7 @@ element zachowuje ważność. Powiedzmy, że mamy zmienną, która wygląda tak:
 let s = "witaj";
 ```
 
-Zmienna `s` odnosi się do literału znakowego, którego wartość jest ustalona w
+Zmienna `s` odnosi się do literału łańcuchowego, którego wartość jest ustalona w
 samym kodzie programu. Zmienna zachowuje ważność od miejsca, w którym ją
 zadeklarowano, do końca bieżącego *zasięgu*. Listing 4-1 zawiera komentarze
 wyjaśniające, gdzie zmienna `s` zachowuje ważność:
@@ -192,7 +192,7 @@ nie? Różnica polega na sposobie, w jakim oba te typy korzystają z pamięci.
 
 ### Pamięć i alokacja
 
-W przypadku literału znakowego, jego wartość znana jest już w czasie kompilacji,
+W przypadku literału łańcuchowego, jego wartość znana jest już w czasie kompilacji,
 więc przechowywany tekst jest na stałe zakodowany w docelowym pliku
 wykonywalnym, co czyni literały szybkimi i wydajnymi. Ale cechy te wynikają z
 niemodyfikowalności literałów. Niestety, nie możemy w pliku binarnym umieścić
@@ -203,14 +203,13 @@ Mając typ `String`, w celu obsługi modyfikowalnego i potencjalnie rosnącego
 tekstu, musimy zaalokować pewną ilość pamięci na stercie, nieznaną podczas
 kompilacji. To oznacza, że:
 
-* O przydział pamięci należy poprosić system operacyjny w trakcie działania
-programu
-* Potrzebny jest sposób na zwracanie pamięci do systemu operacyjnego, kiedy
+* O przydział pamięci należy poprosić alokator w trakcie wykonywania programu.
+* Potrzebny jest sposób na oddanie pamięci do alokatora, kiedy
 `String` nie będzie już używany.
 
 Pierwszą część robimy sami, wywołując funkcję `String::from`, której
-implementacja zawiera prośbę o wymaganą pamięć. Takie rozwiązanie jest w
-zasadzie uniwersalne dla wielu języków programowania.
+implementacja zawiera prośbę o wymaganą pamięć. Podobne rozwiązanie jest w
+w wielu innych językach programowania.
 
 Druga część znacznie się za to różni. W językach wyposażonych w systemy
 odśmiecania (*garbage collector - GC*), GC śledzi i zwalnia pamięć, która nie
@@ -223,19 +222,19 @@ wcześnie, zostaniemy z nieważną zmienną. Zrobimy to dwukrotnie - to też bł
 Musimy połączyć w pary dokładnie jedną `alokację` z dokładnie jednym
 `zwolnieniem`.
 
-Rust prezentuje inne podejście: pamięć jest automatycznie zwracana do systemu,
-kiedy skończy się zasięg zmiennej, będącej jej właścicielem. Oto wersja naszego
+Rust prezentuje inne podejście: pamięć jest automatycznie zwalniana,
+kiedy skończy się zasięg zmiennej będącej jej właścicielem. Oto wersja naszego
 przykładu z listingu 4-1, który używa typu `String` zamiast literału:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
 ```
 
-Istnieje oczywisty moment, w którym możemy zwrócić pamięć wykorzystywaną przez
-nasz `String` do systemu operacyjnego - kiedy kończy się zasięg zmiennej `s`.
+Istnieje oczywisty moment, w którym możemy oddać pamięć wykorzystywaną przez
+nasz `String` do alokatora - kiedy kończy się zasięg zmiennej `s`.
 Kiedy zasięg jakiejś zmiennej się kończy, Rust wywołuje za nas specjalną
-funkcję. Funkcja ta nosi nazwę `drop` (*rzuć, upuść*), a w jej treści autor typu
-`String` umieszcza kod zwrotu pamięci. Funkcja `drop` zostaje wywołana przez
+funkcję. Funkcja ta nosi nazwę [`drop`] (*rzuć, upuść*), a w jej treści autor typu
+`String` umieszcza kod zwalniający pamięć. Funkcja `drop` zostaje wywołana przez
 Rusta automatycznie, przy zamykającej kod klamrze.
 
 > Uwaga: W C++ schemat dealokacji zasobów przy końcu czasu życia jakiegoś
@@ -290,7 +289,7 @@ przechowującego wartość `"witaj"` przypisaną do `s1`</span>
 
 Znacznik `length` wskazuje, ile bajtów pamięci zajmuje bieżący ciąg znaków w
 zmiennej typu `String`, natomiast `capacity` przechowuje dane o całkowitej
-ilości pamięci, jaką system operacyjny dla tej zmiennej przydzielił. Różnica
+ilości pamięci, jaką alokator dla tej zmiennej przydzielił. Różnica
 między `length` i `capacity` ma znaczenie, ale nie w tym kontekście. Dlatego na
 razie możemy zignorować `capacity`.
 
@@ -336,7 +335,7 @@ po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
 Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów
 przy użyciu nieważnych zmiennych:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
 ```
 
@@ -390,7 +389,7 @@ całkowitych, którego treść pokazano na listingu 4-2, działa i jest prawidł
 ```
 
 Zdaje się on przeczyć temu, czego przed chwilą się nauczyliśmy: nie mamy
-odwołania do `clone`, ale zmienna `x` zachowuje ważność i nie zostaje
+wywołania `clone`, ale zmienna `x` zachowuje ważność i nie zostaje
 przeniesiona do `y`.
 
 Przyczyną jest to, że typy takie jak liczby całkowite, które mają znany rozmiar
@@ -404,13 +403,13 @@ Rust zawiera specjalną adnotację zwaną „cechą `Copy`”, którą można
 zaimplementować dla typów przechowywanych na stosie, takich jak liczby
 całkowite (więcej o cechach będzie w rozdziale 10). Jeśli dany typ ma
 zaimplementowaną cechę `Copy`, zmienną, którą przypisano do innej zmiennej,
-można dalej używać po tej operacji. Rust nie pozwoli zaimplementować cechy
+można dalej używać. Rust nie pozwoli zaimplementować cechy
 `Copy` dla żadnego typu, dla którego całości lub jakiejkolwiek jego części
-zaimplementowano wcześniej cechę `Drop`. Jeśli specyfikacja typu wymaga
+zaimplementowano cechę `Drop`. Jeśli specyfikacja typu wymaga
 wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
-się zasięg, a dodamy dla tego typu cechę `Copy`, wywołamy błąd kompilacji. Aby
+się zasięg, a dodamy dla tego typu cechę `Copy`, uzyskamy błąd kompilacji. Aby
 nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
-[“Cechy wyprowadzane”][derivable-traits]<!-- ignore --> w Dodatku C.
+[“Cechy wyprowadzalne”][derivable-traits]<!-- ignore --> w Dodatku C.
 
 Które więc typy mają cechę `Copy`? Dla danego typu można dla pewności sprawdzić
 w dokumentacji, ale jako regułę zapamiętaj, że każda grupa wartości skalarnych
@@ -419,9 +418,9 @@ zasobem jej nie ma. Oto przykłady typów z zaimplementowaną cechą `Copy`:
 
 * Wszystkie typy całkowite, takie jak `u32`.
 * Typ logiczny, `bool`, z wartościami `true` oraz `false`.
+* Wszystkie typy zmiennoprzecinkowe, jak `f64`.
 * Typ znakowy, `char`.
-* All the floating point types, like `f64`.
-* Krotki, ale tylko wtedy, jeśli zawierają wyłącznie typy z cechą `Copy`. Na
+* Krotki, jeśli zawierają wyłącznie typy z cechą `Copy`. Na
   przykład, `(i32, i32)` ma cechę `Copy`, ale `(i32, String)` już nie.
 
 ### Własność i funkcje
@@ -489,5 +488,6 @@ obsługującą takie przypadki, zwaną *referencje*.
 
 [data-types]: ch03-02-data-types.html#typy-danych
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#method-syntax 
+[method-syntax]: ch05-03-method-syntax.html#method-syntax
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[`drop`]: ../std/ops/trait.Drop.html#tymethod.drop

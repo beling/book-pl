@@ -63,14 +63,14 @@ Wypróbujmy kod z listingu 4-6. Uwaga: on nie zadziała!
 
 Otrzymamy następujący błąd:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/listing-04-06/output.txt}}
 ```
 
 Tak jak zmienne, referencje są domyślnie niemutowalne.
 Nie możemy zmieniać czegoś do czego mamy referencję.
 
-### Mutowalne Referencje
+### Referencje mutowalne
 
 Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawkę:
 
@@ -92,7 +92,7 @@ Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zak
 
 Otrzymamy następujący błąd:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/output.txt}}
 ```
 
@@ -114,55 +114,37 @@ wiele mutowalnych referencji, ale nie *równocześnie*:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
 ```
 
-A similar rule exists for combining mutable and immutable references. This code
-results in an error:
+Podobne ograniczenie dotyczy mieszania referencji mutowalnych z niemutowalnymi. Następujący kod nie skompiluje się:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/src/main.rs:here}}
 ```
 
-Here’s the error:
+Kompilator wyświetli następujący komunikat błędu:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
 ```
 
-Whew! We *also* cannot have a mutable reference while we have an immutable one.
-Users of an immutable reference don’t expect the values to suddenly change out
-from under them! However, multiple immutable references are okay because no one
-who is just reading the data has the ability to affect anyone else’s reading of
-the data.
+Fiu, fiu! Mutowalnej referencji nie możemy mieć *także* gdy mamy niemutowalną.
+Użytkownicy niemutowalnej referencji nie spodziewają się, że wartość do której ta referencja się odnosi, może się nagle zmienić! Jednakże, istnienie wielu niemutowalnych referencji niczemu nie zagraża, bo nie dają one możliwość zmiany danych i wpłynięcia na to, co odczytają inni.
 
-Note that a reference’s scope starts from where it is introduced and continues
-through the last time that reference is used. For instance, this code will
-compile because the last usage of the immutable references occurs before the
-mutable reference is introduced:
+Uwaga: zakres życia referencji zaczyna się w miejscu jej utworzenia, kończy się zaś w miejscu jej ostatniego użycia. Przykładowo, następujący kod skompiluje się, bo ostatnie użycie niemutowalnej referencji występuje przed wprowadzeniem mutowalnej:
 
 ```rust,edition2018
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
 ```
 
-The scopes of the immutable references `r1` and `r2` end after the `println!`
-where they are last used, which is before the mutable reference `r3` is
-created. These scopes don’t overlap, so this code is allowed.
+Zakresy życia niemutowalnych referencji `r1` i `r2` kończą się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
 
-Even though borrowing errors may be frustrating at times, remember that it’s the
-Rust compiler pointing out a potential bug early (at compile time rather than
-at runtime) and showing you exactly where the problem is. Then you don’t have
-to track down why your data isn’t what you thought it was.
+Błędy kompilacji związane z pożyczaniem mogą być czasami frustrujące. Pamiętajmy jednak, że nierzadko wskazują one potencjalne błędy, dokładnie wskazując problem, i to na wczesnym etapie, w czasie kompilacji, a nie wykonywania programu.
+Dzięki nim nie musimy odkrywać, dlaczego nasze dane są inne niż się spodziewaliśmy.
 
-### Dangling References
+### Wiszące referencje
 
-In languages with pointers, it’s easy to erroneously create a *dangling
-pointer*, a pointer that references a location in memory that may have been
-given to someone else, by freeing some memory while preserving a pointer to
-that memory. In Rust, by contrast, the compiler guarantees that references will
-never be dangling references: if you have a reference to some data, the
-compiler will ensure that the data will not go out of scope before the
-reference to the data does.
+W językach ze wskaźnikami, łatwo jest błędnie stworzyć *wiszący wskaźnik*, t.j. taki, który odnosi się do miejsca w pamięci, które mogło być przekazane komuś innemu, poprzez zwolnienie  pamięci przy jednoczesnym zachowaniu wskaźnika do niej. W Ruście natomiast, kompilator gwarantuje, że referencje nigdy nie będą wiszące: kompilator zawsze dba o to, aby jakiekolwiek dane nie wyszły poza zakres wcześniej, niż referencje do tych danych.
 
-Let’s try to create a dangling reference, which Rust will prevent with a
-compile-time error:
+Spróbujmy utworzyć wiszącą referencję. Rust nam to uniemożliwi, zgłaszając następujący błąd kompilacji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -170,9 +152,9 @@ compile-time error:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/src/main.rs}}
 ```
 
-Here’s the error:
+Komunikat błędu:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/output.txt}}
 ```
 
@@ -180,13 +162,15 @@ This error message refers to a feature we haven’t covered yet: lifetimes. We�
 discuss lifetimes in detail in Chapter 10. But, if you disregard the parts
 about lifetimes, the message does contain the key to why this code is a problem:
 
+Ten komunikat odnosi się do czegoś, czego jeszcze nie omawialiśmy: czasów życia (ang. lifetimes).
+Będziemy omawiać je szczegółowo w rozdziale 10. Pomijając jednak części o czasie życia, wiadomość zawiera jasne wskazanie problemu związanego z naszym kodem:
+
 ```text
 this function's return type contains a borrowed value, but there is no value
 for it to be borrowed from.
 ```
 
-Let’s take a closer look at exactly what’s happening at each stage of our
-`dangle` code:
+Przyjrzyjmy się dokładnie temu, co dzieje się na każdym etapie kodu `dangle`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -194,26 +178,23 @@ Let’s take a closer look at exactly what’s happening at each stage of our
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-15-dangling-reference-annotated/src/main.rs:here}}
 ```
 
-Because `s` is created inside `dangle`, when the code of `dangle` is finished,
-`s` will be deallocated. But we tried to return a reference to it. That means
-this reference would be pointing to an invalid `String`. That’s no good! Rust
-won’t let us do this.
+Jako że `s` jest tworzony wewnątrz `dangle`, to jest on zwalniany wraz z końcem `dangle`.
+Jednocześnie próbujemy zwrócić referencję do `s`. Ta referencja wskazywałaby na nieprawidłowy `String`. To niedobre!
+Rust nie pozwoli nam tego zrobić.
 
-The solution here is to return the `String` directly:
+Rozwiązaniem jest zwrócenie `String`a bezpośrednio:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-16-no-dangle/src/main.rs:here}}
 ```
 
-This works without any problems. Ownership is moved out, and nothing is
-deallocated.
+To działa bez żadnych problemów. Własność jest przenoszona na zewnątrz i nic nie jest zwalniane.
 
-### The Rules of References
+### Zasady dotyczące referencji
 
-Let’s recap what we’ve discussed about references:
+Podsumujmy informacje na temat referencji:
 
-* At any given time, you can have *either* one mutable reference *or* any
-  number of immutable references.
-* References must always be valid.
+* W każdej chwili możesz mieć *albo* jedną referencję mutowalną *albo* dowolną liczbę referencji niemutowalnych.
+* Referencje zawsze muszą być poprawne.
 
-Next, we’ll look at a different kind of reference: slices.
+Wkrótce przyjrzymy się innemu rodzajowi referencji: wycinkowi (ang. slice).

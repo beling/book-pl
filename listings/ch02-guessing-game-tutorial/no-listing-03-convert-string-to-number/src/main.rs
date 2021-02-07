@@ -29,5 +29,5 @@ fn main() {
         Ordering::Greater => println!("Za duża!"),
         Ordering::Equal => println!("Jesteś zwycięzcą!"),
     }
+    // ANCHOR_END: here
 }
-// ANCHOR_END: here

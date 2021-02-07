@@ -68,7 +68,7 @@ Listing 17-3 shows how to define a trait named `Draw` with one method named
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-03/src/lib.rs}}
 ```
 
@@ -82,7 +82,7 @@ a `Box` that implements the `Draw` trait.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-04/src/lib.rs:here}}
 ```
 
@@ -95,7 +95,7 @@ On the `Screen` struct, we’ll define a method named `run` that will call the
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-05/src/lib.rs:here}}
 ```
 
@@ -111,7 +111,7 @@ as in listing 17-6:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
 ```
 
@@ -138,7 +138,7 @@ might have fields for `width`, `height`, and `label`, as shown in listing 17-7:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-07/src/lib.rs:here}}
 ```
 
@@ -219,7 +219,7 @@ implement the trait object’s trait</span>
 
 We’ll get this error because `String` doesn’t implement the `Draw` trait:
 
-```text
+```console
 {{#include ../listings/ch17-oop/listing-17-10/output.txt}}
 ```
 
@@ -300,7 +300,7 @@ implement the `Clone` trait instead of the `Draw` trait, like this:
 
 We would get this error:
 
-```text
+```console
 {{#include ../listings/ch17-oop/no-listing-01-trait-object-of-clone/output.txt}}
 ```
 

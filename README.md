@@ -16,7 +16,7 @@ wersji, do której odnosi się
 [ten plik w repozytorium rust-lang/rust][rust-mdbook].
 Aby je zainstalować, wpisz:
 
-[mdBook]: https://github.com/azerupi/mdBook
+[mdBook]: https://github.com/rust-lang-nursery/mdBook
 [rust-mdbook]: https://github.com/rust-lang/rust/blob/master/src/tools/rustbook/Cargo.toml
 
 ```bash
@@ -50,6 +50,9 @@ $ Start-Process "chrome.exe" .\book\index.html  # Windows (PowerShell)
 $ start chrome.exe .\book\index.html            # Windows (Cmd)
 ```
 
+Lub po prostu otwórz dany plik html z poziomu Eksplorera Windows czy innej
+graficznej przeglądarki plików.
+
 Aby uruchomić testy:
 
 ```bash
@@ -70,3 +73,9 @@ $ dot dot/trpl04-01.dot -Tsvg > src/img/trpl04-01.svg
 W wygenerowanym pliku SVG usuń atrybuty `width` i `height` z elementu `svg` i
 ustaw atrybut `viewBox` na wartość `0.00 0.00 1000.00 1000.00` lub inne, o ile
 nie przytną one rysunku.
+
+
+## Pomoc w tłumaczeniu
+
+Chętnie przyjmiemy każdą pomoc! Przed zaczynaniem tłumaczenia zapoznaj się z
+informacjami w pliku [CONTRIBUTING.md](./CONTRIBUTING.md)!
