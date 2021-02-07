@@ -121,15 +121,13 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > inne wartości niż byś tego oczekiwał. Poleganie na zawinięciu uzupełnia do 
 > dwóch jest uważane za błąd.
 >
-> To explicitly handle the possibility of overflow, you can use these families
-> of methods that the standard library provides on primitive numeric types:
+> Przepełnienia można obsłużyć jawnie. W tym celu można skorzystać z następujących rodzin
+> metod, zapewnionych prymitywnym typom liczbowym przez bibliotekę standardową:
 >
-> - Wrap in all modes with the `wrapping_*` methods, such as `wrapping_add`
-> - Return the `None` value if there is overflow with the `checked_*` methods
-> - Return the value and a boolean indicating whether there was overflow with
->   the `overflowing_*` methods
-> - Saturate at the value's minimum or maximum values with `saturating_*`
->   methods
+> - zawijanie we wszystkich trybach kompilacji za pomocą metod `wrapping_*`, takich jak `wrapping_add`;
+> - zwracanie wartość `None` jeśli wystąpiło przepełnienie za pomocą metod `checked_*`;
+> - zwracanie wartość liczbowej wraz z wartością logiczną (boolean) wskazującą, czy wystąpiło przepełnienie za pomocą metod `overflowing_*`;
+> - nasycenie do minimalnych lub maksymalnych wartości za pomocą metod `saturating_*`.
 
 #### Typy zmiennoprzecinkowe
 
