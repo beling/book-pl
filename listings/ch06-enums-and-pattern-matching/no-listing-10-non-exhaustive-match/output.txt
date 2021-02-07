@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling enums v0.1.0 (file:///projects/enums)
+   Compiling enumy v0.1.0 (file:///projects/enumy)
 error[E0004]: non-exhaustive patterns: `None` not covered
    --> src/main.rs:3:15
     |

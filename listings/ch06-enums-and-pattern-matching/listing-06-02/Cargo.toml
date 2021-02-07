@@ -1,5 +1,5 @@
 [package]
-name = "enums"
+name = "enumy"
 version = "0.1.0"
 authors = ["Twoje imię i nazwisko <you@example.com>"]
 edition = "2018"
