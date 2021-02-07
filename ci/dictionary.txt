@@ -69,6 +69,7 @@ chXX
 chYY
 clippy
 clippy's
+cmdlet
 coercions
 combinator
 ConcreteType
@@ -198,6 +199,7 @@ Hoare
 Hola
 homogenous
 html
+https
 hyperoptimize
 hypotheticals
 Iceburgh
@@ -316,6 +318,7 @@ nonadministrators
 nondeterministic
 nonequality
 nongeneric
+noplayground
 NotFound
 nsprust
 null's
@@ -357,6 +360,7 @@ PrimaryColor
 println
 priv
 proc
+proto
 pthreads
 pushups
 QuitMessage
@@ -467,6 +471,7 @@ supertraits
 TcpListener
 TcpStream
 templating
+test_harness
 test's
 TextField
 That'd
@@ -476,6 +481,7 @@ timestamp
 Tiếng
 timeline
 tlborm
+tlsv
 TODO
 TokenStream
 toml

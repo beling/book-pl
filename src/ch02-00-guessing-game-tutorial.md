@@ -15,7 +15,7 @@ Gdy gracz odgadnie wylosowaną liczbę, program wyświetla gratulacje dla zwyci�
 Aby stworzyć nowy projekt, wejdź do folderu *projects* utworzonego w rozdziale 1 i za pomocą Cargo 
 wygeneruj szkielet projektu, w ten sposób:
 
-```text
+```console
 $ cargo new gra_zgadywanka
 $ cd gra_zgadywanka
 ```
@@ -46,7 +46,7 @@ Jak już widziałeś w rozdziale 1, `cargo new` tworzy dla ciebie program
 Teraz skompilujemy i uruchomimy ten program w jednym kroku za pomocą komendy `cargo run`:
 
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-01-cargo-new/output.txt}}
 ```
 
@@ -246,7 +246,7 @@ W tym przypadku wartość ta odpowiada liczbie bajtów, które użytkownik wprow
 
 Gdybyśmy pominęli wywołanie `expect`, program skompilowałby się z warningiem:
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/no-listing-02-without-expect/output.txt}}
 ```
 
@@ -285,7 +285,7 @@ cargo clean
 cargo run
 input 6 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -330,12 +330,9 @@ Otwórz *Cargo.toml* i dodaj na końcu, pod nagłówkiem sekcji `[dependencies]`
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Plik *Cargo.toml* podzielony jest na sekcje, których ciało zaczyna się po nagłówku i kończy się w miejscu,
-gdzie zaczyna się kolejna sekcja. W sekcji `[dependencies]` informujesz Cargo, jakich zewnętrznych skrzyń 
-i w której wersji wymaga twój projekt. Tutaj przy skrzyni `rand` znajduje się specyfikator wersji `0.5.5`.
-Cargo rozumie [Semantic Versioning][semver]<!-- ignore --> (nazywane tez czasem *SemVer*), które to jest 
-standardem zapisywania numeru wersji. Numer `0.5.5` jest właściwie skrótem do `^0.5.5`, które oznacza
-“jakakolwiek wersja, której API publiczne jest kompatybilne z wersją 0.5.5.”
+Plik *Cargo.toml* podzielony jest na sekcje, których ciało zaczyna się po nagłówku i kończy się w miejscu, gdzie zaczyna się kolejna sekcja. W sekcji `[dependencies]` informujesz Cargo, jakich zewnętrznych skrzyń i w której wersji wymaga twój projekt. Tutaj przy skrzyni `rand` znajduje się specyfikator wersji `0.5.5`.
+Cargo rozumie [Semantic Versioning][semver]<!-- ignore --> (nazywane tez czasem *SemVer*), które to jest standardem zapisywania numeru wersji. Numer `0.5.5` jest właściwie skrótem do `^0.5.5`, które oznacza wersję conajmniej `0.5.5`, ale poniżej `0.6.0`.
+Cargo uznaje te wersje za takie, których publiczne API jest kompatybilne z wersją `0.5.5`.
 
 [semver]: http://semver.org
 
@@ -346,7 +343,7 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 cargo clean
 cargo build -->
 
-```text
+```console
 $ cargo build
     Updating crates.io index
   Downloaded rand v0.5.5
@@ -365,8 +362,8 @@ $ cargo build
 
 <span class="caption">Listing 2-2: Wynik po wywołaniu `cargo build` po dodaniu zależności do skrzyni rand</span>
 
-Być może u siebie zobaczysz inne numery wersji (jednak wszystkie będą kompatybilne z kodem, dzięki SemVer!), 
-lub wydrukowane linie będą w innej kolejności.
+Być może u siebie zobaczysz inne numery wersji (jednak wszystkie będą kompatybilne z kodem, dzięki SemVer!), inne linie (zależnie od systemu operacyjnego),
+lub linie wydrukowane w innej kolejności.
 
 Teraz kiedy mamy już zdefiniowaną jakąś zewnętrzną zależność, Cargo ściąga najnowsze wersje wszystkich skrzyń z *rejestru*,
 który jest kopią danych z [Crates.io][cratesio]. Crates.io to miejsce, gdzie ludzie związani z Rustem publikują dla innych
@@ -390,7 +387,7 @@ cd listings/ch02-guessing-game-tutorial/listing-02-02/
 touch src/main.rs
 cargo build -->
 
-```text
+```console
 $ cargo build
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -427,7 +424,7 @@ Jednak domyślnie Cargo będzie szukało jedynie wersji większej od `0.5.5` i m
 Jeśli skrzynia `rand` została wypuszczona w dwóch nowych wersjach, `0.5.6` i `0.6.0`,
 po uruchomieniu `cargo update` zobaczysz taki wynik:
 
-```text
+```console
 $ cargo update
     Updating registry `https://github.com/rust-lang/crates.io-index`
     Updating rand v0.5.5 -> v0.5.6
@@ -501,7 +498,7 @@ cargo run
 5
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
@@ -581,7 +578,7 @@ Wyrażenie `match` kończy wykonanie, ponieważ nie ma potrzeby sprawdzać już 
 Niemniej, kod z listingu 2-4 jeszcze się nie skompiluje. Spróbujmy:
 
 
-```text
+```console
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
@@ -595,8 +592,7 @@ która spowoduje że Rust wybierze inny typ. Przyczyną błędu jest to, że Rus
 stringa z typem numerycznym.
 
 Ostatecznie musimy przekonwertować stringa, którego program wczytał jako wejście z klawiatury,
-do postaci typu numerycznego, który można porównać matematycznie do sekretnej liczby. Możemy to osiągnąć, dodając takie
-dwie linie do ciała funkcji `main`:
+do postaci typu numerycznego, który można porównać matematycznie do sekretnej liczby. Możemy to osiągnąć, dodając kolejną linię do ciała funkcji `main`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -604,11 +600,10 @@ dwie linie do ciała funkcji `main`:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
 ```
 
-Dodane linie to:
+Dodana linia to:
 
 ```rust,ignore
-let guess: u32 = guess.trim().parse()
-    .expect("Podaj liczbę!");
+let guess: u32 = guess.trim().parse().expect("Podaj liczbę!");
 ```
 
 Tworzymy tu zmienną o nazwie `guess`. Ale czekaj, czy program przypadkiem nie ma już
@@ -658,7 +653,7 @@ cargo run
   76
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
@@ -710,7 +705,7 @@ cargo run
 quit
 -->
 
-```text
+```console
 $ cargo run
    Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50 secs
@@ -731,8 +726,8 @@ Wybrana przez ciebie liczba: 59
 Jesteś zwycięzcą!
 Podaj swoją liczbę:
 quit
-thread 'main' panicked at 'Podaj liczbę!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:785
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+thread 'main' panicked at 'Podaj liczbę!: ParseIntError { kind: InvalidDigit }', src/main.rs:28:47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Wpisanie `quit` faktycznie spowodowało wyjście z programu, ale taki sam skutek miałoby wprowadzenie
@@ -801,10 +796,11 @@ foo
 (correct guess)
 -->
 
-```text
+```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
-     Running `target/debug/gra_zgadywanka`
+   Compiling gra_zgadywanka v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 4.45s
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 61
 Podaj swoją liczbę:

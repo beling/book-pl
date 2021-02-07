@@ -20,7 +20,7 @@ podanych jako osobne argumenty</span>
 
 Uruchommy program komendą `cargo run`:
 
-```text
+```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/output.txt}}
 ```
 
@@ -191,7 +191,7 @@ i wyświetlanie instancji `Rectangle` formatowaniem przeznaczonym do celów debu
 Teraz kiedy uruchomimy program nie wyskoczy nam żaden błąd, a naszym oczom
 ukaże się poniższy tekst:
 
-```text
+```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-12/output.txt}}
 ```
 
@@ -202,7 +202,7 @@ Kiedy w grę wchodzą większe struktury miło byłoby też mieć troszkę czyte
 w takich sytuacjach możemy użyć `{:#?}` zamiast `{:?}` w makrze `println!`.
 Użycie stylu `{:#?}` w tym przypadku wyglądało będzie tak:
 
-```text
+```console
 {{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-02-pretty-debug/output.txt}}
 ```
 

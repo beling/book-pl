@@ -26,4 +26,3 @@ i sprawdź, czy ktoś już nie zaczął nad nim pracować. Sprawdź też obecnie
 Jeśli nikt obecnie nie tłumaczy danego rozdziału, oznacza to że czekamy na twoje Pull Requesty.
 
 Dziękujemy ci serdecznie w umożliwianiu polskim Rustafarianom czytanie książki w ojczystym języku!
-

@@ -1,4 +1,3 @@
-// ANCHOR: all
 use hello::ThreadPool;
 use std::fs;
 use std::io::prelude::*;
@@ -25,7 +24,7 @@ fn main() {
 // ANCHOR_END: here
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 512];
+    let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
 
     let get = b"GET / HTTP/1.1\r\n";
@@ -47,4 +46,3 @@ fn handle_connection(mut stream: TcpStream) {
     stream.write(response.as_bytes()).unwrap();
     stream.flush().unwrap();
 }
-// ANCHOR_END: all

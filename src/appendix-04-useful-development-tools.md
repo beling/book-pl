@@ -15,14 +15,14 @@ let us know how it goes!
 
 To install `rustfmt`:
 
-```text
-$ rustup component add rustfmt-preview
+```console
+$ rustup component add rustfmt
 ```
 
 This will give you both `rustfmt` and `cargo-fmt`, similar to how Rust gives
 you both `rustc` and `cargo`. To take any Cargo project and format it:
 
-```text
+```console
 $ cargo fmt
 ```
 
@@ -52,7 +52,7 @@ fn main() {
 Here, we’re calling the `do_something` function 100 times, but we never use the
 variable `i` in the body of the `for` loop. Rust warns us about that:
 
-```text
+```console
 $ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
 warning: unused variable: `i`
@@ -71,7 +71,7 @@ indicates that we intend for this variable to be unused. We can automatically
 apply that suggestion using the `rustfix` tool by running the command `cargo
 fix`:
 
-```text
+```console
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
@@ -110,13 +110,13 @@ let us know how it goes!
 
 To install `clippy`:
 
-```text
-$ rustup component add clippy-preview
+```console
+$ rustup component add clippy
 ```
 
 To take any Cargo project and run clippy’s lints on it:
 
-```text
+```console
 $ cargo clippy
 ```
 
@@ -181,8 +181,8 @@ how it goes!
 
 To install the `rls`:
 
-```text
-$ rustup component add rls-preview
+```console
+$ rustup component add rls
 ```
 
 Then install the language server support in your particular IDE, and you will

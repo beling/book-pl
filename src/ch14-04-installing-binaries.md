@@ -25,7 +25,7 @@ the `grep` tool called `ripgrep` for searching files. If we want to install
 cargo install something you don't have, copy relevant output below
 -->
 
-```text
+```console
 $ cargo install ripgrep
     Updating crates.io index
   Downloaded ripgrep v11.0.2
@@ -33,7 +33,7 @@ $ cargo install ripgrep
   Installing ripgrep v11.0.2
 --snip--
    Compiling ripgrep v11.0.2
-    Finished release [optimized] target(s) in 3m 10s
+    Finished release [optimized + debuginfo] target(s) in 3m 10s
   Installing ~/.cargo/bin/rg
    Installed package `ripgrep v11.0.2` (executable `rg`)
 ```

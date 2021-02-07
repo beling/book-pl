@@ -32,8 +32,8 @@ kroków powinna współgrać z treścią książki zgodnie z oczekiwaniami.
 Jeśli korzystasz z Linuksa lub macOS, otwórz konsolę / terminal i wpisz
 następujące polecenie:
 
-```text
-$ curl https://sh.rustup.rs -sSf | sh
+```console
+$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
 Spowoduje to ściągnięcie skryptu, który rozpocznie instalację narzędzia
@@ -43,24 +43,6 @@ zobaczysz na ekranie taki tekst:
 
 ```text
 Rust is installed now. Great!
-```
-
-Jeśli chcesz, możesz ściągnąć wspomniany skrypt i skontrolować go przed
-uruchomieniem.
-
-Skrypt instalacyjny automatycznie dodaje Rusta do środowiskowej zmiennej PATH w
-systemie po kolejnym zalogowaniu się. Jeśli chcesz od razu zacząć używać Rusta,
-bez ponownego logowania, wprowadź następujące polecenie, dodając Rusta do
-zmiennej PATH ręcznie:
-
-```text
-$ source $HOME/.cargo/env
-```
-
-Alternatywnie, dodaj następującą linię do swojego pliku *~/.bash_profile*:
-
-```text
-$ export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
 Następnie będziesz potrzebować programu linkującego (*linkera*). Prawdopodobnie
@@ -80,12 +62,12 @@ Z poziomu Windowsa, odwiedź stronę
 instalacji Rusta. W którymś momencie procesu otrzymasz komunikat informujący, że
 będziesz również potrzebować narzędzi budowania C++ dla Visual Studio 2013 lub
 nowszego. Najprościej jest w tym celu zainstalować
-[narzędzia budowania dla Visual Studio 2019][visualstudio], które można znaleźć
-w sekcji „Other Tools and Frameworks” (*inne narzędzia i platformy
-programistyczne).
+[narzędzia budowania dla Visual Studio 2019][visualstudio].
+When asked which workloads to install make sure "C++ build tools" is selected
+and that the Windows 10 SDK and the English language pack components are included.
 
 [install]: https://www.rust-lang.org/tools/install
-[visualstudio]: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019
+[visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 Dalsza część książki będzie zawierać polecenia działające zarówno w *cmd.exe*
 jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaśnione.
@@ -95,13 +77,13 @@ jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaś
 Kiedy już zainstalujesz Rusta używając `rustup`, aktualizacja do najnowszej
 wersji jest prosta. W terminalu uruchom następujący skrypt aktualizacji:
 
-```text
+```console
 $ rustup update
 ```
 
 Aby odinstalować Rusta oraz `rustup`, w terminalu uruchom skrypt dezinstalacji:
 
-```text
+```console
 $ rustup self uninstall
 ```
 
@@ -110,7 +92,7 @@ $ rustup self uninstall
 Aby sprawdzić, czy Rust jest prawidłowo zainstalowany, otwórz terminal i wpisz
 następujące polecenie:
 
-```text
+```console
 $ rustc --version
 ```
 
@@ -133,7 +115,7 @@ użytkowników][users] oraz [Stack Overflow][stackoverflow].
 
 [discord]: https://discord.gg/rust-lang
 [users]: https://users.rust-lang.org/
-[stackoverflow]: http://stackoverflow.com/questions/tagged/rust
+[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
 
 ### Lokalna dokumentacja
 

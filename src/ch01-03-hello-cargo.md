@@ -20,7 +20,7 @@ instalatorów, zgodnie z opisem w sekcji
 Rustem. Jeżeli instalowałeś(-aś) Rusta w inny sposób, możesz sprawdzić, czy Cargo
 jest zainstalowany, przez wprowadzenie w terminalu następującej komendy:
 
-```text
+```console
 $ cargo --version
 ```
 
@@ -35,7 +35,7 @@ naszego pierwotnego projektu Hello World. Przejdź z powrotem do swojego
 katalogu *projects* (lub innego, w którym zdecydowałeś(-aś) się trzymać swój kod) i
 bez względu na posiadany system operacyjny wprowadź polecenie:
 
-```text
+```console
 $ cargo new hello_cargo
 $ cd hello_cargo
 ```
@@ -75,11 +75,9 @@ edition = "2018"
 <span class="caption">Listing 1-2: Zawartość pliku *Cargo.toml* wygenerowanego
 przez `cargo new`</span>
 
-Plik jest w formacie [*TOML*][toml]<!-- ignore --> (Tom’s Obvious, Minimal
+Plik jest w formacie [*TOML*](https://toml.io)<!-- ignore --> (Tom’s Obvious, Minimal
 Language) (*Oczywisty, Minimalistyczny Język Toma - przyp. tłum.*), którego
 Cargo używa do konfiguracji.
-
-[toml]: https://github.com/toml-lang/toml
 
 Pierwsza linia, `[package]`, jest nagłówkiem sekcji, której kolejne wyrażenia
 konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też inne
@@ -130,7 +128,7 @@ Przyjrzyjmy się teraz, jakie są różnice w budowaniu i uruchamianiu programu
 "Hello World" poprzez Cargo. Aby zbudować swój projekt, z poziomu głównego
 katalogu *hello_cargo* wprowadź polecenie:
 
-```text
+```console
 $ cargo build
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
@@ -140,7 +138,7 @@ Spowoduje to utworzenie pliku wykonywalnego *target/debug/hello_cargo*
 (lub *target\debug\hello_cargo.exe* pod Windowsem), który możesz uruchomić
 następującym poleceniem:
 
-```text
+```console
 $ ./target/debug/hello_cargo # lub .\target\debug\hello_cargo.exe pod Windowsem
 Witaj, świecie!
 ```
@@ -157,7 +155,7 @@ Właśnie zbudowaliśmy projekt poleceniem `cargo build` i uruchomiliśmy go prz
 `./target/debug/hello_cargo`. Możemy również użyć `cargo run`, żeby skompilować
 i uruchomić program za jednym rzutem:
 
-```text
+```console
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
@@ -170,7 +168,7 @@ więc po prostu uruchomił binarkę. Gdyby kod źródłowy został zmodyfikowany
 przebudowałby projekt przed jego uruchomieniem i wówczas informacja na ekranie
 wyglądałaby następująco:
 
-```text
+```console
 $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
@@ -182,7 +180,7 @@ Mamy jeszcze do dyspozycji `cargo check`. To polecenie szybko sprawdzi twój kod
 celem upewnienia się, że skompilowałby się on prawidłowo, ale nie tworzy pliku
 wykonywalnego:
 
-```text
+```console
 $ cargo check
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
@@ -197,7 +195,7 @@ uruchamia `cargo check`, żeby sprawdzić, czy wszystko się kompiluje, a
 
 Podsumujmy, co do tej pory nauczyliśmy się o Cargo:
 
-* Możemy zbudować projekt poleceniami `cargo build` lub `cargo check`.
+* Możemy zbudować projekt poleceniami `cargo build`.
 * Możemy zbudować i uruchomić projekt w jednym kroku z użyciem `cargo run`.
 * Zamiast umieszczać pliki wynikowe budowania w tym samym katalogu co nasz kod,
   Cargo umieści je w podkatalogu *target/debug*.
@@ -234,7 +232,7 @@ kariery z Rustem. Rzeczywiście, rozpoczęcie pracy nad jakimkolwiek istniejący
 projektem sprowadza się do wydania kilku poleceń: check out kodu w Git,
 wejście do katalogu roboczego i budowanie:
 
-```text
+```console
 $ git clone jakisadres.com/jakisprojekt
 $ cd jakisprojekt
 $ cargo build

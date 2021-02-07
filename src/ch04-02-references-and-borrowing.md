@@ -63,7 +63,7 @@ Wypróbujmy kod z listingu 4-6. Uwaga: on nie zadziała!
 
 Otrzymamy następujący błąd:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/listing-04-06/output.txt}}
 ```
 
@@ -92,7 +92,7 @@ Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zak
 
 Otrzymamy następujący błąd:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/output.txt}}
 ```
 
@@ -122,7 +122,7 @@ Podobne ograniczenie dotyczy mieszania referencji mutowalnych z niemutowalnymi. 
 
 Kompilator wyświetli następujący komunikat błędu:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-12-immutable-and-mutable-not-allowed/output.txt}}
 ```
 
@@ -154,7 +154,7 @@ Spróbujmy utworzyć wiszącą referencję. Rust nam to uniemożliwi, zgłaszaj�
 
 Komunikat błędu:
 
-```text
+```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-14-dangling-reference/output.txt}}
 ```
 

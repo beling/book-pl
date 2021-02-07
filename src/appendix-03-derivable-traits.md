@@ -1,4 +1,4 @@
-## Appendix C: Derivable Traits
+## Dodatek C: Cechy Wyprowadzalne
 
 In various places in the book, we’ve discussed the `derive` attribute, which
 you can apply to a struct or enum definition. The `derive` attribute generates

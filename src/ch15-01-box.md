@@ -137,7 +137,7 @@ is one more `Cons` value that holds `3` and a `List` value, which is finally
 If we try to compile the code in listing 15-3, we get the error shown in
 Listing 15-4:
 
-```text
+```console
 {{#include ../listings/ch15-smart-pointers/listing-15-03/output.txt}}
 ```
 
@@ -192,7 +192,10 @@ after doing automatic regeneration, look at listings/ch15-smart-pointers/listing
 -->
 
 ```text
-  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
+  |
+2 |     Cons(i32, Box<List>),
+  |               ^^^^    ^
 ```
 
 In this suggestion, “indirection” means that instead of storing a value

@@ -77,7 +77,7 @@ from the vector.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/lib.rs:here}}
 ```
 
@@ -116,7 +116,7 @@ test illustrating a use of the `sum` method:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs:here}}
 ```
 
@@ -150,7 +150,7 @@ create a new iterator</span>
 
 The warning we get is this:
 
-```text
+```console
 {{#include ../listings/ch13-functional-features/listing-13-17/output.txt}}
 ```
 
@@ -196,7 +196,7 @@ instances. It will return only shoes that are the specified size.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-19/src/lib.rs}}
 ```
 
@@ -241,7 +241,7 @@ Listing 13-20 has the definition of the `Counter` struct and an associated
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-20/src/lib.rs}}
 ```
 
@@ -261,8 +261,8 @@ iterator is used, as shown in listing 13-21:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch13-functional-features/listing-13-21/src/lib.rs:here}}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-21/src/lib.rs}}
 ```
 
 <span class="caption">Listing 13-21: Implementing the `Iterator` trait on our
@@ -287,7 +287,7 @@ with the iterator created from a vector in listing 13-15.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-22/src/lib.rs:here}}
 ```
 
@@ -312,7 +312,7 @@ together, we could do so, as shown in the test in listing 13-23:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch13-functional-features/listing-13-23/src/lib.rs:here}}
 ```
 

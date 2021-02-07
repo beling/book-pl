@@ -97,7 +97,7 @@ The following code tries to return a closure directly, but it won’t compile:
 
 The compiler error is as follows:
 
-```text
+```console
 {{#include ../listings/ch19-advanced-features/no-listing-18-returns-closure/output.txt}}
 ```
 
@@ -105,7 +105,7 @@ The error references the `Sized` trait again! Rust doesn’t know how much space
 it will need to store the closure. We saw a solution to this problem earlier.
 We can use a trait object:
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch19-advanced-features/no-listing-19-returns-closure-trait-object/src/lib.rs}}
 ```
 

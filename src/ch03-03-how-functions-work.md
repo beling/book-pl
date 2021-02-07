@@ -26,7 +26,7 @@ a jedynie to żeby te definicje gdzieś były.
 Stwórzmy nowy projekt o nazwie *funkcje*, dzięki któremu zapoznamy się z głębiej z funkcjami w Ruście. Umieść powyższy przykład z `another_function`
 w pliku *src/main.rs* i uruchom program. Powinieneś zobaczyć taki wynik:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
@@ -54,7 +54,7 @@ Poniższa zaktualizowana wersja funkcji `another_function` prezentuje, jak wygl�
 Spróbuj uruchomić ten program; powinieneś otrzymać następujący wynik:
 
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
 ```
 
@@ -82,7 +82,7 @@ być jednego, tego samego typu, tak po prostu się tutaj zdarzyło.
 Spróbujmy uruchomić ten kod. Otwórz plik *src/main.rs* w twoim projekcie *funkcje* i zastąp jego zawartość kodem
 z powyższego przykładu. Uruchom program poleceniem `cargo run`:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
@@ -129,19 +129,8 @@ zmiennej, tak jak poniższy kod próbuje zrobić; Rust zwróci błąd:
 
 Po uruchomieniu tego programu dostaniesz taki błąd:
 
-<!--TODO: not extracting this because the new error message is incorrect; see
-https://github.com/rust-lang/rust/issues/65254 -->
-
-```text
-$ cargo run
-   Compiling funkcje v0.1.0 (file:///projects/funkcje)
-error: expected expression, found statement (`let`)
- --> src/main.rs:2:14
-  |
-2 |     let x = (let y = 6);
-  |              ^^^
-  |
-  = note: variable declaration using `let` is a statement
+```console
+{{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
 ```
 
 Instrukcja `let y = 6` nie zwraca żadnej wartości, więc nie ma nic, co moglibyśmy przypisać do `x`.
@@ -200,7 +189,7 @@ W funkcji `five` nie ma żadnych wywołań funkcji, makr, ani nawet instrukcji `
 rezultat powinien wyglądać tak:
 
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
 ```
 
@@ -238,7 +227,7 @@ i Rust zgłosiłby błąd.
 
 Próba kompilacji poskutkuje następującym błędem:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 

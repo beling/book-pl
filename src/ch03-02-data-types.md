@@ -21,23 +21,21 @@ Jeżeli w powyższym kodzie nie dodalibyśmy adnotacji typu danych, Rust
 wyświetliłby następujący komunikat o błędzie, mówiący o tym, że kompilator
 potrzebuje więcej informacji, aby określić, jakiego typu danych chcemy użyć:
 
-```text
+```console
 {{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
 ```
 
-Spotkasz się z odpowiednimi zapisami dla poszczególnych typów danych.
+Można napotkać różne zapisy poszczególnych typów danych.
 
 ### Typy skalarne
 
 Typ *skalarny* reprezentuje pojedynczą wartość. Rust posiada 4 główne,
-skalarne typy danych: całkowity, zmiennoprzecinkowy, logiczny (Boolean)
-i znakowy. Możesz kojarzyć je z innych języków programowania. Zobaczmy
-jak działają w Ruście.
+skalarne typy danych: całkowity (ang. integer), zmiennoprzecinkowy (ang. floating-point numbers), logiczny (ang. Boolean) i znakowy (ang. characters). Możesz kojarzyć je z innych języków programowania. Zobaczmy jak działają w Ruście.
 
 #### Typy całkowite
 
 *Liczba całkowita* to liczba nieposiadająca części ułamkowej.
-Wykorzystywaliśmy jeden z typów całkowitych — `u32` — w rozdziale 2. Ten typ
+Jeden z typów całkowitych, `u32`, wykorzystywaliśmy w rozdziale 2. Ten typ
 danych określa, że wartość, do której się odnosi, jest liczbą całkowitą bez
 znaku (typy całkowite ze znakiem zaczynają się od `i` zamiast `u`), która
 zajmuje 32 bity pamięci. Tabela 3-1 pokazuje typy całkowite wbudowane w Rusta.
@@ -74,7 +72,7 @@ dany wariant. Tak więc `i8` może przechowywać liczby od -(2<sup>7</sup>) do
 przechowywać liczby od 0 do 2<sup>n</sup> - 1, więc `u8` może przechowywać
 liczby od 0 do 2<sup>8</sup> - 1, co daje zakres od 0 do 255.
 
-Dodatkowo typ `isize` oraz `usize` dopasowują swój rozmiar do architektury
+Dodatkowo rozmiar typów `isize` oraz `usize` zależy od architektury
 komputera, na którym uruchamiasz swój program: 64 bity na komputerze
 o 64-bitowej architekturze i 32 bity na komputerze o 32-bitowej architekturze.
 
@@ -116,19 +114,28 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > Rust *nie* dołącza do programu mechanizmów wykrywających przekroczenia 
 > zakresu liczb całkowitych, które spowodują spanikowanie programu. Zamiast tego 
 > w przypadku wystąpienia przekroczenia zakresu, Rust wykona operację nazywaną
-> *zwinięciem uzupełnia do dwóch*. Krótko mówiąc, wartości większe niż 
-> maksymalna dla danego typu danych zostaną "zwinięte" do najmniejszych wartości 
-> dla danego typu danych. Na przykład w przypadku `u8`, 256 zostanie zamienione 
+> *zawinięciem uzupełnia do dwóch*. Krótko mówiąc, wartości większe niż 
+> maksymalna dla danego typu danych zostaną "zawinięte w koło" do mniejszych wartości, 
+> odpowiednich dla danego typu danych. Na przykład w przypadku `u8`, 256 zostanie zamienione 
 > na 0, 257 na 1 itd. Program nie spanikuje, ale zmiennym zostaną przypisane 
-> inne wartości niż byś tego oczekiwał. Poleganie na zwinięciu uzupełnia do 
-> dwóch jest uważane za błąd. Jeżeli chcesz jawnie zwijać, może skorzystać 
-> z typu danych z biblioteki standardowej o nazwie [`Wrapping`][wrapping].
+> inne wartości niż byś tego oczekiwał. Poleganie na zawinięciu uzupełnia do 
+> dwóch jest uważane za błąd.
+>
+> To explicitly handle the possibility of overflow, you can use these families
+> of methods that the standard library provides on primitive numeric types:
+>
+> - Wrap in all modes with the `wrapping_*` methods, such as `wrapping_add`
+> - Return the `None` value if there is overflow with the `checked_*` methods
+> - Return the value and a boolean indicating whether there was overflow with
+>   the `overflowing_*` methods
+> - Saturate at the value's minimum or maximum values with `saturating_*`
+>   methods
 
 #### Typy zmiennoprzecinkowe
 
 Rust posiada też dwa prymitywne typy danych dla *liczb zmiennoprzecinkowych*,
 czyli liczb posiadających część ułamkową. Typy zmiennoprzecinkowe w Ruście
-to: `f32` i `f64`, czyli o rozmiarach odpowiednio 32 i 64 bitów. Domyślnie Rust
+to: `f32` i `f64`, o rozmiarach, odpowiednio, 32 i 64 bity. Domyślnie Rust
 wykorzystuje `f64`, gdyż nowoczesne procesory wykonują operacje na tym typie
 niemal tak szybko, jak na `f32`, a jest on bardziej precyzyjny.
 
@@ -158,9 +165,9 @@ w połączeniu z instrukcją `let`:
 ```
 
 Każde z wyrażeń w tych instrukcjach korzysta z operatora matematycznego
-i jest konwertowane (ewaluowane) do pojedynczej wartości, która następnie
+i jest wyliczane do pojedynczej wartości, która następnie
 jest przypisywana do zmiennej. Listę wszystkich operatorów obsługiwanych
-przez Rusta znajdziesz w Dodatku B.
+przez Rusta znajdziesz w [Dodatku B][appendix_b]<!-- ignore -->.
 
 #### Typ logiczny (Boolean)
 
@@ -328,26 +335,40 @@ wartość znajduje się w tablicy na miejscu o indeksie `[0]`. Zmienna o nazwie
 ##### Próba uzyskania dostępu do niepoprawnego elementu tablicy
 
 Co się stanie, jeśli spróbujesz uzyskać dostęp do elementu, który jest poza
-tablicą? Powiedzmy, że zmienisz wcześniejszy przykład na poniższy kod, który
-poprawnie skompiluje się, ale próba uruchomienia zakończy się błędem:
+tablicą? Powiedzmy, że zmienisz wcześniejszy przykład na poniższy kod, pobiera 
+indeks tablicy od użytkownika, używając kodu podobnego do tego z gry zgadywanki
+z rozdziału 2:
 
 <span class="filename">Plik: src/main.rs</span>
 
-```rust,ignore
+```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
-Rezultatem uruchomienia tego kodu przy pomocy `cargo run` będzie:
+Nie wystąpiły żadne błędy w trakcie kompilacji. Po uruchomieniu za pomocą
+`cargo run` i podaniu 0, 1, 2, 3, lub 4, program wypisuje wartość z tablicy
+o podanym indeksie. Jeśli jednak w zamian zostanie podana liczba niebędąca
+poprawnym indeksem tej tablicy, jak np. 10, pojawi się następujący komunikat:
 
-```text
-{{#include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/output.txt}}
+<!-- manual-regeneration
+cd listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access
+cargo run
+10
+-->
+
+```console
+thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Nie wystąpiły żadne błędy w trakcie kompilacji, ale uruchomienie programu
-poskutkowało błędem *uruchomieniowym* i nie zakończyło się sukcesem. Kiedy
-próbujesz uzyskać dostęp do elementu wykorzystając indeksowanie, Rust sprawdza,
-czy indeks, który zapisałeś, jest mniejszy niż długość tablicy. Jeżeli ten
-indeks jest większy lub równy długości tablicy, program spanikuje.
+Uruchomienie programu poskutkowało błędem *wykonania* w momencie użycia niepoprawnej
+wartości dla operacji indeksowania. Program zakończył działanie w tym momencie
+z komunikatem o błędzie i nie wykonał końcowego `println!`. Przy próbie dostępu do
+elementu z wykorzystaniem indeksowania, Rust sprawdza, czy podany indeks jest mniejszy
+niż długość tablicy. Jeżeli ten indeks jest większy lub równy długości tablicy,
+program spanikuje. To sprawdzenie musi się odbyć w czasie wykonywania, szczególnie
+w tym przypadku, w którym kompilator nie może wiedzieć, jaką wartość wprowadzi użytkownik
+uruchamiający kod.
 
 Oto pierwszy przykład zasad bezpieczeństwa Rusta w akcji. W wielu
 niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany,
@@ -361,3 +382,4 @@ program. W rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
 [strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
 [wrapping]: ../std/num/struct.Wrapping.html
+[appendix_b]: appendix-02-operators.md

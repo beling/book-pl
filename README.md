@@ -16,7 +16,7 @@ wersji, do której odnosi się
 [ten plik w repozytorium rust-lang/rust][rust-mdbook].
 Aby je zainstalować, wpisz:
 
-[mdBook]: https://github.com/azerupi/mdBook
+[mdBook]: https://github.com/rust-lang-nursery/mdBook
 [rust-mdbook]: https://github.com/rust-lang/rust/blob/master/src/tools/rustbook/Cargo.toml
 
 ```bash

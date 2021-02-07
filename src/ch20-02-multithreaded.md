@@ -140,7 +140,7 @@ Make the changes in listing 20-12 to *src/main.rs*, and then let’s use the
 compiler errors from `cargo check` to drive our development. Here is the first
 error we get:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/listing-20-12/output.txt}}
 ```
 
@@ -157,7 +157,7 @@ definition of a `ThreadPool` struct that we can have for now:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-01-define-threadpool-struct/src/lib.rs}}
 ```
 
@@ -177,7 +177,7 @@ following code to the top of *src/bin/main.rs*:
 This code still won’t work, but let’s check it again to get the next error that
 we need to address:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/no-listing-01-define-threadpool-struct/output.txt}}
 ```
 
@@ -189,8 +189,8 @@ characteristics:
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-02-impl-threadpool-new/src/lib.rs:here}}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-web-server/no-listing-02-impl-threadpool-new/src/lib.rs}}
 ```
 
 We chose `usize` as the type of the `size` parameter, because we know that a
@@ -201,7 +201,7 @@ ignore --> section of Chapter 3.
 
 Let’s check the code again:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/no-listing-02-impl-threadpool-new/output.txt}}
 ```
 
@@ -246,7 +246,7 @@ the thread will take to execute. Let’s create an `execute` method on
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-03-define-execute/src/lib.rs:here}}
 ```
 
@@ -258,7 +258,7 @@ have no parameters, we still need the parentheses.
 Again, this is the simplest implementation of the `execute` method: it does
 nothing, but we’re trying only to make our code compile. Let’s check it again:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/no-listing-03-define-execute/output.txt}}
 ```
 
@@ -287,7 +287,7 @@ zero by using the `assert!` macro, as shown in listing 20-13.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-13/src/lib.rs:here}}
 ```
 
@@ -404,7 +404,7 @@ Ready? Here is listing 20-15 with one way to make the preceding modifications.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-15/src/lib.rs:here}}
 ```
 
@@ -459,7 +459,7 @@ the channel.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-16/src/lib.rs:here}}
 ```
 
@@ -488,7 +488,7 @@ the channel into `Worker::new`, and then we use it inside the closure.
 
 When we try to check this code, we get this error:
 
-```text
+```console
 {{#include ../listings/ch20-web-server/listing-20-17/output.txt}}
 ```
 
@@ -511,7 +511,7 @@ receiver at a time. Listing 20-18 shows the changes we need to make.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-18/src/lib.rs:here}}
 ```
 
@@ -535,7 +535,7 @@ at listing 20-19.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-19/src/lib.rs:here}}
 ```
 
@@ -559,7 +559,7 @@ shown in listing 20-20 to `Worker::new`.
 
 <span class="filename">Plik: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-20/src/lib.rs:here}}
 ```
 
@@ -593,7 +593,7 @@ make some requests to 127.0.0.1:7878
 Can't automate because the output depends on making requests
 -->
 
-```text
+```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
 warning: field is never read: `workers`
@@ -615,6 +615,8 @@ warning: field is never read: `thread`
    |
 49 |     thread: thread::JoinHandle<()>,
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: 3 warnings emitted
 
     Finished dev [unoptimized + debuginfo] target(s) in 1.40s
      Running `target/debug/main`
@@ -662,15 +664,15 @@ method returns. At compile time, the borrow checker can then enforce the rule
 that a resource guarded by a `Mutex` cannot be accessed unless we hold the
 lock. But this implementation can also result in the lock being held longer
 than intended if we don’t think carefully about the lifetime of the
-`MutexGuard<T>`. Because the values in the `while let` expression remain in
-scope for the duration of the block, the lock remains held for the duration of
-the call to `job()`, meaning other workers cannot receive jobs.
+`MutexGuard<T>`.
 
-By using `loop` instead and acquiring the lock without assigning to a variable,
-the temporary `MutexGuard` returned from the `lock` method is dropped as soon
-as the `let job` statement ends. This ensures that the lock is held during the
-call to `recv`, but it is released before the call to `job()`, allowing
-multiple requests to be serviced concurrently.
+The code in Listing 20-20 that uses `let job =
+receiver.lock().unwrap().recv().unwrap();` works because with `let`, any
+temporary values used in the expression on the right hand side of the equals
+sign are immediately dropped when the `let` statement ends. However, `while
+let` (and `if let` and `match`) does not drop temporary values until the end of
+the associated block. In Listing 20-21, the lock remains held for the duration
+of the call to `job()`, meaning other workers cannot receive jobs.
 
 [creating-type-synonyms-with-type-aliases]:
 ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases

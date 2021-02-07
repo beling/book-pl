@@ -25,7 +25,7 @@ Otwórz terminal i wprowadź następujące polecenia, aby utworzyć katalog
 
 Pod Linuksem, macOS, lub w PowerShell pod Windowsem, wpisz to:
 
-```text
+```console
 $ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
@@ -64,7 +64,7 @@ fn main() {
 Zapisz plik i wróć do okna terminala. Pod Linuksem lub macOS, wprowadź podane
 polecenia, żeby skompilować i uruchomić program:
 
-```text
+```console
 $ rustc main.rs
 $ ./main
 Witaj, świecie!
@@ -108,12 +108,11 @@ Rust wymaga tych znaków wokół ciał wszystkich funkcji. Za dobry styl uważa 
 umieszczenie klamry otwierającej w tej samej linii, co deklaracja funkcji i
 oddzielenie jej od poprzedzającego kodu jedną spacją.
 
-W czasie, kiedy powstaje ten tekst, rozwijany jest automatyczny formater,
-`rustfmt`. Jeśli chcesz trzymać się ściśle standardowego stylu we wszystkich
-Rustowych projektach, narzędzie `rustfmt` umożliwia formatowanie kodu do
-konkretnego stylu. W przyszłości planowane jest umieszczenie programu w
-standardowej dystrybucji Rusta, tak jak `rustc`, więc kiedy czytasz ten
-rozdział, `rustfmt` może być już zainstalowany na twoim komputerze! Więcej
+Jeśli chcesz trzymać się ściśle standardowego stylu używanego w
+Rustowych projektach, możesz użyć `rustfmt` -- narzędzia do automatycznego
+formatowania kodu do konkretnego stylu.
+Programu zawarty jest w standardowej dystrybucji Rusta, tak jak `rustc`,
+więc `rustfmt` prawdopodobnie już zainstalowany na twoim komputerze! Więcej
 szczegółów znajdziesz w dokumentacji online.
 
 Wewnątrz funkcji `main` mamy następujący kod:
@@ -123,8 +122,9 @@ Wewnątrz funkcji `main` mamy następujący kod:
 ```
 
 Ta linia wykonuje całą robotę w naszym krótkim programie: wyświetla tekst na
-ekranie. Należy tu zwrócić uwagę na cztery szczegóły. Po pierwsze, wcięcie
-tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
+ekranie. Należy tu zwrócić uwagę na cztery szczegóły.
+
+Po pierwsze, wcięcie tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
 
 Po drugie, tekst `println!` wywołuje w Ruście makro. Gdyby wywoływana była
 funkcja, wpisana byłaby jako `println` (bez `!`). Makra będą szerzej opisane w
@@ -148,7 +148,7 @@ Zanim uruchomisz program w Ruście, należy go skompilować kompilatorem Rusta,
 wprowadzając polecenie `rustc` i przekazując do niego jako argument nazwę pliku
 źródłowego. Wygląda to tak:
 
-```text
+```console
 $ rustc main.rs
 ```
 
@@ -181,8 +181,8 @@ przypadku Windowsa, pliku z rozszerzeniem *.pdb* zawierającego informacje
 debugujące. Wszystko, co pozostało do zrobienia, to uruchomienie pliku *main*
 lub *main.exe*, w taki sposób:
 
-```text
-$ ./main  # lub .\main.exe pod Windowsem
+```console
+$ ./main # lub .\main.exe pod Windowsem
 ```
 
 Jeżeli *main.rs* jest twoim programem „Witaj, świecie!”, wyświetli to w oknie
