@@ -28,7 +28,7 @@
 - [Używanie struktur do przechowywania powiązanych danych](ch05-00-structs.md)
     - [Definiowanie i tworzenie instancji struktur](ch05-01-defining-structs.md)
     - [Przykładowy program wykorzystujący struktury](ch05-02-example-structs.md)
-    - [Method Syntax](ch05-03-method-syntax.md)
+    - [Składnia metod](ch05-03-method-syntax.md)
 
 - [Enums and Pattern Matching](ch06-00-enums.md)
     - [Defining an Enum](ch06-01-defining-an-enum.md)
