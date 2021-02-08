@@ -260,7 +260,7 @@ w większości języków programowania pierwszy indeks w krotce ma wartość 0.
 
 #### Typ tablicowy
 
-Innnym sposobem na stworzenie kolekcji wartości jest użycie *tablicy*.
+Innym sposobem na stworzenie kolekcji wartości jest użycie *tablicy*.
 W przeciwieństwie do krotki każdy element tablicy musi być tego samego typu. Tablice w Ruście różnią się od tablic znanych z paru innych języków
 programowania tym, że mają stały rozmiar; raz zadeklarowane nie mogą zwiększyć
 ani zmniejszyć swojego rozmiaru.
@@ -282,7 +282,7 @@ bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
 Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie
 powinieneś użyć wektora. Rozdział 8 szczegółowo opisuje wektory i ich działanie.
 
-Przykładowa sytuacja, w której lepiej użyć tablicy niz wektora ma miejsce,
+Przykładowa sytuacja, w której lepiej użyć tablicy niż wektora ma miejsce,
 gdy nasz program potrzebuje znać nazwy wszystkich miesięcy. Jest bardzo mało
 prawdopodobne, by trzeba było dodać lub usunąć miesiąc, więc możemy
 skorzystać z tablicy, ponieważ wiemy, że zawsze będzie zawierać 12 pozycji.
@@ -371,9 +371,9 @@ uruchamiający kod.
 Oto pierwszy przykład zasad bezpieczeństwa Rusta w akcji. W wielu
 niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany,
 a skorzystanie z niepoprawnego indeksu może skutkować uzyskaniem dostępu do
-niewłaściwego bloku pamięci. Rust chroni cię przed takimi błędami. Zamiast
-pozwolić ci na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
-program. W rozdziale 9 szczegółowiej omówiono obługę błędów w Ruście.
+niewłaściwego bloku pamięci. Rust chroni przed takimi błędami. Zamiast
+pozwolić na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
+program. W rozdziale 9 szczegółowiej omówiono obsługę błędów w Ruście.
 
 [comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
 [control-flow]: ch03-05-control-flow.html#control-flow
