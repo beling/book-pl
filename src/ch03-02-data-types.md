@@ -98,19 +98,19 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 
 > ##### Przekroczenie zakresu liczb całkowitych
 >
-> Załóżmy, że masz zmienną typy `u8`, która może przechowywać wartości
-> między 0 i 255. Jeżeli spróbujesz przypisać tej zmiennej wartość nie
+> Załóżmy, że mamy zmienną typy `u8`, która może przechowywać wartości
+> między 0 i 255. Jeżeli spróbujemy przypisać tej zmiennej wartość nie
 > mieszczącą się w podanym zakresie, np. 256, nastąpi przekroczenie zakresu
-> liczb całkowitych. Rust posiada kilka ciekawych zasad dotyczących takiego
-> zachowania. Kiedy kompilujesz program w trybie debugowania, Rust dołącza 
-> do programu mechanizmy,
-> które w przypadku wystąpienia przekroczenia zakresu liczb całkowitych 
-> zmuszą twój program do spanikowania (*panic*). Rust wykorzystuje termin 
+> liczb całkowitych. Rust posiada kilka ciekawych zasad dotyczących takiej
+> sytuacji. Kiedy program kompilowany jest w trybie debugowania, Rust dołącza 
+> do niego mechanizmy powodujące jego "spanikowanie" (*panic*)
+> w momencie wystąpienia przekroczenia zakresu liczb całkowitych.
+> Rust wykorzystuje termin 
 > "panikowania" programu wtedy, gdy program kończy działaniem zwracając błąd;
 > panikowanie szczegółowiej omówimy w sekcji [“Nieodwracalne błędy z `panic!`”][unrecoverable-errors-with-panic]<!-- ignore -->
 > w rozdziale 9.
 >
-> Kiedy kompilujesz program w trybie produkcyjnym z włączoną flagą `--release`,
+> Kiedy kompilujemy program w trybie produkcyjnym z włączoną flagą `--release`,
 > Rust *nie* dołącza do programu mechanizmów wykrywających przekroczenia 
 > zakresu liczb całkowitych, które spowodują spanikowanie programu. Zamiast tego 
 > w przypadku wystąpienia przekroczenia zakresu, Rust wykona operację nazywaną
