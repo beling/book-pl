@@ -2,12 +2,12 @@
 
 As mentioned at the start of the chapter, testing is a complex discipline, and
 different people use different terminology and organization. The Rust community
-thinks about tests in terms of two main categories: *unit tests* and
-*integration tests*. Unit tests are small and more focused, testing one module
-in isolation at a time, and can test private interfaces. Integration tests are
-entirely external to your library and use your code in the same way any other
-external code would, using only the public interface and potentially exercising
-multiple modules per test.
+thinks about tests in terms of two main categories: unit tests and integration
+tests. *Unit tests* are small and more focused, testing one module in isolation
+at a time, and can test private interfaces. *Integration tests* are entirely
+external to your library and use your code in the same way any other external
+code would, using only the public interface and potentially exercising multiple
+modules per test.
 
 Writing both kinds of tests is important to ensure that the pieces of your
 library are doing what you expect them to, separately and together.
@@ -38,7 +38,7 @@ this chapter, Cargo generated this code for us:
 <span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
-{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs:here}}
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 ```
 
 This code is the automatically generated test module. The attribute `cfg`
@@ -66,9 +66,12 @@ Consider the code in listing 11-12 with the private function `internal_adder`.
 
 <span class="caption">Listing 11-12: Testing a private function</span>
 
-Note that the `internal_adder` function is not marked as `pub`, but because
-tests are just Rust code and the `tests` module is just another module, you can
-bring `internal_adder` into a test’s scope and call it. If you don’t think
+Note that the `internal_adder` function is not marked as `pub`. Tests are just
+Rust code, and the `tests` module is just another module. As we discussed in
+the [“Paths for Referring to an Item in the Module Tree”][paths]<!-- ignore -->
+section, items in child modules can use the items in their ancestor modules. In
+this test, we bring all of the `test` module’s parent’s items into scope with
+`use super::*`, and then the test can call `internal_adder`. If you don’t think
 private functions should be tested, there’s nothing in Rust that will compel
 you to do so.
 
@@ -86,12 +89,30 @@ tests, you first need a *tests* directory.
 
 We create a *tests* directory at the top level of our project directory, next
 to *src*. Cargo knows to look for integration test files in this directory. We
-can then make as many test files as we want to in this directory, and Cargo
-will compile each of the files as an individual crate.
+can then make as many test files as we want, and Cargo will compile each of the
+files as an individual crate.
 
+<<<<<<< HEAD
 Let’s create an integration test. With the code in listing 11-12 still in the
 *src/lib.rs* file, make a *tests* directory, create a new file named
 *tests/integration_test.rs*, and enter the code in listing 11-13.
+=======
+Let’s create an integration test. With the code in Listing 11-12 still in the
+*src/lib.rs* file, make a *tests* directory, and create a new file named
+*tests/integration_test.rs*. Your directory structure should look like this:
+
+```text
+adder
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── lib.rs
+└── tests
+    └── integration_test.rs
+```
+
+Enter the code in Listing 11-13 into the *tests/integration_test.rs* file:
+>>>>>>> english/main
 
 <span class="filename">Plik: tests/integration_test.rs</span>
 
@@ -102,9 +123,9 @@ Let’s create an integration test. With the code in listing 11-12 still in the
 <span class="caption">Listing 11-13: An integration test of a function in the
 `adder` crate</span>
 
-We’ve added `use adder` at the top of the code, which we didn’t need in the
-unit tests. The reason is that each file in the `tests` directory is a separate
-crate, so we need to bring our library into each test crate’s scope.
+Each file in the `tests` directory is a separate crate, so we need to bring our
+library into each test crate’s scope. For that reason we add `use adder` at the
+top of the code, which we didn’t need in the unit tests.
 
 We don’t need to annotate any code in *tests/integration_test.rs* with
 `#[cfg(test)]`. Cargo treats the `tests` directory specially and compiles files
@@ -115,20 +136,21 @@ in this directory only when we run `cargo test`. Run `cargo test` now:
 ```
 
 The three sections of output include the unit tests, the integration test, and
-the doc tests. The first section for the unit tests is the same as we’ve been
-seeing: one line for each unit test (one named `internal` that we added in
-Listing 11-12) and then a summary line for the unit tests.
+the doc tests. Note that if any test in a section fails, the following sections
+will not be run. For example, if a unit test fails, there won’t be any output
+for integration and doc tests because those tests will only be run if all unit
+tests are passing.
+
+The first section for the unit tests is the same as we’ve been seeing: one line
+for each unit test (one named `internal` that we added in Listing 11-12) and
+then a summary line for the unit tests.
 
 The integration tests section starts with the line `Running
-target/debug/deps/integration_test-ce99bcc2479f4607` (the hash at the end of
-your output will be different). Next, there is a line for each test function in
+tests/integration_test.rs`. Next, there is a line for each test function in
 that integration test and a summary line for the results of the integration
 test just before the `Doc-tests adder` section starts.
 
-Similarly to how adding more unit test functions adds more result lines to the
-unit tests section, adding more test functions to the integration test file
-adds more result lines to this integration test file’s section. Each
-integration test file has its own section, so if we add more files in the
+Each integration test file has its own section, so if we add more files in the
 *tests* directory, there will be more integration test sections.
 
 We can still run a particular integration test function by specifying the test
@@ -144,29 +166,26 @@ This command runs only the tests in the *tests/integration_test.rs* file.
 
 #### Submodules in Integration Tests
 
-As you add more integration tests, you might want to make more than one file in
-the *tests* directory to help organize them; for example, you can group the
-test functions by the functionality they’re testing. As mentioned earlier, each
-file in the *tests* directory is compiled as its own separate crate.
+As you add more integration tests, you might want to make more files in the
+*tests* directory to help organize them; for example, you can group the test
+functions by the functionality they’re testing. As mentioned earlier, each file
+in the *tests* directory is compiled as its own separate crate, which is useful
+for creating separate scopes to more closely imitate the way end users will be
+using your crate. However, this means files in the *tests* directory don’t
+share the same behavior as files in *src* do, as you learned in Chapter 7
+regarding how to separate code into modules and files.
 
-Treating each integration test file as its own crate is useful to create
-separate scopes that are more like the way end users will be using your crate.
-However, this means files in the *tests* directory don’t share the same
-behavior as files in *src* do, as you learned in Chapter 7 regarding how to
-separate code into modules and files.
-
-The different behavior of files in the *tests* directory is most noticeable
-when you have a set of helper functions that would be useful in multiple
-integration test files and you try to follow the steps in the [“Separating
-Modules into Different Files”][separating-modules-into-files]<!-- ignore -->
-section of Chapter 7 to extract them into a common module. For example, if we
-create *tests/common.rs* and place a function named `setup` in it, we can add
-some code to `setup` that we want to call from multiple test functions in
-multiple test files:
+The different behavior of *tests* directory files is most noticeable when you
+have a set of helper functions to use in multiple integration test files and
+you try to follow the steps in the [“Separating Modules into Different
+Files”][separating-modules-into-files]<!-- ignore --> section of Chapter 7 to
+extract them into a common module. For example, if we create *tests/common.rs*
+and place a function named `setup` in it, we can add some code to `setup` that
+we want to call from multiple test functions in multiple test files:
 
 <span class="filename">Plik: tests/common.rs</span>
 
-```rust
+```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
 ```
 
@@ -183,13 +202,28 @@ it is not what we wanted. We just wanted to share some code with the other
 integration test files.
 
 To avoid having `common` appear in the test output, instead of creating
-*tests/common.rs*, we’ll create *tests/common/mod.rs*. This is an alternate
-naming convention that Rust also understands. Naming the file this way tells
-Rust not to treat the `common` module as an integration test file. When we move
-the `setup` function code into *tests/common/mod.rs* and delete the
-*tests/common.rs* file, the section in the test output will no longer appear.
-Files in subdirectories of the *tests* directory don’t get compiled as separate
-crates or have sections in the test output.
+*tests/common.rs*, we’ll create *tests/common/mod.rs*. The project directory
+now looks like this:
+
+```text
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── lib.rs
+└── tests
+    ├── common
+    │   └── mod.rs
+    └── integration_test.rs
+```
+
+This is the older naming convention that Rust also understands that we
+mentioned in the [“Alternate File Paths”][alt-paths]<!-- ignore --> section of
+Chapter 7. Naming the file this way tells Rust not to treat the `common` module
+as an integration test file. When we move the `setup` function code into
+*tests/common/mod.rs* and delete the *tests/common.rs* file, the section in the
+test output will no longer appear. Files in subdirectories of the *tests*
+directory don’t get compiled as separate crates or have sections in the test
+output.
 
 After we’ve created *tests/common/mod.rs*, we can use it from any of the
 integration test files as a module. Here’s an example of calling the `setup`
@@ -235,5 +269,7 @@ reduce logic bugs having to do with how your code is expected to behave.
 Let’s combine the knowledge you learned in this chapter and in previous
 chapters to work on a project!
 
+[paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [separating-modules-into-files]:
 ch07-05-separating-modules-into-different-files.html
+[alt-paths]: ch07-05-separating-modules-into-different-files.html#alternate-file-paths

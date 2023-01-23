@@ -1,8 +1,6 @@
 ## Funkcje
 
-Funkcje są wszechobecne w kodzie Rusta. Widziałeś już jedną z najważniejszych funkcji
-w całym języku: funkcję `main`, która jest punktem wejściowym wielu programów. Widziałeś
-już też słowo kluczowe `fn`, za pomocą którego możesz deklarować nowe funkcje.
+Funkcje są wszechobecne w kodzie Rusta. Widziałeś już jedną z najważniejszych funkcji w całym języku: funkcję `main`, która jest punktem wejściowym wielu programów. Widziałeś już też słowo kluczowe `fn`, za pomocą którego możesz deklarować nowe funkcje.
 
 W kodzie Rusta konwencjonalnym stylem zapisu nazw funkcji i zmiennych jest użycie tzw. *snake case*. W tym
 stylu wszystkie człony pisane są małymi literami, a poszczególne wyrazy oddzielone są podkreślnikami. Poniżej
@@ -20,8 +18,7 @@ klamrowe informują kompilator, gdzie zaczyna i kończy się ciało funkcji.
 Zdefiniowane przez nas funkcje możemy wywołać, pisząc ich nazwę wraz z parą nawiasów.
 Ponieważ funkcja `another_function` jest już zdefiniowana programie, możemy ją wywołać z wnętrza funkcji `main`.
 Zauważ, że definicja funkcji `another_function` znajduje się w kodzie źródłowym *po* ciele funkcji `main`;
-moglibyśmy równie dobrze umieścić ją przed funkcją `main`. Rusta nie obchodzi, gdzie umieszczasz definicje swoich funkcji,
-a jedynie to żeby te definicje gdzieś były.
+moglibyśmy równie dobrze umieścić ją przed funkcją `main`. Rusta nie obchodzi, gdzie umieszczasz definicje swoich funkcji, a jedynie to żeby te definicje były w zasięgu widzianym przez wywołującego.
 
 Stwórzmy nowy projekt o nazwie *funkcje*, dzięki któremu zapoznamy się z głębiej z funkcjami w Ruście. Umieść powyższy przykład z `another_function`
 w pliku *src/main.rs* i uruchom program. Powinieneś zobaczyć taki wynik:
@@ -30,9 +27,7 @@ w pliku *src/main.rs* i uruchom program. Powinieneś zobaczyć taki wynik:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
-Linie kodu wykonywane są w kolejności, w jakiej pojawiają się w funkcji `main`.
-Najpierw pokaże się tekst “Witaj, świecie!”, a następnie wywołana jest funkcja `another_function`
-i ukazuje się wiadomość z jej wnętrza.
+Linie kodu wykonywane są w kolejności, w jakiej pojawiają się w funkcji `main`. Najpierw pokaże się tekst “Witaj, świecie!”, a następnie wywołana jest funkcja `another_function` i ukazuje się wiadomość z jej wnętrza.
 
 
 ### Parametry funkcji
@@ -60,11 +55,10 @@ Spróbuj uruchomić ten program; powinieneś otrzymać następujący wynik:
 
 Deklaracja funkcji `another_function` ma jeden parametr o nazwie `x`. Typ `x` jest określony jako `i32`.
 Kiedy wartość `5` jest przekazana do `another_function`, makro `println!` umieszcza `5` w miejscu, gdzie
-w stringu formatującym była para nawiasów klamrowych.
+string formatujący zawiera `x` w nawiasach klamrowych.
 
-W sygnaturze funkcji *musisz* zadeklarować typ każdego z parametrów. To celowa decyzja projektantów Rusta:
-wymaganie anotacji typów w definicjach funkcji powoduje, że nie musisz już podawać ich niemal nigdzie więcej,
-a Rust i tak wie, co miałeś na myśli.
+W sygnaturze funkcji *trzeba* podać typ każdego z parametrów. To celowa decyzja projektantów Rusta: wymaganie adnotacji typów w definicjach funkcji powoduje, że nie trzeba już podawać ich niemal nigdzie więcej, a Rust i tak wie, co mamy na myśli.
+Kompilator jest również w stanie wypisać bardziej pomocne komunikaty o błędach, jeśli wie, jakich typów oczekuje funkcja.
 
 Jeśli chcesz, żeby funkcja przyjmowała wiele parametrów, rozdziel kolejne deklaracje parametrów przecinkami,
 jak poniżej:
@@ -75,9 +69,9 @@ jak poniżej:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
 ```
 
-W tym przykładzie stworzyliśmy funkcję z dwoma parametrami, które oba są typu `i32`.
-Funkcja wypisuje na ekran wartości obu parametrów. Zauważ, że parametry funkcji nie muszą
-być jednego, tego samego typu, tak po prostu się tutaj zdarzyło.
+W tym przykładzie stworzyliśmy funkcję `print_labeled_measurement` z dwoma parametrami.
+Pierwszy parametr ma nazwę `value` i typ `i32`. Drugi jest
+nazwany `unit_label` i jest typu `char`. Funkcja drukuje tekst zawierający wartości zarówno `value` jak i `unit_label`.
 
 Spróbujmy uruchomić ten kod. Otwórz plik *src/main.rs* w twoim projekcie *funkcje* i zastąp jego zawartość kodem
 z powyższego przykładu. Uruchom program poleceniem `cargo run`:
@@ -86,22 +80,15 @@ z powyższego przykładu. Uruchom program poleceniem `cargo run`:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
-Ponieważ wywołaliśmy tę funkcję z argumentem `5` jako wartość dla `x` oraz `6` jako wartość dla
-`y`, wypisane stringi zawierają właśnie te wartości.
+Ponieważ wywołaliśmy tę funkcję z argumentem `5` jako wartość dla `value` oraz `'h'` jako wartość dla `unit_label`, program wypisał właśnie te wartości.
 
+### Instrukcje i wyrażenia
 
-### Ciała funkcji zawierają instrukcje i wyrażenia
+Ciało funkcji jest składa sie z serii instrukcji (*statements*) i opcjonalnie jest zakończone wyrażeniem (*expression*). Jak dotąd analizowaliśmy jedynie funkcje bez końcowego wyrażenia, jednakże widziałeś już wyrażenia będące częścią instrukcji. Ponieważ Rust jest językiem opartym
+o wyrażenia, ważne jest, aby zrozumieć różnicę między tymi dwoma. Podobne rozróżnienie nie występuje w innych językach, więc przyjrzyjmy się teraz instrukcjom i wyrażeniom oraz jak różnice między nimi wpływają na postać funkcji.
 
-Ciała funkcji są zbudowane z serii instrukcji (*statements*), opcjonalnie zakończonej 
-wyrażeniem (*expression*). Jak dotąd analizowaliśmy jedynie funkcje bez końcowego wyrażenia,
-jednakże widziałeś już wyrażenia będące częścią instrukcji. Ponieważ Rust jest językiem opartym
-o wyrażenia, ważne jest, aby zrozumieć różnicę między tymi dwoma. Podobne rozróżnienie nie występuje
-w innych językach, więc przyjrzyjmy się teraz instrukcjom i wyrażeniom oraz jak różnice między nimi
-wpływają na postać funkcji.
-
-
-Właściwie używaliśmy już i instrukcji, i wyrażeń. *Instrukcje* to polecenia wykonania
-jakichś akcji i nie zwracają one wartości. *Wyrażenia* zaś rozwijają się do wartości zwracanej. Spójrzmy na przykłady. 
+* **Instrukcje** to polecenia wykonania jakichś akcji; nie zwracają one wartości.
+* **Wyrażenia** zaś rozwijają się do wartości zwracanej. Spójrzmy na przykłady. 
 
 Tworzenie zmiennej i przypisanie do niej wartości z użyciem słowa kluczowego `let` jest instrukcją. W listingu 3-1, 
 `let y = 6;` to instrukcja.
@@ -142,8 +129,7 @@ Wyrażenia rozwijają się do pewnej wartości i zaraz po instrukcjach stanowią
 jaki napiszesz w Ruście. Rozważmy prostą operację matematyczną, taką jak `5 + 6`, która to jest
 wyrażeniem rozwijającym się do wartości `11`. Wyrażenia mogą być częścią instrukcji: w listingu 3-1
 liczba `6` w instrukcji `let y = 6;` jest wyrażeniem, które rozwija się do wartości `6`. Wywołanie funkcji
-jest wyrażeniem. Wywołanie makra jest wyrażeniem. Blok, który tworzymy dla zdefiniowania nowego zakresu,
-`{}`, również jest wyrażeniem, na przykład:
+jest wyrażeniem. Wywołanie makra jest wyrażeniem. Blok, który tworzymy za pomocą nawiasów klamrowych dla zdefiniowania nowego zasięgu, również jest wyrażeniem, na przykład:
 
 
 <span class="filename">Plik: src/main.rs</span>
@@ -215,9 +201,7 @@ Spójrzmy na kolejny przykład:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
 ```
 
-Po uruchomieniu tego kodu na ekranie zostanie wypisane: `Wartość x wynosi: 6`. Jednak
-gdybyśmy dopisali średnik po linii zawierającej `x + 1`, zmienilibyśmy wyrażenie w instrukcję
-i Rust zgłosiłby błąd.
+Po uruchomieniu tego kodu na ekranie zostanie wypisane `Wartość x wynosi: 6`. Jednak gdybyśmy dopisali średnik po linii zawierającej `x + 1`, zmienilibyśmy wyrażenie w instrukcję i Rust zgłosiłby błąd.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -231,8 +215,7 @@ Próba kompilacji poskutkuje następującym błędem:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 
-Główny fragment wiadomości o błędzie, “mismatched types”, czyli niezgodność typów, informuje o podstawowym problemie
-w tym kodzie. Definicja funkcji `plus_one` określa typ zwracany jako `i32`, jednak instrukcje nie rozwijają się do żadnej wartości,
-i wartość zwrócona z funkcji przyjmuje postać `()`, czyli pustej krotki. Jest to sprzeczne z definicją funkcji i powoduje błąd.
+Główny fragment wiadomości o błędzie, `mismatched types`, czyli niezgodność typów, informuje o podstawowym problemie
+w tym kodzie. Definicja funkcji `plus_one` określa typ zwracany jako `i32`, jednak instrukcje nie rozwijają się do żadnej wartości, i wartość zwrócona z funkcji przyjmuje postać `()`, czyli pustej krotki. Jest to sprzeczne z definicją funkcji i powoduje błąd.
 W komunikacie błędu Rust podaje przypuszczalne rozwiązanie tego problemu: sugeruje, aby usunąć średnik z końca linii,
 co naprawi błąd kompilacji.

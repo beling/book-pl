@@ -5,7 +5,7 @@ use std::io;
 fn main() {
     println!("Zgadnij liczbę!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
     loop {
         println!("Podaj swoją liczbę:");
@@ -21,7 +21,7 @@ fn main() {
             Err(_) => continue,
         };
 
-        println!("Wybrana przez ciebie liczba: {}", guess);
+        println!("Wybrana przez ciebie liczba: {guess}");
 
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Za mała!"),

@@ -9,5 +9,5 @@ fn main() {
         }
     };
 
-    println!("Zmienna result wynosi {}", result);
+    println!("Zmienna result wynosi {result}");
 }

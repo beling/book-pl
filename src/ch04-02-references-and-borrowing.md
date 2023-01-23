@@ -3,8 +3,11 @@
 Z rozwiązaniem z krotką zastosowanym na listingu 4-5 związana jest taka niedogodność,
 że musieliśmy zwrócić `String` do funkcji wywołującej, by ta mogła dalej z niego korzystać
 (po wywołaniu `calculate_length`). Było tak dlatego że wspomniany `String` był przenoszony do `calculate_length`.
+Funkcję `calculate_length` można jednak zdefiniować tak, by jako parametr przekazywana była jedynie referencja do obiektu i dzięki temu nie był on przez `calculate_length` przejmowany na własność.
+*Referencja* jest podobna do wskaźnika. Jest ona adresem pod którym przechowywane są dane i dzięki niej możemy uzyskać do nich dostęp. Dane te są własnością innej zmiennej.
+W przeciwieństwie do wskaźnika, referencja daje gwarancję, że przez cały czas swojego życia, będzie wskazywać na poprawną wartość danego typu.
 
-Funkcję `calculate_length` można by zdefiniować w następujący sposób, w którym jako parametr przekazywana jest jedynie referencja do obiektu i dzięki temu nie jest on przez `calculate_length` przejmowany na własność:
+Oto jak zdefiniować i użyć funkcji `calculate_length`, która jako parametr otrzymuje referencję do obiektu:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -12,11 +15,11 @@ Funkcję `calculate_length` można by zdefiniować w następujący sposób, w kt
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:all}}
 ```
 Po pierwsze proszę zauważyć, że krotki nie są nam już dalej potrzebne. Nie ma ich ani przy deklaracji zmiennej, ani w typie zwracanym przez funkcję `calculate_length`. Po drugie, proszę zwrócić uwagę, że przekazujemy do tej funkcji `&s1` oraz, że typ jej parametru został zmieniony z `String` na `&String`.
+Te ampersandy oznaczają *referencje* (ang. references) i pozwalają na odnoszenie się (referowanie) do wartości bez przejmowania jej na własność. Jest to zilustrowane na Rysunku 4-5.
 
-Te ampersandy oznaczają *referencje* (ang. references) i pozwalają na odnoszenie się (referowanie) do wartości bez przejmowania jej na własność.
-Jest to zilustrowane na Rysunku 4-5.
-
-<img alt="&String s wskazuje na String s1" src="img/trpl04-05.svg" class="center" />
+<img alt="Three tables: the table for s contains only a pointer to the table
+for s1. The table for s1 contains the stack data for s1 and points to the
+string data on the heap." src="img/trpl04-05.svg" class="center" />
 
 <span class="caption">Rysunek 4-5: `&String s` wskazuje na `String s1`</span>
 
@@ -30,19 +33,16 @@ Przyjrzyjmy się nieco bliżej temu wywołaniu funkcji:
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:here}}
 ```
-Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale
-nie posiada go na własność.
-Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie
-usunięta wraz z końcem zakresu życia samej referencji.
+Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale nie posiada go na własność.
+Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie usunięta wraz z końcem zasięgu życia samej referencji.
 
-Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją.
-Poniżej dodano kilka komentarzy z wyjaśnieniami:
+Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją. Poniżej dodano kilka komentarzy z wyjaśnieniami:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-08-reference-with-annotations/src/main.rs:here}}
 ```
-Zakres, w którym zmienna `s` jest dostępna, jest taki sam jak zakres każdego innego parametru funkcji.
-Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zakres.
+Zasięg, w którym zmienna `s` jest dostępna, jest taki sam jak zasięg każdego innego parametru funkcji.
+Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zasięg.
 W przeciwieństwie do argumentów przekazywanych przez wartość, te przekazywane przez referencje nie są funkcji dawane na własność.
 Dlatego też funkcja nie musi więcej zwracać ich za pomocą `return`, by je oddać.
 
@@ -72,7 +72,7 @@ Nie możemy zmieniać czegoś do czego mamy referencję.
 
 ### Referencje mutowalne
 
-Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawkę:
+Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawkę, by używać *mutowalnej referencji* (*mutable reference*):
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -80,9 +80,10 @@ Możemy wyeliminować błąd z kodu z listingu 4-6 wprowadzając drobną poprawk
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-09-fixes-listing-04-06/src/main.rs}}
 ```
 
-Po pierwsze, zmieniliśmy `s` by było `mut`. Następnie, utworzyliśmy mutowalną referencję za pomocą `&mut s` i ją przyjęliśmy za pomocą `some_string: &mut String`.
+Po pierwsze, zmieniliśmy `s` by było `mut`. Następnie, w miejscu wywołania funkcji `zmien` utworzyliśmy mutowalną referencję za pomocą `&mut s` i ją przyjęliśmy za pomocą `some_string: &mut String` w sygnaturze funkcji.
+Taka składnia czytelnie pokazuje, że funkcja `zmien` będzie zmieniać wartość, którą pożycza.
 
-Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zakresie można mieć tylko jedną mutowalną referencję do konkretnych danych. Ten kod nie skompiluje się:
+Jednakże mutowalne referencję posiadają jedno spore ograniczenie: w danym zasięgu można mieć tylko jedną mutowalną referencję do konkretnych danych. Ten kod nie skompiluje się:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -96,10 +97,15 @@ Otrzymamy następujący błąd:
 {{#include ../listings/ch04-understanding-ownership/no-listing-10-multiple-mut-not-allowed/output.txt}}
 ```
 
+This error says that this code is invalid because we cannot borrow `s` as
+mutable more than once at a time. The first mutable borrow is in `r1` and must
+last until it’s used in the `println!`, but between the creation of that
+mutable reference and its usage, we tried to create another mutable reference
+in `r2` that borrows the same data as `r1`.
+
 To ograniczenie pozwala na mutowalność jedynie w bardzo kontrolowany sposób.
 Może ono być kłopotliwe dla początkujących rustowców, gdyż większość innych języków nie nakłada podobnych ograniczeń.
-
-Korzyścią z tego ograniczenia jest to, że Rust może zapobiec tzw. wyścigom do danych (ang. data races) i to już na etapie kompilacji. Wyścig do danych podobny jest do wyścigu (ang. race condition) i ma miejsce, gdy zachodzą następujące trzy warunki:
+Korzyścią z tego ograniczenia jest to, że Rust może zapobiec tzw. *wyścigom do danych* (ang. *data races*) i to już na etapie kompilacji. *Wyścig do danych* podobny jest do *wyścigu* (ang. *race condition*) i ma miejsce, gdy zachodzą następujące trzy warunki:
 
 * W tym samym czasie współistnieją dwa lub więcej wskaźniki umożliwiające dostęp do tych samych danych.
 * Przynajmniej jeden z tych wskaźników jest używany do zapisu danych.
@@ -107,8 +113,7 @@ Korzyścią z tego ograniczenia jest to, że Rust może zapobiec tzw. wyścigom 
 
 Wyścigi danych powodują niezdefiniowane zachowania i mogą być trudne do zdiagnozowania, wyśledzenia w czasie wykonywania programu i naprawienia; Tymczasem Rust całkowicie im zapobiega, nie kompilując nawet kodu który je zawiera!
 
-Oczywiście zawsze możemy użyć nawiasów klamrowych do stworzenia nowego zakresu, pozwalając na
-wiele mutowalnych referencji, ale nie *równocześnie*:
+Oczywiście zawsze możemy użyć nawiasów klamrowych do stworzenia nowego zasięgu, pozwalając na wiele mutowalnych referencji, ale nie *równocześnie*:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-11-muts-in-separate-scopes/src/main.rs:here}}
@@ -127,22 +132,23 @@ Kompilator wyświetli następujący komunikat błędu:
 ```
 
 Fiu, fiu! Mutowalnej referencji nie możemy mieć *także* gdy mamy niemutowalną.
+
 Użytkownicy niemutowalnej referencji nie spodziewają się, że wartość do której ta referencja się odnosi, może się nagle zmienić! Jednakże, istnienie wielu niemutowalnych referencji niczemu nie zagraża, bo nie dają one możliwość zmiany danych i wpłynięcia na to, co odczytają inni.
 
-Uwaga: zakres życia referencji zaczyna się w miejscu jej utworzenia, kończy się zaś w miejscu jej ostatniego użycia. Przykładowo, następujący kod skompiluje się, bo ostatnie użycie niemutowalnej referencji występuje przed wprowadzeniem mutowalnej:
+Uwaga: zasięg życia referencji zaczyna się w miejscu jej utworzenia, kończy się zaś w miejscu jej ostatniego użycia. Przykładowo, następujący kod skompiluje się, bo ostatnie użycie niemutowalnej referencji, `println!`, występuje przed wprowadzeniem mutowalnej:
 
-```rust,edition2018
+```rust,edition2021
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-13-reference-scope-ends/src/main.rs:here}}
 ```
 
-Zakresy życia niemutowalnych referencji `r1` i `r2` kończą się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zakresy się nie zazębiają i dlatego kompilator ten kod akceptuje.
+Zasięgi życia niemutowalnych referencji `r1` i `r2` kończą się zaraz po `println!` w którym są one ostatni raz użyte, czyli przed utworzeniem mutowalnej referencji `r3`. Te zasięgi się nie zazębiają i dlatego kompilator ten kod akceptuje.
 
 Błędy kompilacji związane z pożyczaniem mogą być czasami frustrujące. Pamiętajmy jednak, że nierzadko wskazują one potencjalne błędy, dokładnie wskazując problem, i to na wczesnym etapie, w czasie kompilacji, a nie wykonywania programu.
 Dzięki nim nie musimy odkrywać, dlaczego nasze dane są inne niż się spodziewaliśmy.
 
 ### Wiszące referencje
 
-W językach ze wskaźnikami, łatwo jest błędnie stworzyć *wiszący wskaźnik*, t.j. taki, który odnosi się do miejsca w pamięci, które mogło być przekazane komuś innemu, poprzez zwolnienie  pamięci przy jednoczesnym zachowaniu wskaźnika do niej. W Ruście natomiast, kompilator gwarantuje, że referencje nigdy nie będą wiszące: kompilator zawsze dba o to, aby jakiekolwiek dane nie wyszły poza zakres wcześniej, niż referencje do tych danych.
+W językach ze wskaźnikami, łatwo jest błędnie stworzyć *wiszący wskaźnik*, tj. taki, który odnosi się do miejsca w pamięci, które mogło być przekazane komuś innemu, poprzez zwolnienie  pamięci przy jednoczesnym zachowaniu wskaźnika do niej. W Ruście natomiast, kompilator gwarantuje, że referencje nigdy nie będą wiszące: kompilator zawsze dba o to, aby jakiekolwiek dane nie wyszły poza zasięg wcześniej, niż referencje do tych danych.
 
 Spróbujmy utworzyć wiszącą referencję. Rust nam to uniemożliwi, zgłaszając następujący błąd kompilacji:
 
@@ -167,7 +173,7 @@ Będziemy omawiać je szczegółowo w rozdziale 10. Pomijając jednak części o
 
 ```text
 this function's return type contains a borrowed value, but there is no value
-for it to be borrowed from.
+for it to be borrowed from
 ```
 
 Przyjrzyjmy się dokładnie temu, co dzieje się na każdym etapie kodu `dangle`:

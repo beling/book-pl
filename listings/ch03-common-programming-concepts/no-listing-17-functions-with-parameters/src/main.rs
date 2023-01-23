@@ -3,5 +3,5 @@ fn main() {
 }
 
 fn another_function(x: i32) {
-    println!("Wartość x wynosi: {}", x);
+    println!("Wartość x wynosi: {x}");
 }

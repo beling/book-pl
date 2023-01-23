@@ -3,22 +3,22 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    println!("Zgadnij liczbę!");
+    println!("Guess the number!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
     // ANCHOR: here
     loop {
         // --snip--
 
         // ANCHOR_END: here
-        println!("Podaj swoją liczbę:");
+        println!("Please input your guess.");
 
         let mut guess = String::new();
 
         io::stdin()
             .read_line(&mut guess)
-            .expect("Błąd wczytania linii");
+            .expect("Failed to read line");
 
         // ANCHOR: here
         let guess: i32 = match guess.trim().parse() {
@@ -34,10 +34,10 @@ fn main() {
         match guess.cmp(&secret_number) {
             // --snip--
             // ANCHOR_END: here
-            Ordering::Less => println!("Za mała!"),
-            Ordering::Greater => println!("Za duża!"),
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {
-                println!("Jesteś zwycięzcą!");
+                println!("You win!");
                 break;
             }
         }

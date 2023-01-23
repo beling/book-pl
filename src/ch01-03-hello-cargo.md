@@ -7,7 +7,7 @@ budowanie bibliotek, od których kod jest zależny. Biblioteki, których wymaga
 twój kod nazywamy *zależnościami* (*dependencies*).
 
 Najprostsze programy w Ruście, takie jak ten, który właśnie napisaliśmy, nie
-mają żadnych zależności, więc gdybyśmy zbudowali projekt Hello World za pomocą
+mają żadnych zależności, więc gdybyśmy zbudowali projekt „Hello World!” za pomocą
 Cargo, zostałaby użyta tylko ta część narzędzia, która zajmuje się budowaniem
 kodu. W miarę pisania bardziej skomplikowanych programów, zechcesz dodawać
 zależności i jeśli swój projekt rozpoczniesz z użyciem Cargo, będzie to
@@ -31,7 +31,7 @@ swojej metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
 ### Tworzenie projektu z Cargo
 
 Stwórzmy nowy projekt z pomocą Cargo i przyjrzyjmy się, czym różni się on od
-naszego pierwotnego projektu Hello World. Przejdź z powrotem do swojego
+naszego pierwotnego projektu „Hello World!”. Przejdź z powrotem do swojego
 katalogu *projects* (lub innego, w którym zdecydowałeś(-aś) się trzymać swój kod) i
 bez względu na posiadany system operacyjny wprowadź polecenie:
 
@@ -40,8 +40,8 @@ $ cargo new hello_cargo
 $ cd hello_cargo
 ```
 
-Tworzy to nowy katalog o nazwie `hello_cargo`. Ponieważ nadaliśmy naszemu
-projektowi nazwę `hello_cargo`, Cargo tworzy jego pliki źródłowe w katalogu o
+Pierwsze polecenie stworzy nowy katalog o nazwie *hello_cargo*. Ponieważ nadaliśmy naszemu
+projektowi nazwę *hello_cargo*, Cargo tworzy jego pliki źródłowe w katalogu o
 tej samej nazwie.
 
 Wejdź do katalogu *hello_cargo* i wyświetl listę plików. Powinieneś(-aś) zobaczyć, że
@@ -66,8 +66,9 @@ powinna wyglądać podobnie do kodu z listingu 1-2:
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Twoje imię i nazwisko <you@example.com>"]
-edition = "2018"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 ```
@@ -75,7 +76,7 @@ edition = "2018"
 <span class="caption">Listing 1-2: Zawartość pliku *Cargo.toml* wygenerowanego
 przez `cargo new`</span>
 
-Plik jest w formacie [*TOML*](https://toml.io)<!-- ignore --> (Tom’s Obvious, Minimal
+Plik jest w formacie [*TOML*][toml]<!-- ignore --> (Tom’s Obvious, Minimal
 Language) (*Oczywisty, Minimalistyczny Język Toma - przyp. tłum.*), którego
 Cargo używa do konfiguracji.
 
@@ -83,11 +84,9 @@ Pierwsza linia, `[package]`, jest nagłówkiem sekcji, której kolejne wyrażeni
 konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też inne
 sekcje.
 
-Następne cztery linie ustalają informacje konfiguracyjne, których Cargo
-potrzebuje do kompilacji twojego programu: nazwę, wersję, dane o autorze i
-używanej edycji Rusta. Cargo pobiera twoje imię i adres email z twojego
-środowiska, więc jeśli nie są one prawidłowe, popraw je śmiało i zapisz plik. O
-kluczu `edition` będzie mowa w Dodatku E.
+Następne trzy linie ustalają informacje konfiguracyjne, których Cargo
+potrzebuje do kompilacji twojego programu: nazwę, wersję, i dane o
+używanej edycji Rusta. O kluczu `edition` będzie mowa w [Dodatku E][appendix-e]<!-- ignore -->.
 
 Ostatnia linia, `[dependencies]`, rozpoczyna sekcję, gdzie wyszczególnia się
 wszystkie zależności twojego projektu. W Ruście paczki z kodem źródłowym
@@ -101,11 +100,11 @@ Otwórz teraz plik *src/main.rs* i przyjrzyj się zawartości:
 
 ```rust
 fn main() {
-    println!("Witaj, świecie!");
+    println!("Hello, world!");
 }
 ```
 
-Cargo wygenerował za ciebie program „Hello World!”, taki sam jak ten, który
+Cargo wygenerował dla ciebie program „Hello World!”, taki sam jak ten, który
 napisaliśmy w listingu 1-1! Jak na razie, różnice między naszym poprzednim
 projektem, a tym wygenerowanym przez Cargo są takie, że w Cargo kod źródłowy
 trafia do podkatalogu *src*, a w katalogu głównym pozostaje plik
@@ -134,16 +133,18 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-Spowoduje to utworzenie pliku wykonywalnego *target/debug/hello_cargo*
-(lub *target\debug\hello_cargo.exe* pod Windowsem), który możesz uruchomić
-następującym poleceniem:
+Spowoduje to utworzenie pliku wykonywalnego w *target/debug/hello_cargo*
+(lub *target\debug\hello_cargo.exe* pod Windowsem), zamiast w katalogu bieżącym.
+Ponieważ domyślnie budowana jest wersja debug programu, Cargo umieszcza
+skompilowany plik binarny w katalogu *debug*.
+Plik można uruchomić następującym poleceniem:
 
 ```console
 $ ./target/debug/hello_cargo # lub .\target\debug\hello_cargo.exe pod Windowsem
-Witaj, świecie!
+Hello, world!
 ```
 
-Jeśli wszystko przebiegło prawidłowo, `Witaj, świecie!` powinno ponownie
+Jeśli wszystko przebiegło prawidłowo, `Hello, world!` powinno ponownie
 wyświetlić się w oknie terminala. Uruchomienie `cargo build` za pierwszym razem
 powoduje dodatkowo utworzenie przez Cargo nowego pliku w katalogu głównym o
 nazwie *Cargo.lock*, który wykorzystywany jest do śledzenia dokładnych wersji
@@ -159,8 +160,12 @@ i uruchomić program za jednym rzutem:
 $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
-Witaj, świecie!
+Hello, world!
 ```
+
+Using `cargo run` is more convenient than having to remember to run `cargo
+build` and then use the whole path to the binary, so most developers use `cargo
+run`.
 
 Zauważ, że tym razem nie wyświetliła się informacja o tym, że Cargo kompilował
 `hello_cargo`. Program wywnioskował, że zawartość plików nie uległa zmianie,
@@ -195,8 +200,11 @@ uruchamia `cargo check`, żeby sprawdzić, czy wszystko się kompiluje, a
 
 Podsumujmy, co do tej pory nauczyliśmy się o Cargo:
 
+* Możemy stworzyć projekt używając `cargo new`.
 * Możemy zbudować projekt poleceniami `cargo build`.
 * Możemy zbudować i uruchomić projekt w jednym kroku z użyciem `cargo run`.
+* Możemy zbudować projekt bez tworzenia binarki, aby sprawdzić błędy używając
+  `cargo check`.
 * Zamiast umieszczać pliki wynikowe budowania w tym samym katalogu co nasz kod,
   Cargo umieści je w podkatalogu *target/debug*.
 
@@ -223,8 +231,8 @@ podkatalogu *target/release*.
 
 W przypadku prostych projektów, Cargo nie wnosi wielu korzyści w porównaniu z
 używaniem prostego `rustc`, ale udowodni swoją wartość w miarę postępów. Przy
-skomplikowanych projektach złożonych z wielu skrzyń, zezwolenie Cargo na
-koordynację budowania znacznie ułatwia pracę.
+skomplikowanych projektach złożonych z wielu plików lub mających wiele zależności,
+zezwolenie Cargo na koordynację budowania znacznie ułatwia pracę.
 
 Nawet jeśli projekt `hello_cargo` jest prosty, używa już sporej części arsenału
 narzędzi, z którymi będziesz mieć do czynienia przez pozostały okres swojej
@@ -233,14 +241,12 @@ projektem sprowadza się do wydania kilku poleceń: check out kodu w Git,
 wejście do katalogu roboczego i budowanie:
 
 ```console
-$ git clone jakisadres.com/jakisprojekt
+$ git clone przyklad.org/jakisprojekt
 $ cd jakisprojekt
 $ cargo build
 ```
 
-Jeśli chcesz przyjrzeć się narzędziu Cargo bliżej, sprawdź [jego dokumentację].
-
-[jego dokumentację]: https://doc.rust-lang.org/cargo/
+Więcej informacji o Cargo można znaleźć w [jego dokumentacji][cargo].
 
 ## Podsumowanie
 
@@ -260,3 +266,6 @@ pojęć programistycznych w Ruście, przejdź do rozdziału 3, a następnie wró
 rozdziału 2.
 
 [installation]: ch01-01-installation.html#instalacja
+[toml]: https://toml.io
+[appendix-e]: appendix-05-editions.html
+[cargo]: https://doc.rust-lang.org/cargo/

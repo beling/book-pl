@@ -11,7 +11,3 @@ jak dopasowywanie wzorców w wyrażeniach `match` ułatwia wybór uruchomionego 
 dla różnych wartości wyliczeń. A na koniec, zajmiemy się wyrażeniem `if let`
 które jest kolejnym poręcznym i zwięzłym idiomem przydatnym do radzenia sobie
 z wyliczeniami.
-
-Wyliczenia istnieją w wielu językach, ale ich możliwości
-w każdym języku się od siebie różnią. Wyliczenia w Ruście są najbardziej zbliżone do *algebraicznych typów danych* w
-funkcyjnych językach programowania, takich jak F#, OCaml i Haskell.

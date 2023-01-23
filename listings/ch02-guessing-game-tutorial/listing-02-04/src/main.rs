@@ -8,9 +8,9 @@ fn main() {
     // ANCHOR_END: here
     println!("Zgadnij liczbę!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Sekretna liczba to: {}", secret_number);
+    println!("Sekretna liczba to: {secret_number}");
 
     println!("Podaj swoją liczbę:");
 
@@ -21,7 +21,7 @@ fn main() {
         .expect("Błąd wczytania linii");
     // ANCHOR: here
 
-    println!("Wybrana przez ciebie liczba: {}", guess);
+    println!("Wybrana przez ciebie liczba: {guess}");
 
     match guess.cmp(&secret_number) {
         Ordering::Less => println!("Za mała!"),

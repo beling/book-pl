@@ -1,6 +1,6 @@
 ## Hello, World!
 
-Ponieważ Rust jest już zainstalowany, napiszmy twój pierwszy program. Przy
+Ponieważ Rust jest już zainstalowany, napiszmy pierwszy program. Przy
 poznawaniu nowego języka tradycją stało się tworzenie krótkiego programu, który
 wyświetla na ekranie tekst „Witaj, świecie!”. Postąpimy tu
 tak samo.
@@ -11,7 +11,8 @@ tak samo.
 > środowiska programistycznego zamiast wiersza poleceń, masz do tego pełne
 > prawo. Wiele IDE obsługuje Rusta w pewnym stopniu - możesz sprawdzić
 > dokumentację swojego IDE, aby uzyskać szczegóły. Zespół Rusta ostatnio zadbał
-> o obsługę języka w niektórych IDE, dzięki czemu nabrało to rozpędu!
+> o obsługę języka w niektórych IDE dzięki `rust-analyzer`.
+> Więcej szczegółów zawiera [Dodatek D][devtools]<!-- ignore -->.
 
 ### Tworzenie katalogu projektu
 
@@ -46,7 +47,7 @@ W Windows CMD, wpisz to:
 Następnie utwórz nowy plik źródłowy i nazwij go *main.rs*. Pliki języka Rust
 zawsze zakończone są rozszerzeniem *.rs*. Jeśli w nazwie pliku znajduje się
 więcej niż jedno słowo, użyj znaku podkreślenia jako separatora. Na przykład,
-powinieneś/powinnnaś napisać *hello_world.rs* zamiast *helloworld.rs*.
+*hello_world.rs* zamiast *helloworld.rs*.
 
 Otwórz plik *main.rs*, który właśnie utworzyłeś i wprowadź kod podany w
 Listingu 1-1:
@@ -61,7 +62,7 @@ fn main() {
 
 <span class="caption">Listing 1-1: Program wyświetlający „Witaj, świecie!”</span>
 
-Zapisz plik i wróć do okna terminala. Pod Linuksem lub macOS, wprowadź podane
+Zapisz plik i wróć do okna terminala w katalogu *~/projects/hello_world*. Pod Linuksem lub macOS, wprowadź podane
 polecenia, żeby skompilować i uruchomić program:
 
 ```console
@@ -98,7 +99,7 @@ fn main() {
 ```
 
 Powyższe linie definiują w Ruście funkcję. Funkcja `main` jest szczególna: to
-pierwsza rzecz, która wykonuje się w każdym wykonywalnym pliku Rusta. Pierwsza
+pierwsza rzecz, która wykonuje się w każdym programie napisanym w Ruście. Pierwsza
 linia deklaruje funkcję o nazwie `main`, która nie przyjmuje argumentów oraz
 niczego nie zwraca. Gdyby funkcja przyjmowała jakieś argumenty, ich nazwy
 umieszczone byłyby w nawiasach, `()`.
@@ -108,12 +109,12 @@ Rust wymaga tych znaków wokół ciał wszystkich funkcji. Za dobry styl uważa 
 umieszczenie klamry otwierającej w tej samej linii, co deklaracja funkcji i
 oddzielenie jej od poprzedzającego kodu jedną spacją.
 
-Jeśli chcesz trzymać się ściśle standardowego stylu używanego w
-Rustowych projektach, możesz użyć `rustfmt` -- narzędzia do automatycznego
-formatowania kodu do konkretnego stylu.
-Programu zawarty jest w standardowej dystrybucji Rusta, tak jak `rustc`,
-więc `rustfmt` prawdopodobnie już zainstalowany na twoim komputerze! Więcej
-szczegółów znajdziesz w dokumentacji online.
+> Uwaga: Jeśli chcesz trzymać się ściśle standardowego stylu używanego w
+> Rustowych projektach, możesz użyć `rustfmt` -- narzędzia do automatycznego
+> formatowania kodu do konkretnego stylu (więcej o `rustfmt` jest w
+> [Dodatku D][devtools]<!-- ignore -->).
+> Programu zawarty jest w standardowej dystrybucji Rusta, tak jak `rustc`,
+> więc `rustfmt` prawdopodobnie już zainstalowany na twoim komputerze!
 
 Wewnątrz funkcji `main` mamy następujący kod:
 
@@ -126,10 +127,10 @@ ekranie. Należy tu zwrócić uwagę na cztery szczegóły.
 
 Po pierwsze, wcięcie tekstu w Ruście składa się z czterech spacji, a nie z tabulatora.
 
-Po drugie, tekst `println!` wywołuje w Ruście makro. Gdyby wywoływana była
+Po drugie, `println!` wywołuje w Ruście makro. Gdyby wywoływana była
 funkcja, wpisana byłaby jako `println` (bez `!`). Makra będą szerzej opisane w
-rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!`, wywołuje
-makro zamiast zwykłej funkcji.
+rozdziale 19. Jedyne, co musisz wiedzieć teraz, to to, że użycie `!` wywołuje
+makro zamiast zwykłej funkcji i że makra nie zawsze podlegają tym samym regułą co funkcje.
 
 Po trzecie, w programie widzimy łańcuch znaków (*string*) `"Witaj, świecie!"`.
 Przekazujemy go jako argument do `println!`, którego ostatecznym efektem jest
@@ -157,16 +158,15 @@ wywoływania `gcc` lub `clang`. Po udanej kompilacji, Rust tworzy binarny plik
 wykonywalny.
 
 Pod Linuksem, macOS lub w PowerShell pod Windowsem możesz sprawdzić obecność
-pliku wykonywalnego używając w terminalu polecenia `ls`. W przypadku Linuksa i
-macOS zobaczysz dwa pliki. PowerShell pod Windowsem wyświetli trzy pliki - te
-same, które wyświetliłby CMD.
+pliku wykonywalnego używając w terminalu polecenia `ls`:
 
-```text
+```console
 $ ls
 main  main.rs
 ```
 
-W CMD pod Windowsem wyglądałoby to tak:
+W przypadku Linuksa i macOS zobaczysz dwa pliki. PowerShell pod Windowsem wyświetli trzy pliki - te
+same, które wyświetliłby CMD. W CMD pod Windowsem możesz wpisać:
 
 ```cmd
 > dir /B %= opcja /B powoduje wyświetlenie jedynie nazw plików =%
@@ -205,3 +205,4 @@ W dalszym ciągu przedstawimy narzędzie zwane Cargo, które pomoże ci w pisani
 *prawdziwych* programów w Ruście.
 
 [troubleshooting]: ch01-01-installation.html#rozwiązywanie-problemów
+[devtools]: appendix-04-useful-development-tools.md

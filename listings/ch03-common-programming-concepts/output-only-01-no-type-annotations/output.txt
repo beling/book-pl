@@ -4,11 +4,12 @@ error[E0282]: type annotations needed
  --> src/main.rs:2:9
   |
 2 |     let guess = "42".parse().expect("To nie liczba!");
-  |         ^^^^^ consider giving `guess` a type
-
-error: aborting due to previous error
+  |         ^^^^^
+  |
+help: consider giving `guess` an explicit type
+  |
+2 |     let guess: _ = "42".parse().expect("To nie liczba!");
+  |              +++
 
 For more information about this error, try `rustc --explain E0282`.
-error: could not compile `brak_adnotacji_typow`
-
-To learn more, run the command again with --verbose.
+error: could not compile `brak_adnotacji_typow` due to previous error

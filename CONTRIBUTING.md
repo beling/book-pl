@@ -11,14 +11,16 @@ od oryginału czy może chciałbyś przetłumaczyć jakiś rozdział,
 lub cokolwiek innego co przykuło twoją uwagę... 
 Dziękujemy Ci za pomoc!
 
-### Co i jak
-
+## Gdzie Edytować
 Sama książka znajduje się w folderze `src` i jest napisana w formacie Markdown.
 W folderze `listing` znajdziesz wycinki kodu Rusta, w których należy przetłumaczyć
 stałe tekstowe. W folderze `dot` znajdziesz rysunki; rzadko są one załączane.
 
-### A więc chcesz pomóc tłumaczyć?
+Katalog `nostarch` zawiera snapshoty do wysyłania edycji do wydawców
+wersji drukowanej i dotyczy tylko anglojęzycznej wersji książki. **Nie należy składać pull
+pull requestów zmieniających pliki w katalogu `nostarch`, zostaną one zamknięte.**
 
+### A więc chcesz pomóc tłumaczyć?
 Świetnie! Jest jeszcze wiele do zrobienia!
 
 Zanim zaczniesz tłumaczyć wybrany rozdział, otwórz *Issue* #1 *Bieżący stan tłumaczenia*

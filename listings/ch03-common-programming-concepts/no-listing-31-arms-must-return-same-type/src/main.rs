@@ -3,5 +3,5 @@ fn main() {
 
     let number = if condition { 5 } else { "six" };
 
-    println!("Wartość zmiennej number wynosi: {}", number);
+    println!("Wartość zmiennej number wynosi: {number}");
 }

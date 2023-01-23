@@ -18,8 +18,5 @@ fn main() {
 
     let element = a[index];
 
-    println!(
-        "Wartość elementu pod indeksem {} wynosi: {}",
-        index, element
-    );
+    println!("Wartość elementu pod indeksem {index} wynosi: {element}");
 }

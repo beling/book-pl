@@ -17,9 +17,7 @@ musimy dodać adnotację typu danych:
 let guess: u32 = "42".parse().expect("To nie liczba!");
 ```
 
-Jeżeli w powyższym kodzie nie dodalibyśmy adnotacji typu danych, Rust
-wyświetliłby następujący komunikat o błędzie, mówiący o tym, że kompilator
-potrzebuje więcej informacji, aby określić, jakiego typu danych chcemy użyć:
+Jeżeli w powyższym kodzie nie dodalibyśmy adnotacji typu danych `: u32`, Rust wyświetliłby następujący komunikat o błędzie, mówiący o tym, że kompilator potrzebuje więcej informacji, aby określić, jakiego typu danych chcemy użyć:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/output-only-01-no-type-annotations/output.txt}}
@@ -35,12 +33,8 @@ skalarne typy danych: całkowity (ang. integer), zmiennoprzecinkowy (ang. floati
 #### Typy całkowite
 
 *Liczba całkowita* to liczba nieposiadająca części ułamkowej.
-Jeden z typów całkowitych, `u32`, wykorzystywaliśmy w rozdziale 2. Ten typ
-danych określa, że wartość, do której się odnosi, jest liczbą całkowitą bez
-znaku (typy całkowite ze znakiem zaczynają się od `i` zamiast `u`), która
-zajmuje 32 bity pamięci. Tabela 3-1 pokazuje typy całkowite wbudowane w Rusta.
-Każdy z wariantów w kolumnach Ze znakiem i Bez znaku (na przykład `i16`) może
-zostać użyty do zadeklarowania typu danych liczby całkowitej.
+Jeden z typów całkowitych, `u32`, wykorzystywaliśmy w rozdziale 2. Ten typ danych określa, że wartość, do której się odnosi, jest liczbą całkowitą bez znaku (typy całkowite ze znakiem zaczynają się od `i` zamiast `u`), która zajmuje 32 bity pamięci. Tabela 3-1 pokazuje typy całkowite wbudowane w Rusta.
+Każdy z wariantów w kolumnach Ze znakiem i Bez znaku (na przykład `i16`) może zostać użyty do zadeklarowania typu danych liczby całkowitej.
 
 <span class="caption">Tabela 3-1: Typy całkowite w Ruście</span>
 
@@ -54,16 +48,10 @@ zostać użyty do zadeklarowania typu danych liczby całkowitej.
 | arch      | isize      | usize     |
 
 Każdy z wariantów może posiadać znak lub nie, a także ma określony rozmiar.
-Nazwy *Ze znakiem* i *Bez znaku* odnoszą się do tego, czy dana liczba może
-być ujemna, czy tylko dodatnia — inaczej mówiąc, czy liczba musi posiadać znak
-(Ze znakiem), czy też nie, gdyż wiadomo, że zawsze będzie dodatnia (Bez znaku).
-Można to porównać do zapisywania liczb na kartce, gdy znak ma znaczenie,
-zapisujemy go — odpowiednio plus lub minus przed liczbą, ale gdy liczba jest
-dodatnia i w danym kontekście nie jest to konieczne, pomijamy znak. Liczby
-całkowite ze znakiem przechowywane są z pomocą [Kodu uzupełnień do dwóch](https://en.wikipedia.org/wiki/Two%27s_complement)
+Nazwy *Ze znakiem* i *Bez znaku* odnoszą się do tego, czy dana liczba może być ujemna, czy tylko dodatnia -- inaczej mówiąc, czy liczba musi posiadać znak (ze znakiem), czy też nie, gdyż wiadomo, że zawsze będzie dodatnia (bez znaku).
+Można to porównać do zapisywania liczb na kartce, gdy znak ma znaczenie, zapisujemy go -- odpowiednio plus lub minus przed liczbą, ale gdy liczba jest dodatnia i w danym kontekście nie jest to konieczne, pomijamy znak. Liczby całkowite ze znakiem przechowywane są z pomocą [Kodu uzupełnień do dwóch][twos-complement]<!-- ignore -->
 (jeżeli nie jesteś pewien, co to oznacza, możesz poszukać
-informacji w internecie; wyjaśnienie jest poza zakresem materiału zawartego
-w tej książce).
+informacji w internecie; wyjaśnienie jest poza zakresem materiału zawartego w tej książce).
 
 Każdy wariant ze znakiem może przechowywać liczby od -(2<sup>n - 1</sup>) do
 2<sup>n - 1</sup> - 1 włącznie, gdzie *n* to liczba bitów, które wykorzystuje
@@ -72,13 +60,10 @@ dany wariant. Tak więc `i8` może przechowywać liczby od -(2<sup>7</sup>) do
 przechowywać liczby od 0 do 2<sup>n</sup> - 1, więc `u8` może przechowywać
 liczby od 0 do 2<sup>8</sup> - 1, co daje zakres od 0 do 255.
 
-Dodatkowo rozmiar typów `isize` oraz `usize` zależy od architektury
-komputera, na którym uruchamiasz swój program: 64 bity na komputerze
-o 64-bitowej architekturze i 32 bity na komputerze o 32-bitowej architekturze.
+Dodatkowo rozmiar typów `isize` oraz `usize` zależy od architektury komputera, na którym uruchamiasz swój program: 64 bity na komputerze o 64-bitowej architekturze i 32 bity na komputerze o 32-bitowej architekturze.
 
-Możesz zapisywać literały liczb całkowitych w każdej z form uwzględnionych
-w Tabeli 3-2. Zauważ, że wszystkie literały, poza bajtem, pozwalają na użycie
-przyrostka, np. `57u8` i wizualnego separatora `_`, np. `1_000`.
+Możesz zapisywać literały liczb całkowitych w każdej z form uwzględnionych w Tabeli 3-2. Zauważ, że wszystkie literały mogące oznaczać różne typy numeryczne, pozwalają na użycie przyrostka by wskazać typ, np. `57u8`.
+Literały numeryczne dopuszczają też wizualny separator `_` poprawiający czytelności, np. `1_000` oznacza tą samą wartość co `1000`.
 
 <span class="caption">Tabela 3-2: Literały liczb całkowitych w Ruście</span>
 
@@ -90,11 +75,8 @@ przyrostka, np. `57u8` i wizualnego separatora `_`, np. `1_000`.
 | Binarny           | `0b1111_0000` |
 | Bajt (tylko `u8`) | `b'A'`        |
 
-W takim razie skąd masz wiedzieć, którego typu całkowitego użyć? Jeżeli nie
-jesteś pewien, typy domyślnie wykorzystywane przez Rusta są w większości
-przypadków dobrym wyborem, dla liczb całkowitych to `i32`; ogólnie ten typ
-jest najszybszy, nawet na 64-bitowych systemach. Z typów `isize` i `usize`
-skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
+W takim razie skąd masz wiedzieć, którego typu całkowitego użyć? Jeżeli nie masz pewności, to zazwyczaj dobrze jest zacząć od typów domyślnych wykorzystywanych przez Rusta. Dla liczb całkowitych to `i32`. Z typów `isize` i `usize`
+korzystamy głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 
 > ##### Przekroczenie zakresu liczb całkowitych
 >
@@ -124,18 +106,15 @@ skorzystasz głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > Przepełnienia można obsłużyć jawnie. W tym celu można skorzystać z następujących rodzin
 > metod, zapewnionych prymitywnym typom liczbowym przez bibliotekę standardową:
 >
-> - zawijanie we wszystkich trybach kompilacji za pomocą metod `wrapping_*`, takich jak `wrapping_add`;
-> - zwracanie wartość `None` jeśli wystąpiło przepełnienie za pomocą metod `checked_*`;
-> - zwracanie wartość liczbowej wraz z wartością logiczną (boolean) wskazującą, czy wystąpiło przepełnienie za pomocą metod `overflowing_*`;
-> - nasycenie do minimalnych lub maksymalnych wartości za pomocą metod `saturating_*`.
+> * zawijanie we wszystkich trybach kompilacji za pomocą metod `wrapping_*`, takich jak `wrapping_add`;
+> * zwracanie wartość `None` jeśli wystąpiło przepełnienie za pomocą metod `checked_*`;
+> * zwracanie wartość liczbowej wraz z wartością logiczną (boolean) wskazującą, czy wystąpiło przepełnienie za pomocą metod `overflowing_*`;
+> * nasycenie do minimalnych lub maksymalnych wartości za pomocą metod `saturating_*`.
 
 #### Typy zmiennoprzecinkowe
 
-Rust posiada też dwa prymitywne typy danych dla *liczb zmiennoprzecinkowych*,
-czyli liczb posiadających część ułamkową. Typy zmiennoprzecinkowe w Ruście
-to: `f32` i `f64`, o rozmiarach, odpowiednio, 32 i 64 bity. Domyślnie Rust
-wykorzystuje `f64`, gdyż nowoczesne procesory wykonują operacje na tym typie
-niemal tak szybko, jak na `f32`, a jest on bardziej precyzyjny.
+Rust posiada też dwa prymitywne typy danych dla *liczb zmiennoprzecinkowych*, czyli liczb posiadających część ułamkową. Typy zmiennoprzecinkowe w Ruście to: `f32` i `f64`, o rozmiarach, odpowiednio, 32 i 64 bity. Domyślnie Rust
+wykorzystuje `f64`, gdyż nowoczesne procesory wykonują operacje na tym typie niemal tak szybko, jak na `f32`, a jest on bardziej precyzyjny.
 
 Oto przykład pokazujący liczby zmiennoprzecinkowe w akcji:
 
@@ -151,10 +130,9 @@ z pojedynczą precyzją, a `f64` — z podwójną.
 
 #### Operacje arytmetyczne
 
-Rust wspiera podstawowe operacje arytmetyczne na wszystkich numerycznych
-typach danych: dodawanie, odejmowanie, mnożenie, dzielenia i resztę z dzielenia.
-Poniższy kod przedstawia przykładowe użycie każdej z wymienionych operacji
-w połączeniu z instrukcją `let`:
+Rust wspiera podstawowe operacje arytmetyczne na wszystkich numerycznych typach danych: dodawanie, odejmowanie, mnożenie, dzielenia i resztę z dzielenia.
+Dzielenie na typach liczb całkowitych odrzuca resztę z dzielenia, zaokrąglając w kierunku zera.
+Poniższy kod przedstawia przykładowe użycie każdej z wymienionych operacji w połączeniu z instrukcją `let`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -162,9 +140,7 @@ w połączeniu z instrukcją `let`:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-07-numeric-operations/src/main.rs}}
 ```
 
-Każde z wyrażeń w tych instrukcjach korzysta z operatora matematycznego
-i jest wyliczane do pojedynczej wartości, która następnie
-jest przypisywana do zmiennej. Listę wszystkich operatorów obsługiwanych
+Każde z wyrażeń w tych instrukcjach korzysta z operatora matematycznego i jest wyliczane do pojedynczej wartości, która następnie jest przypisywana do zmiennej. Listę wszystkich operatorów obsługiwanych
 przez Rusta znajdziesz w [Dodatku B][appendix_b]<!-- ignore -->.
 
 #### Typ logiczny (Boolean)
@@ -184,11 +160,7 @@ Działanie wyrażenia `if` w Ruście omówimy w sekcji `Kontrola przepływu`.
 
 #### Typ znakowy
 
-Do tej pory pracowaliśmy tylko z liczbami, ale Rust wspiera też litery. Typ
-danych `char` jest najprostszym typem znakowym zaimplementowanym w Ruście.
-Poniższy kod pokazuje jeden ze sposobów jego użycia. (Zauważ, że typ `char`
-jest zapisywany z użyciem pojedynczego cudzysłowia, w przeciwieństwie
-do ciągów znaków, które korzystają z podwójnego cudzysłowia)
+Do tej pory pracowaliśmy tylko z liczbami, ale Rust wspiera też litery. Najprostszym typ znakowym jest `char`. Oto przykłady jego deklaracji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -196,29 +168,23 @@ do ciągów znaków, które korzystają z podwójnego cudzysłowia)
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
 ```
 
-Typ `char` w Ruście ma wielkość czterech bajtów i reprezentuje Skalarną Wartość Unikod,
-co oznacza, że można w nim przedstawić dużo więcej niż tylko znaki ASCII.
-Litery akcentowane; chińskie, japońskie i koreańskie symbole; emoji;
-pola o zerowej długości to wszystko poprawne wartości dla typu `char` w Ruście.
-Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do
-`U+10FFFF` włącznie. Jednak “znak” nie jest naprawdę ideą w Unikodzie,
-więc twój intuicyjny sposób postrzegania tego, czym jest “znak” może nie
-być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo
-omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
+Proszę zauważyć, że literały typu `char` są zapisywane z użyciem pojedynczego cudzysłowia, w przeciwieństwie do literałów łańcuchowych, które korzystają z podwójnego cudzysłowia.
+Typ `char` w Ruście ma wielkość czterech bajtów i reprezentuje Skalarną Wartość Unikod, co oznacza, że można w nim przedstawić dużo więcej niż tylko znaki ASCII.
+Litery akcentowane; chińskie, japońskie i koreańskie symbole; emoji; pola o zerowej długości to wszystko poprawne wartości dla typu `char` w Ruście.
+Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do `U+10FFFF` włącznie. Jednak “znak” nie jest naprawdę ideą w Unikodzie, więc twój intuicyjny sposób postrzegania tego, czym jest “znak” może nie
+być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
 
 ### Typy złożone
 
 *Typy złożone* mogą grupować wiele wartości w jeden typ danych. Rust posiada
 dwa prymitywne typy złożone: krotki i tablice.
 
-#### Krotka
+#### Krotki
 
-Krotka pozwala na zgrupowanie pewnej liczby wartości o różnych typach danych
-w jeden złożony typ danych.
+Krotka pozwala na zgrupowanie pewnej liczby wartości o różnych typach danych w jeden złożony typ danych.
+Krotka ma stałą długość. Po zadeklarowaniu nie może się powiększyć ani pomniejszyć.
 
-Aby stworzyć krotkę, zapisujemy w nawiasie okrągłym listę wartości oddzielonych
-przecinkami. Każda pozycja w krotce ma pewien typ danych, przy czym wszystkie
-wartości nie muszą mieć tego samego typu danych. W tym przykładzie dodaliśmy
+Aby stworzyć krotkę, zapisujemy w nawiasie okrągłym listę wartości oddzielonych przecinkami. Każda pozycja w krotce ma pewien typ danych, przy czym wszystkie wartości nie muszą mieć tego samego typu danych. W tym przykładzie dodaliśmy
 opcjonalne adnotacje typów danych:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -227,9 +193,7 @@ opcjonalne adnotacje typów danych:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-10-tuples/src/main.rs}}
 ```
 
-Zmienna `tup` odnosi się do całej krotki, gdyż krotka jest traktowana jak
-jeden złożony element. Aby uzyskać dostęp do wartości, które składają się na
-krotkę, możemy skorzystać z dopasowywania do wzorca i rozdzielić wartość krotki,
+Zmienna `tup` odnosi się do całej krotki, gdyż krotka jest traktowana jak jeden złożony element. Aby uzyskać dostęp do wartości, które składają się na krotkę, możemy skorzystać z dopasowywania do wzorca i rozdzielić wartość krotki,
 tak jak poniżej:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -239,14 +203,10 @@ tak jak poniżej:
 ```
 
 Powyższy program najpierw tworzy krotkę i przypisuje ją do zmiennej `tup`.
-Następnie korzysta ze wzorca w połączeniu z instrukcją `let`, aby
-przetransformować `tup` w trzy niezależne zmienne `x`, `y`, i `z`.
-Tę operację nazywamy *destrukturyzacją*, gdyż rozdziela pojedynczą krotkę na trzy
-części. Na końcu, program wypisuje wartość zmiennej `y`, czyli `6.4`.
+Następnie korzysta ze wzorca w połączeniu z instrukcją `let`, aby przetransformować `tup` w trzy niezależne zmienne `x`, `y`, i `z`.
+Tę operację nazywamy *destrukturyzacją*, gdyż rozdziela pojedynczą krotkę na trzy części. Na końcu, program wypisuje wartość zmiennej `y`, czyli `6.4`.
 
-Oprócz rozkładania krotki z użyciem dopasowywania do wzorca możemy uzyskać
-bezpośredni dostęp do elementu krotki, wykorzystując znak kropki (`.`) oraz
-indeks wartości, do której chcemy uzyskać dostęp.
+Możemy też uzyskać bezpośredni dostęp do elementu krotki, wykorzystując znak kropki (`.`) oraz indeks wartości, do której chcemy uzyskać dostęp. Na przykład:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -254,19 +214,17 @@ indeks wartości, do której chcemy uzyskać dostęp.
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-12-tuple-indexing/src/main.rs}}
 ```
 
-Powyższy program tworzy krotkę `x`, a następnie — po jednej zmiennej dla każdego
-elementu zawartego w krotce, wykorzystując przy tym ich indeksy. Podobnie, jak
-w większości języków programowania pierwszy indeks w krotce ma wartość 0.
+Powyższy program tworzy krotkę `x`, a następnie uzyskuje dostęp do jej elementów wykorzystując ich indeksy. Podobnie, jak w większości języków programowania pierwszy indeks w krotce ma wartość 0.
 
-#### Typ tablicowy
+The tuple without any values has a special name, *unit*. This value and its corresponding type are both written `()` and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value.
+
+#### Tablice
 
 Innym sposobem na stworzenie kolekcji wartości jest użycie *tablicy*.
-W przeciwieństwie do krotki każdy element tablicy musi być tego samego typu. Tablice w Ruście różnią się od tablic znanych z paru innych języków
-programowania tym, że mają stały rozmiar; raz zadeklarowane nie mogą zwiększyć
+W przeciwieństwie do krotki każdy element tablicy musi być tego samego typu. Tablice w Ruście różnią się od tablic znanych z paru innych języków programowania tym, że mają stały rozmiar. Raz zadeklarowane nie mogą zwiększyć
 ani zmniejszyć swojego rozmiaru.
 
-W Ruście, aby umieścić wartości w tablicy, zapisujemy je jako lista rozdzieloną
-przecinkami, wewnątrz nawiasów kwadratowych:
+W Ruście, aby umieścić wartości w tablicy, zapisujemy je jako lista rozdzieloną przecinkami, wewnątrz nawiasów kwadratowych:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -274,39 +232,27 @@ przecinkami, wewnątrz nawiasów kwadratowych:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-13-arrays/src/main.rs}}
 ```
 
-Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie
-(Stos i stertę omówimy w rozdziale 4) lub gdy chcesz mieć pewność, że ilość
-elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna,
-jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez
-bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
-Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie
-powinieneś użyć wektora. Rozdział 8 szczegółowo opisuje wektory i ich działanie.
+Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie (Stos i stertę omówimy w [rozdziale 4][stack-and-heap]<!-- ignore -->) lub gdy chcesz mieć pewność, że ilość elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna, jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
+Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie powinieneś użyć wektora. [Rozdział 8][][vectors]<!-- ignore --> szczegółowo opisuje wektory i ich działanie.
 
-Przykładowa sytuacja, w której lepiej użyć tablicy niż wektora ma miejsce,
-gdy nasz program potrzebuje znać nazwy wszystkich miesięcy. Jest bardzo mało
-prawdopodobne, by trzeba było dodać lub usunąć miesiąc, więc możemy
-skorzystać z tablicy, ponieważ wiemy, że zawsze będzie zawierać 12 pozycji.
+Jednak tablice są bardziej przydatne, gdy wiadomo, że liczba elementów nie zmieni się.
+Przykładowo gdy w programie chcemy używać nazw miesięcy, lepiej przechowywać je w tablicy niż w wektorze, ponieważ wiemy, że potrzebujemy dokładnie 12 elementów:
 
 ```rust
 let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec",
               "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 ```
 
-Typ tablicy zapisać możesz używając nawiasów kwadratowych, wewnątrz których
-umieszczone zostanie typ każdego z elementów, po nim średnik, a następnie liczba elementów
-w tablicy, tak jak poniżej:
+Typ tablicy zapisujemy używając nawiasów kwadratowych, wewnątrz których umieszczamy typ każdego z elementów, po nim średnik, a następnie liczbę elementów w tablicy, tak jak poniżej:
 
 ```rust
 let a: [i32; 5] = [1, 2, 3, 4, 5];
 ```
 
-Powyżej `i32` to typ każdego elementu. Po średniku liczba `5` oznacza, że w tej
-tablicy znajdzie się pięć elementów.
+Powyżej `i32` to typ każdego elementu. Po średniku liczba `5` oznacza, że w tej tablicy znajdzie się pięć elementów.
 
-Zapisywanie typu tablicy w ten sposób może wyglądać podobnie do alternatywnej
-składni inicjalizacji tablicy: jeśli chcesz stworzyć tablicę mającą te same wartości
-dla każdego elementu, możesz podać tę wartość, po niej średnik oraz liczbę 
-elementów - to wszystko w nawiasach kwadratowych, jak pokazano poniżej:
+By stworzyć tablicę mającą te same wartości dla każdego elementu, można podać tę wartość, po niej średnik i liczbę 
+elementów, całość obejmując nawiasami kwadratowymi:
 
 ```rust
 let a = [3; 5];
@@ -317,8 +263,7 @@ Taki sam rezultat osiągnąłby taki zapis: `let a = [3, 3, 3, 3, 3];`, ale ten 
 
 ##### Uzyskiwanie dostępu do elementów tablicy
 
-Tablica to obszar pamięci ulokowany na stosie. Możesz uzyskać dostęp
-do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
+Tablica to obszar pamięci ulokowany na stosie. Możesz uzyskać dostęp do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -326,26 +271,19 @@ do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-14-array-indexing/src/main.rs}}
 ```
 
-W tym przykładzie, zmienna o nazwie `first` otrzyma wartość `1`, ponieważ taka
-wartość znajduje się w tablicy na miejscu o indeksie `[0]`. Zmienna o nazwie
-`second` otrzyma wartość `2` od pozycji w tablicy o indeksie `[1]`.
+W tym przykładzie, zmienna o nazwie `first` otrzyma wartość `1`, ponieważ taka wartość znajduje się w tablicy na miejscu o indeksie `[0]`. Zmienna o nazwie `second` otrzyma wartość `2` od pozycji w tablicy o indeksie `[1]`.
 
 ##### Próba uzyskania dostępu do niepoprawnego elementu tablicy
 
-Co się stanie, jeśli spróbujesz uzyskać dostęp do elementu, który jest poza
-tablicą? Powiedzmy, że zmienisz wcześniejszy przykład na poniższy kod, pobiera 
-indeks tablicy od użytkownika, używając kodu podobnego do tego z gry zgadywanki
-z rozdziału 2:
+Co się stanie, gdy spróbujemy uzyskać dostęp do elementu, który jest poza tablicą? Zmienimy wcześniejszy przykład na poniższy kod, który pobiera indeks tablicy od użytkownika, używając kodu podobnego do tego z gry zgadywanki z rozdziału 2:
 
 <span class="filename">Plik: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,ignore,panics
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-15-invalid-array-access/src/main.rs}}
 ```
 
-Nie wystąpiły żadne błędy w trakcie kompilacji. Po uruchomieniu za pomocą
-`cargo run` i podaniu 0, 1, 2, 3, lub 4, program wypisuje wartość z tablicy
-o podanym indeksie. Jeśli jednak w zamian zostanie podana liczba niebędąca
+Nie wystąpiły żadne błędy w trakcie kompilacji. Po uruchomieniu za pomocą `cargo run` i podaniu 0, 1, 2, 3, lub 4, program wypisuje wartość z tablicy o podanym indeksie. Jeśli jednak w zamian zostanie podana liczba niebędąca
 poprawnym indeksem tej tablicy, jak np. 10, pojawi się następujący komunikat:
 
 <!-- manual-regeneration
@@ -359,25 +297,18 @@ thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Uruchomienie programu poskutkowało błędem *wykonania* w momencie użycia niepoprawnej
-wartości dla operacji indeksowania. Program zakończył działanie w tym momencie
-z komunikatem o błędzie i nie wykonał końcowego `println!`. Przy próbie dostępu do
-elementu z wykorzystaniem indeksowania, Rust sprawdza, czy podany indeks jest mniejszy
-niż długość tablicy. Jeżeli ten indeks jest większy lub równy długości tablicy,
-program spanikuje. To sprawdzenie musi się odbyć w czasie wykonywania, szczególnie
-w tym przypadku, w którym kompilator nie może wiedzieć, jaką wartość wprowadzi użytkownik
-uruchamiający kod.
+Uruchomienie programu poskutkowało błędem *wykonania* w momencie użycia niepoprawnej wartości dla operacji indeksowania. Program zakończył działanie w tym momencie
+z komunikatem o błędzie i nie wykonał końcowego `println!`. Przy próbie dostępu do elementu z wykorzystaniem indeksowania, Rust sprawdza, czy podany indeks jest mniejszy
+niż długość tablicy. Jeżeli ten indeks jest większy lub równy długości tablicy, program spanikuje. To sprawdzenie musi się odbyć w czasie wykonywania, szczególnie w tym przypadku, w którym kompilator nie może wiedzieć, jaką wartość wprowadzi użytkownik uruchamiający kod.
 
-Oto pierwszy przykład zasad bezpieczeństwa Rusta w akcji. W wielu
-niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany,
-a skorzystanie z niepoprawnego indeksu może skutkować uzyskaniem dostępu do
-niewłaściwego bloku pamięci. Rust chroni przed takimi błędami. Zamiast
-pozwolić na uzyskanie dostępu do pamięci i kontynuację działania, zamyka
-program. W rozdziale 9 szczegółowiej omówiono obsługę błędów w Ruście.
+Oto pierwszy przykład zasad bezpieczeństwa Rusta w akcji. W wielu niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany, a skorzystanie z niepoprawnego indeksu może skutkować uzyskaniem dostępu do
+niewłaściwego bloku pamięci. Rust chroni przed takimi błędami. Zamiast pozwolić na uzyskanie dostępu do pamięci i kontynuację działania, zamyka program. Obsługę błędów w Ruście dokładniej omówimy w rozdziale 9. Tam też pokażemy jak pisać czytelny i bezpieczny kod, który nigdy nie panikuje i nie dopuszcza do nieprawidłowych dostępów do pamięci.
 
 [comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
+[twos-complement]: https://en.wikipedia.org/wiki/Two%27s_complement
 [control-flow]: ch03-05-control-flow.html#control-flow
 [strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[stack-and-heap]: ch04-01-what-is-ownership.html#the-stack-and-the-heap
+[vectors]: ch08-01-vectors.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
-[wrapping]: ../std/num/struct.Wrapping.html
 [appendix_b]: appendix-02-operators.md

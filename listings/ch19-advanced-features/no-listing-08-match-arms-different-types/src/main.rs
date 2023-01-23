@@ -3,7 +3,7 @@ fn main() {
     // ANCHOR: here
     let guess = match guess.trim().parse() {
         Ok(_) => 5,
-        Err(_) => "witaj",
+        Err(_) => "hello",
     };
     // ANCHOR_END: here
 }

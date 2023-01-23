@@ -3,7 +3,10 @@ fn main() {
 
     let x = x + 1;
 
-    let x = x * 2;
+    {
+        let x = x * 2;
+        println!("Wartość x w wewnętrznym bloku kodu wynosi: {x}");
+    }
 
-    println!("Wartość x wynosi: {}", x);
+    println!("Wartość x wynosi: {x}");
 }

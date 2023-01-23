@@ -1,6 +1,6 @@
 [book]
 title = "Język Programowania Rust"
-author = "Steve Klabnik oraz Carol Nichols, z udziałem Społeczności Rusta"
+author = ["Steve Klabnik", "Carol Nichols", "Z udziałem Społeczności Rusta"]
 language = "pl"
 
 [output.html]

@@ -4,8 +4,7 @@
 po którym umieszczamy nazwę, a czasem parametry i typ zwracanej wartości.
 Tak jak funkcje, zawierają jakieś polecenia wykonywane przy wywołaniu. 
 Metody jednak różnią się od funkcji tym, że definiujemy je wewnątrz struktur
-(lub enumeracji czy obiektów-cech, które omówimy odpowiednio w rozdziałach 6 i 17)
-a ich pierwszym parametrem jest zawsze `self` reprezentujące instancję
+(lub enumeracji czy obiektów-cech, które omówimy odpowiednio w rozdziałach [6][enums]<!-- ignore --> i [17][trait-objects]<!-- ignore -->), a ich pierwszym parametrem jest zawsze `self` reprezentujące instancję
 struktury, na której metoda jest wywołana.
 
 ### Definiowanie metod
@@ -22,7 +21,8 @@ To przedstawia listing 5-13.
 
 <span class="caption">Listing 5-13: Definicja metody `area` w strukturze `Rectangle`</span>
 
-Aby zdefiniować funkcję w kontekście `Rectangle` otwieramy blok `impl`, czyli implementacji. 
+Aby zdefiniować funkcję w kontekście `Rectangle` otwieramy blok `impl` (czyli implementacji) dla `Rectangle`.
+Wszystko wewnątrz tego bloku będzie związane z typem `Rectangle`.
 Następnie przenosimy funkcję `area` do nawiasów klamrowych
 należących do bloku `impl` i jako pierwszy parametr funkcji dodajemy
 `self` w jej sygnaturze i wszędzie w jej wnętrzu. W funkcji `main`,
@@ -32,14 +32,18 @@ na instancji struktury `Rectangle`.
 Składnia metody pojawia się po nazwie instancji: dodajemy kropkę, a po niej nazwę samej metody, oraz
 nawiasy i argumenty jeśli są wymagane.
 
-W sygnaturze funkcji `area` używamy `&self` zamiast `rectangle: &Rectangle`
-ponieważ Rust wie, że typ `self` to `Rectangle`, gdyż metoda znajduje się
-wewnątrz kontekstu `impl Rectangle`. Zauważ, że nadal musimy użyć `&`
-przed `self`, podobnie jak w `&Rectangle`. Metody mogą wejść w posiadanie `self`,
-pożyczyć `self` niemutowalnie, lub pożyczyć `self` mutowalnie, 
+W sygnaturze funkcji `area` używamy `&self` zamiast `rectangle: &Rectangle`.
+The `&self` is actually short for `self: &Self`. Within an `impl` block, the
+type `Self` is an alias for the type that the `impl` block is for. Methods must
+have a parameter named `self` of type `Self` for their first parameter, so Rust
+lets you abbreviate this with only the name `self` in the first parameter spot.
+Note that we still need to use the `&` in front of the `self` shorthand to
+indicate that this method borrows the `Self` instance, just as we did in
+`rectangle: &Rectangle`.
+Metody mogą wejść w posiadanie `self`, pożyczyć `self` niemutowalnie, lub pożyczyć `self` mutowalnie, 
 tak jakby to był jakikolwiek inny parametr.
 
-W tym wypadku użyliśmy `&self` z tego samego powodu, co `&Rectangle`
+W tym wypadku używamy `&self` z tego samego powodu, co `&Rectangle`
 w wersji z funkcją. Nie chcemy ani zostać właścicielem struktury, 
 ani do niej pisać, a jedynie z niej czytać.
 Jeśli chcielibyśmy zmienić dane instancji w trakcie wywoływania
@@ -49,14 +53,35 @@ jest dość rzadkie; tej techniki używamy głównie jedynie, kiedy metoda przeo
 w coś innego i chcesz zabronić wywołującemu metody wykorzystanie oryginalnej instancji
 po jej transformacji.
 
-Podstawową zaletą używania metod zamiast funkcji, oprócz używania
-składni metody oraz braku wymogu podawania typu `self` w każdej sygnaturze,
-jest organizacja.  
+Podstawowym celem używania metod zamiast funkcji, oprócz używania składni metody oraz braku wymogu podawania typu `self` w każdej sygnaturze, jest organizacja.  
 Umieściliśmy wszystko, co związane jest z instancją danego typu w jednym bloku `impl`.
-Dzięki temu oszczędzamy przyszłym użytkownikom kodu szukania zachowań struktury
-`Rectangle` po różnych zakątkach naszej biblioteki.
+Dzięki temu oszczędzamy przyszłym użytkownikom kodu szukania zachowań struktury `Rectangle` po różnych zakątkach naszej biblioteki.
 
+Note that we can choose to give a method the same name as one of the struct’s
+fields. For example, we can define a method on `Rectangle` that is also named
+`width`:
 
+<span class="filename">Filename: src/main.rs</span>
+
+```rust
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
+```
+
+Here, we’re choosing to make the `width` method return `true` if the value in
+the instance’s `width` field is greater than `0` and `false` if the value is
+`0`: we can use a field within a method of the same name for any purpose. In
+`main`, when we follow `rect1.width` with parentheses, Rust knows we mean the
+method `width`. When we don’t use parentheses, Rust knows we mean the field
+`width`.
+
+Often, but not always, when we give a method the same name as a field we want
+it to only return the value in the field and do nothing else. Methods like this
+are called *getters*, and Rust does not implement them automatically for struct
+fields as some other languages do. Getters are useful because you can make the
+field private but the method public, and thus enable read-only access to that
+field as part of the type’s public API. We will discuss what public and private
+are and how to designate a field or method as public or private in [Chapter
+7][public]<!-- ignore -->.
 
 > ### Co z operatorem `->`?
 >
@@ -74,7 +99,7 @@ Dzięki temu oszczędzamy przyszłym użytkownikom kodu szukania zachowań struk
 > automatycznie dodaje `&`, `&mut`, lub `*` aby `object`
 > pasował do sygnatury metody. Inaczej mówiąc, oba te przykłady są równoważne:
 >
-<!-- CAN'T EXTRACT SEE BUG TODO -->
+> <!-- CAN'T EXTRACT SEE BUG https://github.com/rust-lang/mdBook/issues/1127 -->
 > ```rust
 > # #[derive(Debug,Copy,Clone)]
 > # struct Point {
@@ -120,8 +145,7 @@ być w stanie napisać program przedstawiony w listingu 5-14.
 
 <span class="caption">Listing 5-14: Użycie jeszcze nieistniejącej metody `can_hold`</span>
 
-Skoro wymiary
-`rect2` są mniejsze od wymiarów `rect1`, a `rect3` jest szerszy
+Skoro wymiary `rect2` są mniejsze od wymiarów `rect1`, a `rect3` jest szerszy
 od `rect1`, spodziewamy się następującego wyniku wykonania powyższej funkcji `main`.
 
 ```text
@@ -160,17 +184,12 @@ Te parametry niczym nie różnią się od parametrów funkcji.
 
 ### Funkcje powiązane
 
-Używanie bloków `impl` niesie za sobą kolejną przydatną funkcję, a mianowicie
-pozwala nam na definiowanie funkcji w blokach `impl`, które *nie* przyjmują `self` jako parametru. Są to
-tzw. *funkcje powiązane* (*ang. associated functions*), ponieważ mają bliski związek ze strukturami.
-To jednak nadal są funkcje, a nie metody, bo nie mogą wykonywać operacji na
-instancjach struktury. Już miałeś okazję użyć funkcji powiązanej, była nią `String::from`.
+Wszystkie funkcje zdefiniowane w bloku `impl` nazywamy *funkcjami powiązanymi* (*ang. associated functions*).
+Można definiować funkcje powiązane, które *nie* mają parametru `self` (więc nie są metodami), bo nie potrzebują do działania instancji typu. Już mialiśmy okazję używać funkcji powiązanej. Była nią `String::from` zdefiniowana dla typu `String`.
 
-Funkcje powiązane są często używane w konstruktorach zwracających nową
-instancję pewnej struktury. Na przykład, możemy stworzyć funkcję powiązaną,
-która przyjmie tylko jeden wymiar jako parametr i przypisze go zarówno do wysokości i szerokości
-ułatwiając stworzenie kwadratowego `Rectangle` zamiast podawania dwa razy
-tej samej wartości:
+Funkcje powiązane są często wykorzystywane do zdefiniowania konstruktorów zwracających nową
+instancję pewnej struktury. Zwykle nazywa sie je `new`, ale `new` nie jest specjalną nazwą wbudowaną w język.
+Na przykład, możemy stworzyć funkcję powiązaną `square`, która przyjmie tylko jeden wymiar jako parametr i przypisze go zarówno do wysokości i szerokości, umożliwiając stworzenie kwadratowego `Rectangle` bez podawania dwa razy tej samej wartości:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -178,15 +197,18 @@ tej samej wartości:
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
-Aby wywołać funkcję powiązaną używamy składni `::` po nazwie struktury; np.
+The `Self` keywords in the return type and in the body of the function are
+aliases for the type that appears after the `impl` keyword, which in this case
+is `Rectangle`.
+
+Aby wywołać funkcję powiązaną używamy składni `::` po nazwie struktury, np.
 `let sq = Rectangle::square(3)`. Ta funkcja znajduje się w przestrzeni nazw
 struktury: składnia `::` używana jest zarówno w kontekście funkcji powiązanych,
-ale i też w przestrzeniach nazw modułów. Moduły omówimy w rozdziale 7.
+ale i też w przestrzeniach nazw modułów. Moduły omówimy w [rozdziale 7][modules]<!-- ignore -->.
 
 ### Wiele bloków `impl`
 
-Każda struktura może mieć wiele bloków `impl`. Dla przykładu, kod w listingu 5-15 jest równoważny z kodem w listingu 5-16
-zawierającym każdą metodę w innym bloku `impl`.
+Każda struktura może mieć wiele bloków `impl`. Dla przykładu, kod w listingu 5-15 jest równoważny z kodem w listingu 5-16 zawierającym każdą metodę w innym bloku `impl`.
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
@@ -201,12 +223,14 @@ omówimy w rozdziale 10, w którym omówimy typy uniwersalne i cechy.
 ## Podsumowanie
 
 Dzięki strukturom możesz tworzyć własne typy, potrzebne do rozwiązania problemów w Twojej domenie. 
-Kiedy używasz struktury grupujesz powiązane elementy danych,
-a każdemu elementowi nadajesz nazwę, co sprawia, że twój kod staje się przejrzysty. Metody pozwalają określić
-zachowanie instancji struktur, a funkcje powiązane pozwalają umieścić funkcję
-w przestrzeni nazw danej struktury bez wymogu dostępu do istniejącej instancji struktury.
+Kiedy używasz struktury grupujesz powiązane elementy danych, a każdemu elementowi nadajesz nazwę, co sprawia, że twój kod staje się przejrzysty. 
+W blokach `impl` można zdefiniować funkcje powiązane z naszym typem, których szczególnym rodzajem są metody pozwalające określić zachowanie instancji struktury.
 
 Ale struktury to nie jest jedyny sposób na tworzenie własnych typów:
-poznamy kolejną funkcjonalność Rusta - enumeracje, czyli kolejne
-niezbędne narzędzie w twojej kolekcji.
+poznamy kolejną funkcjonalność Rusta - enumeracje, czyli kolejne niezbędne narzędzie w twojej kolekcji.
+
+[enums]: ch06-00-enums.html
+[trait-objects]: ch17-02-trait-objects.md
+[public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
+[modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 

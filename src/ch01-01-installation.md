@@ -6,8 +6,7 @@ wersjami Rusta i powiązanych narzędzi. Będzie do tego potrzebne połączenie 
 internetem.
 
 > Uwaga: Jeśli z jakiegoś powodu wolisz nie używać narzędzia `rustup`, odwiedź
-> [Stronę instalacyjną Rusta](https://www.rust-lang.org/install.html),
-> aby dowiedzieć się, jakie masz inne opcje.
+> [Stronę opisującą inne metody instalacji Rusta][otherinstall].
 
 Wykonanie kolejnych kroków spowoduje zainstalowanie najnowszej, stabilnej wersji
 kompilatora Rusta. Stabilność Rusta gwarantuje, że wszystkie przykłady z
@@ -45,7 +44,8 @@ zobaczysz na ekranie taki tekst:
 Rust is installed now. Great!
 ```
 
-Następnie będziesz potrzebować programu linkującego (*linkera*). Prawdopodobnie
+Będziesz też potrzebować programu linkującego (*linkera*), którego Rust używa do
+złączenia wyników kompilowania w jeden plik. Prawdopodobnie
 masz już taki zainstalowany, ale jeżeli przy próbie kompilacji programu Rusta
 uzyskasz błędy informujące, że nie można uruchomić linkera, oznacza to, że w
 danym systemie linker nie jest zainstalowany i konieczna jest jego ręczna
@@ -55,19 +55,32 @@ ewentualną instalację kompilatora C. Wiele popularnych pakietów Rusta korzyst
 kodu C i wymaga również kompilatora C. Z tego względu jego instalacja w tym
 momencie może być zasadna.
 
+On macOS, you can get a C compiler by running:
+
+```console
+$ xcode-select --install
+```
+
+Linux users should generally install GCC or Clang, according to their
+distribution’s documentation. For example, if you use Ubuntu, you can install
+the `build-essential` package.
+
+
 ### Instalacja `rustup` pod Windowsem
 
 Z poziomu Windowsa, odwiedź stronę
 [https://www.rust-lang.org/tools/install][install] i kieruj się instrukcjami
 instalacji Rusta. W którymś momencie procesu otrzymasz komunikat informujący, że
-będziesz również potrzebować narzędzi budowania C++ dla Visual Studio 2013 lub
-nowszego. Najprościej jest w tym celu zainstalować
-[narzędzia budowania dla Visual Studio 2019][visualstudio].
-When asked which workloads to install make sure "C++ build tools" is selected
-and that the Windows 10 SDK and the English language pack components are included.
+będziesz również potrzebować narzędzi budowania MSVC dla Visual Studio 2013 lub
+nowszego.
 
-[install]: https://www.rust-lang.org/tools/install
-[visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+To acquire the build tools, you’ll need to install [Visual Studio
+2022][visualstudio]. When asked which workloads to install, include:
+
+* “Desktop Development with C++”
+* The Windows 10 or 11 SDK
+* The English language pack component, along with any other language pack of
+  your choosing
 
 Dalsza część książki będzie zawierać polecenia działające zarówno w *cmd.exe*
 jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaśnione.
@@ -87,6 +100,7 @@ Aby odinstalować Rusta oraz `rustup`, w terminalu uruchom skrypt dezinstalacji:
 $ rustup self uninstall
 ```
 
+
 ### Rozwiązywanie problemów
 
 Aby sprawdzić, czy Rust jest prawidłowo zainstalowany, otwórz terminal i wpisz
@@ -103,19 +117,30 @@ stabilnej, w formacie podobnym do poniższego:
 rustc x.y.z (abcabcabc rrrr-mm-dd)
 ```
 
-Jeśli widzisz coś takiego, Rust zainstalował się prawidłowo! Jeśli nie, a
-pracujesz pod Windowsem, sprawdź, czy Rust został dodany do zmiennej
-środowiskowej `%PATH%`. Jeżeli wciąż coś nie działa, jest kilka miejsc, w
-których możesz uzyskać pomoc. Najłatwiej na
-[oficjalnym kanale Rusta na Discordzie][discord]. 
-Tam możesz czatować z innymi Rustowcami (*Rustaceans - od angielskiego terminu
-“crustaceans” - “skorupiaki” - przyp. tłum.*) (taką wspólną ksywką się
-określamy), którzy mogą ci pomóc. Do innych świetnych źródeł należy [forum
-użytkowników][users] oraz [Stack Overflow][stackoverflow].
+Jeśli widzisz coś takiego, Rust zainstalował się prawidłowo! Jeśli nie, to sprawdź
+czy Rust został dodany do zmiennej środowiskowej `%PATH%`.
 
-[discord]: https://discord.gg/rust-lang
-[users]: https://users.rust-lang.org/
-[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
+In Windows CMD, use:
+
+```console
+> echo %PATH%
+```
+
+In PowerShell, use:
+
+```powershell
+> echo $env:Path
+```
+
+In Linux and macOS, use:
+
+```console
+$ echo $PATH
+```
+
+If that’s all correct and Rust still isn’t working, there are a number of
+places you can get help. Find out how to get in touch with other Rustaceans (a
+silly nickname we call ourselves) on [the community page][community].
 
 ### Lokalna dokumentacja
 
@@ -126,3 +151,10 @@ przeglądarce.
 Za każdym razem, kiedy przytoczone są typ lub funkcja z biblioteki standardowej,
 a nie masz pewności co robią lub jak ich użyć, użyj dokumentacji API
 (Interfejs Programowania Aplikacji), aby się dowiedzieć.
+
+
+[otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[install]: https://www.rust-lang.org/tools/install
+[visualstudio]: https://visualstudio.microsoft.com/downloads/
+[community]: https://www.rust-lang.org/community
+

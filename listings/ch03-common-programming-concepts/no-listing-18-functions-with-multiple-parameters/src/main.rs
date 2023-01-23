@@ -1,8 +1,7 @@
 fn main() {
-    another_function(5, 6);
+    print_labeled_measurement(5, 'h');
 }
 
-fn another_function(x: i32, y: i32) {
-    println!("Wartość x wynosi: {}", x);
-    println!("Wartość y wynosi: {}", y);
+fn print_labeled_measurement(value: i32, unit_label: char) {
+    println!("Wynik pomiaru: {value}{unit_label}");
 }

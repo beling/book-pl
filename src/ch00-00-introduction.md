@@ -40,7 +40,7 @@ deweloperskie:
   dodawanie, kompilowanie i zarządzanie zależnościami bezbolesnym i spójnym
   procesem w obrębie ekosystemu Rusta.
 * Rustfmt zapewnia spójny styl kodu wśród deweloperów.
-* Serwer języka Rust zapewnia w konkretnych Zintegrowanych Środowiskach
+* Serwer języka Rust (Rust Language Server) zapewnia w konkretnych Zintegrowanych Środowiskach
   Programistycznych (IDE) auto-uzupełnianie oraz ostrzeżenia inline o błędach.
 
 Korzystając z tych oraz innych narzędzi w ekosystemie Rusta, deweloperzy mogą
@@ -58,7 +58,7 @@ nowym.
 
 ### Firmy
 
-W setkach dużych i małych firm używa się roboczo Rusta do różnych zadań, w
+W setkach dużych i małych firm używa się Rusta do różnych zadań, w
 poczet których można zaliczyć: narzędzia linii poleceń, usługi sieciowe,
 narzędzia w DevOps, urządzenia wbudowane, analizę i przetwarzanie audio i video,
 kryptowaluty, bioinformatykę, silniki wyszukiwarek, aplikacje w Internecie
@@ -119,9 +119,8 @@ world!” oraz jak używać Cargo - menedżera paczek i narzędzie budowania Rus
 Rozdział 2 jest praktycznym wprowadzeniem do języka Rust. Poszczególne pojęcia
 omawiamy tu ogólnie, podczas gdy szczegóły zostaną wyjaśnione w późniejszych
 rozdziałach. Jeżeli chcesz od razu pobrudzić sobie ręce, rozdział 2 jest do tego
-idealnym miejscem. W pierwszej chwili możesz zechcieć przeskoczyć do rozdziału
-3, w którym omawiane są funkcje języka Rust podobne do tych z innych języków
-programowania, a następnie prosto do rozdziału 4, aby nauczyć się systemu
+idealnym miejscem. W rozdziale 3 omawiane są funkcje języka Rust podobne do tych z innych języków
+programowania. Z rozdziału 4 można nauczyć się systemu
 własności w Ruście. Jeśli jednak należysz do szczególnie skrupulatnych
 czytelników, którzy wolą poznać każdy szczegół przed przejściem do kolejnych
 tematów, możesz wstępnie pominąć rozdział 2 i przejść prosto do rozdziału 3,
@@ -171,7 +170,9 @@ Na zakończenie, kilka dodatków zawiera przydatne informacje o języku w formac
 przypominajacym książkę referencyjną. Dodatek A obejmuje słowa kluczowe Rusta,
 Dodatek B operatory i symbole, Dodatek C omawia dostarczone przez bibliotekę
 standardową cechy wyprowadzane, natomiast Dodatek D - kilka przydatnych narzędzi
-deweloperskich, a Dodatek E wyjaśnia koncepcję edycji Rusta.
+deweloperskich, a Dodatek E wyjaśnia koncepcję edycji Rusta. W dodatku F można
+znaleźć tłumaczenia książki, a w dodatku G zajmiemy się tym, jak powstaje Rust
+i czym jest Rust Nightly.
 
 Nie ma złego sposobu na czytanie tej ksiażki - jeśli masz ochotę skakać w przód,
 proszę bardzo! Powrót do wcześniejszych rozdziałów może okazać się konieczny,
@@ -188,12 +189,11 @@ może się nie skompilować. Koniecznie przeczytaj okalający go tekst aby
 sprawdzić, czy dany kod przy próbie kompilacji powinien zwrócić błąd. Również
 Ferris pomoże ci rozpoznać kod, który nie powinien zadziałać:
 
-| Ferris                                                                 | Znaczenie                                 |
-|------------------------------------------------------------------------|-------------------------------------------|
-| <img src="img/ferris/does_not_compile.svg" class="ferris-explain"/>    | Ten kod się nie kompiluje!                |
-| <img src="img/ferris/panics.svg" class="ferris-explain"/>              | Ten kod panikuje!                         |
-| <img src="img/ferris/unsafe.svg" class="ferris-explain"/>              | Ten blok kodu zawiera blok niebezpieczny. |
-| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain"/>| Ten kod nie wywołuje zamierzonego efektu. |
+| Ferris                                                                                                           | Znaczenie                                          |
+|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| <img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris with a question mark"/>            | Ten kod się nie kompiluje!                      |
+| <img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris throwing up their hands"/>                   | Ten kod panikuje!                               |
+| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris with one claw up, shrugging"/> | Ten kod nie daje pożądanego zachowania.         |
 
 W większości przypadków pokierujemy cię do uzykania prawidłowej wersji kodu,
 który pierwotnie się nie kompiluje.
@@ -203,7 +203,7 @@ który pierwotnie się nie kompiluje.
 Pliki źródłowe, z których wygenerowana została niniejsza książka, można znaleźć
 na [GitHubie][book].
 
-[book]: https://github.com/paytchoo/book-pl/tree/master/src
+[book]: https://github.com/beling/book-pl/tree/master/src
 
 ## Informacje od tłumaczy
 

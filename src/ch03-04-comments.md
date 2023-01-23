@@ -1,10 +1,6 @@
 ## Komentarze
 
-Wszyscy programiści starają się tworzyć czytelny i zrozumiały kod,
-jednak czasem potrzebne jest dodatkowe wyjaśnienie. W takich wypadkach
-programiści umieszczają w kodzie notki lub *komentarze*, które mimo że
-są ignorowane przez kompilator, mogą okazać się przydatne dla osób
-czytających kod.
+Wszyscy programiści starają się tworzyć czytelny i zrozumiały kod, jednak czasem potrzebne jest dodatkowe wyjaśnienie. W takich wypadkach programiści umieszczają w kodzie notki lub *komentarze*, które mimo że są ignorowane przez kompilator, mogą okazać się przydatne dla osób czytających kod.
 
 Oto prosty komentarz:
 
@@ -42,5 +38,6 @@ fn main() {
 }
 ```
 
-Rust posiada też wbudowany inny typ komentarzy, komentarze dokumentacji,
-które omówimy w sekcji "Publikacja skrzyni w Crates.io" rozdziału 14.
+Rust posiada też wbudowany inny typ komentarzy, komentarze dokumentacji, które omówimy w sekcji ["Publikacja skrzyni w Crates.io"][publishing]<!-- ignore --> rozdziału 14.
+
+[publishing]: ch14-02-publishing-to-crates-io.html

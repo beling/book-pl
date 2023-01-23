@@ -22,7 +22,7 @@ Aby je zainstalować, wpisz:
 [rust-mdbook]: https://github.com/rust-lang/rust/blob/master/src/tools/rustbook/Cargo.toml
 
 ```bash
-$ cargo install mdbook --vers [numer-wersji]
+$ cargo install mdbook --version <numer_wersji>
 ```
 
 ## Budowanie
@@ -61,23 +61,16 @@ Aby uruchomić testy:
 $ mdbook test
 ```
 
-## Graphviz dot
-
-Używamy narzędzia [Graphviz](http://graphviz.org/) do utworzenia niektórych
-diagramów w książce. Źródła tych plików znajdują się w podfolderze `dot`. Aby
-przekonwertować plik `dot`, przykładowo `dot/trpl-01.dot` na format `svg`,
-wpisz:
-
-```bash
-$ dot dot/trpl04-01.dot -Tsvg > src/img/trpl04-01.svg
-```
-
-W wygenerowanym pliku SVG usuń atrybuty `width` i `height` z elementu `svg` i
-ustaw atrybut `viewBox` na wartość `0.00 0.00 1000.00 1000.00` lub inne, o ile
-nie przytną one rysunku.
-
-
 ## Pomoc w tłumaczeniu
-
 Chętnie przyjmiemy każdą pomoc! Przed zaczynaniem tłumaczenia zapoznaj się z
 informacjami w pliku [CONTRIBUTING.md](./CONTRIBUTING.md)!
+
+## Sprawdzanie pisowni
+Aby przeskanować pliki źródłowe w poszukiwaniu błędów ortograficznych, możesz użyć skryptu `spellcheck.sh`.
+dostępnego w katalogu `ci`. Potrzebuje on słownika poprawnych słów,
+który jest dostarczany w `ci/dictionary.txt`. Jeśli skrypt daje fałszywy
+pozytywny (powiedzmy, że użyłeś słowa `BTreeMap`, które skrypt uważa za niepoprawne),
+musisz dodać to słowo do `ci/dictionary.txt` (zachowaj posortowaną kolejność dla
+spójności).
+
+Uwaga: metoda nie została sprawdzona z polskojęzyczną wersją książki. Skrpyt może wymagać przystosowania.

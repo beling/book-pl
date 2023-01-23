@@ -1,21 +1,13 @@
 ## Zmienne i ich modyfikowalność
 
-Tak jak wspomniano w rozdziale 2, zmienne są domyślnie niemodyfikowalne
-(*immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do
-tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty
-współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
-uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego
-Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu
-czasem możesz chcieć zrezygnować z tej własciwości.
+Tak jak wspomniano w rozdziale [“Storing Values with
+Variables”][storing-values-with-variables]<!-- ignore --> , zmienne są domyślnie niemodyfikowalne (niemutowalne, ang. *immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
+uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu czasem możesz chcieć zrezygnować z tej własciwości.
 
-Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy,
-nie możesz później zmienić tej wartości. Aby to zobrazować, utwórzmy nowy
-projekt o nazwie *zmienne* w folderze *projects* korzystając z komendy
+Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy, nie można później zmienić tej wartości. Aby to zobrazować, utworzymy nowy projekt o nazwie *zmienne* w folderze *projects* korzystając z komendy
 `cargo new --bin zmienne`.
 
-Następnie w nowo utworzonym folderze *zmienne*, odnajdź i otwórz *src/main.rs*,
-zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się
-poprawnie:
+Następnie w nowo utworzonym folderze *zmienne*, odnajdź i otwórz *src/main.rs*, zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się poprawnie:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -23,44 +15,24 @@ poprawnie:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/src/main.rs}}
 ```
 
-Zapisz zmiany i uruchom program, używając `cargo run`. Powinieneś/Powinnaś otrzymać
-następujący komunikat o błędzie:
+Zapiszmy zmiany i uruchommy program, używając `cargo run`. Powinniśmy otrzymać następujący komunikat o błędzie związanym z niemutowalnością:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-01-variables-are-immutable/output.txt}}
 ```
 
-Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich
-programach. Mimo że błędy zwracane przez kompilator mogą być denerwujące,
-świadczą jedynie o tym, że twój program jeszcze nie działa prawidłowo — nie
-wykonuje w bezpieczny sposób tego, co chcesz, by robił; *nie* oznaczają,
-że nie jesteś dobrym programistą(-tką)! Nawet doświadczeni Rustowcy nadal napotykają
-błędy podczas kompilacji.
+Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich programach. Mimo że błędy kompilacji mogą być denerwujące, świadczą jedynie o tym, że twój program jeszcze nie działa prawidłowo. Nie wykonuje w bezpieczny sposób tego, co chcesz, by robił. Tw błędy *nie* oznaczają jednak, że nie jesteś dobrym programistą! Nawet doświadczeni Rustowcy nadal napotykają błędy podczas kompilacji.
 
-Powyższy komunikat informuje cię, że przyczyną zaistniałego błędu jest to,
-że `nie możesz dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej x`,
-ponieważ próbowałeś(-aś) po raz kolejny przypisać wartość do niemodyfikowalnej
-zmiennej `x`.
+Otrzymany komunikat błedu `` cannot assign twice to immutable variable `x``` oznacza, że nie można dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej `x`.
+Pierwotnie nadanej wartości nie można zmienić.
 
-To ważne, że napotykamy błędy w trakcie kompilacji, gdy próbujemy zmienić
-wartość, którą wcześniej określiliśmy jako niemodyfikowalną, gdyż takie
-działanie może prowadzić do podatności i błędów w programie. Jeżeli pierwsza
-część kodu opiera się na założeniu, że dana wartość nigdy nie ulegnie zmianie,
-a inna część kodu zmienia tę wartość, pierwsza część kodu może przestać
-wykonywać swoje zadanie poprawnie. Przyczyna tego rodzaju błędów może być
-trudna do zidentyfikowania po wystąpieniu, szczególnie gdy druga część kodu
-zmienia daną wartość tylko *czasami*.
+To ważne, że napotykamy błędy w trakcie kompilacji, gdy próbujemy zmienić wartość, którą wcześniej określiliśmy jako niemodyfikowalną, gdyż takie działanie może prowadzić do podatności i błędów w programie. Jeżeli pierwsza część kodu opiera się na założeniu, że dana wartość nigdy nie ulegnie zmianie, a inna część kodu zmienia tę wartość, pierwsza część kodu może przestać wykonywać swoje zadanie poprawnie. Przyczyna tego rodzaju błędów może być trudna do zidentyfikowania po wystąpieniu, szczególnie gdy druga część kodu zmienia daną wartość tylko *czasami*.
 
-W Ruście, kompilator gwarantuje, że jeżeli ustawimy wartość na niemodyfikowalną,
-to naprawdę nigdy nie ulegnie zmianie. Oznacza to, że czytając i pisząc kod,
-nie musisz ciągle sprawdzać gdzie i jak wartość może się zmienić. W związku
+W Ruście, kompilator gwarantuje, że jeżeli ustawimy wartość na niemodyfikowalną, to naprawdę nigdy nie ulegnie zmianie. Oznacza to, że czytając i pisząc kod, nie musisz ciągle sprawdzać gdzie i jak wartość może się zmienić. W związku
 z tym tworzony przez ciebie kod staje się łatwiejszy do zrozumienia.
 
-Jednak modyfikowalność może być też bardzo użyteczna. Zmienne są tylko
-domyślnie niemodyfikowalne; tak jak zrobiłeś(-aś) to w rozdziale 2, możesz uczynić
-je modyfikowalnymi, dodając `mut` przed nazwą zmiennej. Poza tym, że dzięki
-dodaniu `mut` możliwa jest modyfikacja wartości zmiennej, jest ono też wyraźnym
-sygnałem dla osób, które będą czytały kod w przyszłości — informuje, że inne
+Jednak modyfikowalność może być też bardzo użyteczna. Zmienne są tylko domyślnie niemodyfikowalne. Można uczynić
+je modyfikowalnymi, dodając `mut` przed nazwą zmiennej. Poza tym, że dzięki dodaniu `mut` możliwa jest modyfikacja wartości zmiennej, jest ono też wyraźnym sygnałem dla osób, które będą czytały kod w przyszłości. Informuje, że inne
 części kodu będą modyfikować wartość danej zmiennej.
 
 Na przykład, zmieńmy kod w *src/main.rs* na poniższy:
@@ -77,73 +49,43 @@ Gdy teraz uruchomimy program, otrzymamy:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-02-adding-mut/output.txt}}
 ```
 
-Możemy zmienić wartość, do której odwołuje się `x` z `5` na `6`, dzięki
-wykorzystaniu `mut`. W niektórych przypadkach będziesz chciał uczynić zmienną
-modyfikowalną, ponieważ sprawi to, że pisanie kodu stanie się wygodniejsze niż
+Możemy zmienić wartość, do której odwołuje się `x` z `5` na `6`, dzięki wykorzystaniu `mut`. W niektórych przypadkach będziesz chciał uczynić zmienną modyfikowalną, ponieważ sprawi to, że pisanie kodu stanie się wygodniejsze niż
 gdyby tworzono go tylko z użyciem niemodyfikowalnych zmiennych.
 
-Oprócz zapobiegania błędom należy też rozważyć wiele innych kwestii i
-wynikających z nich kompromisów. Przykładowo, gdy wykorzystujesz ogromne
-struktury danych, modyfikacja instancji może okazać się szybsza niż kopiowanie
-i zwracanie nowo utworzonych instancji. W przypadku mniejszych struktur danych,
-tworzenie nowych instancji i zapisywanie ich bardziej w stylu programowania
-funkcyjnego może pomóc w łatwiejszym zrozumieniu działania kodu, które z kolei
-może okazać się satysfakcjonującą rekompensatą za zmniejszenie wydajności.
+### Stałe
 
-### Różnice między zmiennymi i stałymi
+Brak możliwości modyfikacji wartości zmiennej może przypominać ci inne rozwiązanie programistyczne, które wykorzystuje wiele języków programowania:
+stałe (*constants*). Podobnie jak zmienne niemodyfikowalne, stałe to wartości, których nie można zmienić, przypisane do nazw, ale występuje też kilka różnic między stałymi i zmiennymi.
 
-Brak możliwości modyfikacji wartości zmiennej może przypominać ci inne
-rozwiązanie programistyczne, które wykorzystuje wiele języków programowania:
-stałe (*constants*). Podobnie jak zmienne niemodyfikowalne, stałe to wartości,
-których nie można zmienić, przypisane do nazw, ale występuje też kilka
-różnic między stałymi i zmiennymi.
+Po pierwsze, nie możesz używać `mut` do stałych. Stałe są nie tylko domyślnie niemodyfikowalne. One są zawsze niemodyfikowalne.
+Do deklaracji stałej wykorzystujemy słowo kluczowe `const` zamiast `let` i *zawsze* musimy określić typ wartości. Typy danych i ich adnotacje omówimy już niedługo, w następnym podrozdziale ["Typy Danych"][data-types]<!-- ignore-->,
+więc nie przejmuj się na razie szczegółami. Po prostu zapamiętaj, że zawsze musisz nadać stałej typ danych.
 
-Po pierwsze, nie możesz używać `mut` do stałych. Stałe są nie tylko domyślnie
-niemodyfikowalne — są zawsze niemodyfikowalne.
+Stałe mogą być deklarowane w każdym zasięgu, włączając w to zasięg globalny, dzięki czemu są bardzo użyteczne w przypadku wartości, z których korzysta wiele części kodu.
 
-Do deklaracji stałej wykorzystujesz słowo kluczowe `const` zamiast `let`
-i *zawsze* musisz określić typ wartości. Typy danych i ich adnotacje omówimy
-już niedługo, w następnym podrozdziale ["Typy Danych"][data-types]<!-- ignore-->,
-więc nie przejmuj się na razie szczegółami. Po prostu zapamiętaj, że zawsze musisz nadać stałej
-typ danych.
+Ostatnia różnica to, że stałym można nadać wartości tylko za pomocą stałych wyrażeń, a nie takich obliczanych dopiero trakcie działania programu.
 
-Stałe mogą być deklarowane w każdym zakresie, włączając w to zakres globalny,
-dzięki czemu są bardzo użyteczne w przypadku wartości, z których korzysta
-wiele części kodu.
-
-Ostatnia różnica to, że stałymi mogą być tylko wyrażenia stałe, a nie wartości
-zwracane przez funkcje lub też inne wartości wytworzone podczas działania
-programu.
-
-Oto przykład deklaracji stałej, nazwa stałej to `MAX_POINTS`, a jej wartość
-została ustawiona na 100,000. Konwencja nazewnicza Rusta dla stałych
-zobowiązuje do wykorzystywanie tylko dużych liter z podkreśleniami między
-słowami:
+Oto przykład deklaracji stałej:
 
 ```rust
-const MAX_POINTS: u32 = 100_000;
+const TRZY_GODZINY_W_SEKUNDACH: u32 = 60 * 60 * 3;
 ```
 
-Stałe są dostępne przez cały okres działania programu w zakresie, w którym
-zostały zadeklarowane, stają się tym samym dobrym wyborem dla wartości w twojej
-domenie aplikacji, które mogą być wykorzystywane przez różne elementy programu,
-takich jak maksymalna liczba punktów, które może uzyskać gracz, czy też prędkość
-światła.
+Nazwą stałej jest `TRZY_GODZINY_W_SEKUNDACH`, zaś jej wartością jest iloczyn: 60 (liczba sekund w minucie), kolejnej 60 (liczba minut w godzienie) i 3 (liczba godzin którą chcemy odliczyć w programie). Konwencja nazewnicza Rusta dla stałych
+zobowiązuje do wykorzystywanie tylko dużych liter z podkreśleniami między słowami.
+The compiler is able to evaluate a limited set of operations at compile time, which lets us choose to write out this value in a way that’s easier to understand and verify, rather than setting this constant to the value 10,800. See the [Rust Reference’s section on constant evaluation][const-eval] for more information on what operations can be used when declaring constants.
 
-Nazywanie predefiniowanych wartości używanych przez twój program stałymi jest
-użyteczne w przekazywaniu znaczenia wykorzystywanych wartości dla przyszłych
-współtwórców kodu. Pomaga to w utrzymaniu predefiniowanych wartości w jednym
+Stałe są dostępne przez cały okres działania programu w zasięgu, w którym zostały zadeklarowane, stają się tym samym dobrym wyborem dla wartości w twojej domenie aplikacji, które mogą być wykorzystywane przez różne elementy programu,
+takich jak maksymalna liczba punktów, które może uzyskać gracz, czy też prędkość światła.
+
+Nazywanie predefiniowanych wartości używanych przez twój program stałymi jest użyteczne w przekazywaniu znaczenia wykorzystywanych wartości dla przyszłych współtwórców kodu. Pomaga to w utrzymaniu predefiniowanych wartości w jednym
 miejscu i ułatwia ich późniejsze uaktualnianie.
 
 ### Przesłanianie
 
-Tak jak już pewnie zauważyłeś/aś w poradniku do gry zgadywanki w sekcji
-["Porównywanie odpowiedzi gracza z sekretnym numerem"][comparing-the-guess-to-the-secret-number]<!-- ignore -->
-w rozdziale 2, mogłeś(-aś)
-zadeklarować nową zmienną o takiej samej nazwie, jak dawna zmienna, a nowa
-zmienna przesłania dawną zmienną. Rustowcy powiedzą, że pierwsza zmienna jest
-*przesłoniona* przez drugą, co oznacza, że przy wywołaniu zmiennej otrzymujemy
-wartość drugiej zmiennej. Możemy przesłonić zmienną poprzez wykorzystanie tej
+Jak widzieliśmy w poradniku do gry zgadywanki w [rozdziale 2][comparing-the-guess-to-the-secret-number]<!-- ignore -->, można zadeklarować nową zmienną o takiej samej nazwie, jak miała dawna zmienna, i ta nowa zmienna przesłania dawną zmienną. Rustowcy mówią, że pierwsza zmienna jest
+*przesłoniona* przez drugą. I właśnie tą nową zmienną użyje komiplator w miejscach wystąpienia jej nazwy, aż do czasu gdy i ona nie zostanie przesłonięta, albo nie skończy się zasięg jej życia.
+Możemy przesłonić zmienną poprzez wykorzystanie tej
 samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -152,38 +94,24 @@ samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
 ```
 
-Ten program najpierw przypisuje zmiennej `x` wartość `5`. Następnie
-przesłania `x` powtarzając `let x =`, pobiera oryginalną wartość zmiennej
-i dodaje do niej `1` w wyniku czego wartość `x` to obecnie `6`. Użycie
-deklaracji `let` po raz trzeci również przesłania `x`, poprzednia wartość
-`x` zostaje pomnożona razy `2` aby finalnie nadać `x` wartość `12`. Gdy
+Ten program najpierw przypisuje zmiennej `x` wartość `5`. Następnie tworzy nową zmienną `x` powtarzając `let x =`, pobiera oryginalną wartość zmiennej i dodaje do niej `1` w wyniku czego wartość `x` to obecnie `6`. Użycie
+deklaracji `let` po raz trzeci również przesłania `x` i tworzy kolejną zmienną, której wartość ustala przemnażając poprzednią wartość przez `2` i uzyskując `12`. Gdy
 uruchomimy ten program, otrzymamy:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/output.txt}}
 ```
 
-To nie to samo, co nadanie `mut` zmiennej, gdyż jeżeli przypadkowo spróbujemy
-ponownie przypisać wartość do zmiennej, nie wykorzystując słowa kluczowego
-`let` otrzymamy błąd kompilacji. Dzięki użyciu `let`, możemy przeprowadzić
+To nie to samo, co nadanie `mut` zmiennej, gdyż jeżeli przypadkowo spróbujemy ponownie przypisać wartość do zmiennej, nie wykorzystując słowa kluczowego `let` otrzymamy błąd kompilacji. Dzięki użyciu `let`, możemy przeprowadzić
 kilka transformacji na wartości, pozostawiając przy tym zmienną niemodyfikowalną.
 
-Inna różnica między `mut` i przesłanianiem to, że za każdym razem, gdy używamy
-słowa kluczowego `let`, tworzymy nową zmienną, co oznacza, że możemy wybrać
-inny typ danych, ale ponownie użyć tej samej nazwy zmiennej. Na przykład,
-powiedzmy, że nasz program prosi użytkownika o pokazanie ilości spacji, jaka
-ma zostać umieszczona między jakimś tekstem, poprzez wpisanie tych spacji,
-ale my tak naprawdę chcemy przechowywać tę wartość jako liczbę:
+Inna różnica między `mut` i przesłanianiem to, że za każdym razem, gdy używamy słowa kluczowego `let`, tworzymy nową zmienną, co oznacza, że możemy wybrać inny typ danych, ale ponownie użyć tej samej nazwy zmiennej. Na przykład, powiedzmy, że nasz program prosi użytkownika o pokazanie ilości spacji, jaka ma zostać umieszczona między jakimś tekstem, poprzez wpisanie tych spacji, ale my tak naprawdę chcemy przechowywać tę wartość jako liczbę:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-04-shadowing-can-change-types/src/main.rs:here}}
 ```
 
-Powyższa konstrukcja jest dozwolona, gdyż pierwsza zmienna `spaces` typu
-string, to zupełnie inna zmienna niż druga zmienna `spaces` typu numerycznym,
-posiadająca tylko tę samą nazwę. Dzięki przesłanianiu nie musimy wykorzystywać
-dwóch różnych nazw np. `spaces_str` i `spaces_num`; zamiast tego, ponownie
-korzystamy z prostszej nazwy `spaces`. Jednak, jeżeli spróbowalibyśmy użyć
+Powyższa konstrukcja jest dozwolona, gdyż pierwsza zmienna `spaces` typu string, to zupełnie inna zmienna niż druga zmienna `spaces` typu numerycznego. Dzięki przesłanianiu nie musimy wykorzystywać dwóch różnych nazw np. `spaces_str` i `spaces_num`. Zamiast tego, ponownie korzystamy z prostszej nazwy `spaces`. Jednak, jeżeli spróbowalibyśmy użyć
 `mut` dla tej zmiennej otrzymalibyśmy błąd kompilacji:
 
 ```rust,ignore,does_not_compile
@@ -197,9 +125,10 @@ Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 
 ```
 
-Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom
-danych, jakich mogą być zmienne.
+Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom danych, jakich mogą być zmienne.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
 [data-types]: ch03-02-data-types.html#data-types
+[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#storing-values-with-variables
+[const-eval]: ../reference/const_eval.html

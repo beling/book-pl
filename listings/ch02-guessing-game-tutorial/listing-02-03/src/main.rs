@@ -8,10 +8,10 @@ fn main() {
     println!("Zgadnij liczbę!");
 
     // ANCHOR: ch07-04
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
     // ANCHOR_END: ch07-04
 
-    println!("Sekretna liczba to: {}", secret_number);
+    println!("Sekretna liczba to: {secret_number}");
 
     println!("Podaj swoją liczbę:");
 
@@ -21,7 +21,7 @@ fn main() {
         .read_line(&mut guess)
         .expect("Błąd wczytania linii");
 
-    println!("Wybrana przez ciebie liczba: {}", guess);
+    println!("Wybrana przez ciebie liczba: {guess}");
     // ANCHOR: ch07-04
 }
 // ANCHOR_END: ch07-04

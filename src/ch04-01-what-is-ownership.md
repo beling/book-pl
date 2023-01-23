@@ -1,26 +1,12 @@
 ## Czym jest własność?
 
-System *własności* jest w zasadzie najważniejszą cechą Rusta. Mimo, że
-funkcjonalność tę można w prosty sposób wytłumaczyć, wymusza ona poważne
-następstwa dla reszty języka.
+*Własność* to zestaw reguł, które determinują, jak program Rusta zarządza pamięcią.
+Wszystkie programy muszą kontrolować sposób wykorzystywania pamięci komputera podczas swojego działania. Niektóre języki korzystają z automatycznego systemu odśmiecania (*garbage collection*), który regularnie poszukuje fragmentów pamięci, których działający program już nie używa. W innych językach, sam programista ręcznie zajmuje i zwalnia pamięć. Rust wykorzystuje trzecie podejście: pamięć jest zarządzana przez system własności, obejmujący zestaw zasad sprawdzanych przez kompilator w trakcie kompilacji. Jeśli którakolwiek z reguł zostanie naruszona, program nie skompiluje się. Jednocześnie żaden z aspektów związanych z systemem własności nie spowalnia działania programu.
 
-Wszystkie programy muszą kontrolować sposób wykorzystywania pamięci komputera
-podczas swojego działania. Niektóre języki korzystają z automatycznych
-systemów odśmiecania (*garbage collection*), które stale poszukują fragmentów
-pamięci, których działający program już nie używa. W innych językach, sam
-programista ręcznie zajmuje i zwalnia pamięć. Rust wykorzystuje trzecie
-podejście: pamięć jest zarządzana przez system własności, obejmujący zestaw
-zasad sprawdzanych przez kompilator w trakcie kompilacji. W ten sposób żaden z
-aspektów związanych z systemem własności nie spowalnia działania programu.
-
-Ponieważ własność jest nowym pojęciem dla wielu programistów, przyzwyczajenie
-się do niej zabiera trochę czasu. Dobra wiadomość jest taka, że w miarę
-nabywania doświadczenia z Rustem i zasadami systemu własności, rośnie też twoja
+Ponieważ własność jest nowym pojęciem dla wielu programistów, przyzwyczajenie się do niej zabiera trochę czasu. Dobra wiadomość jest taka, że w miarę nabywania doświadczenia z Rustem i zasadami systemu własności, rośnie też twoja
 zdolność do naturalnego tworzenia bezpiecznego i wydajnego kodu. Tak trzymaj!
 
-Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozumieniu
-innych, unikatowych funkcjonalności Rusta. W tym rozdziale nauczysz się, czym
-jest własność za pomocą kilku przykładów, które skupiają się na bardzo często
+Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozumieniu innych, unikatowych funkcjonalności Rusta. W tym rozdziale nauczysz się, czym jest własność za pomocą kilku przykładów, które skupiają się na bardzo często
 spotykanej strukturze danych: łańcuchach znaków (*string*).
 
 > ### Stos i sterta
@@ -100,45 +86,35 @@ spotykanej strukturze danych: łańcuchach znaków (*string*).
 W pierwszej kolejności przyjrzyjmy się zasadom systemu własności. Miej je na
 uwadze, kiedy będziemy omawiać ilustrujące je przykłady:
 
-* Każda wartość w Ruście przyporządkowana jest do zmiennej, którą określa się
-mianem jej *właściciela*.
+* Każda wartość w Ruście ma *właściciela*.
 * W danym momencie może istnieć tylko jeden właściciel.
 * Kiedy program wychodzi poza zasięg właściciela, przechowywana wartość
 zostaje usunięta.
 
 ### Zasięg zmiennych
 
-W rozdziale 2 przebrnęliśmy przez przykład programu napisanego w Ruście. Teraz,
-kiedy znamy już podstawy składni, nie będziemy umieszczać w treści przykładów
-kodu `fn main() {`. Jeśli zatem przepisujesz kod na bieżąco, musisz ręcznie
-umieszczać zaprezentowane dalej fragmenty wewnątrz funkcji `main`. Dzięki temu, 
-przykłady będą nieco bardziej zwięzłe, pozwalając nam skupić się na istocie
-sprawy zamiast na powtarzalnych frazach.
+Teraz, kiedy znamy już podstawy składni, nie będziemy umieszczać w treści przykładów kodu `fn main() {`. Jeśli zatem przepisujesz kod na bieżąco, musisz ręcznie
+umieszczać zaprezentowane dalej fragmenty wewnątrz funkcji `main`. Dzięki temu, przykłady będą nieco bardziej zwięzłe, pozwalając nam skupić się na istocie sprawy zamiast na powtarzalnych frazach.
 
-W pierwszym przykładzie systemu własności, przyjrzymy się *zasięgowi* kilku
-zmiennych. Zasięgiem elementu nazywamy obszar programu, wewnątrz którego dany
-element zachowuje ważność. Powiedzmy, że mamy zmienną, która wygląda tak:
+W pierwszym przykładzie systemu własności, przyjrzymy się *zasięgowi* kilku zmiennych. Zasięgiem elementu nazywamy obszar programu, wewnątrz którego dany element zachowuje ważność (istnieje). Powiedzmy, że mamy zmienną, która wygląda tak:
 
 ```rust
 let s = "witaj";
 ```
 
-Zmienna `s` odnosi się do literału łańcuchowego, którego wartość jest ustalona w
-samym kodzie programu. Zmienna zachowuje ważność od miejsca, w którym ją
-zadeklarowano, do końca bieżącego *zasięgu*. Listing 4-1 zawiera komentarze
-wyjaśniające, gdzie zmienna `s` zachowuje ważność:
+Zmienna `s` odnosi się do literału łańcuchowego, którego wartość jest ustalona w samym kodzie programu. Zmienna zachowuje ważność od miejsca, w którym ją zadeklarowano, do końca bieżącego *zasięgu*. Listing 4-1 zawiera komentarze
+wyjaśniające, gdzie zmienna `s` zachowuje ważność.
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-1: Zmienna, oraz zasięg, w którym zachowuje ona
-ważność</span>
+<span class="caption">Listing 4-1: Zmienna, oraz zasięg, w którym zachowuje ona ważność</span>
 
 Innymi słowy, mamy do czynienia z dwoma istotnymi momentami w czasie:
 
-* Kiedy zmienna `s` *wchodzi w zasięg*, staje się ona ważna.
-* Zmienna pozostaje ważna, dopóki nie *wyjdzie z zasięgu*.
+* Kiedy zmienna `s` wchodzi *w* zasięg, staje się ona ważna.
+* Zmienna pozostaje ważna, dopóki nie wyjdzie *z* zasięgu.
 
 Na tę chwilę zależność między zasięgiem a ważnością zmiennych jest podobna do
 sytuacji w innych językach programowania. Posłużymy się tą wiedzą, wprowadzając
@@ -156,7 +132,7 @@ stercie . Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
 W przykładzie użyjemy typu `String`, koncentrując się na tych jego elementach,
 które odnoszą się do systemu własności. Te same elementy mają znaczenie dla
 innych złożonych typów, które dostarcza biblioteka standardowa oraz tych, które
-stworzysz sam. Typ `String` omawiany będzie dogłębnie w rozdziale 8.
+stworzysz sam. Typ `String` omawiany będzie dogłębnie w [rozdziale 8][ch8].
 
 Widzieliśmy już literały znakowe, których dane na stałe umieszczone są w treści
 programu. Takie zmienne są wygodne w użyciu, ale nieprzydatne w wielu
@@ -173,7 +149,7 @@ funkcji `from`. Wygląda to tak:
 let s = String::from("witaj");
 ```
 
-Podwójny dwukropek (`::`) jest operatorem umożliwiającym wykorzystanie funkcji
+Podwójny dwukropek `::` jest operatorem umożliwiającym wykorzystanie funkcji
 `from` z przestrzeni nazw typu `String`, zamiast konieczności utworzenia
 ogólnej funkcji o przykładowej nazwie `string_from`. Ten rodzaj składni będzie
 szerzej omawiany w sekcji [„Składnia metod”][method-syntax]<!-- ignore --> w
@@ -204,8 +180,7 @@ tekstu, musimy zaalokować pewną ilość pamięci na stercie, nieznaną podczas
 kompilacji. To oznacza, że:
 
 * O przydział pamięci należy poprosić alokator w trakcie wykonywania programu.
-* Potrzebny jest sposób na oddanie pamięci do alokatora, kiedy
-`String` nie będzie już używany.
+* Potrzebny jest sposób na oddanie pamięci do alokatora, kiedy `String` nie będzie już potrzebny.
 
 Pierwszą część robimy sami, wywołując funkcję `String::from`, której
 implementacja zawiera prośbę o wymaganą pamięć. Podobne rozwiązanie jest w
@@ -215,7 +190,7 @@ Druga część znacznie się za to różni. W językach wyposażonych w systemy
 odśmiecania (*garbage collector - GC*), GC śledzi i zwalnia pamięć, która nie
 jest już używana, a my nie musimy już o tym myśleć. W językach pozbawionych GC,
 naszą odpowiedzialnością jest identyfikowanie nieużywanej już pamięci i
-wywoływanie bezpośrednio kodu, który tę pamięć zwalnia - tak samo, jak kodu,
+bezpośrednie wywoływanie zarówno kodu, który tę pamięć zwalnia, jak i tego,
 który ją alokuje. Poprawne wykonanie tej operacji stanowiło historycznie trudny,
 programistyczny problem. Jeśli zapomnimy, marnujemy pamięć. Jeśli zrobimy to za
 wcześnie, zostaniemy z nieważną zmienną. Zrobimy to dwukrotnie - to też błąd.
@@ -230,12 +205,12 @@ przykładu z listingu 4-1, który używa typu `String` zamiast literału:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-02-string-scope/src/main.rs:here}}
 ```
 
-Istnieje oczywisty moment, w którym możemy oddać pamięć wykorzystywaną przez
+Istnieje naturalny moment, w którym można oddać pamięć wykorzystywaną przez
 nasz `String` do alokatora - kiedy kończy się zasięg zmiennej `s`.
 Kiedy zasięg jakiejś zmiennej się kończy, Rust wywołuje za nas specjalną
-funkcję. Funkcja ta nosi nazwę [`drop`] (*rzuć, upuść*), a w jej treści autor typu
+funkcję. Funkcja ta nosi nazwę [`drop`][drop]<!-- ignore --> (*porzuć, upuść*), a w jej treści autor typu
 `String` umieszcza kod zwalniający pamięć. Funkcja `drop` zostaje wywołana przez
-Rusta automatycznie, przy zamykającej kod klamrze.
+Rusta automatycznie, przy klamrze zamykającej.
 
 > Uwaga: W C++ schemat dealokacji zasobów przy końcu czasu życia jakiegoś
 > elementu jest czasem nazywany *Inicjowaniem Przy Pozyskaniu Zasobu* (*Resource
@@ -247,7 +222,10 @@ wydawać się to proste, ale program może zachować się niespodziewanie w bard
 złożonych przypadkach, kiedy chcemy, aby kilka zmiennych używało tej samej
 danej, alokowanej na stercie. Zbadajmy teraz kilka takich sytuacji.
 
-#### Metody interakcji między zmiennymi a danymi: Move (*przeniesienie*)
+<!-- Old heading. Do not remove or links may break. -->
+<a id="ways-variables-and-data-interact-move"></a>
+
+#### Przenoszenie Zmiennych i Danych
 
 Kilka zmiennych może w Ruście odnosić się do tej samej danej na różne sposoby.
 Spójrzmy na przykład w listingu 4-2, z wykorzystaniem liczby całkowitej:
@@ -282,23 +260,29 @@ pamięci przechowującej właściwy łańcuch znaków, znacznik jego długości
 grupa danych przechowywana jest na stosie. Po prawej pokazano obszar pamięci na
 stercie, który zawiera tekst.
 
-<img alt="String w pamięci" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+<img alt="Two tables: the first table contains the representation of s1 on the
+stack, consisting of its length (5), capacity (5), and a pointer to the first
+value in the second table. The second table contains the representation of the
+string data on the heap, byte by byte." src="img/trpl04-01.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Rysunek 4-1: Reprezentacja pamięci dla typu `String`
 przechowującego wartość `"witaj"` przypisaną do `s1`</span>
 
-Znacznik `length` wskazuje, ile bajtów pamięci zajmuje bieżący ciąg znaków w
-zmiennej typu `String`, natomiast `capacity` przechowuje dane o całkowitej
+`Length` (długość) wskazuje, ile bajtów pamięci zajmuje bieżący ciąg znaków w
+zmiennej typu `String`, natomiast `capacity` (pojemność) przechowuje dane o całkowitej
 ilości pamięci, jaką alokator dla tej zmiennej przydzielił. Różnica
-między `length` i `capacity` ma znaczenie, ale nie w tym kontekście. Dlatego na
-razie możemy zignorować `capacity`.
+między długością i pojemnością ma znaczenie, ale nie w tym kontekście. Dlatego na
+razie możemy zignorować pojemność.
 
 Kiedy przypisujemy `s1` do `s2`, dane ze zmiennej typu `String` zostają
 skopiowane. Dotyczy to przechowywanych na stosie: wskaźnika, długości i
 pojemności. Dane tekstowe, do których odnosi się wskaźnik nie są kopiowane.
 Innymi słowy, reprezentację pamięci w tej sytuacji ilustruje Rysunek 4-2.
 
-<img alt="s1 i s2 wskazujące tę samą wartość" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<img alt="Three tables: tables s1 and s2 representing those strings on the
+stack, respectively, and both pointing to the same string data on the heap."
+src="img/trpl04-02.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Rysunek 4-2: Reprezentacja w pamięci zmiennej `s2`
 posiadającej kopię wskaźnika i znaczników długości i pojemności zmiennej `s1`</span>
@@ -308,7 +292,9 @@ skopiował dane na stercie. Gdyby taka sytuacja miała miejsce, operacja
 `s2 = s1` mogłaby potencjalnie zająć dużo czasu, w przypadku sporej ilości
 danych na stercie.
 
-<img alt="s1 i s2 wskazujące do dwóch obszarów" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+<img alt="Four tables: two tables representing the stack data for s1 and s2,
+and each points to its own copy of string data on the heap."
+src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Rysunek 4-3: Hipotetyczny wynik operacji `s2 = s1`, gdyby
 Rust również kopiował dane sterty</span>
@@ -322,18 +308,14 @@ jako *błąd podwójnego zwolnienia* i należy do grupy bugów bezpieczeństwa
 pamięci, o których wcześniej wspomnieliśmy. Podwójne zwalnianie pamięci może
 prowadzić do jej *zepsucia*, a w efekcie potencjalnie do luk w zabezpieczeniach.
 
-Aby zapewnić bezpieczeństwo pamięci, w Ruście ma miejsce w takiej sytuacji
-jeszcze jeden szczegół. Zamiast próbować skopiować zaalokowaną pamięć, Rust
-traktuje zmienną `s1` jako nieważną i, tym samym, nie musi nic zwalniać, kiedy
-zasięg `s1` się kończy. Zobacz, co stanie się przy próbie użycia zmiennej `s1`
-po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
+Aby zapewnić bezpieczeństwo pamięci, po linii `let s2 = s1;`, zamiast próbować skopiować zaalokowaną pamięć, Rust
+traktuje zmienną `s1` jako nieważną i, tym samym, nie musi nic zwalniać, kiedy zasięg `s1` się kończy. Zobaczmy, co stanie się przy próbie użycia zmiennej `s1` po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}
 ```
 
-Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów
-przy użyciu nieważnych zmiennych:
+Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów przy użyciu nieważnych zmiennych:
 
 ```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
@@ -347,7 +329,11 @@ proces płytką kopią, używa się terminu *przeniesienie*. W tym przypadku
 moglibyśmy powiedzieć, że zmienna `s1` została *przeniesiona* do `s2`. Rysunek
 4-4 ilustruje, co tak naprawdę dzieje się w pamięci.
 
-<img alt="s1 przeniesiona do s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
+<img alt="Three tables: tables s1 and s2 representing those strings on the
+stack, respectively, and both pointing to the same string data on the heap.
+Table s1 is grayed out be-cause s1 is no longer valid; only s2 can be used to
+access the heap data." src="img/trpl04-04.svg" class="center" style="width:
+50%;" />
 
 <span class="caption">Rysunek 4-4: Reprezentacja w pamięci po unieważnieniu
 zmiennej `s1`</span>
@@ -359,7 +345,10 @@ Dodatkowo, implikuje to decyzję w budowie języka: Rust nigdy automatycznie nie
 tworzy „głębokich” kopii twoich danych. Można zatem założyć, że *automatyczny*
 proces kopiowania nie będzie drogą operacją w sensie czasu jej trwania.
 
-#### Metody interakcji między zmiennymi a danymi: Clone (*klonowanie*)
+<!-- Old heading. Do not remove or links may break. -->
+<a id="ways-variables-and-data-interact-clone"></a>
+
+#### Klonowanie zmiennych i danych
 
 W przypadku jeśli *chcemy* wykonać głęboką kopię danych ze sterty dla typu
 `String`, a nie tylko danych ze stosu, możemy skorzystać z często stosowanej
@@ -392,6 +381,7 @@ Zdaje się on przeczyć temu, czego przed chwilą się nauczyliśmy: nie mamy
 wywołania `clone`, ale zmienna `x` zachowuje ważność i nie zostaje
 przeniesiona do `y`.
 
+
 Przyczyną jest to, że typy takie jak liczby całkowite, które mają znany rozmiar
 już podczas kompilacji, są w całości przechowywane na stosie. Tworzenie kopii
 ich wartości jest więc szybkie. To oznacza, że nie ma powodu unieważniać zmienną
@@ -401,11 +391,11 @@ od zwykłego płytkiego kopiowania i można je zatem pominąć.
 
 Rust zawiera specjalną adnotację zwaną „cechą `Copy`”, którą można
 zaimplementować dla typów przechowywanych na stosie, takich jak liczby
-całkowite (więcej o cechach będzie w rozdziale 10). Jeśli dany typ ma
+całkowite (więcej o cechach będzie w [rozdziale 10][traits]<!-- ignore -->). Jeśli dany typ ma
 zaimplementowaną cechę `Copy`, zmienną, którą przypisano do innej zmiennej,
-można dalej używać. Rust nie pozwoli zaimplementować cechy
-`Copy` dla żadnego typu, dla którego całości lub jakiejkolwiek jego części
-zaimplementowano cechę `Drop`. Jeśli specyfikacja typu wymaga
+można dalej używać.
+
+Rust nie pozwoli dodać adnotacji `Copy` do żadnego typu, dla którego zaimplmentowano (lub zaimplementowano dla jakiejkolwiek jego części tego typu) cechę `Drop`. Jeśli typ wymaga
 wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
 się zasięg, a dodamy dla tego typu cechę `Copy`, uzyskamy błąd kompilacji. Aby
 nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
@@ -425,7 +415,7 @@ zasobem jej nie ma. Oto przykłady typów z zaimplementowaną cechą `Copy`:
 
 ### Własność i funkcje
 
-Semantyka przekazywania wartości do funkcji jest podobna do przypisania wartości
+Mechanika przekazywania wartości do funkcji jest podobna do przypisania wartości
 do zmiennej. Przekazanie zmiennej do funkcji przeniesie ją lub skopiuje, tak jak
 przy przypisywaniu. Listing 4-3 ukazuje przykład z kilkoma adnotacjami
 ilustrującymi, kiedy zaczynają się lub kończą zasięgi zmiennych:
@@ -448,7 +438,7 @@ tego zabraniają.
 ### Wartości zwracane i ich zasięg
 
 Wartości zwracane mogą również przenosić własność. Listing 4-4 ilustruje
-przykład z podobnymi komentarzami do tych z listingu 4-3:
+przykład z podobnymi komentarzami do tych z listingu 4-3.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -460,7 +450,7 @@ przykład z podobnymi komentarzami do tych z listingu 4-3:
 zwracanych</span>
 
 Własność zmiennej zachowuje się zawsze w ten sam sposób: przypisanie wartości do
-innej zmiennej przenosi tę wartość. Kiedy kończy się zakres zmiennej
+innej zmiennej przenosi tę wartość. Kiedy kończy się zasięg zmiennej
 zawierającej dane ze sterty, dane te zostaną usunięte przez `drop`, chyba że
 przekażemy je na własność innej zmiennej.
 
@@ -472,7 +462,7 @@ Nie mówiąc już o danych generowanych przy okazji normalnego działania funkcj
 które być może także chcielibyśmy zwrócić.
 
 Z funkcji można zwrócić kilka wartości za pomocą krotki. Listing 4-5 ilustruje
-ten przypadek:
+ten przypadek.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -482,12 +472,12 @@ ten przypadek:
 
 <span class="caption">Listing 4-5: Zwracanie własności przez argumenty</span>
 
-Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest
-powszechnie. Na szczęście dla nas, Rust wyposażony jest w funkcjonalność
-obsługującą takie przypadki, zwaną *referencje*.
+Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest powszechnie. Na szczęście dla nas, Rust wyposażony jest w *referencje*, które świetnie obsługują takie przypadki.
 
-[data-types]: ch03-02-data-types.html#typy-danych
+[data-types]: ch03-02-data-types.html#data-types
+[ch8]: ch08-02-strings.html
+[traits]: ch10-02-traits.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [method-syntax]: ch05-03-method-syntax.html#method-syntax
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
-[`drop`]: ../std/ops/trait.Drop.html#tymethod.drop
+[drop]: ../std/ops/trait.Drop.html#tymethod.drop

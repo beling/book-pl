@@ -9,11 +9,11 @@ fn main() {
     // ANCHOR: here
     impl Message {
         fn call(&self) {
-            // ciało metody byłoby tutaj zdefiniowane
+            // method body would be defined here
         }
     }
 
-    let m = Message::Write(String::from("witaj"));
+    let m = Message::Write(String::from("hello"));
     m.call();
     // ANCHOR_END: here
 }
