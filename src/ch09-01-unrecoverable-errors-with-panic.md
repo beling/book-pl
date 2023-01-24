@@ -31,7 +31,7 @@ panic occurs to make it easier to track down the source of the panic.
 
 Let’s try calling `panic!` in a simple program:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-01-panic/src/main.rs}}
@@ -64,7 +64,7 @@ from a library because of a bug in our code instead of from our code calling
 the macro directly. Listing 9-1 has some code that attempts to access an
 index in a vector beyond the range of valid indexes.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-01/src/main.rs}}
@@ -147,17 +147,6 @@ information, debug symbols must be enabled. Debug symbols are enabled by
 default when using `cargo build` or `cargo run` without the `--release` flag,
 as we have here.
 
-<<<<<<< HEAD
-In the output in Listing 9-2, line 6 of the backtrace points to the line in
-our project that’s causing the problem: line 4 of *src/main.rs*. If we don’t
-want our program to panic, the location pointed to by the first line mentioning
-a file we wrote is where we should start investigating. In listing 9-1, where
-we deliberately wrote code that would panic in order to demonstrate how to use
-backtraces, the way to fix the panic is to not request an element at index 99
-from a vector that only contains 3 items. When your code panics in the future,
-you’ll need to figure out what action the code is taking with what values to
-cause the panic and what the code should do instead.
-=======
 In the output in Listing 9-2, line 6 of the backtrace points to the line in our
 project that’s causing the problem: line 4 of *src/main.rs*. If we don’t want
 our program to panic, we should start our investigation at the location pointed
@@ -166,7 +155,6 @@ deliberately wrote code that would panic, the way to fix the panic is to not
 request an element beyond the range of the vector indexes. When your code
 panics in the future, you’ll need to figure out what action the code is taking
 with what values to cause the panic and what the code should do instead.
->>>>>>> english/main
 
 We’ll come back to `panic!` and when we should and should not use `panic!` to
 handle error conditions in the [“To `panic!` or Not to

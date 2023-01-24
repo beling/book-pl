@@ -23,13 +23,13 @@ them many times in the book. However, there is a complication when you use
 named variables in `match` expressions. Because `match` starts a new scope,
 variables declared as part of a pattern inside the `match` expression will
 shadow those with the same name outside the `match` construct, as is the case
-with all variables. In listing 18-11, we declare a variable named `x` with the
+with all variables. In Listing 18-11, we declare a variable named `x` with the
 value `Some(5)` and a variable `y` with the value `10`. We then create a
 `match` expression on the value `x`. Look at the patterns in the match arms and
 `println!` at the end, and try to figure out what the code will print before
 running this code or reading further.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-11/src/main.rs:here}}
@@ -119,7 +119,7 @@ different parts of these values. Let’s walk through each value.
 Listing 18-12 shows a `Point` struct with two fields, `x` and `y`, that we can
 break apart using a pattern with a `let` statement.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-12/src/main.rs}}
@@ -130,19 +130,6 @@ separate variables</span>
 
 This code creates the variables `a` and `b` that match the values of the `x`
 and `y` fields of the `p` struct. This example shows that the names of the
-<<<<<<< HEAD
-variables in the pattern don’t have to match the field names of the struct. But
-it’s common to want the variable names to match the field names to make it
-easier to remember which variables came from which fields.
-
-Because having variable names match the fields is common and because writing
-`let Point { x: x, y: y } = p;` contains a lot of duplication, there is a
-shorthand for patterns that match struct fields: you only need to list the name
-of the struct field, and the variables created from the pattern will have the
-same names. Listing 18-13 shows code that behaves in the same way as the code
-in listing 18-12, but the variables created in the `let` pattern are `x` and
-`y` instead of `a` and `b`.
-=======
 variables in the pattern don’t have to match the field names of the struct.
 However, it’s common to match the variable names to the field names to make it
 easier to remember which variables came from which fields. Because of this
@@ -152,9 +139,8 @@ you only need to list the name of the struct field, and the variables created
 from the pattern will have the same names. Listing 18-13 behaves in the same
 way as the code in Listing 18-12, but the variables created in the `let`
 pattern are `x` and `y` instead of `a` and `b`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-13/src/main.rs}}
@@ -176,7 +162,7 @@ In Listing 18-14, we have a `match` expression that separates `Point` values
 into three cases: points that lie directly on the `x` axis (which is true when
 `y = 0`), on the `y` axis (`x = 0`), or neither.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-14/src/main.rs:here}}
@@ -203,21 +189,13 @@ and the `y` axis, this code would only print `On the x axis at 0`.
 
 #### Destructuring Enums
 
-<<<<<<< HEAD
-We’ve destructured enums earlier in this book, for example, when we
-destructured `Option<i32>` in listing 6-5 in Chapter 6. One detail we haven’t
-mentioned explicitly is that the pattern to destructure an enum should
-correspond to the way the data stored within the enum is defined. As an
-example, in listing 18-15 we use the `Message` enum from listing 6-2 and write
-=======
 We've destructured enums in this book (for example, Listing 6-5 in Chapter 6),
 but haven’t yet explicitly discussed that the pattern to destructure an enum
 corresponds to the way the data stored within the enum is defined. As an
 example, in Listing 18-15 we use the `Message` enum from Listing 6-2 and write
->>>>>>> english/main
 a `match` with patterns that will destructure each inner value.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-15/src/main.rs}}
@@ -237,7 +215,7 @@ For struct-like enum variants, such as `Message::Move`, we can use a pattern
 similar to the pattern we specify to match structs. After the variant name, we
 place curly brackets and then list the fields with variables so we break apart
 the pieces to use in the code for this arm. Here we use the shorthand form as
-we did in listing 18-13.
+we did in Listing 18-13.
 
 For tuple-like enum variants, like `Message::Write` that holds a tuple with one
 element and `Message::ChangeColor` that holds a tuple with three elements, the
@@ -247,18 +225,10 @@ matching.
 
 #### Destructuring Nested Structs and Enums
 
-<<<<<<< HEAD
-Until now, all our examples have been matching structs or enums that were one
-level deep. Matching can work on nested items too!
-
-For example, we can refactor the code in listing 18-15 to support RGB and HSV
-colors in the `ChangeColor` message, as shown in listing 18-16.
-=======
 So far, our examples have all been matching structs or enums one level deep,
 but matching can work on nested items too! For example, we can refactor the
 code in Listing 18-15 to support RGB and HSV colors in the `ChangeColor`
 message, as shown in Listing 18-16.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-16/src/main.rs}}
@@ -301,19 +271,12 @@ parts of a value. Let’s explore how and why to use each of these patterns.
 
 #### Ignoring an Entire Value with `_`
 
-<<<<<<< HEAD
-We’ve used the underscore (`_`) as a wildcard pattern that will match any value
-but not bind to the value. Although the underscore `_` pattern is especially
-useful as the last arm in a `match` expression, we can use it in any pattern,
-including function parameters, as shown in listing 18-17.
-=======
 We’ve used the underscore as a wildcard pattern that will match any value but
 not bind to the value. This is especially useful as the last arm in a `match`
 expression, but we can also use it in any pattern, including function
 parameters, as shown in Listing 18-17.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-17/src/main.rs}}
@@ -376,23 +339,14 @@ ignored.
 #### Ignoring an Unused Variable by Starting Its Name with `_`
 
 If you create a variable but don’t use it anywhere, Rust will usually issue a
-<<<<<<< HEAD
-warning because that could be a bug. But sometimes it’s useful to create a
-variable you won’t use yet, such as when you’re prototyping or just starting a
-project. In this situation, you can tell Rust not to warn you about the unused
-variable by starting the name of the variable with an underscore. In listing
-18-20, we create two unused variables, but when we run this code, we should
-only get a warning about one of them.
-=======
 warning because an unused variable could be a bug. However, sometimes it’s
 useful to be able to create a variable you won’t use yet, such as when you’re
 prototyping or just starting a project. In this situation, you can tell Rust
 not to warn you about the unused variable by starting the name of the variable
 with an underscore. In Listing 18-20, we create two unused variables, but when
 we compile this code, we should only get a warning about one of them.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-20/src/main.rs}}
@@ -407,7 +361,7 @@ warning about not using `_x`.
 Note that there is a subtle difference between using only `_` and using a name
 that starts with an underscore. The syntax `_x` still binds the value to the
 variable, whereas `_` doesn’t bind at all. To show a case where this
-distinction matters, listing 18-21 will provide us with an error.
+distinction matters, Listing 18-21 will provide us with an error.
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-21/src/main.rs:here}}
@@ -435,7 +389,7 @@ This code works just fine because we never bind `s` to anything; it isn’t move
 With values that have many parts, we can use the `..` syntax to use specific
 parts and ignore the rest, avoiding the need to list underscores for each
 ignored value. The `..` pattern ignores any parts of a value that we haven’t
-explicitly matched in the rest of the pattern. In listing 18-23, we have a
+explicitly matched in the rest of the pattern. In Listing 18-23, we have a
 `Point` struct that holds a coordinate in three-dimensional space. In the
 `match` expression, we want to operate only on the `x` coordinate and ignore
 the values in the `y` and `z` fields.
@@ -455,7 +409,7 @@ relevant.
 The syntax `..` will expand to as many values as it needs to be. Listing 18-24
 shows how to use `..` with a tuple.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-24/src/main.rs}}
@@ -472,7 +426,7 @@ intended for matching and which should be ignored, Rust will give us an error.
 Listing 18-25 shows an example of using `..` ambiguously, so it will not
 compile.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-25/src/main.rs}}
@@ -526,19 +480,14 @@ the match guard gives us the ability to express this logic. The downside of
 this additional expressiveness is that the compiler doesn't try to check for
 exhaustiveness when match guard expressions are involved.
 
-<<<<<<< HEAD
-In listing 18-11, we mentioned that we could use match guards to solve our
-pattern-shadowing problem. Recall that a new variable was created inside the
-=======
 In Listing 18-11, we mentioned that we could use match guards to solve our
 pattern-shadowing problem. Recall that we created a new variable inside the
->>>>>>> english/main
 pattern in the `match` expression instead of using the variable outside the
 `match`. That new variable meant we couldn’t test against the value of the
 outer variable. Listing 18-27 shows how we can use a match guard to fix this
 problem.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-27/src/main.rs}}

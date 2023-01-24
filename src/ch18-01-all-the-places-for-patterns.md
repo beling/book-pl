@@ -58,17 +58,12 @@ if`, and `else if let` expressions. Doing so gives us more flexibility than a
 patterns. Also, Rust doesn't require that the conditions in a series of `if
 let`, `else if`, `else if let` arms relate to each other.
 
-<<<<<<< HEAD
-The code in listing 18-1 shows a series of checks for several conditions that
-decide what the background color should be. For this example, we’ve created
-=======
 The code in Listing 18-1 determines what color to make your background based on
 a series of checks for several conditions. For this example, we’ve created
->>>>>>> english/main
 variables with hardcoded values that a real program might receive from user
 input.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-01/src/main.rs}}
@@ -135,7 +130,7 @@ apart, a tuple as part of the `for` loop.
 <span class="caption">Listing 18-3: Using a pattern in a `for` loop to
 destructure a tuple</span>
 
-The code in listing 18-3 will print the following:
+The code in Listing 18-3 will print the following:
 
 ```console
 {{#include ../listings/ch18-patterns-and-matching/listing-18-03/output.txt}}
@@ -173,7 +168,7 @@ the expression against the pattern and assigns any names it finds. So in the
 the variable `x`.” Because the name `x` is the whole pattern, this pattern
 effectively means “bind everything to the variable `x`, whatever the value is.”
 
-To see the pattern matching aspect of `let` more clearly, consider listing
+To see the pattern matching aspect of `let` more clearly, consider Listing
 18-4, which uses a pattern with `let` to destructure a tuple.
 
 ```rust
@@ -190,7 +185,7 @@ pattern as nesting three individual variable patterns inside it.
 
 If the number of elements in the pattern doesn’t match the number of elements
 in the tuple, the overall type won’t match and we’ll get a compiler error. For
-example, listing 18-5 shows an attempt to destructure a tuple with three
+example, Listing 18-5 shows an attempt to destructure a tuple with three
 elements into two variables, which won’t work.
 
 ```rust,ignore,does_not_compile
@@ -215,7 +210,7 @@ of elements in the tuple.
 
 ### Function Parameters
 
-Function parameters can also be patterns. The code in listing 18-6, which
+Function parameters can also be patterns. The code in Listing 18-6, which
 declares a function named `foo` that takes one parameter named `x` of type
 `i32`, should by now look familiar.
 
@@ -230,7 +225,7 @@ The `x` part is a pattern! As we did with `let`, we could match a tuple in a
 function’s arguments to the pattern. Listing 18-7 splits the values in a tuple
 as we pass it to a function.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch18-patterns-and-matching/listing-18-07/src/main.rs}}

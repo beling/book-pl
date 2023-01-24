@@ -1,11 +1,7 @@
 ## Using Trait Objects That Allow for Values of Different Types
 
 In Chapter 8, we mentioned that one limitation of vectors is that they can
-<<<<<<< HEAD
-store elements of only one type. We created a workaround in listing 8-10 where
-=======
 store elements of only one type. We created a workaround in Listing 8-9 where
->>>>>>> english/main
 we defined a `SpreadsheetCell` enum that had variants to hold integers, floats,
 and text. This meant we could store different types of data in each cell and
 still have a vector that represented a row of cells. This is a perfectly good
@@ -70,7 +66,7 @@ behavior.
 Listing 17-3 shows how to define a trait named `Draw` with one method named
 `draw`:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-03/src/lib.rs}}
@@ -79,12 +75,12 @@ Listing 17-3 shows how to define a trait named `Draw` with one method named
 <span class="caption">Listing 17-3: Definition of the `Draw` trait</span>
 
 This syntax should look familiar from our discussions on how to define traits
-in Chapter 10. Next comes some new syntax: listing 17-4 defines a struct named
+in Chapter 10. Next comes some new syntax: Listing 17-4 defines a struct named
 `Screen` that holds a vector named `components`. This vector is of type
 `Box<dyn Draw>`, which is a trait object; it’s a stand-in for any type inside
 a `Box` that implements the `Draw` trait.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-04/src/lib.rs:here}}
@@ -95,9 +91,9 @@ a `Box` that implements the `Draw` trait.
 trait</span>
 
 On the `Screen` struct, we’ll define a method named `run` that will call the
-`draw` method on each of its `components`, as shown in listing 17-5:
+`draw` method on each of its `components`, as shown in Listing 17-5:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-05/src/lib.rs:here}}
@@ -111,9 +107,9 @@ parameter with trait bounds. A generic type parameter can only be substituted
 with one concrete type at a time, whereas trait objects allow for multiple
 concrete types to fill in for the trait object at runtime. For example, we
 could have defined the `Screen` struct using a generic type and a trait bound
-as in listing 17-6:
+as in Listing 17-6:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-06/src/lib.rs:here}}
@@ -138,9 +134,9 @@ Now we’ll add some types that implement the `Draw` trait. We’ll provide the
 `Button` type. Again, actually implementing a GUI library is beyond the scope
 of this book, so the `draw` method won’t have any useful implementation in its
 body. To imagine what the implementation might look like, a `Button` struct
-might have fields for `width`, `height`, and `label`, as shown in listing 17-7:
+might have fields for `width`, `height`, and `label`, as shown in Listing 17-7:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-07/src/lib.rs:here}}
@@ -161,9 +157,9 @@ types like `TextField`.
 
 If someone using our library decides to implement a `SelectBox` struct that has
 `width`, `height`, and `options` fields, they implement the `Draw` trait on the
-`SelectBox` type as well, as shown in listing 17-8:
+`SelectBox` type as well, as shown in Listing 17-8:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-08/src/main.rs:here}}
@@ -178,7 +174,7 @@ by putting each in a `Box<T>` to become a trait object. They can then call the
 `run` method on the `Screen` instance, which will call `draw` on each of the
 components. Listing 17-9 shows this implementation:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-09/src/main.rs:here}}
@@ -196,7 +192,7 @@ This concept—of being concerned only with the messages a value responds to
 rather than the value’s concrete type—is similar to the concept of *duck
 typing* in dynamically typed languages: if it walks like a duck and quacks
 like a duck, then it must be a duck! In the implementation of `run` on `Screen`
-in listing 17-5, `run` doesn’t need to know what the concrete type of each
+in Listing 17-5, `run` doesn’t need to know what the concrete type of each
 component is. It doesn’t check whether a component is an instance of a `Button`
 or a `SelectBox`, it just calls the `draw` method on the component. By
 specifying `Box<dyn Draw>` as the type of the values in the `components`
@@ -209,10 +205,10 @@ value implements a particular method at runtime or worry about getting errors
 if a value doesn’t implement a method but we call it anyway. Rust won’t compile
 our code if the values don’t implement the traits that the trait objects need.
 
-For example, listing 17-10 shows what happens if we try to create a `Screen`
+For example, Listing 17-10 shows what happens if we try to create a `Screen`
 with a `String` as a component:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-10/src/main.rs}}
@@ -246,74 +242,6 @@ you’re calling. In dynamic dispatch cases, the compiler emits code that at
 runtime will figure out which method to call.
 
 When we use trait objects, Rust must use dynamic dispatch. The compiler doesn’t
-<<<<<<< HEAD
-know all the types that might be used with the code that is using trait
-objects, so it doesn’t know which method implemented on which type to call.
-Instead, at runtime, Rust uses the pointers inside the trait object to know
-which method to call. There is a runtime cost when this lookup happens that
-doesn’t occur with static dispatch. Dynamic dispatch also prevents the compiler
-from choosing to inline a method’s code, which in turn prevents some
-optimizations. However, we did get extra flexibility in the code that we wrote
-in listing 17-5 and were able to support in listing 17-9, so it’s a trade-off
-to consider.
-
-### Object Safety Is Required for Trait Objects
-
-You can only make *object-safe* traits into trait objects. Some complex rules
-govern all the properties that make a trait object safe, but in practice, only
-two rules are relevant. A trait is object safe if all the methods defined in
-the trait have the following properties:
-
-* The return type isn’t `Self`.
-* There are no generic type parameters.
-
-The `Self` keyword is an alias for the type we’re implementing the traits or
-methods on. Trait objects must be object safe because once you’ve used a trait
-object, Rust no longer knows the concrete type that’s implementing that trait.
-If a trait method returns the concrete `Self` type, but a trait object forgets
-the exact type that `Self` is, there is no way the method can use the original
-concrete type. The same is true of generic type parameters that are filled in
-with concrete type parameters when the trait is used: the concrete types become
-part of the type that implements the trait. When the type is forgotten through
-the use of a trait object, there is no way to know what types to fill in the
-generic type parameters with.
-
-An example of a trait whose methods are not object safe is the standard
-library’s `Clone` trait. The signature for the `clone` method in the `Clone`
-trait looks like this:
-
-```rust
-pub trait Clone {
-    fn clone(&self) -> Self;
-}
-```
-
-The `String` type implements the `Clone` trait, and when we call the `clone`
-method on an instance of `String` we get back an instance of `String`.
-Similarly, if we call `clone` on an instance of `Vec<T>`, we get back an
-instance of `Vec<T>`. The signature of `clone` needs to know what type will
-stand in for `Self`, because that’s the return type.
-
-The compiler will indicate when you’re trying to do something that violates the
-rules of object safety in regard to trait objects. For example, let’s say we
-tried to implement the `Screen` struct in listing 17-4 to hold types that
-implement the `Clone` trait instead of the `Draw` trait, like this:
-
-```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch17-oop/no-listing-01-trait-object-of-clone/src/lib.rs}}
-```
-
-We would get this error:
-
-```console
-{{#include ../listings/ch17-oop/no-listing-01-trait-object-of-clone/output.txt}}
-```
-
-This error means you can’t use this trait as a trait object in this way. If
-you’re interested in more details on object safety, see [Rust RFC 255].
-
-[Rust RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
-=======
 know all the types that might be used with the code that’s using trait objects,
 so it doesn’t know which method implemented on which type to call. Instead, at
 runtime, Rust uses the pointers inside the trait object to know which method to
@@ -322,7 +250,6 @@ dispatch. Dynamic dispatch also prevents the compiler from choosing to inline a
 method’s code, which in turn prevents some optimizations. However, we did get
 extra flexibility in the code that we wrote in Listing 17-5 and were able to
 support in Listing 17-9, so it’s a trade-off to consider.
->>>>>>> english/main
 
 [performance-of-code-using-generics]:
 ch10-01-syntax.html#performance-of-code-using-generics

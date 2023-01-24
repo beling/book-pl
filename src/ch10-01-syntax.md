@@ -12,16 +12,11 @@ signature of the function where we would usually specify the data types of the
 parameters and return value. Doing so makes our code more flexible and provides
 more functionality to callers of our function while preventing code duplication.
 
-<<<<<<< HEAD
-Continuing with our `largest` function, listing 10-4 shows two functions that
-both find the largest value in a slice.
-=======
 Continuing with our `largest` function, Listing 10-4 shows two functions that
 both find the largest value in a slice. We'll then combine these into a single
 function that uses generics.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
@@ -30,7 +25,7 @@ function that uses generics.
 <span class="caption">Listing 10-4: Two functions that differ only in their
 names and the types in their signatures</span>
 
-The `largest_i32` function is the one we extracted in listing 10-3 that finds
+The `largest_i32` function is the one we extracted in Listing 10-3 that finds
 the largest `i32` in a slice. The `largest_char` function finds the largest
 `char` in a slice. The function bodies have the same code, so let’s eliminate
 the duplication by introducing a generic type parameter in a single function.
@@ -38,9 +33,9 @@ the duplication by introducing a generic type parameter in a single function.
 To parameterize the types in a new single function, we need to name the type
 parameter, just as we do for the value parameters to a function. You can use
 any identifier as a type parameter name. But we’ll use `T` because, by
-convention, type parameter names in Rust are short, often just a letter, and Rust’s
-type-naming convention is CamelCase. Short for “type,” `T` is the default
-choice of most Rust programmers.
+convention, type parameter names in Rust are short, often just a letter, and
+Rust’s type-naming convention is UpperCamelCase. Short for “type,” `T` is the
+default choice of most Rust programmers.
 
 When we use a parameter in the body of the function, we have to declare the
 parameter name in the signature so the compiler knows what that name means.
@@ -63,7 +58,7 @@ data type in its signature. The listing also shows how we can call the function
 with either a slice of `i32` values or `char` values. Note that this code won’t
 compile yet, but we’ll fix it later in this chapter.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/src/main.rs}}
@@ -95,7 +90,7 @@ We can also define structs to use a generic type parameter in one or more
 fields using the `<>` syntax. Listing 10-6 defines a `Point<T>` struct to hold
 `x` and `y` coordinate values of any type.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-06/src/main.rs}}
@@ -115,7 +110,7 @@ the fields `x` and `y` are *both* that same type, whatever that type may be. If
 we create an instance of a `Point<T>` that has values of different types, as in
 Listing 10-7, our code won’t compile.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-07/src/main.rs}}
@@ -138,7 +133,7 @@ different types, we can use multiple generic type parameters. For example, in
 Listing 10-8, we change the definition of `Point` to be generic over types `T`
 and `U` where `x` is of type `T` and `y` is of type `U`.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-08/src/main.rs}}
@@ -188,7 +183,7 @@ The `Result` enum is generic over two types, `T` and `E`, and has two variants:
 `E`. This definition makes it convenient to use the `Result` enum anywhere we
 have an operation that might succeed (return a value of some type `T`) or fail
 (return an error of some type `E`). In fact, this is what we used to open a
-file in listing 9-3, where `T` was filled in with the type `std::fs::File` when
+file in Listing 9-3, where `T` was filled in with the type `std::fs::File` when
 the file was opened successfully and `E` was filled in with the type
 `std::io::Error` when there were problems opening the file.
 
@@ -200,9 +195,9 @@ avoid duplication by using generic types instead.
 
 We can implement methods on structs and enums (as we did in Chapter 5) and use
 generic types in their definitions, too. Listing 10-9 shows the `Point<T>`
-struct we defined in listing 10-6 with a method named `x` implemented on it.
+struct we defined in Listing 10-6 with a method named `x` implemented on it.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-09/src/main.rs}}
@@ -225,18 +220,12 @@ conventional. Methods written within an `impl` that declares the generic type
 will be defined on any instance of the type, no matter what concrete type ends
 up substituting for the generic type.
 
-<<<<<<< HEAD
-We could, for example, implement methods only on `Point<f32>` instances rather
-than on `Point<T>` instances with any generic type. In listing 10-10 we use the
-concrete type `f32`, meaning we don’t declare any types after `impl`.
-=======
 We can also specify constraints on generic types when defining methods on the
 type. We could, for example, implement methods only on `Point<f32>` instances
 rather than on `Point<T>` instances with any generic type. In Listing 10-10 we
 use the concrete type `f32`, meaning we don’t declare any types after `impl`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-10/src/main.rs:here}}
@@ -252,22 +241,13 @@ point at coordinates (0.0, 0.0) and uses mathematical operations that are
 available only for floating point types.
 
 Generic type parameters in a struct definition aren’t always the same as those
-<<<<<<< HEAD
-you use in that struct’s method signatures. For example, listing 10-11 defines
-the method `mixup` on the `Point<T, U>` struct from listing 10-8. The method
-takes another `Point` as a parameter, which might have different types from the
-`self` `Point` we’re calling `mixup` on. The method creates a new `Point`
-instance with the `x` value from the `self` `Point` (of type `T`) and the `y`
-value from the passed-in `Point` (of type `W`).
-=======
 you use in that same struct’s method signatures. Listing 10-11 uses the generic
 types `X1` and `Y1` for the `Point` struct and `X2` `Y2` for the `mixup` method
 signature to make the example clearer. The method creates a new `Point`
 instance with the `x` value from the `self` `Point` (of type `X1`) and the `y`
 value from the passed-in `Point` (of type `Y2`).
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-11/src/main.rs}}
@@ -294,7 +274,7 @@ method.
 ### Performance of Code Using Generics
 
 You might be wondering whether there is a runtime cost when using generic type
-parameters. The good news is that using generic types won't make your program run 
+parameters. The good news is that using generic types won't make your program run
 any slower than it would with concrete types.
 
 Rust accomplishes this by performing monomorphization of the code using
@@ -305,16 +285,7 @@ to create the generic function in Listing 10-5: the compiler looks at all the
 places where generic code is called and generates code for the concrete types
 the generic code is called with.
 
-<<<<<<< HEAD
-In this process, the compiler does the opposite of the steps we used to create
-the generic function in listing 10-5: the compiler looks at all the places
-where generic code is called and generates code for the concrete types the
-generic code is called with.
-
-Let’s look at how this works with an example that uses the standard library’s
-=======
 Let’s look at how this works by using the standard library’s generic
->>>>>>> english/main
 `Option<T>` enum:
 
 ```rust
@@ -332,7 +303,7 @@ definition with the specific ones.
 The monomorphized version of the code looks similar to the following (the
 compiler uses different names than what we’re using here for illustration):
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 enum Option_i32 {

@@ -14,9 +14,9 @@ the environment variable has a value. We’ll continue to follow the TDD process
 so the first step is again to write a failing test. We’ll add a new test for
 the new `search_case_insensitive` function and rename our old test from
 `one_result` to `case_sensitive` to clarify the differences between the two
-tests, as shown in listing 12-20.
+tests, as shown in Listing 12-20.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
@@ -39,16 +39,16 @@ should match the line containing `"Rust:"` with a capital R and match the line
 our failing test, and it will fail to compile because we haven’t yet defined
 the `search_case_insensitive` function. Feel free to add a skeleton
 implementation that always returns an empty vector, similar to the way we did
-for the `search` function in listing 12-16 to see the test compile and fail.
+for the `search` function in Listing 12-16 to see the test compile and fail.
 
 ### Implementing the `search_case_insensitive` Function
 
-The `search_case_insensitive` function, shown in listing 12-21, will be almost
+The `search_case_insensitive` function, shown in Listing 12-21, will be almost
 the same as the `search` function. The only difference is that we’ll lowercase
 the `query` and each `line` so whatever the case of the input arguments,
 they’ll be the same case when we check whether the line contains the query.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
@@ -90,26 +90,18 @@ from the `run` function. First, we’ll add a configuration option to the
 Adding this field will cause compiler errors because we aren’t initializing
 this field anywhere yet:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/lib.rs:here}}
 ```
 
-<<<<<<< HEAD
-Note that we added the `case_sensitive` field that holds a Boolean. Next, we
-need the `run` function to check the `case_sensitive` field’s value and use
-that to decide whether to call the `search` function or the
-`search_case_insensitive` function, as shown in listing 12-22. Note this still
-won’t compile yet.
-=======
 We added the `ignore_case` field that holds a Boolean. Next, we need the `run`
 function to check the `ignore_case` field’s value and use that to decide
 whether to call the `search` function or the `search_case_insensitive`
 function, as shown in Listing 12-22. This still won’t compile yet.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/lib.rs:there}}
@@ -120,19 +112,12 @@ function, as shown in Listing 12-22. This still won’t compile yet.
 
 Finally, we need to check for the environment variable. The functions for
 working with environment variables are in the `env` module in the standard
-<<<<<<< HEAD
-library, so we want to bring that module into scope with a `use std::env;` line
-at the top of *src/lib.rs*. Then we’ll use the `var` function from the `env`
-module to check for an environment variable named `CASE_INSENSITIVE`, as shown
-in listing 12-23.
-=======
 library, so we bring that module into scope at the top of *src/lib.rs*. Then
 we’ll use the `var` function from the `env` module to check to see if any value
 has been set for an environment variable named `IGNORE_CASE`, as shown in
 Listing 12-23.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/lib.rs:here}}
@@ -156,15 +141,9 @@ care about the *value* of the environment variable, just whether it’s set or
 unset, so we’re checking `is_ok` rather than using `unwrap`, `expect`, or any
 of the other methods we’ve seen on `Result`.
 
-<<<<<<< HEAD
-We pass the value in the `case_sensitive` variable to the `Config` instance so
-the `run` function can read that value and decide whether to call `search` or
-`search_case_insensitive`, as we implemented in listing 12-22.
-=======
 We pass the value in the `ignore_case` variable to the `Config` instance so the
 `run` function can read that value and decide whether to call
 `search_case_insensitive` or `search`, as we implemented in Listing 12-22.
->>>>>>> english/main
 
 Let’s give it a try! First, we’ll run our program without the environment
 variable set and with the query `to`, which should match any line that contains

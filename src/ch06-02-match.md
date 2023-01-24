@@ -17,17 +17,10 @@ the first hole it encounters that it fits into. In the same way, values go
 through each pattern in a `match`, and at the first pattern the value “fits,”
 the value falls into the associated code block to be used during execution.
 
-<<<<<<< HEAD
-Because we just mentioned coins, let’s use them as an example using `match`! We
-can write a function that can take an unknown United States coin and, in a
-similar way as the counting machine, determine which coin it is and return its
-value in cents, as shown here in listing 6-3.
-=======
 Speaking of coins, let’s use them as an example using `match`! We can write a
 function that takes an unknown US coin and, in a similar way as the counting
 machine, determines which coin it is and returns its value in cents, as shown
 in Listing 6-3.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-03/src/main.rs:here}}
@@ -52,26 +45,18 @@ When the `match` expression executes, it compares the resultant value against
 the pattern of each arm, in order. If a pattern matches the value, the code
 associated with that pattern is executed. If that pattern doesn’t match the
 value, execution continues to the next arm, much as in a coin-sorting machine.
-We can have as many arms as we need: in listing 6-3, our `match` has four arms.
+We can have as many arms as we need: in Listing 6-3, our `match` has four arms.
 
 The code associated with each arm is an expression, and the resultant value of
 the expression in the matching arm is the value that gets returned for the
 entire `match` expression.
 
-<<<<<<< HEAD
-Curly brackets typically aren’t used if the match arm code is short, as it is
-in listing 6-3 where each arm just returns a value. If you want to run multiple
-lines of code in a match arm, you can use curly brackets. For example, the
-following code would print “Lucky penny!” every time the method was called with
-a `Coin::Penny` but would still return the last value of the block, `1`:
-=======
 We don’t typically use curly brackets if the match arm code is short, as it is
 in Listing 6-3 where each arm just returns a value. If you want to run multiple
 lines of code in a match arm, you must use curly brackets, and the comma
 following the arm is then optional. For example, the following code prints
 “Lucky penny!” every time the method is called with a `Coin::Penny`, but still
 returns the last value of the block, `1`:
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
@@ -87,13 +72,8 @@ As an example, let’s change one of our enum variants to hold data inside it.
 From 1999 through 2008, the United States minted quarters with different
 designs for each of the 50 states on one side. No other coins got state
 designs, so only quarters have this extra value. We can add this information to
-<<<<<<< HEAD
-our `enum` by changing the `Quarter` variant to include a `UsState` value stored
-inside it, which we’ve done here in listing 6-4.
-=======
 our `enum` by changing the `Quarter` variant to include a `UsState` value
 stored inside it, which we’ve done in Listing 6-4.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-04/src/main.rs:here}}
@@ -166,13 +146,8 @@ binds to the value contained in `Some`, so `i` takes the value `5`. The code in
 the match arm is then executed, so we add 1 to the value of `i` and create a
 new `Some` value with our total `6` inside.
 
-<<<<<<< HEAD
-Now let’s consider the second call of `plus_one` in listing 6-5, where `x` is
-`None`. We enter the `match` and compare to the first arm.
-=======
 Now let’s consider the second call of `plus_one` in Listing 6-5, where `x` is
 `None`. We enter the `match` and compare to the first arm:
->>>>>>> english/main
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}

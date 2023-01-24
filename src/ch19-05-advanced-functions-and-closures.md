@@ -11,12 +11,6 @@ function you’ve already defined rather than defining a new closure. Functions
 coerce to the type `fn` (with a lowercase f), not to be confused with the `Fn`
 closure trait. The `fn` type is called a *function pointer*. Passing functions
 with function pointers will allow you to use functions as arguments to other
-<<<<<<< HEAD
-functions. Functions coerce to the type `fn` (with a lowercase f), not to be
-confused with the `Fn` closure trait. The `fn` type is called a *function
-pointer*. The syntax for specifying that a parameter is a function pointer is
-similar to that of closures, as shown in listing 19-27.
-=======
 functions.
 
 The syntax for specifying that a parameter is a function pointer is similar to
@@ -27,9 +21,8 @@ and returns an `i32`, and one `i32 value`. The `do_twice` function calls the
 function `f` twice, passing it the `arg` value, then adds the two function call
 results together. The `main` function calls `do_twice` with the arguments
 `add_one` and `5`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch19-advanced-features/listing-19-27/src/main.rs}}

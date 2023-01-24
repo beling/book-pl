@@ -1,6 +1,6 @@
 ## Graceful Shutdown and Cleanup
 
-The code in listing 20-20 is responding to requests asynchronously through the
+The code in Listing 20-20 is responding to requests asynchronously through the
 use of a thread pool, as we intended. We get some warnings about the `workers`,
 `id`, and `thread` fields that we’re not using in a direct way that reminds us
 we’re not cleaning up anything. When we use the less elegant <span
@@ -22,7 +22,7 @@ dropped, our threads should all join to make sure they finish their work.
 Listing 20-22 shows a first attempt at a `Drop` implementation; this code won’t
 quite work yet.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-22/src/lib.rs:here}}
@@ -47,7 +47,7 @@ Here is the error we get when we compile this code:
 The error tells us we can’t call `join` because we only have a mutable borrow
 of each `worker` and `join` takes ownership of its argument. To solve this
 issue, we need to move the thread out of the `Worker` instance that owns
-`thread` so `join` can consume the thread. We did this in listing 17-15: if
+`thread` so `join` can consume the thread. We did this in Listing 17-15: if
 `Worker` holds an `Option<thread::JoinHandle<()>>` instead, we can call the
 `take` method on the `Option` to move the value out of the `Some` variant and
 leave a `None` variant in its place. In other words, a `Worker` that is running
@@ -57,7 +57,7 @@ thread to run.
 
 So we know we want to update the definition of `Worker` like this:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-04-update-worker-definition/src/lib.rs:here}}
@@ -74,7 +74,7 @@ Let’s address the second error, which points to the code at the end of
 `Worker::new`; we need to wrap the `thread` value in `Some` when we create a
 new `Worker`. Make the following changes to fix this error:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-05-fix-worker-new/src/lib.rs:here}}
@@ -84,7 +84,7 @@ The first error is in our `Drop` implementation. We mentioned earlier that we
 intended to call `take` on the `Option` value to move `thread` out of `worker`.
 The following changes will do so:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,not_desired_behavior
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-06-fix-threadpool-drop/src/lib.rs:here}}
@@ -130,47 +130,9 @@ infinite loop will return an error. In Listing 20-24, we change the `Worker`
 loop to gracefully exit the loop in that case, which means the threads will
 finish when the `ThreadPool` `drop` implementation calls `join` on them.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
-<<<<<<< HEAD
-{{#rustdoc_include ../listings/ch20-web-server/no-listing-07-define-message-enum/src/lib.rs:here}}
-```
-
-This `Message` enum will either be a `NewJob` variant that holds the `Job` the
-thread should run, or it will be a `Terminate` variant that will cause the
-thread to exit its loop and stop.
-
-We need to adjust the channel to use values of type `Message` rather than type
-`Job`, as shown in listing 20-23.
-
-<span class="filename">Plik: src/lib.rs</span>
-
-```rust,ignore
-{{#rustdoc_include ../listings/ch20-web-server/listing-20-23/src/lib.rs:here}}
-```
-
-<span class="caption">Listing 20-23: Sending and receiving `Message` values and
-exiting the loop if a `Worker` receives `Message::Terminate`</span>
-
-To incorporate the `Message` enum, we need to change `Job` to `Message` in two
-places: the definition of `ThreadPool` and the signature of `Worker::new`. The
-`execute` method of `ThreadPool` needs to send jobs wrapped in the
-`Message::NewJob` variant. Then, in `Worker::new` where a `Message` is received
-from the channel, the job will be processed if the `NewJob` variant is
-received, and the thread will break out of the loop if the `Terminate` variant
-is received.
-
-With these changes, the code will compile and continue to function in the same
-way as it did after listing 20-20. But we’ll get a warning because we aren’t
-creating any messages of the `Terminate` variety. Let’s fix this warning by
-changing our `Drop` implementation to look like listing 20-24.
-
-<span class="filename">Plik: src/lib.rs</span>
-
-```rust,ignore
-=======
->>>>>>> english/main
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-24/src/lib.rs:here}}
 ```
 
@@ -178,13 +140,9 @@ changing our `Drop` implementation to look like listing 20-24.
 `recv` returns an error</span>
 
 To see this code in action, let’s modify `main` to accept only two requests
-before gracefully shutting down the server, as shown in listing 20-25.
+before gracefully shutting down the server, as shown in Listing 20-25.
 
-<<<<<<< HEAD
-<span class="filename">Plik: src/bin/main.rs</span>
-=======
 <span class="filename">Filename: src/main.rs</span>
->>>>>>> english/main
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-25/src/main.rs:here}}
@@ -255,17 +213,13 @@ shutdown of the server, which cleans up all the threads in the pool.
 
 Here’s the full code for reference:
 
-<<<<<<< HEAD
-<span class="filename">Plik: src/bin/main.rs</span>
-=======
 <span class="filename">Filename: src/main.rs</span>
->>>>>>> english/main
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-07-final-code/src/main.rs}}
 ```
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-07-final-code/src/lib.rs}}

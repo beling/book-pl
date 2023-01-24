@@ -15,18 +15,6 @@ A path can take two forms:
 Both absolute and relative paths are followed by one or more identifiers
 separated by double colons (`::`).
 
-<<<<<<< HEAD
-Let’s return to the example in listing 7-1. How do we call the
-`add_to_waitlist` function? This is the same as asking, what’s the path of the
-`add_to_waitlist` function? In listing 7-3, we simplified our code a bit by
-removing some of the modules and functions. We’ll show two ways to call the
-`add_to_waitlist` function from a new function `eat_at_restaurant` defined in
-the crate root. The `eat_at_restaurant` function is part of our library crate’s
-public API, so we mark it with the `pub` keyword. In the [”Exposing Paths with
-the `pub` Keyword”][pub]<!-- ignore --> section, we’ll go into more detail
-about `pub`. Note that this example won’t compile just yet; we’ll explain why
-in a bit.
-=======
 Returning to Listing 7-1, say we want to call the `add_to_waitlist` function.
 This is the same as asking: what’s the path of the `add_to_waitlist` function?
 Listing 7-3 contains Listing 7-1 with some of the modules and functions
@@ -40,9 +28,8 @@ as-is. We’ll explain why in a bit.
 The `eat_at_restaurant` function is part of our library crate’s public API, so
 we mark it with the `pub` keyword. In the [“Exposing Paths with the `pub`
 Keyword”][pub]<!-- ignore --> section, we’ll go into more detail about `pub`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
@@ -79,8 +66,8 @@ same, but the relative path would need to be updated. Our preference in general
 is to specify absolute paths because it’s more likely we’ll want to move code
 definitions and item calls independently of each other.
 
-Let’s try to compile listing 7-3 and find out why it won’t compile yet! The
-error we get is shown in listing 7-4.
+Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The
+error we get is shown in Listing 7-4.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
@@ -112,12 +99,12 @@ modules by using the `pub` keyword to make an item public.
 
 ### Exposing Paths with the `pub` Keyword
 
-Let’s return to the error in listing 7-4 that told us the `hosting` module is
+Let’s return to the error in Listing 7-4 that told us the `hosting` module is
 private. We want the `eat_at_restaurant` function in the parent module to have
 access to the `add_to_waitlist` function in the child module, so we mark the
-`hosting` module with the `pub` keyword, as shown in listing 7-5.
+`hosting` module with the `pub` keyword, as shown in Listing 7-5.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs}}
@@ -126,7 +113,7 @@ access to the `add_to_waitlist` function in the child module, so we mark the
 <span class="caption">Listing 7-5: Declaring the `hosting` module as `pub` to
 use it from `eat_at_restaurant`</span>
 
-Unfortunately, the code in listing 7-5 still results in an error, as shown in
+Unfortunately, the code in Listing 7-5 still results in an error, as shown in
 Listing 7-6.
 
 ```console
@@ -145,14 +132,14 @@ Because modules are containers, there’s not much we can do by only making the
 module public; we need to go further and choose to make one or more of the
 items within the module public as well.
 
-The errors in listing 7-6 say that the `add_to_waitlist` function is private.
+The errors in Listing 7-6 say that the `add_to_waitlist` function is private.
 The privacy rules apply to structs, enums, functions, and methods as well as
 modules.
 
 Let’s also make the `add_to_waitlist` function public by adding the `pub`
-keyword before its definition, as in listing 7-7.
+keyword before its definition, as in Listing 7-7.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs}}
@@ -222,13 +209,13 @@ which can make rearranging the module tree easier when the module is closely
 related to the parent, but the parent might be moved elsewhere in the module
 tree someday.
 
-Consider the code in listing 7-8 that models the situation in which a chef
+Consider the code in Listing 7-8 that models the situation in which a chef
 fixes an incorrect order and personally brings it out to the customer. The
 function `fix_incorrect_order` defined in the `back_of_house` module calls the
 function `deliver_order` defined in the parent module by specifying the path to
 `deliver_order` starting with `super`:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
@@ -249,17 +236,6 @@ code gets moved to a different module.
 ### Making Structs and Enums Public
 
 We can also use `pub` to designate structs and enums as public, but there are a
-<<<<<<< HEAD
-few extra details. If we use `pub` before a struct definition, we make the
-struct public, but the struct’s fields will still be private. We can make each
-field public or not on a case-by-case basis. In listing 7-9, we’ve defined a
-public `back_of_house::Breakfast` struct with a public `toast` field but a
-private `seasonal_fruit` field. This models the case in a restaurant where the
-customer can pick the type of bread that comes with a meal, but the chef
-decides which fruit accompanies the meal based on what’s in season and in
-stock. The available fruit changes quickly, so customers can’t choose the fruit
-or even see which fruit they’ll get.
-=======
 few details extra to the usage of `pub` with structs and enums. If we use `pub`
 before a struct definition, we make the struct public, but the struct’s fields
 will still be private. We can make each field public or not on a case-by-case
@@ -269,9 +245,8 @@ the case in a restaurant where the customer can pick the type of bread that
 comes with a meal, but the chef decides which fruit accompanies the meal based
 on what’s in season and in stock. The available fruit changes quickly, so
 customers can’t choose the fruit or even see which fruit they’ll get.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
@@ -294,9 +269,9 @@ have such a function, we couldn’t create an instance of `Breakfast` in
 `seasonal_fruit` field in `eat_at_restaurant`.
 
 In contrast, if we make an enum public, all of its variants are then public. We
-only need the `pub` before the `enum` keyword, as shown in listing 7-10.
+only need the `pub` before the `enum` keyword, as shown in Listing 7-10.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}

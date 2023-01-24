@@ -43,7 +43,7 @@ $ cd adder
 The contents of the *src/lib.rs* file in your `adder` library should look like
 Listing 11-1.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 <!-- manual-regeneration
 cd listings/ch11-writing-automated-tests
@@ -73,7 +73,7 @@ which contains the result of adding 2 and 2, equals 4. This assertion serves as
 an example of the format for a typical test. Let’s run it to see that this test
 passes.
 
-The `cargo test` command runs all tests in our project, as shown in listing
+The `cargo test` command runs all tests in our project, as shown in Listing
 11-2.
 
 ```console
@@ -113,7 +113,7 @@ ignore the `Doc-tests` output.
 Let’s start to customize the test to our own needs. First change the name of
 the `it_works` function to a different name, such as `exploration`, like so:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/src/lib.rs}}
@@ -126,23 +126,14 @@ Then run `cargo test` again. The output now shows `exploration` instead of
 {{#include ../listings/ch11-writing-automated-tests/no-listing-01-changing-test-name/output.txt}}
 ```
 
-<<<<<<< HEAD
-Let’s add another test, but this time we’ll make a test that fails! Tests fail
-when something in the test function panics. Each test is run in a new thread,
-and when the main thread sees that a test thread has died, the test is marked
-as failed. We talked about the simplest way to cause a panic in Chapter 9,
-which is to call the `panic!` macro. Enter the new test, `another`, so your
-*src/lib.rs* file looks like listing 11-3.
-=======
 Now we’ll add another test, but this time we’ll make a test that fails! Tests
 fail when something in the test function panics. Each test is run in a new
 thread, and when the main thread sees that a test thread has died, the test is
 marked as failed. In Chapter 9, we talked about how the simplest way to panic
 is to call the `panic!` macro. Enter the new test as a function named
 `another`, so your *src/lib.rs* file looks like Listing 11-3.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,panics,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-03/src/lib.rs:here}}
@@ -151,7 +142,7 @@ is to call the `panic!` macro. Enter the new test as a function named
 <span class="caption">Listing 11-3: Adding a second test that will fail because
 we call the `panic!` macro</span>
 
-Run the tests again using `cargo test`. The output should look like listing
+Run the tests again using `cargo test`. The output should look like Listing
 11-4, which shows that our `exploration` test passed and `another` failed.
 
 ```console
@@ -187,17 +178,11 @@ to ensure that some condition in a test evaluates to `true`. We give the
 `assert!` macro calls `panic!` to cause the test to fail. Using the `assert!`
 macro helps us check that our code is functioning in the way we intend.
 
-<<<<<<< HEAD
-In Chapter 5, listing 5-15, we used a `Rectangle` struct and a `can_hold`
-method, which are repeated here in listing 11-5. Let’s put this code in the
-*src/lib.rs* file and write some tests for it using the `assert!` macro.
-=======
 In Chapter 5, Listing 5-15, we used a `Rectangle` struct and a `can_hold`
 method, which are repeated here in Listing 11-5. Let’s put this code in the
 *src/lib.rs* file, then write some tests for it using the `assert!` macro.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-05/src/lib.rs:here}}
@@ -207,12 +192,12 @@ method, which are repeated here in Listing 11-5. Let’s put this code in the
 `can_hold` method from Chapter 5</span>
 
 The `can_hold` method returns a Boolean, which means it’s a perfect use case
-for the `assert!` macro. In listing 11-6, we write a test that exercises the
+for the `assert!` macro. In Listing 11-6, we write a test that exercises the
 `can_hold` method by creating a `Rectangle` instance that has a width of 8 and
 a height of 7 and asserting that it can hold another `Rectangle` instance that
 has a width of 5 and a height of 1.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-06/src/lib.rs:here}}
@@ -242,7 +227,7 @@ supposed to return `true`, so our test should pass. Let’s find out!
 It does pass! Let’s add another test, this time asserting that a smaller
 rectangle cannot hold a larger rectangle:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-02-adding-another-rectangle-test/src/lib.rs:here}}
@@ -288,16 +273,10 @@ fails, which makes it easier to see *why* the test failed; conversely, the
 `assert!` macro only indicates that it got a `false` value for the `==`
 expression, without printing the values that led to the `false` value.
 
-<<<<<<< HEAD
-In listing 11-7, we write a function named `add_two` that adds `2` to its
-parameter and returns the result. Then we test this function using the
-`assert_eq!` macro.
-=======
 In Listing 11-7, we write a function named `add_two` that adds `2` to its
 parameter, then we test this function using the `assert_eq!` macro.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-07/src/lib.rs}}
@@ -355,17 +334,6 @@ output of the function is not equal to the input.
 Under the surface, the `assert_eq!` and `assert_ne!` macros use the operators
 `==` and `!=`, respectively. When the assertions fail, these macros print their
 arguments using debug formatting, which means the values being compared must
-<<<<<<< HEAD
-implement the `PartialEq` and `Debug` traits. All the primitive types and most
-of the standard library types implement these traits. For structs and enums
-that you define, you’ll need to implement `PartialEq` to assert that values of
-those types are equal or not equal. You’ll need to implement `Debug` to print
-the values when the assertion fails. Because both traits are derivable traits,
-as mentioned in listing 5-12 in Chapter 5, this is usually as straightforward
-as adding the `#[derive(PartialEq, Debug)]` annotation to your struct or enum
-definition. See Appendix C, [“Derivable Traits,”][derivable-traits]<!-- ignore
---> for more details about these and other derivable traits.
-=======
 implement the `PartialEq` and `Debug` traits. All primitive types and most of
 the standard library types implement these traits. For structs and enums that
 you define yourself, you’ll need to implement `PartialEq` to assert equality of
@@ -375,7 +343,6 @@ Listing 5-12 in Chapter 5, this is usually as straightforward as adding the
 `#[derive(PartialEq, Debug)]` annotation to your struct or enum definition. See
 Appendix C, [“Derivable Traits,”][derivable-traits]<!-- ignore --> for more
 details about these and other derivable traits.
->>>>>>> english/main
 
 ### Adding Custom Failure Messages
 
@@ -393,7 +360,7 @@ the problem is with the code.
 For example, let’s say we have a function that greets people by name and we
 want to test that the name we pass into the function appears in the output:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-05-greeter/src/lib.rs}}
@@ -454,7 +421,7 @@ inside the function doesn’t panic.
 Listing 11-8 shows a test that checks that the error conditions of `Guess::new`
 happen when we expect them to.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-08/src/lib.rs}}
@@ -478,7 +445,7 @@ that the `new` function will panic if the value is greater than 100:
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/src/lib.rs:here}}
 ```
 
-When we run the test in listing 11-8, it will fail:
+When we run the test in Listing 11-8, it will fail:
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/no-listing-08-guess-with-bug/output.txt}}
@@ -488,16 +455,6 @@ We don’t get a very helpful message in this case, but when we look at the test
 function, we see that it’s annotated with `#[should_panic]`. The failure we got
 means that the code in the test function did not cause a panic.
 
-<<<<<<< HEAD
-Tests that use `should_panic` can be imprecise because they only indicate that
-the code has caused some panic. A `should_panic` test would pass even if the
-test panics for a different reason from the one we were expecting to happen. To
-make `should_panic` tests more precise, we can add an optional `expected`
-parameter to the `should_panic` attribute. The test harness will make sure that
-the failure message contains the provided text. For example, consider the
-modified code for `Guess` in listing 11-9 where the `new` function panics with
-different messages depending on whether the value is too small or too large.
-=======
 Tests that use `should_panic` can be imprecise. A `should_panic` test would
 pass even if the test panics for a different reason from the one we were
 expecting. To make `should_panic` tests more precise, we can add an optional
@@ -506,9 +463,8 @@ make sure that the failure message contains the provided text. For example,
 consider the modified code for `Guess` in Listing 11-9 where the `new` function
 panics with different messages depending on whether the value is too small or
 too large.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-09/src/lib.rs:here}}
@@ -548,15 +504,9 @@ figuring out where our bug is!
 
 ### Using `Result<T, E>` in Tests
 
-<<<<<<< HEAD
-So far, we’ve written tests that panic when they fail. We can also write tests
-that use `Result<T, E>`! Here’s the test from listing 11-1, rewritten to use
-`Result<T, E>` and return an `Err` instead of panicking:
-=======
 Our tests so far all panic when they fail. We can also write tests that use
 `Result<T, E>`! Here’s the test from Listing 11-1, rewritten to use `Result<T,
 E>` and return an `Err` instead of panicking:
->>>>>>> english/main
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-10-result-in-tests/src/lib.rs}}

@@ -44,7 +44,7 @@ on demand whenever anyone needs it. In other words, `AveragedCollection` will
 cache the calculated average for us. Listing 17-1 has the definition of the
 `AveragedCollection` struct:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-01/src/lib.rs}}
@@ -58,9 +58,9 @@ The struct is marked `pub` so that other code can use it, but the fields within
 the struct remain private. This is important in this case because we want to
 ensure that whenever a value is added or removed from the list, the average is
 also updated. We do this by implementing `add`, `remove`, and `average` methods
-on the struct, as shown in listing 17-2:
+on the struct, as shown in Listing 17-2:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-02/src/lib.rs:here}}
@@ -105,19 +105,6 @@ If a language must have inheritance to be an object-oriented language, then
 Rust is not one. There is no way to define a struct that inherits the parent
 struct’s fields and method implementations without using a macro.
 
-<<<<<<< HEAD
-You choose inheritance for two main reasons. One is for reuse of code: you can
-implement particular behavior for one type, and inheritance enables you to
-reuse that implementation for a different type. You can share Rust code using
-default trait method implementations instead, which you saw in listing 10-14
-when we added a default implementation of the `summarize` method on the
-`Summary` trait. Any type implementing the `Summary` trait would have the
-`summarize` method available on it without any further code. This is similar to
-a parent class having an implementation of a method and an inheriting child
-class also having the implementation of the method. We can also override the
-default implementation of the `summarize` method when we implement the
-`Summary` trait, which is similar to a child class overriding the
-=======
 However, if you’re used to having inheritance in your programming toolbox, you
 can use other solutions in Rust, depending on your reason for reaching for
 inheritance in the first place.
@@ -133,7 +120,6 @@ similar to a parent class having an implementation of a method and an
 inheriting child class also having the implementation of the method. We can
 also override the default implementation of the `summarize` method when we
 implement the `Summary` trait, which is similar to a child class overriding the
->>>>>>> english/main
 implementation of a method inherited from a parent class.
 
 The other reason to use inheritance relates to the type system: to enable a

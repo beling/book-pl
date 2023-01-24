@@ -36,15 +36,10 @@ are UTF-8 encoded.
 ### Creating a New String
 
 Many of the same operations available with `Vec<T>` are available with `String`
-<<<<<<< HEAD
-as well, starting with the `new` function to create a string, shown in listing
-8-11.
-=======
 as well, because `String` is actually implemented as a wrapper around a vector
 of bytes with some extra guarantees, restrictions, and capabilities. An example
 of a function that works the same way with `Vec<T>` and `String` is the `new`
 function to create an instance, shown in Listing 8-11.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
@@ -68,7 +63,7 @@ two examples.
 This code creates a string containing `initial contents`.
 
 We can also use the function `String::from` to create a `String` from a string
-literal. The code in listing 8-13 is equivalent to the code from listing 8-12
+literal. The code in Listing 8-13 is equivalent to the code from Listing 8-12
 that uses `to_string`.
 
 ```rust
@@ -85,7 +80,7 @@ redundant, but they all have their place! In this case, `String::from` and
 readability.
 
 Remember that strings are UTF-8 encoded, so we can include any properly encoded
-data in them, as shown in listing 8-14.
+data in them, as shown in Listing 8-14.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
@@ -105,7 +100,7 @@ use the `+` operator or the `format!` macro to concatenate `String` values.
 #### Appending to a String with `push_str` and `push`
 
 We can grow a `String` by using the `push_str` method to append a string slice,
-as shown in listing 8-15.
+as shown in Listing 8-15.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
@@ -116,13 +111,8 @@ using the `push_str` method</span>
 
 After these two lines, `s` will contain `foobar`. The `push_str` method takes a
 string slice because we don’t necessarily want to take ownership of the
-<<<<<<< HEAD
-parameter. For example, the code in listing 8-16 shows that it would be
-unfortunate if we weren’t able to use `s2` after appending its contents to `s1`.
-=======
 parameter. For example, in the code in Listing 8-16, we want to be able to use
 `s2` after appending its contents to `s1`.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
@@ -149,13 +139,8 @@ As a result, `s` will contain `lol`.
 
 #### Concatenation with the `+` Operator or the `format!` Macro
 
-<<<<<<< HEAD
-Often, you’ll want to combine two existing strings. One way is to use the `+`
-operator, as shown in listing 8-18.
-=======
 Often, you’ll want to combine two existing strings. One way to do so is to use
 the `+` operator, as shown in Listing 8-18.
->>>>>>> english/main
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
@@ -164,19 +149,11 @@ the `+` operator, as shown in Listing 8-18.
 <span class="caption">Listing 8-18: Using the `+` operator to combine two
 `String` values into a new `String` value</span>
 
-<<<<<<< HEAD
-The string `s3` will contain `Witaj, świecie!` as a result of this code. The
-reason `s1` is no longer valid after the addition and the reason we used a
-reference to `s2` has to do with the signature of the method that gets called
-when we use the `+` operator. The `+` operator uses the `add` method, whose
-signature looks something like this:
-=======
 The string `s3` will contain `Hello, world!`. The reason `s1` is no longer
 valid after the addition, and the reason we used a reference to `s2`, has to do
 with the signature of the method that’s called when we use the `+` operator.
 The `+` operator uses the `add` method, whose signature looks something like
 this:
->>>>>>> english/main
 
 ```rust,ignore
 fn add(self, s: &str) -> String {
@@ -189,17 +166,10 @@ This signature gives us the clues we need to understand the tricky bits of the
 `+` operator.
 
 First, `s2` has an `&`, meaning that we’re adding a *reference* of the second
-<<<<<<< HEAD
-string to the first string because of the `s` parameter in the `add` function:
-we can only add a `&str` to a `String`; we can’t add two `String` values
-together. But wait—the type of `&s2` is `&String`, not `&str`, as specified in
-the second parameter to `add`. So why does listing 8-18 compile?
-=======
 string to the first string. This is because of the `s` parameter in the `add`
 function: we can only add a `&str` to a `String`; we can’t add two `String`
 values together. But wait—the type of `&s2` is `&String`, not `&str`, as
 specified in the second parameter to `add`. So why does Listing 8-18 compile?
->>>>>>> english/main
 
 The reason we’re able to use `&s2` in the call to `add` is that the compiler
 can *coerce* the `&String` argument into a `&str`. When we call the `add`
@@ -209,15 +179,6 @@ not take ownership of the `s` parameter, `s2` will still be a valid `String`
 after this operation.
 
 Second, we can see in the signature that `add` takes ownership of `self`,
-<<<<<<< HEAD
-because `self` does *not* have an `&`. This means `s1` in listing 8-18 will be
-moved into the `add` call and no longer be valid after that. So although `let
-s3 = s1 + &s2;` looks like it will copy both strings and create a new one, this
-statement actually takes ownership of `s1`, appends a copy of the contents of
-`s2`, and then returns ownership of the result. In other words, it looks like
-it’s making a lot of copies but isn’t; the implementation is more efficient
-than copying.
-=======
 because `self` does *not* have an `&`. This means `s1` in Listing 8-18 will be
 moved into the `add` call and will no longer be valid after that. So although
 `let s3 = s1 + &s2;` looks like it will copy both strings and create a new one,
@@ -225,7 +186,6 @@ this statement actually takes ownership of `s1`, appends a copy of the contents
 of `s2`, and then returns ownership of the result. In other words, it looks
 like it’s making a lot of copies but isn’t; the implementation is more
 efficient than copying.
->>>>>>> english/main
 
 If we need to concatenate multiple strings, the behavior of the `+` operator
 gets unwieldy:
@@ -253,7 +213,7 @@ so that this call doesn’t take ownership of any of its parameters.
 In many other programming languages, accessing individual characters in a
 string by referencing them by index is a valid and common operation. However,
 if you try to access parts of a `String` using indexing syntax in Rust, you’ll
-get an error. Consider the invalid code in listing 8-19.
+get an error. Consider the invalid code in Listing 8-19.
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
@@ -275,7 +235,7 @@ memory.
 #### Internal Representation
 
 A `String` is a wrapper over a `Vec<u8>`. Let’s look at some of our properly
-encoded UTF-8 example strings from listing 8-14. First, this one:
+encoded UTF-8 example strings from Listing 8-14. First, this one:
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}
@@ -301,19 +261,6 @@ let hello = "Здравствуйте";
 let answer = &hello[0];
 ```
 
-<<<<<<< HEAD
-What should the value of `answer` be? Should it be `З`, the first letter? When
-encoded in UTF-8, the first byte of `З` is `208` and the second is `151`, so
-`answer` should in fact be `208`, but `208` is not a valid character on its
-own. Returning `208` is likely not what a user would want if they asked for the
-first letter of this string; however, that’s the only data that Rust has at
-byte index 0. Users generally don’t want the byte value returned, even if the
-string contains only Latin letters: if `&"witaj"[0]` were valid code that
-returned the byte value, it would return `104`, not `h`. To avoid returning an
-unexpected value and causing bugs that might not be discovered immediately,
-Rust doesn’t compile this code at all and prevents misunderstandings early in
-the development process.
-=======
 You already know that `answer` will not be `З`, the first letter. When encoded
 in UTF-8, the first byte of `З` is `208` and the second is `151`, so it would
 seem that `answer` should in fact be `208`, but `208` is not a valid character
@@ -326,7 +273,6 @@ that returned the byte value, it would return `104`, not `h`.
 The answer, then, is that to avoid returning an unexpected value and causing
 bugs that might not be discovered immediately, Rust doesn’t compile this code
 at all and prevents misunderstandings early in the development process.
->>>>>>> english/main
 
 #### Bytes and Scalar Values and Grapheme Clusters! Oh My!
 

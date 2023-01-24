@@ -15,7 +15,7 @@ our current server implementation. Listing 20-10 implements handling a request
 to */sleep* with a simulated slow response that will cause the server to sleep
 for 5 seconds before responding.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,no_run
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-10/src/main.rs:here}}
@@ -106,7 +106,7 @@ thread pool as an improvement, and contrasting the two solutions will be
 easier. Listing 20-11 shows the changes to make to `main` to spawn a new thread
 to handle each stream within the `for` loop.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,no_run
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-11/src/main.rs:here}}
@@ -132,7 +132,7 @@ threads to a thread pool doesn’t require large changes to the code that uses
 our API. Listing 20-12 shows the hypothetical interface for a `ThreadPool`
 struct we want to use instead of `thread::spawn`.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-12/src/main.rs:here}}
@@ -152,7 +152,7 @@ compile, but we’ll try so the compiler can guide us in how to fix it.
 
 #### Building `ThreadPool` Using Compiler Driven Development
 
-Make the changes in listing 20-12 to *src/main.rs*, and then let’s use the
+Make the changes in Listing 20-12 to *src/main.rs*, and then let’s use the
 compiler errors from `cargo check` to drive our development. Here is the first
 error we get:
 
@@ -171,7 +171,7 @@ web requests.
 Create a *src/lib.rs* that contains the following, which is the simplest
 definition of a `ThreadPool` struct that we can have for now:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-01-define-threadpool-struct/src/lib.rs}}
@@ -180,11 +180,7 @@ definition of a `ThreadPool` struct that we can have for now:
 Then edit *main.rs* file to bring `ThreadPool` into scope from the library
 crate by adding the following code to the top of *src/main.rs*:
 
-<<<<<<< HEAD
-<span class="filename">Plik: src/bin/main.rs</span>
-=======
 <span class="filename">Filename: src/main.rs</span>
->>>>>>> english/main
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-01-define-threadpool-struct/src/main.rs:here}}
@@ -203,7 +199,7 @@ that can accept `4` as an argument and should return a `ThreadPool` instance.
 Let’s implement the simplest `new` function that will have those
 characteristics:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-02-impl-threadpool-new/src/lib.rs}}
@@ -259,7 +255,7 @@ closure from one thread to another and `'static` because we don’t know how lon
 the thread will take to execute. Let’s create an `execute` method on
 `ThreadPool` that will take a generic parameter of type `F` with these bounds:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/no-listing-03-define-execute/src/lib.rs:here}}
@@ -298,9 +294,9 @@ parameter, because a pool with a negative number of threads makes no sense.
 However, a pool with zero threads also makes no sense, yet zero is a perfectly
 valid `usize`. We’ll add code to check that `size` is greater than zero before
 we return a `ThreadPool` instance and have the program panic if it receives a
-zero by using the `assert!` macro, as shown in listing 20-13.
+zero by using the `assert!` macro, as shown in Listing 20-13.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-13/src/lib.rs:here}}
@@ -315,21 +311,12 @@ calls out the situations in which our function can panic, as discussed in
 Chapter 14. Try running `cargo doc --open` and clicking the `ThreadPool` struct
 to see what the generated docs for `new` look like!
 
-<<<<<<< HEAD
-Instead of adding the `assert!` macro as we’ve done here, we could make `new`
-return a `Result` like we did with `Config::new` in the I/O project in listing
-12-9. But we’ve decided in this case that trying to create a thread pool
-without any threads should be an unrecoverable error. If you’re feeling
-ambitious, try to write a version of `new` with the following signature to
-compare both versions:
-=======
 Instead of adding the `assert!` macro as we’ve done here, we could change `new`
 into `build` and return a `Result` like we did with `Config::build` in the I/O
 project in Listing 12-9. But we’ve decided in this case that trying to create a
 thread pool without any threads should be an unrecoverable error. If you’re
 feeling ambitious, try to write a function named `build` with the following
 signature to compare with the `new` function:
->>>>>>> english/main
 
 ```rust,ignore
 pub fn build(size: usize) -> Result<ThreadPool, PoolCreationError> {
@@ -355,13 +342,13 @@ closure returns. Let’s try using `JoinHandle` too and see what happens. In our
 case, the closures we’re passing to the thread pool will handle the connection
 and not return anything, so `T` will be the unit type `()`.
 
-The code in listing 20-14 will compile but doesn’t create any threads yet.
+The code in Listing 20-14 will compile but doesn’t create any threads yet.
 We’ve changed the definition of `ThreadPool` to hold a vector of
 `thread::JoinHandle<()>` instances, initialized the vector with a capacity of
 `size`, set up a `for` loop that will run some code to create the threads, and
 returned a `ThreadPool` instance containing them.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,not_desired_behavior
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-14/src/lib.rs:here}}
@@ -385,7 +372,7 @@ When you run `cargo check` again, it should succeed.
 
 #### A `Worker` Struct Responsible for Sending Code from the `ThreadPool` to a Thread
 
-We left a comment in the `for` loop in listing 20-14 regarding the creation of
+We left a comment in the `for` loop in Listing 20-14 regarding the creation of
 threads. Here, we’ll look at how we actually create threads. The standard
 library provides `thread::spawn` as a way to create threads, and
 `thread::spawn` expects to get some code the thread should run as soon as the
@@ -422,11 +409,11 @@ set up in this way:
    a new `Worker` with that `id`, and store the worker in the vector.
 
 If you’re up for a challenge, try implementing these changes on your own before
-looking at the code in listing 20-15.
+looking at the code in Listing 20-15.
 
-Ready? Here is listing 20-15 with one way to make the preceding modifications.
+Ready? Here is Listing 20-15 with one way to make the preceding modifications.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-15/src/lib.rs:here}}
@@ -482,17 +469,12 @@ the `Worker` instances, which will send the job to its thread. Here is the plan:
 5. In its thread, the `Worker` will loop over its receiver and execute the
    closures of any jobs it receives.
 
-<<<<<<< HEAD
-Let’s start by creating a channel in `ThreadPool::new` and holding the sending
-side in the `ThreadPool` instance, as shown in listing 20-16. The `Job` struct
-=======
 Let’s start by creating a channel in `ThreadPool::new` and holding the sender
 in the `ThreadPool` instance, as shown in Listing 20-16. The `Job` struct
->>>>>>> english/main
 doesn’t hold anything for now but will be the type of item we’re sending down
 the channel.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-16/src/lib.rs:here}}
@@ -504,19 +486,12 @@ sender of a channel that transmits `Job` instances</span>
 In `ThreadPool::new`, we create our new channel and have the pool hold the
 sender. This will successfully compile.
 
-<<<<<<< HEAD
-Let’s try passing a receiving end of the channel into each worker as the thread
-pool creates the channel. We know we want to use the receiving end in the
-thread that the workers spawn, so we’ll reference the `receiver` parameter in
-the closure. The code in listing 20-17 won’t quite compile yet.
-=======
 Let’s try passing a receiver of the channel into each worker as the thread pool
 creates the channel. We know we want to use the receiver in the thread that the
 workers spawn, so we’ll reference the `receiver` parameter in the closure. The
 code in Listing 20-17 won’t quite compile yet.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-17/src/lib.rs:here}}
@@ -550,7 +525,7 @@ need to use `Arc<Mutex<T>>`. The `Arc` type will let multiple workers own the
 receiver, and `Mutex` will ensure that only one worker gets a job from the
 receiver at a time. Listing 20-18 shows the changes we need to make.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-18/src/lib.rs:here}}
@@ -571,15 +546,10 @@ Let’s finally implement the `execute` method on `ThreadPool`. We’ll also cha
 `Job` from a struct to a type alias for a trait object that holds the type of
 closure that `execute` receives. As discussed in the [“Creating Type Synonyms
 with Type Aliases”][creating-type-synonyms-with-type-aliases]<!-- ignore -->
-<<<<<<< HEAD
-section of Chapter 19, type aliases allow us to make long types shorter. Look
-at listing 20-19.
-=======
 section of Chapter 19, type aliases allow us to make long types shorter for
 ease of use. Look at Listing 20-19.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-19/src/lib.rs:here}}
@@ -601,9 +571,9 @@ But we’re not quite done yet! In the worker, our closure being passed to
 `thread::spawn` still only *references* the receiving end of the channel.
 Instead, we need the closure to loop forever, asking the receiving end of the
 channel for a job and running the job when it gets one. Let’s make the change
-shown in listing 20-20 to `Worker::new`.
+shown in Listing 20-20 to `Worker::new`.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-20/src/lib.rs:here}}
@@ -689,9 +659,9 @@ thread run them.
 > limitation is not caused by our web server.
 
 After learning about the `while let` loop in Chapter 18, you might be wondering
-why we didn’t write the worker thread code as shown in listing 20-21.
+why we didn’t write the worker thread code as shown in Listing 20-21.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,not_desired_behavior
 {{#rustdoc_include ../listings/ch20-web-server/listing-20-21/src/lib.rs:here}}

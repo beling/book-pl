@@ -27,7 +27,7 @@ instance. To do this, we need a summary from each type, and we’ll request
 that summary by calling a `summarize` method on an instance. Listing 10-12
 shows the definition of a public `Summary` trait that expresses this behavior.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
@@ -62,7 +62,7 @@ the headline, the author, and the location to create the return value of
 followed by the entire text of the tweet, assuming that tweet content is
 already limited to 280 characters.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
@@ -93,26 +93,6 @@ library crate:
 This code prints `1 new tweet: horse_ebooks: of course, as you probably already
 know, people`.
 
-<<<<<<< HEAD
-Note that because we defined the `Summary` trait and the `NewsArticle` and
-`Tweet` types in the same *lib.rs* in listing 10-13, they’re all in the same
-scope. Let’s say this *lib.rs* is for a crate we’ve called `aggregator` and
-someone else wants to use our crate’s functionality to implement the `Summary`
-trait on a struct defined within their library’s scope. They would need to
-bring the trait into their scope first. They would do so by specifying `use
-aggregator::Summary;`, which then would enable them to implement `Summary` for
-their type. The `Summary` trait would also need to be a public trait for
-another crate to implement it, which it is because we put the `pub` keyword
-before `trait` in listing 10-12.
-
-One restriction to note with trait implementations is that we can implement a
-trait on a type only if either the trait or the type is local to our crate.
-For example, we can implement standard library traits like `Display` on a
-custom type like `Tweet` as part of our `aggregator` crate functionality,
-because the type `Tweet` is local to our `aggregator` crate. We can also
-implement `Summary` on `Vec<T>` in our `aggregator` crate, because the
-trait `Summary` is local to our `aggregator` crate.
-=======
 Other crates that depend on the `aggregator` crate can also bring the `Summary`
 trait into scope to implement `Summary` on their own types. One restriction to
 note is that we can implement a trait on a type only if at least one of the
@@ -122,7 +102,6 @@ library traits like `Display` on a custom type like `Tweet` as part of our
 `aggregator` crate. We can also implement `Summary` on `Vec<T>` in our
 `aggregator` crate, because the trait `Summary` is local to our `aggregator`
 crate.
->>>>>>> english/main
 
 But we can’t implement external traits on external types. For example, we can’t
 implement the `Display` trait on `Vec<T>` within our `aggregator` crate,
@@ -141,17 +120,11 @@ in a trait instead of requiring implementations for all methods on every type.
 Then, as we implement the trait on a particular type, we can keep or override
 each method’s default behavior.
 
-<<<<<<< HEAD
-Listing 10-14 shows how to specify a default string for the `summarize` method
-of the `Summary` trait instead of only defining the method signature, as we did
-in listing 10-12.
-=======
 In Listing 10-14 we specify a default string for the `summarize` method of the
 `Summary` trait instead of only defining the method signature, as we did in
 Listing 10-12.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
@@ -174,18 +147,10 @@ the `summarize` method on an instance of `NewsArticle`, like this:
 
 This code prints `New article available! (Read more...)`.
 
-<<<<<<< HEAD
-Creating a default implementation for `summarize` doesn’t require us to change
-anything about the implementation of `Summary` on `Tweet` in listing 10-13. The
-reason is that the syntax for overriding a default implementation is the same
-as the syntax for implementing a trait method that doesn’t have a default
-implementation.
-=======
 Creating a default implementation doesn’t require us to change anything about
 the implementation of `Summary` on `Tweet` in Listing 10-13. The reason is that
 the syntax for overriding a default implementation is the same as the syntax
 for implementing a trait method that doesn’t have a default implementation.
->>>>>>> english/main
 
 Default implementations can call other methods in the same trait, even if those
 other methods don’t have a default implementation. In this way, a trait can
@@ -224,21 +189,11 @@ overriding implementation of that same method.
 ### Traits as Parameters
 
 Now that you know how to define and implement traits, we can explore how to use
-<<<<<<< HEAD
-traits to define functions that accept many different types.
-
-For example, in listing 10-13, we implemented the `Summary` trait on the
-`NewsArticle` and `Tweet` types. We can define a `notify` function that calls
-the `summarize` method on its `item` parameter, which is of some type that
-implements the `Summary` trait. To do this, we can use the `impl Trait`
-syntax, like this:
-=======
 traits to define functions that accept many different types. We'll use the
 `Summary` trait we implemented on the `NewsArticle` and `Tweet` types in
 Listing 10-13 to define a `notify` function that calls the `summarize` method
 on its `item` parameter, which is of some type that implements the `Summary`
 trait. To do this, we use the `impl Trait` syntax, like this:
->>>>>>> english/main
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-04-traits-as-parameters/src/lib.rs:here}}
@@ -371,89 +326,10 @@ Allow for Values of Different
 Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
 ignore --> section of Chapter 17.
 
-<<<<<<< HEAD
-### Fixing the `largest` Function with Trait Bounds
-
-Now that you know how to specify the behavior you want to use using the generic
-type parameter’s bounds, let’s return to listing 10-5 to fix the definition of
-the `largest` function that uses a generic type parameter! Last time we tried
-to run that code, we received this error:
-
-```text
-{{#include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-05/output.txt}}
-```
-
-In the body of `largest` we wanted to compare two values of type `T` using the
-greater than (`>`) operator. Because that operator is defined as a default
-method on the standard library trait `std::cmp::PartialOrd`, we need to specify
-`PartialOrd` in the trait bounds for `T` so the `largest` function can work on
-slices of any type that we can compare. We don’t need to bring `PartialOrd`
-into scope because it’s in the prelude. Change the signature of `largest` to
-look like this:
-
-```rust,ignore
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-fixing-listing-10-05/src/main.rs:here}}
-```
-
-This time when we compile the code, we get a different set of errors:
-
-```console
-{{#include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-07-fixing-listing-10-05/output.txt}}
-```
-
-The key line in this error is `cannot move out of type [T], a non-copy slice`.
-With our non-generic versions of the `largest` function, we were only trying to
-find the largest `i32` or `char`. As discussed in the [“Stack-Only Data:
-Copy”][stack-only-data-copy]<!-- ignore --> section in Chapter 4, types like
-`i32` and `char` that have a known size can be stored on the stack, so they
-implement the `Copy` trait. But when we made the `largest` function generic,
-it became possible for the `list` parameter to have types in it that don’t
-implement the `Copy` trait. Consequently, we wouldn’t be able to move the
-value out of `list[0]` and into the `largest` variable, resulting in this
-error.
-
-To call this code with only those types that implement the `Copy` trait, we can
-add `Copy` to the trait bounds of `T`! listing 10-15 shows the complete code of
-a generic `largest` function that will compile as long as the types of the
-values in the slice that we pass into the function implement the `PartialOrd`
-*and* `Copy` traits, like `i32` and `char` do.
-
-<span class="filename">Plik: src/main.rs</span>
-
-```rust
-{{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/main.rs}}
-```
-
-<span class="caption">Listing 10-15: A working definition of the `largest`
-function that works on any generic type that implements the `PartialOrd` and
-`Copy` traits</span>
-
-If we don’t want to restrict the `largest` function to the types that implement
-the `Copy` trait, we could specify that `T` has the trait bound `Clone` instead
-of `Copy`. Then we could clone each value in the slice when we want the
-`largest` function to have ownership. Using the `clone` function means we’re
-potentially making more heap allocations in the case of types that own heap
-data like `String`, and heap allocations can be slow if we’re working with
-large amounts of data.
-
-Another way we could implement `largest` is for the function to return a
-reference to a `T` value in the slice. If we change the return type to `&T`
-instead of `T`, thereby changing the body of the function to return a
-reference, we wouldn’t need the `Clone` or `Copy` trait bounds and we could
-avoid heap allocations. Try implementing these alternate solutions on your own!
-
-=======
->>>>>>> english/main
 ### Using Trait Bounds to Conditionally Implement Methods
 
 By using a trait bound with an `impl` block that uses generic type parameters,
 we can implement methods conditionally for types that implement the specified
-<<<<<<< HEAD
-traits. For example, the type `Pair<T>` in listing 10-16 always implements the
-`new` function. But `Pair<T>` only implements the `cmp_display` method if its
-inner type `T` implements the `PartialOrd` trait that enables comparison *and*
-the `Display` trait that enables printing.
-=======
 traits. For example, the type `Pair<T>` in Listing 10-15 always implements the
 `new` function to return a new instance of `Pair<T>` (recall from the
 [“Defining Methods”][methods]<!-- ignore --> section of Chapter 5 that `Self`
@@ -461,9 +337,8 @@ is a type alias for the type of the `impl` block, which in this case is
 `Pair<T>`). But in the next `impl` block, `Pair<T>` only implements the
 `cmp_display` method if its inner type `T` implements the `PartialOrd` trait
 that enables comparison *and* the `Display` trait that enables printing.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}

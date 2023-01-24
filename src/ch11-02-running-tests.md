@@ -55,10 +55,10 @@ passes, we won’t see the `println!` output in the terminal; we’ll see only t
 line that indicates the test passed. If a test fails, we’ll see whatever was
 printed to standard output with the rest of the failure message.
 
-As an example, listing 11-10 has a silly function that prints the value of its
+As an example, Listing 11-10 has a silly function that prints the value of its
 parameter and returns 10, as well as a test that passes and a test that fails.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,panics,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
@@ -85,7 +85,7 @@ to also show the output of successful tests with `--show-output`.
 $ cargo test -- --show-output
 ```
 
-When we run the tests in listing 11-10 again with the `--show-output` flag, we
+When we run the tests in Listing 11-10 again with the `--show-output` flag, we
 see the following output:
 
 ```console
@@ -99,15 +99,10 @@ code in a particular area, you might want to run only the tests pertaining to
 that code. You can choose which tests to run by passing `cargo test` the name
 or names of the test(s) you want to run as an argument.
 
-<<<<<<< HEAD
-To demonstrate how to run a subset of tests, we’ll create three tests for our
-`add_two` function, as shown in listing 11-11, and choose which ones to run.
-=======
 To demonstrate how to run a subset of tests, we’ll first create three tests for
 our `add_two` function, as shown in Listing 11-11, and choose which ones to run.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
@@ -157,11 +152,11 @@ on the module’s name.
 
 Sometimes a few specific tests can be very time-consuming to execute, so you
 might want to exclude them during most runs of `cargo test`. Rather than
-Listing as arguments all tests you do want to run, you can instead annotate the
+listing as arguments all tests you do want to run, you can instead annotate the
 time-consuming tests using the `ignore` attribute to exclude them, as shown
 here:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs}}

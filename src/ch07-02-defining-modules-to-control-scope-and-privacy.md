@@ -116,7 +116,7 @@ modules. Create a new library named `restaurant` by running `cargo new
 restaurant --lib`; then enter the code in Listing 7-1 into *src/lib.rs* to
 define some modules and function signatures. Here’s the front of house section:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
@@ -125,21 +125,12 @@ define some modules and function signatures. Here’s the front of house section
 <span class="caption">Listing 7-1: A `front_of_house` module containing other
 modules that then contain functions</span>
 
-<<<<<<< HEAD
-We define a module by starting with the `mod` keyword and then specify the
-name of the module (in this case, `front_of_house`) and place curly brackets
-around the body of the module. Inside modules, we can have other modules, as in
-this case with the modules `hosting` and `serving`. Modules can also hold
-definitions for other items, such as structs, enums, constants, traits, or—as
-in listing 7-1—functions.
-=======
 We define a module with the `mod` keyword followed by the name of the module
 (in this case, `front_of_house`). The body of the module then goes inside curly
 brackets. Inside modules, we can place other modules, as in this case with the
 modules `hosting` and `serving`. Modules can also hold definitions for other
 items, such as structs, enums, constants, traits, and—as in Listing
 7-1—functions.
->>>>>>> english/main
 
 By using modules, we can group related definitions together and name why
 they’re related. Programmers using this code can navigate the code based on the
@@ -152,7 +143,7 @@ roots. The reason for their name is that the contents of either of these two
 files form a module named `crate` at the root of the crate’s module structure,
 known as the *module tree*.
 
-Listing 7-2 shows the module tree for the structure in listing 7-1.
+Listing 7-2 shows the module tree for the structure in Listing 7-1.
 
 ```text
 crate
@@ -166,7 +157,7 @@ crate
          └── take_payment
 ```
 
-<span class="caption">Listing 7-2: The module tree for the code in listing
+<span class="caption">Listing 7-2: The module tree for the code in Listing
 7-1</span>
 
 This tree shows how some of the modules nest inside one another; for example,

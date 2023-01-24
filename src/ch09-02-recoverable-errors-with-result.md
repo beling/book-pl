@@ -27,9 +27,9 @@ many different situations where the successful value and error value we want to
 return may differ.
 
 Let’s call a function that returns a `Result` value because the function could
-fail. In listing 9-3 we try to open a file.
+fail. In Listing 9-3 we try to open a file.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-03/src/main.rs}}
@@ -54,12 +54,12 @@ In the case where it fails, the value in `greeting_file_result` will be an
 instance of `Err` that contains more information about the kind of error that
 happened.
 
-We need to add to the code in listing 9-3 to take different actions depending
+We need to add to the code in Listing 9-3 to take different actions depending
 on the value `File::open` returns. Listing 9-4 shows one way to handle the
 `Result` using a basic tool, the `match` expression that we discussed in
 Chapter 6.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-04/src/main.rs}}
@@ -90,15 +90,6 @@ As usual, this output tells us exactly what has gone wrong.
 
 ### Matching on Different Errors
 
-<<<<<<< HEAD
-The code in listing 9-4 will `panic!` no matter why `File::open` failed. What
-we want to do instead is take different actions for different failure reasons:
-if `File::open` failed because the file doesn’t exist, we want to create the
-file and return the handle to the new file. If `File::open` failed for any
-other reason—for example, because we didn’t have permission to open the file—we
-still want the code to `panic!` in the same way as it did in listing 9-4. Look
-at listing 9-5, which adds an inner `match` expression.
-=======
 The code in Listing 9-4 will `panic!` no matter why `File::open` failed.
 However, we want to take different actions for different failure reasons: if
 `File::open` failed because the file doesn’t exist, we want to create the file
@@ -106,9 +97,8 @@ and return the handle to the new file. If `File::open` failed for any other
 reason—for example, because we didn’t have permission to open the file—we still
 want the code to `panic!` in the same way as it did in Listing 9-4. For this we
 add an inner `match` expression, shown in Listing 9-5.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 <!-- ignore this test because otherwise it creates hello.txt which causes other
 tests to fail lol -->
@@ -137,23 +127,6 @@ file can’t be created, a different error message is printed. The second arm of
 the outer `match` stays the same, so the program panics on any error besides
 the missing file error.
 
-<<<<<<< HEAD
-That’s a lot of `match`! The `match` expression is very useful but also very
-much a primitive. In Chapter 13, you’ll learn about closures; the `Result<T,
-E>` type has many methods that accept a closure and are implemented using
-`match` expressions. Using those methods will make your code more concise. A
-more seasoned Rustacean might write this code instead of listing 9-5:
-
-```rust,ignore
-{{#rustdoc_include ../listings/ch09-error-handling/no-listing-03-closures/src/main.rs}}
-```
-
-Although this code has the same behavior as listing 9-5, it doesn’t contain any
-`match` expressions and is cleaner to read. Come back to this example after
-you’ve read Chapter 13, and look up the `unwrap_or_else` method in the standard
-library documentation. Many more of these methods can clean up huge nested
-`match` expressions when you’re dealing with errors.
-=======
 > ### Alternatives to Using `match` with `Result<T, E>`
 >
 > That’s a lot of `match`! The `match` expression is very useful but also very
@@ -188,7 +161,6 @@ library documentation. Many more of these methods can clean up huge nested
 > after you’ve read Chapter 13, and look up the `unwrap_or_else` method in the
 > standard library documentation. Many more of these methods can clean up huge
 > nested `match` expressions when you’re dealing with errors.
->>>>>>> english/main
 
 ### Shortcuts for Panic on Error: `unwrap` and `expect`
 
@@ -200,7 +172,7 @@ Listing 9-4. If the `Result` value is the `Ok` variant, `unwrap` will return
 the value inside the `Ok`. If the `Result` is the `Err` variant, `unwrap` will
 call the `panic!` macro for us. Here is an example of `unwrap` in action:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-04-unwrap/src/main.rs}}
@@ -226,7 +198,7 @@ Using `expect` instead of `unwrap` and providing good error messages can convey
 your intent and make tracking down the source of a panic easier. The syntax of
 `expect` looks like this:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,should_panic
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-05-expect/src/main.rs}}
@@ -263,11 +235,11 @@ the error and gives more control to the calling code, where there might be more
 information or logic that dictates how the error should be handled than what
 you have available in the context of your code.
 
-For example, listing 9-6 shows a function that reads a username from a file. If
+For example, Listing 9-6 shows a function that reads a username from a file. If
 the file doesn’t exist or can’t be read, this function will return those errors
 to the code that called the function.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -334,14 +306,10 @@ question mark operator `?` to make this easier.
 #### A Shortcut for Propagating Errors: the `?` Operator
 
 Listing 9-7 shows an implementation of `read_username_from_file` that has the
-<<<<<<< HEAD
-same functionality as it had in listing 9-6, but this implementation uses the
-=======
 same functionality as in Listing 9-6, but this implementation uses the
->>>>>>> english/main
 `?` operator.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -355,7 +323,7 @@ don't want to include it for rustdoc testing purposes. -->
 calling code using the `?` operator</span>
 
 The `?` placed after a `Result` value is defined to work in almost the same way
-as the `match` expressions we defined to handle the `Result` values in listing
+as the `match` expressions we defined to handle the `Result` values in Listing
 9-6. If the value of the `Result` is an `Ok`, the value inside the `Ok` will
 get returned from this expression, and the program will continue. If the value
 is an `Err`, the `Err` will be returned from the whole function as if we had
@@ -379,25 +347,17 @@ define `impl From<io::Error> for OurError` to construct an instance of
 `read_username_from_file` will call `from` and convert the error types without
 needing to add any more code to the function.
 
-<<<<<<< HEAD
-In the context of listing 9-7, the `?` at the end of the `File::open` call will
-return the value inside an `Ok` to the variable `f`. If an error occurs, the
-`?` operator will return early out of the whole function and give any `Err`
-value to the calling code. The same thing applies to the `?` at the end of the
-`read_to_string` call.
-=======
 In the context of Listing 9-7, the `?` at the end of the `File::open` call will
 return the value inside an `Ok` to the variable `username_file`. If an error
 occurs, the `?` operator will return early out of the whole function and give
 any `Err` value to the calling code. The same thing applies to the `?` at the
 end of the `read_to_string` call.
->>>>>>> english/main
 
 The `?` operator eliminates a lot of boilerplate and makes this function’s
 implementation simpler. We could even shorten this code further by chaining
-method calls immediately after the `?`, as shown in listing 9-8.
+method calls immediately after the `?`, as shown in Listing 9-8.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -410,19 +370,6 @@ don't want to include it for rustdoc testing purposes. -->
 <span class="caption">Listing 9-8: Chaining method calls after the `?`
 operator</span>
 
-<<<<<<< HEAD
-We’ve moved the creation of the new `String` in `s` to the beginning of the
-function; that part hasn’t changed. Instead of creating a variable `f`, we’ve
-chained the call to `read_to_string` directly onto the result of
-`File::open("hello.txt")?`. We still have a `?` at the end of the
-`read_to_string` call, and we still return an `Ok` value containing the
-username in `s` when both `File::open` and `read_to_string` succeed rather than
-returning errors. The functionality is again the same as in listing 9-6 and
-Listing 9-7; this is just a different, more ergonomic way to write it.
-
-Speaking of different ways to write this function, listing 9-9 shows that
-there’s a way to make this even shorter.
-=======
 We’ve moved the creation of the new `String` in `username` to the beginning of
 the function; that part hasn’t changed. Instead of creating a variable
 `username_file`, we’ve chained the call to `read_to_string` directly onto the
@@ -433,9 +380,8 @@ errors. The functionality is again the same as in Listing 9-6 and Listing 9-7;
 this is just a different, more ergonomic way to write it.
 
 Listing 9-9 shows a way to make this even shorter using `fs::read_to_string`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 <!-- Deliberately not using rustdoc_include here; the `main` function in the
 file panics. We do want to include it for reader experimentation purposes, but
@@ -457,13 +403,6 @@ the longer way first.
 
 #### Where The `?` Operator Can Be Used
 
-<<<<<<< HEAD
-The `?` operator can be used in functions that have a return type of
-`Result`, because it is defined to work in the same way as the `match`
-expression we defined in listing 9-6. The part of the `match` that requires a
-return type of `Result` is `return Err(e)`, so the return type of the function
-has to be a `Result` to be compatible with this `return`.
-=======
 The `?` operator can only be used in functions whose return type is compatible
 with the value the `?` is used on. This is because the `?` operator is defined
 to perform an early return of a value out of the function, in the same manner
@@ -471,7 +410,6 @@ as the `match` expression we defined in Listing 9-6. In Listing 9-6, the
 `match` was using a `Result` value, and the early return arm returned an
 `Err(e)` value. The return type of the function has to be a `Result` so that
 it’s compatible with this `return`.
->>>>>>> english/main
 
 In Listing 9-10, let’s look at the error we’ll get if we use the `?` operator
 in a `main` function with a return type incompatible with the type of the value

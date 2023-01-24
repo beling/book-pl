@@ -34,7 +34,7 @@ By adding `[profile.*]` sections for any profile you want to customize, you
 override any subset of the default settings. For example, here are the default
 values for the `opt-level` setting for the `dev` and `release` profiles:
 
-<span class="filename">Plik: Cargo.toml</span>
+<span class="filename">Filename: Cargo.toml</span>
 
 ```toml
 [profile.dev]
@@ -59,7 +59,7 @@ You can override a default setting by adding a different value for it in
 development profile, we can add these two lines to our project’s *Cargo.toml*
 file:
 
-<span class="filename">Plik: Cargo.toml</span>
+<span class="filename">Filename: Cargo.toml</span>
 
 ```toml
 [profile.dev]

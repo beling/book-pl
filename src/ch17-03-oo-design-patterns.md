@@ -40,7 +40,7 @@ Listing 17-11 shows this workflow in code form: this is an example usage of the
 API we’ll implement in a library crate named `blog`. This won’t compile yet
 because we haven’t implemented the `blog` crate.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:all}}
@@ -76,21 +76,15 @@ make a mistake with the states, like publishing a post before it’s reviewed.
 Let’s get started on the implementation of the library! We know we need a
 public `Post` struct that holds some content, so we’ll start with the
 definition of the struct and an associated public `new` function to create an
-<<<<<<< HEAD
-instance of `Post`, as shown in listing 17-12. We’ll also make a private
-`State` trait. Then `Post` will hold a trait object of `Box<dyn State>`
-inside an `Option<T>` in a private field named `state`. You’ll see why the
-=======
 instance of `Post`, as shown in Listing 17-12. We’ll also make a private
 `State` trait that will define the behavior that all state objects for a `Post`
 must have.
 
 Then `Post` will hold a trait object of `Box<dyn State>` inside an `Option<T>`
 in a private field named `state` to hold the state object. You’ll see why the
->>>>>>> english/main
 `Option<T>` is necessary in a bit.
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-12/src/lib.rs}}
@@ -115,24 +109,15 @@ create a `Post` in any other state! In the `Post::new` function, we set the
 
 ### Storing the Text of the Post Content
 
-<<<<<<< HEAD
-Listing 17-11 showed that we want to be able to call a method named
-`add_text` and pass it a `&str` that is then added to the text content of the
-blog post. We implement this as a method rather than exposing the `content`
-field as `pub`. This means we can implement a method later that will control
-how the `content` field’s data is read. The `add_text` method is pretty
-straightforward, so let’s add the implementation in listing 17-13 to the `impl
-=======
 We saw in Listing 17-11 that we want to be able to call a method named
 `add_text` and pass it a `&str` that is then added as the text content of the
 blog post. We implement this as a method, rather than exposing the `content`
 field as `pub`, so that later we can implement a method that will control how
 the `content` field’s data is read. The `add_text` method is pretty
 straightforward, so let’s add the implementation in Listing 17-13 to the `impl
->>>>>>> english/main
 Post` block:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-13/src/lib.rs:here}}
@@ -153,14 +138,14 @@ support.
 
 Even after we’ve called `add_text` and added some content to our post, we still
 want the `content` method to return an empty string slice because the post is
-still in the draft state, as shown on line 7 of listing 17-11. For now, let’s
+still in the draft state, as shown on line 7 of Listing 17-11. For now, let’s
 implement the `content` method with the simplest thing that will fulfill this
 requirement: always returning an empty string slice. We’ll change this later
 once we implement the ability to change a post’s state so it can be published.
 So far, posts can only be in the draft state, so the post content should always
 be empty. Listing 17-14 shows this placeholder implementation:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-14/src/lib.rs:here}}
@@ -169,7 +154,7 @@ be empty. Listing 17-14 shows this placeholder implementation:
 <span class="caption">Listing 17-14: Adding a placeholder implementation for
 the `content` method on `Post` that always returns an empty string slice</span>
 
-With this added `content` method, everything in listing 17-11 up to line 7
+With this added `content` method, everything in Listing 17-11 up to line 7
 works as intended.
 
 ### Requesting a Review of the Post Changes Its State
@@ -177,7 +162,7 @@ works as intended.
 Next, we need to add functionality to request a review of a post, which should
 change its state from `Draft` to `PendingReview`. Listing 17-15 shows this code:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-15/src/lib.rs:here}}
@@ -235,9 +220,9 @@ Listing 17-11 now works up to line 10!
 
 The `approve` method will be similar to the `request_review` method: it will
 set `state` to the value that the current state says it should have when that
-state is approved, as shown in listing 17-16:
+state is approved, as shown in Listing 17-16:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-16/src/lib.rs:here}}
@@ -257,18 +242,12 @@ boxed instance of the `Published` struct. The `Published` struct implements the
 method, it returns itself, because the post should stay in the `Published`
 state in those cases.
 
-<<<<<<< HEAD
-Now we need to update the `content` method on `Post`: if the state is
-`Published`, we want to return the value in the post’s `content` field;
-otherwise, we want to return an empty string slice, as shown in listing 17-17:
-=======
 Now we need to update the `content` method on `Post`. We want the value
 returned from `content` to depend on the current state of the `Post`, so we’re
 going to have the `Post` delegate to a `content` method defined on its `state`,
 as shown in Listing 17-17:
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch17-oop/listing-17-17/src/lib.rs:here}}
@@ -303,7 +282,7 @@ we need to add `content` to the `State` trait definition, and that is where
 we’ll put the logic for what content to return depending on which state we
 have, as shown in Listing 17-18:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-18/src/lib.rs:here}}
@@ -322,7 +301,7 @@ Chapter 10. We’re taking a reference to a `post` as an argument and returning 
 reference to part of that `post`, so the lifetime of the returned reference is
 related to the lifetime of the `post` argument.
 
-And we’re done—all of listing 17-11 now works! We’ve implemented the state
+And we’re done—all of Listing 17-11 now works! We’ve implemented the state
 pattern with the rules of the blog post workflow. The logic related to the
 rules lives in the state objects rather than being scattered throughout `Post`.
 
@@ -402,9 +381,9 @@ outside code has no knowledge of them, we’ll encode the states into different
 types. Consequently, Rust’s type checking system will prevent attempts to use
 draft posts where only published posts are allowed by issuing a compiler error.
 
-Let’s consider the first part of `main` in listing 17-11:
+Let’s consider the first part of `main` in Listing 17-11:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-11/src/main.rs:here}}
@@ -420,7 +399,7 @@ display draft post content in production, because that code won’t even compile
 Listing 17-19 shows the definition of a `Post` struct and a `DraftPost` struct,
 as well as methods on each:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-19/src/lib.rs}}
@@ -454,9 +433,9 @@ pending review state should still not display any content. Let’s implement
 these constraints by adding another struct, `PendingReviewPost`, defining the
 `request_review` method on `DraftPost` to return a `PendingReviewPost`, and
 defining an `approve` method on `PendingReviewPost` to return a `Post`, as
-shown in listing 17-20:
+shown in Listing 17-20:
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch17-oop/listing-17-20/src/lib.rs:here}}
@@ -484,9 +463,9 @@ called on, so we need to add more `let post =` shadowing assignments to save
 the returned instances. We also can’t have the assertions about the draft and
 pending review posts’ contents be empty strings, nor do we need them: we can’t
 compile code that tries to use the content of posts in those states any longer.
-The updated code in `main` is shown in listing 17-21:
+The updated code in `main` is shown in Listing 17-21:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch17-oop/listing-17-21/src/main.rs}}
@@ -503,17 +482,10 @@ now impossible because of the type system and the type checking that happens at
 compile time! This ensures that certain bugs, such as display of the content of
 an unpublished post, will be discovered before they make it to production.
 
-<<<<<<< HEAD
-Try the tasks suggested for additional requirements that we mentioned at the
-start of this section on the `blog` crate as it is after listing 17-20 to see
-what you think about the design of this version of the code. Note that some of
-the tasks might be completed already in this design.
-=======
 Try the tasks suggested at the start of this section on the `blog` crate as it
 is after Listing 17-21 to see what you think about the design of this version
 of the code. Note that some of the tasks might be completed already in this
 design.
->>>>>>> english/main
 
 We’ve seen that even though Rust is capable of implementing object-oriented
 design patterns, other patterns, such as encoding state into the type system,

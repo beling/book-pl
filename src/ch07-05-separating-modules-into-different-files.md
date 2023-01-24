@@ -4,13 +4,6 @@ So far, all the examples in this chapter defined multiple modules in one file.
 When modules get large, you might want to move their definitions to a separate
 file to make the code easier to navigate.
 
-<<<<<<< HEAD
-For example, let’s start from the code in listing 7-17 and move the
-`front_of_house` module to its own file *src/front_of_house.rs* by changing the
-crate root file so it contains the code shown in listing 7-21. In this case,
-the crate root file is *src/lib.rs*, but this procedure also works with binary
-crates whose crate root file is *src/main.rs*.
-=======
 For example, let’s start from the code in Listing 7-17 that had multiple
 restaurant modules. We’ll extract modules into files instead of having all the
 modules defined in the crate root file. In this case, the crate root file is
@@ -22,9 +15,8 @@ code inside the curly brackets for the `front_of_house` module, leaving only
 the `mod front_of_house;` declaration, so that *src/lib.rs* contains the code
 shown in Listing 7-21. Note that this won’t compile until we create the
 *src/front_of_house.rs* file in Listing 7-22.
->>>>>>> english/main
 
-<span class="filename">Plik: src/lib.rs</span>
+<span class="filename">Filename: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
@@ -33,17 +25,12 @@ shown in Listing 7-21. Note that this won’t compile until we create the
 <span class="caption">Listing 7-21: Declaring the `front_of_house` module whose
 body will be in *src/front_of_house.rs*</span>
 
-<<<<<<< HEAD
-And *src/front_of_house.rs* gets the definitions from the body of the
-`front_of_house` module, as shown in listing 7-22.
-=======
 Next, place the code that was in the curly brackets into a new file named
 *src/front_of_house.rs*, as shown in Listing 7-22. The compiler knows to look
 in this file because it came across the module declaration in the crate root
 with the name `front_of_house`.
->>>>>>> english/main
 
-<span class="filename">Plik: src/front_of_house.rs</span>
+<span class="filename">Filename: src/front_of_house.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
@@ -69,7 +56,7 @@ named for its ancestors in the module tree, in this case *src/front_of_house/*.
 To start moving `hosting`, we change *src/front_of_house.rs* to contain only the
 declaration of the `hosting` module:
 
-<span class="filename">Plik: src/front_of_house.rs</span>
+<span class="filename">Filename: src/front_of_house.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
@@ -78,7 +65,7 @@ declaration of the `hosting` module:
 Then we create a *src/front_of_house* directory and a file *hosting.rs* to
 contain the definitions made in the `hosting` module:
 
-<span class="filename">Plik: src/front_of_house/hosting.rs</span>
+<span class="filename">Filename: src/front_of_house/hosting.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}

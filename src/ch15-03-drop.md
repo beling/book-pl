@@ -28,7 +28,7 @@ Listing 15-14 shows a `CustomSmartPointer` struct whose only custom
 functionality is that it will print `Dropping CustomSmartPointer!` when the
 instance goes out of scope, to show when Rust runs the `drop` function.
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
@@ -76,10 +76,10 @@ you have to call the `std::mem::drop` function provided by the standard library
 if you want to force a value to be dropped before the end of its scope.
 
 If we try to call the `Drop` trait’s `drop` method manually by modifying the
-`main` function from listing 15-14, as shown in listing 15-15, we’ll get a
+`main` function from Listing 15-14, as shown in Listing 15-15, we’ll get a
 compiler error:
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
@@ -110,17 +110,11 @@ scope, and we can’t call the `drop` method explicitly. So, if we need to force
 a value to be cleaned up early, we use the `std::mem::drop` function.
 
 The `std::mem::drop` function is different from the `drop` method in the `Drop`
-<<<<<<< HEAD
-trait. We call it by passing the value we want to force to be dropped early as
-an argument. The function is in the prelude, so we can modify `main` in listing
-15-15 to call the `drop` function, as shown in listing 15-16:
-=======
 trait. We call it by passing as an argument the value we want to force drop.
 The function is in the prelude, so we can modify `main` in Listing 15-15 to
 call the `drop` function, as shown in Listing 15-16:
->>>>>>> english/main
 
-<span class="filename">Plik: src/main.rs</span>
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
