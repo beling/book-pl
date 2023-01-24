@@ -17,7 +17,7 @@ No Starch Press][nsprust].
 
 [install]: ch01-01-installation.html
 [editions]: appendix-05-editions.html
-[nsprust]: https://nostarch.com/rust
+[nsprust]: https://nostarch.com/rust-programming-language-2nd-edition
 [translations]: appendix-06-translation.html
 
 > **🚨 Want a more interactive learning experience? Try out a different version

@@ -1,8 +1,8 @@
-## Hello, World!
+## Witaj, świecie!
 
 Ponieważ Rust jest już zainstalowany, napiszmy pierwszy program. Przy
 poznawaniu nowego języka tradycją stało się tworzenie krótkiego programu, który
-wyświetla na ekranie tekst „Witaj, świecie!”. Postąpimy tu
+wyświetla na ekranie tekst „Witaj, świecie! (ang. „Hello World!”). Postąpimy tu
 tak samo.
 
 > Uwaga: Książka zakłada u czytelnika podstawową znajomość wiersza poleceń. Sam

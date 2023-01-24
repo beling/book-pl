@@ -1,5 +1,5 @@
 [package]
-name = "zmienno-przecinkowe"
+name = "floating-point"
 version = "0.1.0"
 edition = "2021"
 

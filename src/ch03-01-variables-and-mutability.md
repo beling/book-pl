@@ -4,10 +4,10 @@ Tak jak wspomniano w rozdziale [“Storing Values with
 Variables”][storing-values-with-variables]<!-- ignore --> , zmienne są domyślnie niemodyfikowalne (niemutowalne, ang. *immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
 uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu czasem możesz chcieć zrezygnować z tej własciwości.
 
-Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy, nie można później zmienić tej wartości. Aby to zobrazować, utworzymy nowy projekt o nazwie *zmienne* w folderze *projects* korzystając z komendy
-`cargo new --bin zmienne`.
+Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy, nie można później zmienić tej wartości. Aby to zobrazować, utworzymy nowy projekt o nazwie *variables* w folderze *projects* korzystając z komendy
+`cargo new --bin variables`.
 
-Następnie w nowo utworzonym folderze *zmienne*, odnajdź i otwórz *src/main.rs*, zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się poprawnie:
+Następnie w nowo utworzonym folderze *variables*, odnajdź i otwórz *src/main.rs*, zmień kod w tym pliku na poniższy, który jednak jeszcze nie skompiluje się poprawnie:
 
 <span class="filename">Plik: src/main.rs</span>
 

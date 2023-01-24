@@ -4,7 +4,7 @@
 > Language][nsprust] dostępnej w druku oraz w wersji elektronicznej, wydanych
 > przez [No Starch Press][nsp].
 
-[nsprust]: https://nostarch.com/rust
+[nsprust]: https://nostarch.com/rust-programming-language-2nd-edition
 [nsp]: https://nostarch.com/
 
 Witaj na łamach *Języka Programowania Rust* - wprowadzającej ksiażki o Ruście.

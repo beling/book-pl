@@ -125,8 +125,7 @@ Oto przykład pokazujący liczby zmiennoprzecinkowe w akcji:
 ```
 
 Liczby zmiennoprzecinkowe są reprezentowane zgodnie ze standardem IEEE-754.
-Typ `f32` to liczba zmiennoprzecinkowa zapisana w wyżej wymienionym standardzie
-z pojedynczą precyzją, a `f64` — z podwójną.
+Typ `f32` to liczba zmiennoprzecinkowa zapisana w wyżej wymienionym standardzie z pojedynczą precyzją, a `f64` -- z podwójną.
 
 #### Operacje arytmetyczne
 

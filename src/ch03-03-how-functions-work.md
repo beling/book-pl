@@ -1,10 +1,8 @@
 ## Funkcje
 
-Funkcje są wszechobecne w kodzie Rusta. Widziałeś już jedną z najważniejszych funkcji w całym języku: funkcję `main`, która jest punktem wejściowym wielu programów. Widziałeś już też słowo kluczowe `fn`, za pomocą którego możesz deklarować nowe funkcje.
+Funkcje są wszechobecne w kodzie Rusta. Widzieliśmy już jedną z najważniejszych funkcji w całym języku: funkcję `main`, która jest punktem wejściowym wielu programów. Widzieliśmy już też słowo kluczowe `fn`, za pomocą którego można deklarować nowe funkcje.
 
-W kodzie Rusta konwencjonalnym stylem zapisu nazw funkcji i zmiennych jest użycie tzw. *snake case*. W tym
-stylu wszystkie człony pisane są małymi literami, a poszczególne wyrazy oddzielone są podkreślnikami. Poniżej
-program zawierający przykładową definicję funkcji:
+W kodzie Rusta konwencjonalnym stylem zapisu nazw funkcji i zmiennych jest użycie tzw. *snake case*. W tym stylu wszystkie człony pisane są małymi literami, a poszczególne wyrazy oddzielone są podkreślnikami. Poniżej program zawierający przykładową definicję funkcji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -12,16 +10,14 @@ program zawierający przykładową definicję funkcji:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
 ```
 
-Definicje funkcji w Ruście składają się ze słowa kluczowego `fn`, nazwy funkcji i pary nawiasów okrągłych. Nawiasy
-klamrowe informują kompilator, gdzie zaczyna i kończy się ciało funkcji.
+Definicje funkcji w Ruście składają się ze słowa kluczowego `fn`, nazwy funkcji i pary nawiasów okrągłych. Nawiasy klamrowe informują kompilator, gdzie zaczyna i kończy się ciało funkcji.
 
 Zdefiniowane przez nas funkcje możemy wywołać, pisząc ich nazwę wraz z parą nawiasów.
 Ponieważ funkcja `another_function` jest już zdefiniowana programie, możemy ją wywołać z wnętrza funkcji `main`.
-Zauważ, że definicja funkcji `another_function` znajduje się w kodzie źródłowym *po* ciele funkcji `main`;
+Proszę zauważyć, że definicja funkcji `another_function` znajduje się w kodzie źródłowym *po* ciele funkcji `main`;
 moglibyśmy równie dobrze umieścić ją przed funkcją `main`. Rusta nie obchodzi, gdzie umieszczasz definicje swoich funkcji, a jedynie to żeby te definicje były w zasięgu widzianym przez wywołującego.
 
-Stwórzmy nowy projekt o nazwie *funkcje*, dzięki któremu zapoznamy się z głębiej z funkcjami w Ruście. Umieść powyższy przykład z `another_function`
-w pliku *src/main.rs* i uruchom program. Powinieneś zobaczyć taki wynik:
+Stwórzmy nowy projekt o nazwie *functions*, dzięki któremu zapoznamy się z głębiej z funkcjami w Ruście. Umieść powyższy przykład z `another_function` w pliku *src/main.rs* i uruchom program. Powinieneś zobaczyć taki wynik:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
@@ -73,8 +69,7 @@ W tym przykładzie stworzyliśmy funkcję `print_labeled_measurement` z dwoma pa
 Pierwszy parametr ma nazwę `value` i typ `i32`. Drugi jest
 nazwany `unit_label` i jest typu `char`. Funkcja drukuje tekst zawierający wartości zarówno `value` jak i `unit_label`.
 
-Spróbujmy uruchomić ten kod. Otwórz plik *src/main.rs* w twoim projekcie *funkcje* i zastąp jego zawartość kodem
-z powyższego przykładu. Uruchom program poleceniem `cargo run`:
+Spróbujmy uruchomić ten kod. Otwórz plik *src/main.rs* w twoim projekcie *functions* i zastąp jego zawartość kodem z powyższego przykładu. Uruchom program poleceniem `cargo run`:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
@@ -215,7 +210,5 @@ Próba kompilacji poskutkuje następującym błędem:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 
-Główny fragment wiadomości o błędzie, `mismatched types`, czyli niezgodność typów, informuje o podstawowym problemie
-w tym kodzie. Definicja funkcji `plus_one` określa typ zwracany jako `i32`, jednak instrukcje nie rozwijają się do żadnej wartości, i wartość zwrócona z funkcji przyjmuje postać `()`, czyli pustej krotki. Jest to sprzeczne z definicją funkcji i powoduje błąd.
-W komunikacie błędu Rust podaje przypuszczalne rozwiązanie tego problemu: sugeruje, aby usunąć średnik z końca linii,
-co naprawi błąd kompilacji.
+Główny fragment wiadomości o błędzie, `mismatched types`, czyli niezgodność typów, informuje o podstawowym problemie w tym kodzie. Definicja funkcji `plus_one` określa typ zwracany jako `i32`, jednak instrukcje nie rozwijają się do żadnej wartości, i wartość zwrócona z funkcji przyjmuje postać `()`, czyli pustej krotki. Jest to sprzeczne z definicją funkcji i powoduje błąd.
+W komunikacie błędu Rust podaje przypuszczalne rozwiązanie tego problemu: sugeruje, aby usunąć średnik z końca linii, co naprawi błąd kompilacji.

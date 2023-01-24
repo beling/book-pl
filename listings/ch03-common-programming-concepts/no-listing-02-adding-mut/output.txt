@@ -1,6 +1,6 @@
 $ cargo run
-   Compiling zmienne v0.1.0 (file:///projects/zmienne)
+   Compiling variables v0.1.0 (file:///projects/variables)
     Finished dev [unoptimized + debuginfo] target(s) in 0.30s
-     Running `target/debug/zmienne`
+     Running `target/debug/variables`
 Wartość x wynosi: 5
 Wartość x wynosi: 6

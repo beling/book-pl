@@ -1,5 +1,5 @@
 $ cargo run
-   Compiling system_wlasnosci v0.1.0 (file:///projects/system_wlasnosci)
+   Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` reference
  --> src/main.rs:8:5
   |
@@ -9,4 +9,4 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` ref
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `system_wlasnosci` due to previous error
+error: could not compile `ownership` due to previous error

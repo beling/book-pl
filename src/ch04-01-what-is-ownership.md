@@ -3,11 +3,9 @@
 *Własność* to zestaw reguł, które determinują, jak program Rusta zarządza pamięcią.
 Wszystkie programy muszą kontrolować sposób wykorzystywania pamięci komputera podczas swojego działania. Niektóre języki korzystają z automatycznego systemu odśmiecania (*garbage collection*), który regularnie poszukuje fragmentów pamięci, których działający program już nie używa. W innych językach, sam programista ręcznie zajmuje i zwalnia pamięć. Rust wykorzystuje trzecie podejście: pamięć jest zarządzana przez system własności, obejmujący zestaw zasad sprawdzanych przez kompilator w trakcie kompilacji. Jeśli którakolwiek z reguł zostanie naruszona, program nie skompiluje się. Jednocześnie żaden z aspektów związanych z systemem własności nie spowalnia działania programu.
 
-Ponieważ własność jest nowym pojęciem dla wielu programistów, przyzwyczajenie się do niej zabiera trochę czasu. Dobra wiadomość jest taka, że w miarę nabywania doświadczenia z Rustem i zasadami systemu własności, rośnie też twoja
-zdolność do naturalnego tworzenia bezpiecznego i wydajnego kodu. Tak trzymaj!
+Ponieważ własność jest nowym pojęciem dla wielu programistów, przyzwyczajenie się do niej zabiera trochę czasu. Dobra wiadomość jest taka, że w miarę nabywania doświadczenia z Rustem i zasadami systemu własności, rośnie też twoja zdolność do naturalnego tworzenia bezpiecznego i wydajnego kodu. Tak trzymaj!
 
-Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozumieniu innych, unikatowych funkcjonalności Rusta. W tym rozdziale nauczysz się, czym jest własność za pomocą kilku przykładów, które skupiają się na bardzo często
-spotykanej strukturze danych: łańcuchach znaków (*string*).
+Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozumieniu innych, unikatowych funkcjonalności Rusta. W tym rozdziale nauczysz się, czym jest własność za pomocą kilku przykładów, które skupiają się na bardzo często spotykanej strukturze danych: łańcuchach znaków (*string*).
 
 > ### Stos i sterta
 >
@@ -93,8 +91,7 @@ zostaje usunięta.
 
 ### Zasięg zmiennych
 
-Teraz, kiedy znamy już podstawy składni, nie będziemy umieszczać w treści przykładów kodu `fn main() {`. Jeśli zatem przepisujesz kod na bieżąco, musisz ręcznie
-umieszczać zaprezentowane dalej fragmenty wewnątrz funkcji `main`. Dzięki temu, przykłady będą nieco bardziej zwięzłe, pozwalając nam skupić się na istocie sprawy zamiast na powtarzalnych frazach.
+Teraz, kiedy znamy już podstawy składni, nie będziemy umieszczać w treści przykładów kodu `fn main() {`. Jeśli zatem przepisujesz kod na bieżąco, musisz ręcznie umieszczać zaprezentowane dalej fragmenty wewnątrz funkcji `main`. Dzięki temu, przykłady będą nieco bardziej zwięzłe, pozwalając nam skupić się na istocie sprawy zamiast na powtarzalnych frazach.
 
 W pierwszym przykładzie systemu własności, przyjrzymy się *zasięgowi* kilku zmiennych. Zasięgiem elementu nazywamy obszar programu, wewnątrz którego dany element zachowuje ważność (istnieje). Powiedzmy, że mamy zmienną, która wygląda tak:
 

@@ -16,11 +16,11 @@ Aby stworzyć nowy projekt, wejdź do folderu *projects* utworzonego w rozdziale
 wygeneruj szkielet projektu, w ten sposób:
 
 ```console
-$ cargo new gra_zgadywanka
-$ cd gra_zgadywanka
+$ cargo new guessing_game
+$ cd guessing_game
 ```
 
-Pierwsza komenda, `cargo new`, jako argument przyjmuje nazwę projektu (`gra_zgadywanka`).
+Pierwsza komenda, `cargo new`, jako argument przyjmuje nazwę projektu (`guessing_game`).
 W kolejnej linii komenda `cd` przenosi nas do nowo utworzonego folderu projektu.
 
 Spójrz na wygenerowany plik *Cargo.toml*:
@@ -266,9 +266,9 @@ input 6 -->
 
 ```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
-     Running `target/debug/gra_zgadywanka`
+     Running `target/debug/guessing_game`
 Zgadnij numer!
 Podaj swoją liczbę:
 6
@@ -376,7 +376,7 @@ cargo build -->
 
 ```console
 $ cargo build
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
 ```
 
@@ -390,7 +390,7 @@ kompilowane będą te same artefakty: Cargo użyje zależności w konkretnych we
 Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `rand` 0.8.6, która zawierałaby poprawkę istotnego błedu,
 ale jednocześnie wprowadza regresję, która zepsuje twój kod?
 Odpowiedzią na ten problem jest plik *Cargo.lock*, który został stworzony w momencie,
-gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *gra_zgadywanka*.
+gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *guessing_game*.
 
 Kiedy po raz pierwszy budujesz dany projekt, Cargo sprawdza wersje każdej z zależności, tak by kryteria były spełnione,
 i wynik zapisuje w pliku *Cargo.lock*. Od tego czasu przy każdym kolejnym budowaniu, Cargo widząc, że plik *Cargo.lock*
@@ -480,16 +480,16 @@ cargo run
 
 ```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
-     Running `target/debug/gra_zgadywanka`
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 7
 Podaj swoją liczbę:
 4
 Wybrana przez ciebie liczba: 4
 $ cargo run
-     Running `target/debug/gra_zgadywanka`
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 83
 Podaj swoją liczbę:
@@ -620,9 +620,9 @@ cargo run
 
 ```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
-     Running `target/debug/gra_zgadywanka`
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 58
 Podaj swoją liczbę:
@@ -671,9 +671,9 @@ quit
 
 ```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/gra_zgadywanka)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50 secs
-     Running `target/debug/gra_zgadywanka`
+     Running `target/debug/guessing_game`
 Zgadnij liczbę!
 Sekretna liczba to: 59
 Podaj swoją liczbę:
@@ -759,7 +759,7 @@ foo
 
 ```console
 $ cargo run
-   Compiling gra_zgadywanka v0.1.0 (file:///projects/guessing_game)
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 4.45s
      Running `target/debug/guessing_game`
 Zgadnij liczbę!

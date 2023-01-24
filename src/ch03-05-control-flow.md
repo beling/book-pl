@@ -11,7 +11,7 @@ An `if` expression allows you to branch your code depending on conditions. You
 provide a condition and then state, “If this condition is met, run this block
 of code. If the condition is not met, do not run this block of code.”
 
-Create a new project called *galezie* in your *projects* directory to explore
+Create a new project called *branches* in your *projects* directory to explore
 the `if` expression. In the *src/main.rs* file, input the following:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -181,7 +181,7 @@ Rust has three kinds of loops: `loop`, `while`, and `for`. Let’s try each one.
 The `loop` keyword tells Rust to execute a block of code over and over again
 forever or until you explicitly tell it to stop.
 
-As an example, change the *src/main.rs* file in your *petle* directory to look
+As an example, change the *src/main.rs* file in your *loops* directory to look
 like this:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -203,9 +203,9 @@ CTRL-C
 
 ```console
 $ cargo run
-   Compiling petle v0.1.0 (file:///projects/petle)
+   Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.29s
-     Running `target/debug/petle`
+     Running `target/debug/loops`
 znowu!
 znowu!
 znowu!

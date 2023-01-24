@@ -1,4 +1,4 @@
-## Hello, Cargo!
+## Witaj, Cargo!
 
 Cargo jest menedżerem paczek i systemem budowania Rusta. Większość Rustowców
 używa tego narzędzia do zarządzania swoimi projektami, ponieważ Cargo potrafi
@@ -7,7 +7,7 @@ budowanie bibliotek, od których kod jest zależny. Biblioteki, których wymaga
 twój kod nazywamy *zależnościami* (*dependencies*).
 
 Najprostsze programy w Ruście, takie jak ten, który właśnie napisaliśmy, nie
-mają żadnych zależności, więc gdybyśmy zbudowali projekt „Hello World!” za pomocą
+mają żadnych zależności, więc gdybyśmy zbudowali projekt „Witaj, świecie!” (ang. „Hello World!”) za pomocą
 Cargo, zostałaby użyta tylko ta część narzędzia, która zajmuje się budowaniem
 kodu. W miarę pisania bardziej skomplikowanych programów, zechcesz dodawać
 zależności i jeśli swój projekt rozpoczniesz z użyciem Cargo, będzie to
@@ -31,7 +31,7 @@ swojej metody instalacji celem ustalenia, jak zainstalować Cargo osobno.
 ### Tworzenie projektu z Cargo
 
 Stwórzmy nowy projekt z pomocą Cargo i przyjrzyjmy się, czym różni się on od
-naszego pierwotnego projektu „Hello World!”. Przejdź z powrotem do swojego
+naszego pierwotnego projektu „Witaj, świecie!”. Przejdź z powrotem do swojego
 katalogu *projects* (lub innego, w którym zdecydowałeś(-aś) się trzymać swój kod) i
 bez względu na posiadany system operacyjny wprowadź polecenie:
 
@@ -104,8 +104,8 @@ fn main() {
 }
 ```
 
-Cargo wygenerował dla ciebie program „Hello World!”, taki sam jak ten, który
-napisaliśmy w listingu 1-1! Jak na razie, różnice między naszym poprzednim
+Cargo wygenerował dla ciebie program „Witaj, świecie!”, prawie taki sam jak ten, jak
+napisaliśmy w listingu 1-1 (tyle, że w języku angielskim)! Różnice między naszym poprzednim
 projektem, a tym wygenerowanym przez Cargo są takie, że w Cargo kod źródłowy
 trafia do podkatalogu *src*, a w katalogu głównym pozostaje plik
 konfiguracyjny *Cargo.toml*.
@@ -124,7 +124,7 @@ plik *Cargo.toml*.
 ### Budowanie i uruchamianie projektu z Cargo
 
 Przyjrzyjmy się teraz, jakie są różnice w budowaniu i uruchamianiu programu
-"Hello World" poprzez Cargo. Aby zbudować swój projekt, z poziomu głównego
+„Witaj, świecie!” poprzez Cargo. Aby zbudować swój projekt, z poziomu głównego
 katalogu *hello_cargo* wprowadź polecenie:
 
 ```console
@@ -144,7 +144,7 @@ $ ./target/debug/hello_cargo # lub .\target\debug\hello_cargo.exe pod Windowsem
 Hello, world!
 ```
 
-Jeśli wszystko przebiegło prawidłowo, `Hello, world!` powinno ponownie
+Jeśli wszystko przebiegło prawidłowo, `Hello, world!` powinno
 wyświetlić się w oknie terminala. Uruchomienie `cargo build` za pierwszym razem
 powoduje dodatkowo utworzenie przez Cargo nowego pliku w katalogu głównym o
 nazwie *Cargo.lock*, który wykorzystywany jest do śledzenia dokładnych wersji
@@ -163,9 +163,7 @@ $ cargo run
 Hello, world!
 ```
 
-Using `cargo run` is more convenient than having to remember to run `cargo
-build` and then use the whole path to the binary, so most developers use `cargo
-run`.
+Większość programistów używa `cargo run`, bo jest ono wygodniejsze i łatwiejsze do zapamiętania od użycia `cargo build` i pełnej ścieżki do zbudowanego pliku binarnego.
 
 Zauważ, że tym razem nie wyświetliła się informacja o tym, że Cargo kompilował
 `hello_cargo`. Program wywnioskował, że zawartość plików nie uległa zmianie,
@@ -178,7 +176,7 @@ $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
      Running `target/debug/hello_cargo`
-Witaj, świecie!
+Hello, world!
 ```
 
 Mamy jeszcze do dyspozycji `cargo check`. To polecenie szybko sprawdzi twój kod,
