@@ -500,7 +500,7 @@ Wybrana przez ciebie liczba: 5
 Za każdym razem powinieneś/powinnaś otrzymać inny sekretny numer, jednak zawsze z zakresu od 1 do 100. Dobra robota!
 
 
-## Porównywanie odpowiedzi gracza z sekretnym numerem
+## Porównywanie Odpowiedzi z Sekretnym Numerem
 
 Teraz, kiedy już mamy odpowiedź gracza i wylosowaną sekretną liczbę, możemy je porównać. Ten krok przedstawiony jest na listingu 2-4. Ten kod nie będzie się jeszcze kompilował. Zaraz wyjaśnimy dlaczego.
 
@@ -523,10 +523,9 @@ Przyjmuje ona referencję do drugiego obiektu, z którym chcemy porównać pierw
 tutaj porównujemy `guess` do `secret_number`. `cmp` zwraca wariant enuma `Ordering` 
 (którego typ zaciągnęliśmy poprzez wyrażenie `use`). Za pomocą wyrażenia [`match`][match]<!-- ignore -->, na podstawie wartości `Ordering` zwróconej przez wywołanie `cmp` z wartościami `guess` z `secret_number`, decydujemy, co zrobić dalej.
 
-Wyrażenie `match` składa się z *gałęzi* (*ang. branch*). Gałąź składa się ze *wzorca* dopasowania i kodu, który ma się wykonać, jeśli wartość podana na początku wyrażenia `match` będzie pasowała do danego wzorca.
-Rust bierze wartość podaną do `match` i przegląda kolejno wzorce ze wszystkich gałęzi.
-Wzorce i konstrukcja `match` to potężne mechanizmy w Ruście,
-które pozwolą wyrazić w kodzie wiele różnych scenariuszy i pomogą zapewnić obsługę ich wszystkich.
+Wyrażenie `match` składa się z *odnóg*. Każda odnoga składa się ze *wzorca* dopasowania i kodu, który ma się wykonać, jeśli wartość podana na początku wyrażenia `match` będzie pasowała do danego wzorca.
+Rust bierze wartość podaną do `match` i przegląda kolejno wzorce ze wszystkich odnóg.
+Wzorce i konstrukcja `match` to potężne mechanizmy w Ruście, które pozwolą wyrazić w kodzie wiele różnych scenariuszy i pomogą zapewnić obsługę ich wszystkich.
 Zostaną one omówione szczegółowo, odpowiednio w rozdziale 6 i 18.
 
 Przeanalizujmy na przykładzie, co dokładnie dzieje się z użytym tutaj wyrażeniem `match`.
@@ -534,11 +533,10 @@ Powiedzmy, że użytkownik wybrał liczbę 50, a losowo wygenerowana sekretna li
 
 Kiedy kod porówna 50 do 38, metoda `cmp` zwróci wartość `Ordering::Greater`, ponieważ 50 jest większe niż 38.
 Zatem `match` otrzymuje tutaj wartość `Ordering::Greater`.
-`Match` sprawdza wzorzec w pierwszej gałęzi, `Ordering::Less`, ale wartość `Ordering::Greater` nie pasuje do wzorca
-`Ordering::Less`, więc kod z tej gałęzi jest ignorowany i sprawdzana jest następna gałąź.
-Wzorzec z następnego ramienia, `Ordering::Greater`, *pasuje* do `Ordering::Greater`!
-Powiązany kod w tym ramieniu jest wykonywany i na ekranie pojawia się napis `Za duża!`.
-Wyrażenie `match` kończy wykonanie po pierwszym znalzionym dopasowaniu, więc nie sprawdzi już ostatniej gałęzi w tym scenariuszu.
+`Match` sprawdza wzorzec w pierwszej odnodze, `Ordering::Less`, ale wartość `Ordering::Greater` nie pasuje do wzorca `Ordering::Less`, więc kod z tej odnogi jest pomijany i sprawdzana jest następna odnoga.
+Wzorzec z następnej odnogi, `Ordering::Greater`, *pasuje* do `Ordering::Greater`!
+Powiązany kod w tej odnodze jest wykonywany i na ekranie pojawia się napis `Za duża!`.
+Wyrażenie `match` kończy wykonanie po pierwszym znalezionym dopasowaniu, więc ostatnia odnoga nie będzie już w tym przypadku sprawdzana.
 
 Niemniej, kod z listingu 2-4 jeszcze się nie skompiluje. Spróbujmy:
 
@@ -737,8 +735,7 @@ w sobie liczbę otrzymaną w konwersji. Wartość `Ok` odpowiada wzorcowi z pier
 Ta liczba zostanie przypisana do nowoutworzonej przez nas zmiennej `guess`.
 
 Jeśli jednak `parse` *nie* jest w stanie przekonwertować stringa na liczbę, zwróci wartość `Err`,
-która zawiera dodatkowe informacje o błędzie. Wartość `Err` nie pasuje do wzorca `Ok(num)` z pierwszej
-gałęzi `match`, ale pasuje do wzorca `Err(_)` z drugiej gałęzi. Podkreślnik, `_`, pasuje do wszystkich wartości;
+która zawiera dodatkowe informacje o błędzie. Wartość `Err` nie pasuje do wzorca `Ok(num)` z pierwszej odnogi `match`, ale pasuje do wzorca `Err(_)` z drugiej odnogi. Znak podkreślenia, `_`, pasuje do wszystkich wartości;
 w tym przypadku mówimy, że do wzorca mają pasować wszystkie wartości `Err`, bez znaczenia na to jakie dodatkowe informacje
 mają one w środku. Program zatem wykona instrukcje z drugiego ramienia, `continue`, co oznacza że program ma przejść
 do kolejnej iteracji pętli i poprosić o nową liczbę. Dzięki temu program ignoruje wszystkie problemy jakie może napotkać
