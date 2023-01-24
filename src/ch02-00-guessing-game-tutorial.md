@@ -521,9 +521,7 @@ Następnie dopisaliśmy na końcu pięć nowych linii wykorzystujących typ `Ord
 Metoda `cmp` porównuje dwie wartości. Można wywołać ją na dowolnym obiekcie, który da się porównywać.
 Przyjmuje ona referencję do drugiego obiektu, z którym chcemy porównać pierwszy:
 tutaj porównujemy `guess` do `secret_number`. `cmp` zwraca wariant enuma `Ordering` 
-(którego typ zaciągnęliśmy poprzez wyrażenie `use`). Za pomocą wyrażenia [`match`][match]<!-- ignore -->,
-na podstawie wartości `Ordering` zwróconej przez wywołanie `cmp` z wartościami `guess` z `secret_number`,
-decydujemy, co zrobić dalej.
+(którego typ zaciągnęliśmy poprzez wyrażenie `use`). Za pomocą wyrażenia [`match`][match]<!-- ignore -->, na podstawie wartości `Ordering` zwróconej przez wywołanie `cmp` z wartościami `guess` z `secret_number`, decydujemy, co zrobić dalej.
 
 Wyrażenie `match` składa się z *gałęzi* (*ang. branch*). Gałąź składa się ze *wzorca* dopasowania i kodu, który ma się wykonać, jeśli wartość podana na początku wyrażenia `match` będzie pasowała do danego wzorca.
 Rust bierze wartość podaną do `match` i przegląda kolejno wzorce ze wszystkich gałęzi.

@@ -1,18 +1,12 @@
-## Control Flow
+## Przepływ sterowania
 
-The ability to run some code depending on whether a condition is `true` and to
-run some code repeatedly while a condition is `true` are basic building blocks
-in most programming languages. The most common constructs that let you control
-the flow of execution of Rust code are `if` expressions and loops.
+Wykonanie jakiegoś kodu w zależności od tego, czy warunek jest spełniony, albo wykonywania go wielokrotnie dopóki warunek jest spełniony, to podstawowe możliwości większości języków programowania. Najpopularniejsze konstrukcje, które pozwalają sterować przebiegiem wykonania kodu Rusta to wyrażenia `if` oraz pętle.
 
-### `if` Expressions
+### Wyrażenia `if`
 
-An `if` expression allows you to branch your code depending on conditions. You
-provide a condition and then state, “If this condition is met, run this block
-of code. If the condition is not met, do not run this block of code.”
+Wyrażenie `if` pozwala na rozgałęzienie kodu w zależności od spełnienia warunków. Podajemy warunek i nakazujemy: “Jeśli ten warunek jest spełniony, uruchom ten blok kodu. Jeśli warunek nie jest spełniony, nie uruchamiaj tego bloku kodu.”
 
-Create a new project called *branches* in your *projects* directory to explore
-the `if` expression. In the *src/main.rs* file, input the following:
+Stwórzmy nowy projekt o nazwie *branches* (z ang. gałęzie) w katalogu *projects* by zgłębić wyrażanie `if`. W pliku *src/main.rs* wpiszmy:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -20,14 +14,9 @@ the `if` expression. In the *src/main.rs* file, input the following:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-26-if-true/src/main.rs}}
 ```
 
-All `if` expressions start with the keyword `if`, followed by a condition. In
-this case, the condition checks whether or not the variable `number` has a
-value less than 5. We place the block of code to execute if the condition is
-`true` immediately after the condition inside curly brackets. Blocks of code
-associated with the conditions in `if` expressions are sometimes called *arms*,
-just like the arms in `match` expressions that we discussed in the [“Comparing
-the Guess to the Secret Number”][comparing-the-guess-to-the-secret-number]<!--
-ignore --> section of Chapter 2.
+Wszystkie wyrażenia `if` rozpoczynają się słowem kluczowym `if`, po którym następuje warunek. W tym przypadku, warunek sprawdza czy zmienna `number` ma wartość mniejszą od 5.
+Blok kodu umieszczony w nawiasach klamrowych bezpośrednio po warunku zostanie wykonany tylko wtedy, gdy warunek będzie spełniony, tj. będzie miał wartość logiczną `true`.
+Bloki kodu powiązane z warunkami w wyrażenie `if` nazywane są czasami *gałęziami*, podobnie jak to było w przypadku wyrażenia `match`, o którym wspomnieliśmy w sekcji [“Comparing the Guess to the Secret Number”][comparing-the-guess-to-the-secret-number]<!-- ignore --> rozdziału 2.
 
 Optionally, we can also include an `else` expression, which we chose to do
 here, to give the program an alternative block of code to execute should the
