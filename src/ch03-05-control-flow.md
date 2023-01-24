@@ -167,17 +167,12 @@ Słowo `znowu!` może zostać wypisane lub nie po `^C`, zależnie od tego, któr
 Szczęśliwie, Rust zapewnia również sposób na przerwanie pętli za pomocą kodu. Można umieścić słowo kluczowe `break` wewnątrz pętli, aby powiedzieć programowi, gdzie ma przerwać jej wykonywanie.
 Proszę sobie przypomnieć, że już to zrobiliśmy w grze-zgadywance w sekcji [“Quitting After a Correct Guess”][quitting-after-a-correct-guess]<!-- ignore --> rozdziału 2, aby zakończyć program, gdy użytkownik wygrał grę, zgadując poprawną liczbę.
 
-W grze-zgadywance użyliśmy również `continue`, które w pętli nakazuje programowi pominąć kod pozostały do wykonania w bieżącej iteracji pętli i rozpocząć następną iterację.
+W grze-zgadywance użyliśmy również `continue`, które, użyte w pętli, nakazuje programowi pominąć kod pozostały do wykonania w bieżącej iteracji i rozpocząć następną iterację.
 
 <!-- #### Returning Values from Loops -->
 #### Zwracanie Wartości z Pętli
 
-One of the uses of a `loop` is to retry an operation you know might fail, such
-as checking whether a thread has completed its job. You might also need to pass
-the result of that operation out of the loop to the rest of your code. To do
-this, you can add the value you want returned after the `break` expression you
-use to stop the loop; that value will be returned out of the loop so you can
-use it, as shown here:
+Jednym z zastosowań pętli `loop` jest ponawianie prób operacji, która może się nie udać, jak na przykład sprawdzenie czy wątek zakończył swoją pracę. Może zajść również potrzeba przekazania wyniku tej operacji poza pętlę, do reszty kodu. Aby to zrobić, można podać wartość, którą chcemy zwrócić,  po wyrażeniu `break`, którego używamy do zatrzymania pętli. Wartość ta zostanie zwrócona na zewnątrz pętli i będzie można jej tam użyć, na przykład tak:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
