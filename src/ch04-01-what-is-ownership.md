@@ -289,8 +289,8 @@ skopiował dane na stercie. Gdyby taka sytuacja miała miejsce, operacja
 `s2 = s1` mogłaby potencjalnie zająć dużo czasu, w przypadku sporej ilości
 danych na stercie.
 
-<img alt="Four tables: two tables representing the stack data for s1 and s2,
-and each points to its own copy of string data on the heap."
+<img alt="Cztery tabele: dwie tabele reprezentują dane trzymane na stosie przez s1 i s2,
+i każda wskazuje na swoją własną kopię łańcucha na stercie."
 src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Rysunek 4-3: Hipotetyczny wynik operacji `s2 = s1`, gdyby

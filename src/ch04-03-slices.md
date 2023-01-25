@@ -50,12 +50,9 @@ W przeciwnym razie zwracamy długość łańcucha otrzymaną za pomocą `s.len()
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
 ```
 
-We now have a way to find out the index of the end of the first word in the
-string, but there’s a problem. We’re returning a `usize` on its own, but it’s
-only a meaningful number in the context of the `&String`. In other words,
-because it’s a separate value from the `String`, there’s no guarantee that it
-will still be valid in the future. Consider the program in Listing 4-8 that
-uses the `first_word` function from Listing 4-7.
+Mamy teraz wprawdzie sposób na znalezienie indeksu końca pierwszego słowa, ale nie jest on wolny od wad.
+Zwracamy osobną liczbę typu `usize`, która ma jednak znaczenie jedynie w kontekście `&String`.
+Innymi słowy, ponieważ jest to wartość niezależna od naszego `String`a, to nie ma gwarancji, że w przyszłości zachowa ona ważność. Rozważmy program z Listingu 4-8, który używa funkcji `first_word` z Listingu 4-7.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -63,49 +60,40 @@ uses the `first_word` function from Listing 4-7.
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-8: Storing the result from calling the
-`first_word` function and then changing the `String` contents</span>
+<span class="caption">Listing 4-8: Zachowanie wyniku zwróconego przez funkcję
+`first_word` i zmiana wartości `String`a</span>
 
-This program compiles without any errors and would also do so if we used `word`
-after calling `s.clear()`. Because `word` isn’t connected to the state of `s`
-at all, `word` still contains the value `5`. We could use that value `5` with
-the variable `s` to try to extract the first word out, but this would be a bug
-because the contents of `s` have changed since we saved `5` in `word`.
+Ten program kompiluje się bez błędów i zrobiłby to również, gdybyśmy użyli zmiennej `word` po wywołaniu `s.clear()`.
+Ponieważ `word` nie jest w ogóle związany ze stanem `s`, `word` nadal zawiera wartość `5`.
+Moglibyśmy spróbować użyć tej wartości `5` aby wyodrębnić pierwsze słowo z `s`, ale byłby to błąd, ponieważ zawartość `s` zmieniła się od czasu gdy zapisaliśmy `5` w `word`.
 
-Having to worry about the index in `word` getting out of sync with the data in
-`s` is tedious and error prone! Managing these indices is even more brittle if
-we write a `second_word` function. Its signature would have to look like this:
+Martwienie się o to, że indeks w `word` przestanie być zsynchronizowany z danymi w `s` jest uciążliwe i podatne na błędy!
+Zarządzanie tymi indeksami byłoby jeszcze bardziej uciążliwe, gdybyśmy chcieli napisać funkcję `second_word` (z ang. drugie słowo). Jej sygnatura musiałaby wyglądać tak:
 
 ```rust,ignore
 fn second_word(s: &String) -> (usize, usize) {
 ```
 
-Now we’re tracking a starting *and* an ending index, and we have even more
-values that were calculated from data in a particular state but aren’t tied to
-that state at all. We have three unrelated variables floating around that need
-to be kept in sync.
+Teraz śledzimy indeks początkowy *i* końcowy.
+Jest więc więcej wartości, które zostały obliczone na podstawie danych w określonym stanie, ale nie są w ogóle związane z tym stanem.
+Mamy trzy niepowiązane zmienne wymagające synchronizacji.
 
-Luckily, Rust has a solution to this problem: string slices.
+Na szczęście Rust ma rozwiązanie tego problemu: wycinki łańcuchów (ang. string slices).
 
-### String Slices
+### Wycinki Łańcuchów
 
-A *string slice* is a reference to part of a `String`, and it looks like this:
+*Wycinek łańcucha* (ang. *string slice*) jest referencją do części `String`a i wygląda tak:
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
 ```
 
-Rather than a reference to the entire `String`, `hello` is a reference to a
-portion of the `String`, specified in the extra `[0..5]` bit. We create slices
-using a range within brackets by specifying `[starting_index..ending_index]`,
-where `starting_index` is the first position in the slice and `ending_index` is
-one more than the last position in the slice. Internally, the slice data
-structure stores the starting position and the length of the slice, which
-corresponds to `ending_index` minus `starting_index`. So, in the case of `let
-world = &s[6..11];`, `world` would be a slice that contains a pointer to the
-byte at index 6 of `s` with a length value of `5`.
+Zamiast referencji do całego `String`a, `hello` jest referencją do jego części, opisanej fragmentem `[0..5]`.
+Wycinek tworzymy podając zakres w nawiasach `[indeks_początkowy..indeks_końcowy]` i obejmuje on indeksy od `indeks_początkowy` **włącznie** do  `indeks_końcowy` **wyłącznie**.
+Wewnętrznie, struktura danych wycinka przechowuje indeks jego początku i jego długość, która jest równa `indeks_końcowy` minus `indeks_początkowy`.
+Więc w przypadku `let world = &s[6..11];`, `world` jest wycinkiem składającym się ze wskaźnik do bajtu o indeksie 6 w `s` i z długości `5`.
 
-Figure 4-6 shows this in a diagram.
+Rysunek 4-6 pokazuje to w formie diagramu.
 
 <img alt="Three tables: a table representing the stack data of s, which points
 to the byte at index 0 in a table of the string data &quot;hello world&quot; on
@@ -113,11 +101,10 @@ the heap. The third table rep-resents the stack data of the slice world, which
 has a length value of 5 and points to byte 6 of the heap data table."
 src="img/trpl04-06.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-6: String slice referring to part of a
-`String`</span>
+<span class="caption">Rysunek 4-6: Wycinek łańcucha wskazujący część `String`a</span>
 
-With Rust’s `..` range syntax, if you want to start at index 0, you can drop
-the value before the two periods. In other words, these are equal:
+Jeżeli indeksem początkowym jest `0` to można je opcjonalnie pominąć.
+Innymi słowy, dwa wycinki podane poniżej są takie same:
 
 ```rust
 let s = String::from("witaj");
@@ -126,8 +113,8 @@ let slice = &s[0..2];
 let slice = &s[..2];
 ```
 
-By the same token, if your slice includes the last byte of the `String`, you
-can drop the trailing number. That means these are equal:
+Analogicznie, jeśli wycinek zawiera ostatni bajt `String`a, to można zrezygnować z podania indeksu końcowego.
+Dwa wycinki podane poniżej także są sobie równoważne:
 
 ```rust
 let s = String::from("witaj");
@@ -138,8 +125,8 @@ let slice = &s[3..len];
 let slice = &s[3..];
 ```
 
-You can also drop both values to take a slice of the entire string. So these
-are equal:
+Można również pominąć oba indeksy, aby uzyskać wycinek całego łańcucha.
+Następujące wycinki także są sobie równoważne:
 
 ```rust
 let s = String::from("witaj");
