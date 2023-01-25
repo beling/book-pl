@@ -1,10 +1,9 @@
 ## Wycinek
 
 Kolejnym typem danych, który nie przejmuje własności jest *wycinek* (ang. *slice*).
-Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w
-kolekcji, bez konieczności odnoszenia się do całej kolekcji.
+Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w kolekcji, bez konieczności odnoszenia się do całej kolekcji.
 
-Spójrzmy na mały problem programistyczny: Napisz funkcję, która pobiera łańcuch znaków zawierający słowa rozdzielone spacjami i zwraca pierwsze słowo, które się w nim znajdzie. Jeśli funkcja nie znajdzie znaku spacji w łańcuchu, załóż, że cały łańcuch stanowi jedno słowo i zwróć cały łańcuch.
+Spójrzmy na mały problem programistyczny: Napisać funkcję, która pobiera łańcuch znaków zawierający słowa rozdzielone spacjami i zwraca pierwsze słowo, które się w nim znajdzie. Jeśli funkcja nie znajdzie znaku spacji w łańcuchu, należy założyć, że cały łańcuch stanowi jedno słowo i zwrócić go w całości.
 
 Pomyślmy nad sygnaturą tej funkcji (na razie bez użycia wycinków, by zrozumieć problem, który one rozwiązują):
 
@@ -12,10 +11,7 @@ Pomyślmy nad sygnaturą tej funkcji (na razie bez użycia wycinków, by zrozumi
 fn first_word(s: &String) -> ?
 ```
 
-The `first_word` function has a `&String` as a parameter. We don’t want
-ownership, so this is fine. But what should we return? We don’t really have a
-way to talk about *part* of a string. However, we could return the index of the
-end of the word, indicated by a space. Let’s try that, as shown in Listing 4-7.
+Funkcja `first_word` przyjmuje parametr typu `&String`, co jest w porządku, bo funkcja ta nie potrzebuje tego łańcucha na własność. Ale jakiego typu wynik powinna zwrócić? Naprawdę brakuje nam sposobu na mówienie o *części* łańcucha. Możemy jednak zwrócić indeks końca słowa wskazanego przez spację. Próbujmy tego dokonać na Listingu 4-7.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -23,40 +19,32 @@ end of the word, indicated by a space. Let’s try that, as shown in Listing 4-7
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-7: The `first_word` function that returns a
-byte index value into the `String` parameter</span>
+<span class="caption">Listing 4-7: Funkcja `first_word` która zwraca indeks bajta w parametrze typu `String`</span>
 
-Because we need to go through the `String` element by element and check whether
-a value is a space, we’ll convert our `String` to an array of bytes using the
-`as_bytes` method.
+By przejść przez `String` element po elemencie i spróbować znaleźć spacje, konwertujemy nasz `String` na tablicę bajtów używając metody `as_bytes`.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
 ```
 
-Next, we create an iterator over the array of bytes using the `iter` method:
+Następnie tworzymy iterator po tablicy bajtów za pomocą metody `iter`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
 ```
 
-We’ll discuss iterators in more detail in [Chapter 13][ch13]<!-- ignore -->.
-For now, know that `iter` is a method that returns each element in a collection
-and that `enumerate` wraps the result of `iter` and returns each element as
-part of a tuple instead. The first element of the tuple returned from
-`enumerate` is the index, and the second element is a reference to the element.
-This is a bit more convenient than calculating the index ourselves.
+Iteratory omówimy szczegółowo w [rozdziale 13][ch13]<!-- ignore -->.
+Na razie wiedzmy, że `iter` jest metodą, która daje nam każdy element w kolekcji, zaś `enumerate` opakowuje wynik `iter` i daje każdy element jako część krotki.
+Pierwszy element tej krotki to indeks, a drugi element to referencja do elementu z kolekcji.
+Użycie `enumerate` jest wygodniejsze od samodzielnego obliczanie indeksu.
 
-Because the `enumerate` method returns a tuple, we can use patterns to
-destructure that tuple. We’ll be discussing patterns more in [Chapter
-6][ch6]<!-- ignore -->. In the `for` loop, we specify a pattern that has `i`
-for the index in the tuple and `&item` for the single byte in the tuple.
-Because we get a reference to the element from `.iter().enumerate()`, we use
-`&` in the pattern.
+Metoda `enumerate` daje krotkę, którą destrukturyzujemy za pomocą wzorca.
+Wzorce omówimy szczegółowo w [rozdziale 6][ch6]<!-- ignore -->.
+W pętli `for` używamy wzorca dopasowanego do krotki, w którym `i` jest dopasowane do zawartego w niej indeksu, zaś `&item` do bajtu.
+Ponieważ z `.iter().enumerate()` otrzymujemy referencję do elementu (bajtu), we wzorcu używamy `&`.
 
-Inside the `for` loop, we search for the byte that represents the space by
-using the byte literal syntax. If we find a space, we return the position.
-Otherwise, we return the length of the string by using `s.len()`.
+Wewnątrz pętli `for` szukamy bajtu będącego spacją poprzez porównywanie do reprezentującego go literału. Gdy znajdziemy spację, zwracamy jej pozycję.
+W przeciwnym razie zwracamy długość łańcucha otrzymaną za pomocą `s.len()`.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}

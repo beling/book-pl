@@ -278,7 +278,7 @@ Udało się! To był długi rozdział: poznaliśmy zmienne, skalarne i złożone
 * Generowanie *n*-tej liczby ciągu Fibonacciego.
 * Drukowanie tekstu kolędy "The Twelve Days of Christmas" z wykorzystaniem powtórzeń w piosence.
 
-Kiedy będziesz gotowy, aby przejść dalej, porozmawiamy o koncepcji Rusta, która *nie* jest powszechna w innych językach programowania, o własności.
+Kiedy będziesz gotowy aby przejść dalej, porozmawiamy o koncepcji Rusta, która *nie* jest powszechna w innych językach programowania, o własności.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
