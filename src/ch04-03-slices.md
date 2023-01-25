@@ -125,7 +125,7 @@ let slice = &s[3..len];
 let slice = &s[3..];
 ```
 
-Można również pominąć oba indeksy, aby uzyskać wycinek całego łańcucha.
+Można również pominąć oba indeksy, aby uzyskać wycinek obejmujący cały łańcuch.
 Następujące wycinki także są sobie równoważne:
 
 ```rust
@@ -137,15 +137,15 @@ let slice = &s[0..len];
 let slice = &s[..];
 ```
 
-> Note: String slice range indices must occur at valid UTF-8 character
-> boundaries. If you attempt to create a string slice in the middle of a
-> multibyte character, your program will exit with an error. For the purposes
-> of introducing string slices, we are assuming ASCII only in this section; a
-> more thorough discussion of UTF-8 handling is in the [“Storing UTF-8 Encoded
-> Text with Strings”][strings]<!-- ignore --> section of Chapter 8.
+> Uwaga: Indeksy zakresu wycinka łańcucha muszą znajdować się na granicach znaków UTF-8.
+> Próba utworzenia wycinka w środku wielobajtowego znaku spowoduje zakończenie programu z błędem.
+> We wprowadzeniu do wycinków łańcuchów zawartym w niniejszym rozdziale
+> ograniczamy się jedynie do znaków ASCII,
+> zaś bardziej szczegółowe omówienie obsługi UTF-8 znajduje się w sekcji
+> ["Storing UTF-8 Encoded Text with Strings"][strings]<!-- ignoruj -->rozdziału 8.
 
-With all this information in mind, let’s rewrite `first_word` to return a
-slice. The type that signifies “string slice” is written as `&str`:
+Mając na uwadze powyższe informacje, przepiszmy `first_word` tak, aby zwracał wycinek.
+Typ oznaczający "wycinek łańcucha" zapisujemy jako `&str`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -153,16 +153,12 @@ slice. The type that signifies “string slice” is written as `&str`:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
 
-We get the index for the end of the word the same way we did in Listing 4-7, by
-looking for the first occurrence of a space. When we find a space, we return a
-string slice using the start of the string and the index of the space as the
-starting and ending indices.
+Indeks końca słowa otrzymujemy w taki sam sposób, jak na Listingu 4-7, czyli odnajdując pierwsze wystąpienie spacji.
+Gdy znajdziemy spację, zwracamy wycinek łańcucha używając początku łańcucha i indeksu spacji jako odpowiednio indeksu początkowego i końcowego.
 
-Now when we call `first_word`, we get back a single value that is tied to the
-underlying data. The value is made up of a reference to the starting point of
-the slice and the number of elements in the slice.
+Teraz, gdy wywołujemy `first_word`, otrzymujemy w wyniku pojedynczą wartość, związaną z danymi wejściowymi. Wartość ta składa się z referencji do punktu początkowego wycinka i liczby elementów w wycinku.
 
-Returning a slice would also work for a `second_word` function:
+Zwrócenie wycinka zadziałałoby również dla funkcji `second_word`:
 
 ```rust,ignore
 fn second_word(s: &String) -> &str {
