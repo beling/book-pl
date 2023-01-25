@@ -158,21 +158,14 @@ Gdy znajdziemy spację, zwracamy wycinek łańcucha używając początku łańcu
 
 Teraz, gdy wywołujemy `first_word`, otrzymujemy w wyniku pojedynczą wartość, związaną z danymi wejściowymi. Wartość ta składa się z referencji do punktu początkowego wycinka i liczby elementów w wycinku.
 
-Zwrócenie wycinka zadziałałoby również dla funkcji `second_word`:
+Zwrócenie wycinka zadziałałoby również w przypadku funkcji `second_word`:
 
 ```rust,ignore
 fn second_word(s: &String) -> &str {
 ```
 
-We now have a straightforward API that’s much harder to mess up because the
-compiler will ensure the references into the `String` remain valid. Remember
-the bug in the program in Listing 4-8, when we got the index to the end of the
-first word but then cleared the string so our index was invalid? That code was
-logically incorrect but didn’t show any immediate errors. The problems would
-show up later if we kept trying to use the first word index with an emptied
-string. Slices make this bug impossible and let us know we have a problem with
-our code much sooner. Using the slice version of `first_word` will throw a
-compile-time error:
+Mamy teraz proste API, które jest znacznie odporniejsze na błędy, ponieważ kompilator zapewni, że referencje do `String`a pozostaną ważne.
+Proszę przypomnieć sobie błąd w programie z Listingu 4-8, kiedy uzyskaliśmy indeks do końca pierwszego słowa, ale potem wyczyściliśmy łańcuch, i nasz indeks utracił ważność. Tamten kod był logicznie niepoprawny, ale jego błędy początkowo się nie ujawniały. Problemy ujawniłyby się dopiero gdybyśmy spróbowali użyć indeksu pierwszego słowa z wyczyszczonym łańcuchem. Wycinki zapobiegają podobnym błędom i dają nam znać, że mamy problem z naszym kodem znacznie wcześniej. Użycie `first_word` w wersji używającej wycinków obnaży błąd już podczas kompilacji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -180,7 +173,7 @@ compile-time error:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
 ```
 
-Here’s the compiler error:
+Oto błąd kompilatora:
 
 ```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
