@@ -194,14 +194,12 @@ Przypomnijmy, że mówiliśmy o literałach łańcuchowych przechowywanych wewn�
 let s = "Hello, world!";
 ```
 
-Typem `s` jest tutaj `&str`: it’s a slice pointing to that specific point of
-the binary. This is also why string literals are immutable; `&str` is an
-immutable reference.
+Typem `s` jest tutaj `&str`: jest to wycinek wskazujący na konkretny punkt w binarce.
+Dlatego też literały łańcuchowe nie są modyfikowalne; `&str` jest referencją niemutowalną.
 
-#### String Slices as Parameters
+#### Wycinki Łańcuchów jako Parametry
 
-Knowing that you can take slices of literals and `String` values leads us to
-one more improvement on `first_word`, and that’s its signature:
+Wiedza, że wycinki można uzyskać zarówno z literałów jak i wartości `String` prowadzi do jeszcze jednego ulepszenia `first_word`, którego można dokonać w jego sygnaturze:
 
 ```rust,ignore
 fn first_word(s: &String) -> &str {
