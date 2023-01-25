@@ -2,7 +2,7 @@ fn main() {
 	let s = String::from("witaj");       // s pojawia się w zasięgu
 
 	bierze_na_wlasnosc(s);      // Wartość zmiennej s przenosi się do funkcji...
-	// ...i w tym miejscu zmienna jest już nieważna.
+	// ...i w tym miejscu zmienna jest unieważniona.
 
 	let x = 5;                      // Zaczyna się zasięg zmiennej x.
 

@@ -110,7 +110,7 @@ wyjaśniające, gdzie zmienna `s` zachowuje ważność.
 
 Innymi słowy, mamy do czynienia z dwoma istotnymi momentami w czasie:
 
-* Kiedy zmienna `s` wchodzi *w* zasięg, staje się ona ważna.
+* Kiedy zmienna `s` wchodzi *w* zasięg, zyskuje ważność.
 * Zmienna pozostaje ważna, dopóki nie wyjdzie *z* zasięgu.
 
 Na tę chwilę zależność między zasięgiem a ważnością zmiennych jest podobna do
@@ -190,7 +190,7 @@ naszą odpowiedzialnością jest identyfikowanie nieużywanej już pamięci i
 bezpośrednie wywoływanie zarówno kodu, który tę pamięć zwalnia, jak i tego,
 który ją alokuje. Poprawne wykonanie tej operacji stanowiło historycznie trudny,
 programistyczny problem. Jeśli zapomnimy, marnujemy pamięć. Jeśli zrobimy to za
-wcześnie, zostaniemy z nieważną zmienną. Zrobimy to dwukrotnie - to też błąd.
+wcześnie, zostaniemy z unieważnioną zmienną. Zrobimy to dwukrotnie - to też błąd.
 Musimy połączyć w pary dokładnie jedną `alokację` z dokładnie jednym
 `zwolnieniem`.
 
@@ -306,13 +306,13 @@ pamięci, o których wcześniej wspomnieliśmy. Podwójne zwalnianie pamięci mo
 prowadzić do jej *zepsucia*, a w efekcie potencjalnie do luk w zabezpieczeniach.
 
 Aby zapewnić bezpieczeństwo pamięci, po linii `let s2 = s1;`, zamiast próbować skopiować zaalokowaną pamięć, Rust
-traktuje zmienną `s1` jako nieważną i, tym samym, nie musi nic zwalniać, kiedy zasięg `s1` się kończy. Zobaczmy, co stanie się przy próbie użycia zmiennej `s1` po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
+traktuje zmienną `s1` jako unieważnioną i, tym samym, nie musi nic zwalniać, kiedy zasięg `s1` się kończy. Zobaczmy, co stanie się przy próbie użycia zmiennej `s1` po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/src/main.rs:here}}
 ```
 
-Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów przy użyciu nieważnych zmiennych:
+Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do elementów przy użyciu unieważnionych zmiennych:
 
 ```console
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
@@ -381,7 +381,7 @@ przeniesiona do `y`.
 
 Przyczyną jest to, że typy takie jak liczby całkowite, które mają znany rozmiar
 już podczas kompilacji, są w całości przechowywane na stosie. Tworzenie kopii
-ich wartości jest więc szybkie. To oznacza, że nie ma powodu unieważniać zmienną
+ich wartości jest więc szybkie. To oznacza, że nie ma powodu unieważniać zmiennej
 `x` po stworzeniu zmiennej `y`. Innymi słowy, w tym wypadku nie ma różnicy
 między głęboką i płytką kopią, więc wywołanie metody `clone` nie różniłoby się
 od zwykłego płytkiego kopiowania i można je zatem pominąć.
@@ -392,7 +392,7 @@ całkowite (więcej o cechach będzie w [rozdziale 10][traits]<!-- ignore -->). 
 zaimplementowaną cechę `Copy`, zmienną, którą przypisano do innej zmiennej,
 można dalej używać.
 
-Rust nie pozwoli dodać adnotacji `Copy` do żadnego typu, dla którego zaimplmentowano (lub zaimplementowano dla jakiejkolwiek jego części tego typu) cechę `Drop`. Jeśli typ wymaga
+Rust nie pozwoli dodać adnotacji `Copy` do żadnego typu, dla którego zaimplementowano (lub zaimplementowano dla jakiejkolwiek jego części tego typu) cechę `Drop`. Jeśli typ wymaga
 wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
 się zasięg, a dodamy dla tego typu cechę `Copy`, uzyskamy błąd kompilacji. Aby
 nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
