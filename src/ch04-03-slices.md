@@ -205,25 +205,19 @@ Wiedza, że wycinki można uzyskać zarówno z literałów jak i wartości `Stri
 fn first_word(s: &String) -> &str {
 ```
 
-A more experienced Rustacean would write the signature shown in Listing 4-9
-instead because it allows us to use the same function on both `&String` values
-and `&str` values.
+Jednak bardziej doświadczony Rustowiec dokonałby kolejnej zmiany i w zamian napisałby sygnaturę pokazaną na Listingu 4-9, która może być używana zarówno z parametrem typu `&String`, jak i `&str`.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-9: Improving the `first_word` function by using
-a string slice for the type of the `s` parameter</span>
+<span class="caption">Listing 4-9: Ulepszenie funkcji `first_word` poprzez użycie wycinka łańcucha jako typu parametru `s`</span>
 
-If we have a string slice, we can pass that directly. If we have a `String`, we
-can pass a slice of the `String` or a reference to the `String`. This
-flexibility takes advantage of *deref coercions*, a feature we will cover in
-[“Implicit Deref Coercions with Functions and
-Methods”][deref-coercions]<!--ignore--> section of Chapter 15.
+Jeśli mamy wycinek łańcucha, to możemy go przekazać bezpośrednio.
+Jeśli mamy `String`a, to możemy przekazać wycinek tego `String`a lub referencję do tego `String`a.
+Ta elastyczność wykorzystuje *wymuszone dereferencje* (ang. *deref coercions*), cechę, którą omówimy w sekcji ["Implicit Deref Coercions with Functions and Methods"][deref-coercions]<!--ignore--> rozdziału 15.
 
-Defining a function to take a string slice instead of a reference to a `String`
-makes our API more general and useful without losing any functionality:
+Zdefiniowanie funkcji przyjmującej wycinek łańcucha zamiast referencji do `String`a czyni nasze API bardziej ogólnym i użytecznym bez utraty jakiejkolwiek funkcjonalności:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -231,17 +225,18 @@ makes our API more general and useful without losing any functionality:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
 ```
 
-### Other Slices
+### Inne Wycinki
 
-String slices, as you might imagine, are specific to strings. But there’s a
-more general slice type too. Consider this array:
+Wycinki łańcuchów są oczywiście specyficzne dla łańcuchów.
+Istnieje jednak bardziej ogólny typ wycinka.
+Rozważmy tablicę:
 
 ```rust
 let a = [1, 2, 3, 4, 5];
 ```
 
-Just as we might want to refer to part of a string, we might want to refer to
-part of an array. We’d do so like this:
+Tak samo jak możemy chcieć odwołać się do części łańcucha, możemy też chcieć odwołać się do części tablicy.
+Robimy to w ten sposób:
 
 ```rust
 let a = [1, 2, 3, 4, 5];
@@ -251,22 +246,20 @@ let slice = &a[1..3];
 assert_eq!(slice, &[2, 3]);
 ```
 
-This slice has the type `&[i32]`. It works the same way as string slices do, by
-storing a reference to the first element and a length. You’ll use this kind of
-slice for all sorts of other collections. We’ll discuss these collections in
-detail when we talk about vectors in Chapter 8.
+Ten wycinek ma typ `&[i32]`. Działa w taki sam sposób, jak wycinki łańcuchów, przechowując referencję do pierwszego elementu i długość.
+Używamy tego typu wycinków do wszelkiego rodzaju pozostałych kolekcji.
+Kolekcje te omówimy szczegółowo, gdy będziemy rozmawiać o wektorach w rozdziale 8.
 
-## Summary
+## Podsumowanie
 
-The concepts of ownership, borrowing, and slices ensure memory safety in Rust
-programs at compile time. The Rust language gives you control over your memory
-usage in the same way as other systems programming languages, but having the
-owner of data automatically clean up that data when the owner goes out of scope
-means you don’t have to write and debug extra code to get this control.
+Koncepcje własności, pożyczania i wycinków zapewniają bezpieczeństwo pamięci w programach Rusta w czasie kompilacji.
+Język Rust daje taką samą kontrolę nad wykorzystaniem pamięci jak inne języki programowania systemowego.
+Ale posiadanie właściciela danych automatycznie zwalniającego je gdy wychodzi poza zasięg oznacza,
+że nie ma potrzeby pisania i debugowania dodatkowego kodu, aby uzyskać tę kontrolę.
 
-Ownership affects how lots of other parts of Rust work, so we’ll talk about
-these concepts further throughout the rest of the book. Let’s move on to
-Chapter 5 and look at grouping pieces of data together in a `struct`.
+Własność wpływa na to, jak działa wiele innych części Rusta.
+Będziemy więc mówić o tych koncepcjach dalej przez resztę książki.
+Przejdźmy teraz do rozdziału 5, który omawia grupowanie danych w strukturach (`struct`).
 
 [ch13]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#patterns-that-bind-to-values
