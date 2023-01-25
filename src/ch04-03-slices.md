@@ -165,7 +165,7 @@ fn second_word(s: &String) -> &str {
 ```
 
 Mamy teraz proste API, które jest znacznie odporniejsze na błędy, ponieważ kompilator zapewni, że referencje do `String`a pozostaną ważne.
-Proszę przypomnieć sobie błąd w programie z Listingu 4-8, kiedy uzyskaliśmy indeks do końca pierwszego słowa, ale potem wyczyściliśmy łańcuch, i nasz indeks utracił ważność. Tamten kod był logicznie niepoprawny, ale jego błędy początkowo się nie ujawniały. Problemy ujawniłyby się dopiero gdybyśmy spróbowali użyć indeksu pierwszego słowa z wyczyszczonym łańcuchem. Wycinki zapobiegają podobnym błędom i dają nam znać, że mamy problem z naszym kodem znacznie wcześniej. Użycie `first_word` w wersji używającej wycinków obnaży błąd już podczas kompilacji:
+Proszę przypomnieć sobie błąd w programie z Listingu 4-8, kiedy uzyskaliśmy indeks do końca pierwszego słowa, ale potem wyczyściliśmy łańcuch i nasz indeks utracił ważność. Tamten kod był logicznie niepoprawny, ale jego błędy początkowo się nie ujawniały. Problemy ujawniłyby się dopiero gdybyśmy spróbowali użyć indeksu pierwszego słowa z wyczyszczonym łańcuchem. Wycinki zapobiegają podobnym błędom i dają nam znać, że mamy problem z naszym kodem znacznie wcześniej. Funkcja `first_word` używająca wycinków obnaża wspomniane błędy już podczas kompilacji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -179,28 +179,22 @@ Oto błąd kompilatora:
 {{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
 ```
 
-Recall from the borrowing rules that if we have an immutable reference to
-something, we cannot also take a mutable reference. Because `clear` needs to
-truncate the `String`, it needs to get a mutable reference. The `println!`
-after the call to `clear` uses the reference in `word`, so the immutable
-reference must still be active at that point. Rust disallows the mutable
-reference in `clear` and the immutable reference in `word` from existing at the
-same time, and compilation fails. Not only has Rust made our API easier to use,
-but it has also eliminated an entire class of errors at compile time!
+Proszę sobie przypomnieć, że jedna z reguł pożyczania mówi, że jeśli mamy do czegoś niemutowalną referencję, to nie możemy równocześnie mieć do tego referencji mutowalnej. Ponieważ `clear` skraca `String`a, to musi przyjąć go poprzez mutowalną referencję.
+Makro `println!` używa referencji do `word` po wywołaniu `clear`, więc niemutowalna referencja musi być nadal aktywna.
+Rust nie pozwala, aby mutowalna referencja w `clear` i niemutowalna referencja w `word` istniały w tym samym czasie i dlatego kompilacja kończy się niepowodzeniem. Rust nie tylko uczynił nasze API łatwiejszym w użyciu, ale także sprawił, że cała klasa błędów zostanie wykryta już w czasie kompilacji!
 
 <!-- Old heading. Do not remove or links may break. -->
 <a id="string-literals-are-slices"></a>
 
-#### String Literals as Slices
+#### Literały Łańcuchowe jako Wycinki
 
-Recall that we talked about string literals being stored inside the binary. Now
-that we know about slices, we can properly understand string literals:
+Przypomnijmy, że mówiliśmy o literałach łańcuchowych przechowywanych wewnątrz binarki. Zaś teraz, mając wiedzę o wycinkach, możemy właściwie zrozumieć literały łańcuchowe:
 
 ```rust
 let s = "Hello, world!";
 ```
 
-The type of `s` here is `&str`: it’s a slice pointing to that specific point of
+Typem `s` jest tutaj `&str`: it’s a slice pointing to that specific point of
 the binary. This is also why string literals are immutable; `&str` is an
 immutable reference.
 
