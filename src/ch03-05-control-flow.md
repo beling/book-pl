@@ -172,51 +172,40 @@ W grze-zgadywance użyliśmy również `continue`, które, użyte w pętli, naka
 <!-- #### Returning Values from Loops -->
 #### Zwracanie Wartości z Pętli
 
-Jednym z zastosowań pętli `loop` jest ponawianie prób operacji, która może się nie udać, jak na przykład sprawdzenie czy wątek zakończył swoją pracę. Może zajść również potrzeba przekazania wyniku tej operacji poza pętlę, do reszty kodu. Aby to zrobić, można podać wartość, którą chcemy zwrócić,  po wyrażeniu `break`, którego używamy do zatrzymania pętli. Wartość ta zostanie zwrócona na zewnątrz pętli i będzie można jej tam użyć, na przykład tak:
+Jednym z zastosowań pętli `loop` jest ponawianie prób operacji, która może się nie udać, jak na przykład sprawdzenie czy wątek zakończył swoją pracę. Może zajść również potrzeba przekazania wyniku tej operacji poza pętlę, do reszty kodu. Aby to zrobić, można ten wynik podać bezpośrednio po wyrażeniu `break` zatrzymującym pętle. Zostanie on zwrócony na zewnątrz pętli i będzie można go tam użyć, na przykład tak:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-33-return-value-from-loop/src/main.rs}}
 ```
 
-Before the loop, we declare a variable named `counter` and initialize it to
-`0`. Then we declare a variable named `result` to hold the value returned from
-the loop. On every iteration of the loop, we add `1` to the `counter` variable,
-and then check whether the `counter` is equal to `10`. When it is, we use the
-`break` keyword with the value `counter * 2`. After the loop, we use a
-semicolon to end the statement that assigns the value to `result`. Finally, we
-print the value in `result`, which in this case is `20`.
+Przed pętlą deklarujemy zmienną o nazwie `counter` i inicjujemy ją wartością `0`. Następnie deklarujemy zmienną o nazwie `result`, która będzie przechowywać wartość zwracaną z pętli.
+W każdej iteracji pętli dodajemy `1` do zmiennej `counter` i, następnie, sprawdzamy czy `counter` jest równy `10`. Jeśli jest, to używamy słowa kluczowego `break` z wartością `counter * 2`.
+Za pętlą umieściliśmy średnik kończący instrukcję przypisującą tą wartość do `result`.
+Na koniec wypisujemy wartość `result`, która w tym przypadku wynosi `20`.
 
-#### Loop Labels to Disambiguate Between Multiple Loops
+<!-- #### Loop Labels to Disambiguate Between Multiple Loops -->
+#### Etykiety Rozróżniające Pętle
 
-If you have loops within loops, `break` and `continue` apply to the innermost
-loop at that point. You can optionally specify a *loop label* on a loop that
-you can then use with `break` or `continue` to specify that those keywords
-apply to the labeled loop instead of the innermost loop. Loop labels must begin
-with a single quote. Here’s an example with two nested loops:
+Gdy zagnieżdżamy pętle w pętlach, `break` i `continue` odnoszą się do najbardziej wewnętrznej pętli, w której się znajdują.
+Można opcjonalnie określić *etykietę dla pętli*, której można następnie użyć z `break` lub `continue`, by wskazać, że odnoszą się one do wskazanej pętli zamiast najbardziej zagnieżdżonej.
+Etykiety pętli zaczynają się znakiem pojedynczego cytatu. Oto przykład:
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/src/main.rs}}
 ```
 
-The outer loop has the label `'counting_up`, and it will count up from 0 to 2.
-The inner loop without a label counts down from 10 to 9. The first `break` that
-doesn’t specify a label will exit the inner loop only. The `break
-'counting_up;` statement will exit the outer loop. This code prints:
+Pętla zewnętrzna ma etykietę `counting_up` i liczy w górę od 0 do 2.
+Wewnętrzna pętla bez etykiety odlicza w dół od 10 do 9. Pierwszy `break`, bez etykiety, zakończy tylko wewnętrzną pętlę. Instrukcja `break 'counting_up;` wyjdzie z pętli zewnętrznej. Ten kod drukuje:
 
 ```console
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-32-5-loop-labels/output.txt}}
 ```
 
-#### Conditional Loops with `while`
+<!-- Conditional Loops with `while` -->
+#### Pętla Warunkowa `while`
 
-A program will often need to evaluate a condition within a loop. While the
-condition is `true`, the loop runs. When the condition ceases to be `true`, the
-program calls `break`, stopping the loop. It’s possible to implement behavior
-like this using a combination of `loop`, `if`, `else`, and `break`; you could
-try that now in a program, if you’d like. However, this pattern is so common
-that Rust has a built-in language construct for it, called a `while` loop. In
-Listing 3-3, we use `while` to loop the program three times, counting down each
-time, and then, after the loop, print a message and exit.
+Program często potrzebuje sprawdzić warunek wewnątrz pętli.
+Pętla działa tak długa jak warunek daje `true`. Gdy warunek przestaje dawać `true`, program wywołuje `break`, zatrzymując pętlę. Można zaimplementować takie zachowania za pomocą kombinacji `loop`, `if`, `else` i `break`; zachęcam do spróbowania. Jednak jest ono na tyle powszechne, że Rust ma dla niego wbudowaną konstrukcję językową, zwaną pętlą `while`. Program z listingu 3-3 wykonuje trzy iteracje za pomocą pętli `while`, odliczając za każdym razem, a następnie, po zakończeniu pętli, drukuje komunikat i wychodzi.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -224,18 +213,15 @@ time, and then, after the loop, print a message and exit.
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-3: Using a `while` loop to run code while a
-condition holds true</span>
+<span class="caption">Listing 3-3: Użycie pętli `while` by wykonywać kod dopóki zachodzi warunek</span>
 
-This construct eliminates a lot of nesting that would be necessary if you used
-`loop`, `if`, `else`, and `break`, and it’s clearer. While a condition
-evaluates to `true`, the code runs; otherwise, it exits the loop.
+Taka konstrukcja eliminuje wiele zagnieżdżeń, które byłyby konieczne w przypadku użycia `loop`, `if`, `else` i `break`, równocześnie poprawiając czytelność.
+Pętla się wykonuje tak długo jak warunek daje `true`.
 
-#### Looping Through a Collection with `for`
+<!-- #### Looping Through a Collection with `for` -->
+#### Przechodzenie Po Kolekcji Za Pomocą `for`
 
-You can choose to use the `while` construct to loop over the elements of a
-collection, such as an array. For example, the loop in Listing 3-4 prints each
-element in the array `a`.
+Do przejścia po kolekcji, takiej jak tablica, można użyć pętli `while`. Na przykład, pętla na Listingu 3-4 wypisuje każdy element tablicy `a`.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -243,31 +229,21 @@ element in the array `a`.
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-04/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-4: Looping through each element of a collection
-using a `while` loop</span>
+<span class="caption">Listing 3-4: Przechodzenie po każdym elemencie kolekcji za pomocą pętli `while`</span>
 
-Here, the code counts up through the elements in the array. It starts at index
-`0`, and then loops until it reaches the final index in the array (that is,
-when `index < 5` is no longer `true`). Running this code will print every
-element in the array:
+Ten kod liczy w górę po elementach tablicy. Rozpoczyna od indeksu `0` i wykonuje pętle aż do osiągnięcia ostatniego indeksu tablicy, tj. do momentu gdy `index < 5` przestaje dawać `true`.
+Uruchomienie tego kodu spowoduje wydrukowanie każdego elementu tablicy:
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/listing-03-04/output.txt}}
 ```
 
-All five array values appear in the terminal, as expected. Even though `index`
-will reach a value of `5` at some point, the loop stops executing before trying
-to fetch a sixth value from the array.
+Wszystkie pięć wartości zawartych w tablicy pojawia się w terminalu, zgodnie z oczekiwaniami. Nawet jeśli `index` osiągnie w pewnym momencie wartość `5`, pętla zatrzymuje się przed próbą pobrania z tablicy szóstej wartości.
 
-However, this approach is error prone; we could cause the program to panic if
-the index value or test condition is incorrect. For example, if you changed the
-definition of the `a` array to have four elements but forgot to update the
-condition to `while index < 4`, the code would panic. It’s also slow, because
-the compiler adds runtime code to perform the conditional check of whether the
-index is within the bounds of the array on every iteration through the loop.
+Jednakże to rozwiązanie jest podatne na błędy; program może spanikować, jeśli indeks lub warunek będzie nieprawidłowy. Na przykład, jeśli skócimy tablicę `a` do czterech elementów, zapominając przy tym zaktualizować warunek na `while index < 4`, kod spanikuje.
+To rozwiązanie może być również powolne, ponieważ kompilator może dodać kod sprawdzający, w każdej iteracji pętli, czy indeks znajduje się w granicach tablicy.
 
-As a more concise alternative, you can use a `for` loop and execute some code
-for each item in a collection. A `for` loop looks like the code in Listing 3-5.
+Zwięźlejszą alternatywą jest pętla `for` wykonująca jakiś kod dla każdego elementu w kolekcji. Listing 3-5 pokazuje przykład jej użycia.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -275,28 +251,15 @@ for each item in a collection. A `for` loop looks like the code in Listing 3-5.
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-05/src/main.rs}}
 ```
 
-<span class="caption">Listing 3-5: Looping through each element of a collection
-using a `for` loop</span>
+<span class="caption">Listing 3-5: Przechodzenie po każdym elemencie kolekcji za pomocą pętli `for`</span>
 
-When we run this code, we’ll see the same output as in Listing 3-4. More
-importantly, we’ve now increased the safety of the code and eliminated the
-chance of bugs that might result from going beyond the end of the array or not
-going far enough and missing some items.
+Ten kod daje takie same wyjście jak ten na Listingu 3-4. Co ważne, zwiększyliśmy bezpieczeństwo kodu i wyeliminowaliśmy zagrożenie wystąpienie błędów związanych z przekroczeniem końca tablicy albo niedojściem do niego i w konsekwencji nieosiągnięciem niektórych elementów.
 
-Using the `for` loop, you wouldn’t need to remember to change any other code if
-you changed the number of values in the array, as you would with the method
-used in Listing 3-4.
+W przeciwieństwie do metody użytej na listingu 3-4, korzystając z pętli `for` nie musimy martwić się poprawianiem innego kodu gdy zmieniamy liczbę elementów w tablicy.
 
-The safety and conciseness of `for` loops make them the most commonly used loop
-construct in Rust. Even in situations in which you want to run some code a
-certain number of times, as in the countdown example that used a `while` loop
-in Listing 3-3, most Rustaceans would use a `for` loop. The way to do that
-would be to use a `Range`, provided by the standard library, which generates
-all numbers in sequence starting from one number and ending before another
-number.
+Bezpieczeństwo i zwięzłość pętli `for` sprawiają, że jest ona najczęściej wykorzystywaną pętlą w Rust. Nawet gdy istnieje potrzeba wykonania jakiegoś kod określoną liczbę razy, jak w przykładzie odliczania, który na Listingu 3-3 używał pętli `while`, większość rustowców użyłaby pętli `for` wraz z zawartym w bibliotece standardowej `Range` (z ang. zakres), który generuje wszystkie liczby w kolejności, zaczynając od jednej liczby i kończąc przed inną liczbą.
 
-Here’s what the countdown would look like using a `for` loop and another method
-we’ve not yet talked about, `rev`, to reverse the range:
+Oto jak wyglądałoby odliczanie przy użyciu pętli `for` i metody `rev` (o której jeszcze nie mówiliśmy) odwracającej zakres:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -304,22 +267,18 @@ we’ve not yet talked about, `rev`, to reverse the range:
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-34-for-range/src/main.rs}}
 ```
 
-This code is a bit nicer, isn’t it?
+Ten kod jest nieco ładniejszy, nieprawdaż?
 
-## Summary
+<!-- ## Summary -->
+## Podsumowanie
 
-You made it! This was a sizable chapter: you learned about variables, scalar
-and compound data types, functions, comments, `if` expressions, and loops! To
-practice with the concepts discussed in this chapter, try building programs to
-do the following:
+Udało się! To był długi rozdział: poznaliśmy zmienne, skalarne i złożone typy danych, funkcje, komentarze, wyrażenia `if` i pętle! Aby przećwiczyć pojęcia omawiane w tym rozdziale, spróbuj zbudować programy wykonujące następujące czynności:
 
-* Convert temperatures between Fahrenheit and Celsius.
-* Generate the *n*th Fibonacci number.
-* Print the lyrics to the Christmas carol “The Twelve Days of Christmas,”
-  taking advantage of the repetition in the song.
+* Przeliczanie temperatur pomiędzy stopniami Celsjusza i Fahrenheita.
+* Generowanie *n*-tej liczby ciągu Fibonacciego.
+* Drukowanie tekstu kolędy "The Twelve Days of Christmas" z wykorzystaniem powtórzeń w piosence.
 
-When you’re ready to move on, we’ll talk about a concept in Rust that *doesn’t*
-commonly exist in other programming languages: ownership.
+Kiedy będziesz gotowy, aby przejść dalej, porozmawiamy o koncepcji Rusta, która *nie* jest powszechna w innych językach programowania, o własności.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
