@@ -8,17 +8,17 @@
 
 - [Na początek](ch01-00-getting-started.md)
     - [Instalacja](ch01-01-installation.md)
-    - [Hello, World!](ch01-02-hello-world.md)
-    - [Hello, Cargo!](ch01-03-hello-cargo.md)
+    - [Witaj, Świecie!](ch01-02-hello-world.md)
+    - [Witaj, Cargo!](ch01-03-hello-cargo.md)
 
 - [Piszemy grę zgadywankę](ch02-00-guessing-game-tutorial.md)
 
 - [Powszechne koncepcje programistyczne](ch03-00-common-programming-concepts.md)
     - [Zmienne i ich modyfikowalność](ch03-01-variables-and-mutability.md)
     - [Typy danych](ch03-02-data-types.md)
-    - [How Functions Work](ch03-03-how-functions-work.md)
+    - [Funkcje](ch03-03-how-functions-work.md)
     - [Komentarze](ch03-04-comments.md)
-    - [Control Flow](ch03-05-control-flow.md)
+    - [Przepływ sterowania](ch03-05-control-flow.md)
 
 - [Zrozumienie systemu własności](ch04-00-understanding-ownership.md)
     - [Czym jest własność?](ch04-01-what-is-ownership.md)

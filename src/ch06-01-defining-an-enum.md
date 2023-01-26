@@ -1,10 +1,6 @@
 ## Definiowanie wyliczeń
 
-Where structs give you a way of grouping together related fields and data, like
-a `Rectangle` with its `width` and `height`, enums give you a way of saying a
-value is one of a possible set of values. For example, we may want to say that
-`Rectangle` is one of a set of possible shapes that also includes `Circle` and
-`Triangle`. To do this, Rust allows us to encode these possibilities as an enum.
+Podczas gdy struktury pozwalają na grupowanie powiązanych pól i danych, jak `Rectangle` z jego szerokością i wysokością, typy wyliczeniowe pozwalają na określenie wartości jako jednej z możliwych. Na przykład, za ich pomocą możemy wyrazić, że `Rectangle` (prostokąt) jest jednym z możliwych kształtów, które obejmują również `Circle` (koło) i `Triangle` (trójkąt).
 
 Weźmy na tapetę pewną sytuację, w której wyliczenia są przydatniejsze i bardziej odpowiednie niż struktury.
 Załóżmy, że chcemy wykonywać operacje na adresach IP.

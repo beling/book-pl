@@ -1,4 +1,4 @@
-# Gra w zgadywankę
+# Piszemy grę zgadywankę
 
 Rozpocznijmy zabawę z Rustem tworząc razem praktyczny projekt. Ten rozdział zapozna cię z kilkoma podstawowymi
 konceptami Rusta, prezentując ich użycie w prawdziwym programie. Dowiesz się, co oznaczają `let`, `match`, metoda,

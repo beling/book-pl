@@ -1,4 +1,4 @@
-## Wycinek
+## Wycinki
 
 Kolejnym typem danych, który nie przejmuje własności jest *wycinek* (ang. *slice*).
 Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w kolekcji, bez konieczności odnoszenia się do całej kolekcji.
@@ -19,7 +19,7 @@ Funkcja `first_word` przyjmuje parametr typu `&String`, co jest w porządku, bo 
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 4-7: Funkcja `first_word` która zwraca indeks bajta w parametrze typu `String`</span>
+<span class="caption">Listing 4-7: Funkcja `first_word` zwracająca indeks bajta w parametrze typu `String`</span>
 
 By przejść przez `String` element po elemencie i spróbować znaleźć spacje, konwertujemy nasz `String` na tablicę bajtów używając metody `as_bytes`.
 

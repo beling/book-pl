@@ -114,8 +114,8 @@ stworzymy razem krótkie programy wykorzystujące wiedzę przekazaną do danego
 momentu. Rozdziałami projektowymi są te o numerach 2, 12 i 20. Pozostałe to
 rozdziały pojęciowe.
 
-Rozdział 1 wyjaśnia, jak zainstalować Rusta, jak napisać program „Hello,
-world!” oraz jak używać Cargo - menedżera paczek i narzędzie budowania Rusta.
+Rozdział 1 wyjaśnia, jak zainstalować Rusta, jak napisać program „Witaj,
+świecie!” oraz jak używać Cargo - menedżera paczek (skrzyń) i narzędzie budowania Rusta.
 Rozdział 2 jest praktycznym wprowadzeniem do języka Rust. Poszczególne pojęcia
 omawiamy tu ogólnie, podczas gdy szczegóły zostaną wyjaśnione w późniejszych
 rozdziałach. Jeżeli chcesz od razu pobrudzić sobie ręce, rozdział 2 jest do tego
