@@ -3,7 +3,7 @@
 ![Build Status](https://github.com/beling/book-pl/workflows/CI/badge.svg)
 
 Niniejsze repozytorium stanowi próbę przetłumaczenia książki
-[“Język Programowania Rust”][rust-book] na język polski. Druga edycja
+[„Język Programowania Rust”][rust-book] na język polski. Druga edycja
 angielskiej wersji została niedawno wydana w formie papierowej przez wydawnictwo
 NoStarch Press. Odwiedź [stronę No Starch][nostarch], aby uzyskać więcej
 informacji dotyczących daty wydania i zamówień.

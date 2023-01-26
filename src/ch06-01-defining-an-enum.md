@@ -191,7 +191,7 @@ Rust nie ma wartości `null` znanej z wielu innych języków.
 W językach z pustymi wartościami, zmienne zawsze mogą być jednym z dwóch stanów: null lub nie-null.
 
 W swojej prezentacji z 2009 roku "Puste referencje: Błąd warty miliard dolarów" 
-(oryg. “Null References: The Billion Dollar Mistake,”),
+(oryg. „Null References: The Billion Dollar Mistake,”),
 Tony Hoare, wynalazca nulla, miał to do powiedzenia:
 
 > Ten błąd warty jest miliard dolarów. W tamtych czasach projektowałem pierwszy kompleksowy system typów

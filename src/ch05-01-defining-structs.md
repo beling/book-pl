@@ -126,14 +126,14 @@ many fields as we want in any order, regardless of the order of the fields in
 the struct’s definition.
 
 Note that the struct update syntax uses `=` like an assignment; this is because
-it moves the data, just as we saw in the [“Variables and Data Interacting with
+it moves the data, just as we saw in the [„Variables and Data Interacting with
 Move”][move]<!-- ignore --> section. In this example, we can no longer use
 `user1` as a whole after creating `user2` because the `String` in the
 `username` field of `user1` was moved into `user2`. If we had given `user2` new
 `String` values for both `email` and `username`, and thus only used the
 `active` and `sign_in_count` values from `user1`, then `user1` would still be
 valid after creating `user2`. Both `active` and `sign_in_count` are types that
-implement the `Copy` trait, so the behavior we discussed in the [“Stack-Only
+implement the `Copy` trait, so the behavior we discussed in the [„Stack-Only
 Data: Copy”][copy]<!-- ignore --> section would apply.
 
 ### Wykorzystanie braku nazywania pól w struktorach krotkowych do tworzenia nowych typów
@@ -159,7 +159,7 @@ Oprócz tego wyjątku struktury krotkowe zachowują się całkiem jak krotki: mo
 ### Struktura jednostkowa bez żadnych pól
 
 Możesz także definiować struktury nie posiadające żadnych pól!
-Są to tzw. *struktury jednostkowe* (ang. unit-like structs), bo zachowują się podobnie do `()`, czyli typu jednostkowego wspomnianego w rozdziale [“The Tuple Type”][tuples]<!-- ignore -->.
+Są to tzw. *struktury jednostkowe* (ang. unit-like structs), bo zachowują się podobnie do `()`, czyli typu jednostkowego wspomnianego w rozdziale [„The Tuple Type”][tuples]<!-- ignore -->.
 Struktury jednostkowe mogą być przydatne, gdy chcemy zaimplementować cechę na jakimś typie, ale nie potrzebujemy przechowywać żadnych danych. Cechy omawiamy w rozdziale 10.
 
 Here’s an example of declaring and instantiating a unit struct named `AlwaysEqual`:

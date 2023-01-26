@@ -4,7 +4,7 @@ Wykonanie jakiegoś kodu w zależności od tego, czy warunek jest spełniony, al
 
 ### Wyrażenia `if`
 
-Wyrażenie `if` pozwala na rozgałęzienie kodu w zależności od spełnienia warunków. Podajemy warunek i nakazujemy: “Jeśli ten warunek jest spełniony, uruchom ten blok kodu. Jeśli warunek nie jest spełniony, nie uruchamiaj tego bloku kodu.”
+Wyrażenie `if` pozwala na rozgałęzienie kodu w zależności od spełnienia warunków. Podajemy warunek i nakazujemy: „Jeśli ten warunek jest spełniony, uruchom ten blok kodu. Jeśli warunek nie jest spełniony, nie uruchamiaj tego bloku kodu.”
 
 Stwórzmy nowy projekt o nazwie *branches* (z ang. rozgałęzienia) w katalogu *projects* by zgłębić wyrażanie `if`. W pliku *src/main.rs* wpiszmy:
 
@@ -16,7 +16,7 @@ Stwórzmy nowy projekt o nazwie *branches* (z ang. rozgałęzienia) w katalogu *
 
 Wszystkie wyrażenia `if` rozpoczynają się słowem kluczowym `if`, po którym następuje warunek. W tym przypadku, warunek sprawdza czy zmienna `number` ma wartość mniejszą od 5.
 Blok kodu umieszczony w nawiasach klamrowych bezpośrednio po warunku zostanie wykonany tylko wtedy, gdy warunek będzie spełniony, tj. będzie miał wartość logiczną `true`.
-Bloki kodu powiązane z warunkami w wyrażenie `if` nazywane są czasami *odnogami*, podobnie jak to było w przypadku wyrażenia `match`, o którym wspomnieliśmy w sekcji [“Porównywanie Odpowiedzi z Sekretnym Numerem”][comparing-the-guess-to-the-secret-number]<!-- ignore --> rozdziału 2.
+Bloki kodu powiązane z warunkami w wyrażenie `if` nazywane są czasami *odnogami*, podobnie jak to było w przypadku wyrażenia `match`, o którym wspomnieliśmy w sekcji [„Porównywanie Odpowiedzi z Sekretnym Numerem”][comparing-the-guess-to-the-secret-number]<!-- ignore --> rozdziału 2.
 
 Opcjonalnie, możemy również dodać wyrażenie `else`, co zresztą uczyniliśmy, aby dodać alternatywny blok kodu, wykonywany gdy warunek nie zajdzie (da `false`). Jeśli nie ma wyrażenia `else`, a warunek da `false`, program po prostu pominie blok `if` i przejdzie do następnego fragmentu kodu.
 
@@ -165,7 +165,7 @@ Symbol `^C` pokazuje gdzie wcisnęliśmy <span class="keystroke">ctrl-c</span>.
 Słowo `znowu!` może zostać wypisane lub nie po `^C`, zależnie od tego, która linia programu była wykonywana w momencie gdy odebrał on sygnał przerwania.
 
 Szczęśliwie, Rust zapewnia również sposób na przerwanie pętli za pomocą kodu. Można umieścić słowo kluczowe `break` wewnątrz pętli, aby powiedzieć programowi, gdzie ma przerwać jej wykonywanie.
-Proszę sobie przypomnieć, że już to zrobiliśmy w grze-zgadywance w sekcji [“Quitting After a Correct Guess”][quitting-after-a-correct-guess]<!-- ignore --> rozdziału 2, aby zakończyć program, gdy użytkownik wygrał grę, zgadując poprawną liczbę.
+Proszę sobie przypomnieć, że już to zrobiliśmy w grze-zgadywance w sekcji [„Quitting After a Correct Guess”][quitting-after-a-correct-guess]<!-- ignore --> rozdziału 2, aby zakończyć program, gdy użytkownik wygrał grę, zgadując poprawną liczbę.
 
 W grze-zgadywance użyliśmy również `continue`, które, użyte w pętli, nakazuje programowi pominąć kod pozostały do wykonania w bieżącej iteracji i rozpocząć następną iterację.
 

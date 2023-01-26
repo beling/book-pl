@@ -52,7 +52,7 @@ Rust jest językiem dla uczniów i osób zainteresowanych uczeniem się systemow
 pojęć. Z pomocą Rusta, wielu ludzi poznało tematy z zakresu rozwoju systemów
 operacyjnych. Społeczność Rusta jest niezwykle gościnna i chętnie odpowiada na
 pytania uczniów. Poprzez zaangażowanie w projekty takie jak niniejsza książka,
-zespoły tworzące Rusta chcą uczynić pojęcia systemowe osiagalnymi dla większej
+zespoły tworzące Rusta chcą uczynić pojęcia systemowe osiągalnymi dla większej
 ilości osób, szczególnie tych, dla których programowanie jest czymś zupełnie
 nowym.
 

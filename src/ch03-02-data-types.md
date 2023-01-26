@@ -89,7 +89,7 @@ korzystamy głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > w momencie wystąpienia przekroczenia zakresu liczb całkowitych.
 > Rust wykorzystuje termin 
 > "panikowania" programu wtedy, gdy program kończy działaniem zwracając błąd;
-> panikowanie szczegółowiej omówimy w sekcji [“Nieodwracalne błędy z `panic!`”][unrecoverable-errors-with-panic]<!-- ignore -->
+> panikowanie szczegółowiej omówimy w sekcji [„Nieodwracalne błędy z `panic!`”][unrecoverable-errors-with-panic]<!-- ignore -->
 > w rozdziale 9.
 >
 > Kiedy kompilujemy program w trybie produkcyjnym z włączoną flagą `--release`,
@@ -170,7 +170,7 @@ Do tej pory pracowaliśmy tylko z liczbami, ale Rust wspiera też litery. Najpro
 Proszę zauważyć, że literały typu `char` są zapisywane z użyciem pojedynczego cudzysłowia, w przeciwieństwie do literałów łańcuchowych, które korzystają z podwójnego cudzysłowia.
 Typ `char` w Ruście ma wielkość czterech bajtów i reprezentuje Skalarną Wartość Unikod, co oznacza, że można w nim przedstawić dużo więcej niż tylko znaki ASCII.
 Litery akcentowane; chińskie, japońskie i koreańskie symbole; emoji; pola o zerowej długości to wszystko poprawne wartości dla typu `char` w Ruście.
-Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do `U+10FFFF` włącznie. Jednak “znak” nie jest naprawdę ideą w Unikodzie, więc twój intuicyjny sposób postrzegania tego, czym jest “znak” może nie
+Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do `U+10FFFF` włącznie. Jednak „znak” nie jest naprawdę ideą w Unikodzie, więc twój intuicyjny sposób postrzegania tego, czym jest „znak” może nie
 być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
 
 ### Typy złożone

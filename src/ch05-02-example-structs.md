@@ -35,7 +35,7 @@ Problem w tym kodzie widnieje w sygnaturze funkcji `area`:
 
 Funkcja `area` ma wyliczyć pole jakiegoś prostokąta, ale przecież funkcja którą my napisaliśmy ma dwa parametry.
 Parametry są ze sobą powiązane, ale ta zależność nie widnieje nigdzie w naszym programie. Łatwiej byłoby ten kod zrozumieć i nim się posługiwać, jeśli szerokość i wysokość byłyby ze sobą zgrupowane.
-Już omówiliśmy jeden ze sposobów, w jaki można to wykonać w sekcji [“Krotka”][the-tuple-type]<!-- ignore --> rozdziału 3, czyli poprzez wykorzystanie krotek.
+Już omówiliśmy jeden ze sposobów, w jaki można to wykonać w sekcji [„Krotka”][the-tuple-type]<!-- ignore --> rozdziału 3, czyli poprzez wykorzystanie krotek.
 
 ### Refaktoryzacja z krotkami
 
@@ -202,7 +202,7 @@ of that expression, and returns ownership of the value.
 > Note: Calling the `dbg!` macro prints to the standard error console stream
 > (`stderr`), as opposed to `println!`, which prints to the standard output
 > console stream (`stdout`). We’ll talk more about `stderr` and `stdout` in the
-> [“Writing Error Messages to Standard Error Instead of Standard Output”
+> [„Writing Error Messages to Standard Error Instead of Standard Output”
 > section in Chapter 12][err]<!-- ignore -->.
 
 Here’s an example where we’re interested in the value that gets assigned to the
@@ -232,7 +232,7 @@ figure out what your code is doing!
 
 Oprócz cechy `Debug`, Rust dostarcza cały szereg innych cech, które możemy nadać za pomocą atrybutu `derive`, by wzbogacić nasze typy o dodatkową funkcjonalność.
 Te cechy i ich zachowania opisane są w [Załączniku C][app-c]<!-- ignore -->. Jak dodawać takim cechom własne implementacje oraz także jak tworzyć własne cechy omówimy w rozdziale 10.
-There are also many attributes other than `derive`; for more information, see [the “Attributes” section of the Rust Reference][attributes].
+There are also many attributes other than `derive`; for more information, see [the „Attributes” section of the Rust Reference][attributes].
 
 Nasza funkcja `area` jest dość specyficzna: oblicza pola jedynie prostokątów.
 Skoro i tak nie zadziała ona z żadnym innym typem, przydatne 

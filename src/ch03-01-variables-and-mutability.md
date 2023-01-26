@@ -1,6 +1,6 @@
 ## Zmienne i ich modyfikowalność
 
-Tak jak wspomniano w rozdziale [“Storing Values with
+Tak jak wspomniano w rozdziale [„Storing Values with
 Variables”][storing-values-with-variables]<!-- ignore --> , zmienne są domyślnie niemodyfikowalne (niemutowalne, ang. *immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
 uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu czasem możesz chcieć zrezygnować z tej własciwości.
 

@@ -23,7 +23,7 @@ Stwórzmy nowy projekt o nazwie *functions*, dzięki któremu zapoznamy się z g
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
-Linie kodu wykonywane są w kolejności, w jakiej pojawiają się w funkcji `main`. Najpierw pokaże się tekst “Witaj, świecie!”, a następnie wywołana jest funkcja `another_function` i ukazuje się wiadomość z jej wnętrza.
+Linie kodu wykonywane są w kolejności, w jakiej pojawiają się w funkcji `main`. Najpierw pokaże się tekst „Witaj, świecie!”, a następnie wywołana jest funkcja `another_function` i ukazuje się wiadomość z jej wnętrza.
 
 
 ### Parametry funkcji

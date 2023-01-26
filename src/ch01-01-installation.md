@@ -77,7 +77,7 @@ nowszego.
 To acquire the build tools, you’ll need to install [Visual Studio
 2022][visualstudio]. When asked which workloads to install, include:
 
-* “Desktop Development with C++”
+* „Desktop Development with C++”
 * The Windows 10 or 11 SDK
 * The English language pack component, along with any other language pack of
   your choosing

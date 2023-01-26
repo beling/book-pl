@@ -3,7 +3,7 @@
 Kolejnym typem danych, który nie przejmuje własności jest *wycinek* (ang. *slice*).
 Wycinki pozwalają na odniesienie się do wybranej ciągłej sekwencji elementów w kolekcji, bez konieczności odnoszenia się do całej kolekcji.
 
-Spójrzmy na mały problem programistyczny: Napisać funkcję, która pobiera łańcuch znaków zawierający słowa rozdzielone spacjami i zwraca pierwsze słowo, które się w nim znajdzie. Jeśli funkcja nie znajdzie znaku spacji w łańcuchu, należy założyć, że cały łańcuch stanowi jedno słowo i zwrócić go w całości.
+Rozważmy mały problem programistyczny: napisać funkcję, która pobiera łańcuch znaków zawierający słowa rozdzielone spacjami i zwraca pierwsze słowo, które się w nim znajdzie. Jeśli funkcja nie znajdzie znaku spacji w łańcuchu, należy założyć, że cały łańcuch stanowi jedno słowo i zwrócić go w całości.
 
 Pomyślmy nad sygnaturą tej funkcji (na razie bez użycia wycinków, by zrozumieć problem, który one rozwiązują):
 
@@ -191,7 +191,7 @@ Rust nie pozwala, aby mutowalna referencja w `clear` i niemutowalna referencja w
 Przypomnijmy, że mówiliśmy o literałach łańcuchowych przechowywanych wewnątrz binarki. Zaś teraz, mając wiedzę o wycinkach, możemy właściwie zrozumieć literały łańcuchowe:
 
 ```rust
-let s = "Hello, world!";
+let s = "Witaj, świecie!";
 ```
 
 Typem `s` jest tutaj `&str`: jest to wycinek wskazujący na konkretny punkt w binarce.
@@ -215,7 +215,7 @@ Jednak bardziej doświadczony Rustowiec dokonałby kolejnej zmiany i w zamian na
 
 Jeśli mamy wycinek łańcucha, to możemy go przekazać bezpośrednio.
 Jeśli mamy `String`a, to możemy przekazać wycinek tego `String`a lub referencję do tego `String`a.
-Ta elastyczność wykorzystuje *wymuszone dereferencje* (ang. *deref coercions*), cechę, którą omówimy w sekcji ["Implicit Deref Coercions with Functions and Methods"][deref-coercions]<!--ignore--> rozdziału 15.
+Ta elastyczność wykorzystuje *deref coercions*, własność, którą omówimy w sekcji ["Implicit Deref Coercions with Functions and Methods"][deref-coercions]<!--ignore--> rozdziału 15.
 
 Zdefiniowanie funkcji przyjmującej wycinek łańcucha zamiast referencji do `String`a czyni nasze API bardziej ogólnym i użytecznym bez utraty jakiejkolwiek funkcjonalności:
 

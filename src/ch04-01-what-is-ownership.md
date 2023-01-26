@@ -396,7 +396,7 @@ Rust nie pozwoli dodać adnotacji `Copy` do żadnego typu, dla którego zaimplem
 wykonania konkretnych operacji po tym, jak reprezentującej go zmiennej kończy
 się zasięg, a dodamy dla tego typu cechę `Copy`, uzyskamy błąd kompilacji. Aby
 nauczyć się, jak implementować cechę `Copy` dla danego typu, zajrzyj do
-[“Cechy wyprowadzalne”][derivable-traits]<!-- ignore --> w Dodatku C.
+[„Cechy wyprowadzalne”][derivable-traits]<!-- ignore --> w Dodatku C.
 
 Które więc typy mają cechę `Copy`? Dla danego typu można dla pewności sprawdzić
 w dokumentacji, ale jako regułę zapamiętaj, że każda grupa wartości skalarnych
