@@ -81,7 +81,7 @@ Language) (*Oczywisty, Minimalistyczny Język Toma - przyp. tłum.*), którego
 Cargo używa do konfiguracji.
 
 Pierwsza linia, `[package]`, jest nagłówkiem sekcji, której kolejne wyrażenia
-konfigurują paczkę. W miarę dodawania informacji do tego pliku, dodamy też inne
+konfigurują pakiet. W miarę dodawania informacji do tego pliku, dodamy też inne
 sekcje.
 
 Następne trzy linie ustalają informacje konfiguracyjne, których Cargo
@@ -89,7 +89,7 @@ potrzebuje do kompilacji twojego programu: nazwę, wersję, i dane o
 używanej edycji Rusta. O kluczu `edition` będzie mowa w [Dodatku E][appendix-e]<!-- ignore -->.
 
 Ostatnia linia, `[dependencies]`, rozpoczyna sekcję, gdzie wyszczególnia się
-wszystkie zależności twojego projektu. W Ruście paczki z kodem źródłowym
+wszystkie zależności twojego projektu. W Ruście pakiety z kodem źródłowym
 nazywane są *skrzyniami* (*crates*). Do tego projektu nie będziemy potrzebować
 żadnych skrzyń, ale do programu w rozdziale drugim owszem. Wówczas przyda nam
 się sekcja zależności.
