@@ -1,6 +1,6 @@
 ## Witaj, Cargo!
 
-Cargo jest menedżerem paczek i systemem budowania Rusta. Większość Rustowców
+Cargo jest menedżerem pakietów i systemem budowania Rusta. Większość Rustowców
 używa tego narzędzia do zarządzania swoimi projektami, ponieważ Cargo potrafi
 wykonać za nich wiele zadań, takich jak budowanie kodu oraz ściąganie i
 budowanie bibliotek, od których kod jest zależny. Biblioteki, których wymaga

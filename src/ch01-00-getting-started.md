@@ -5,4 +5,4 @@ gdzieś swój początek. W tym rozdziale omówimy:
 
 - Instalację Rusta pod Linuksem, macOS i Windowsem
 - Stworzenie programu wyświetlającego tekst „Witaj, świecie!”
-- Używanie `cargo`, menadżera paczek i systemu budowania Rusta
+- Używanie `cargo`, menadżera pakietów i systemu budowania Rusta

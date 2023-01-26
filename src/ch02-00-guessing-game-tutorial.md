@@ -292,7 +292,7 @@ Projekt, który budujemy, to skrzynia binarna
 (*binary crate*), czyli plik wykonywalny. Skrzynia `rand` to *library crate*, czyli biblioteka stworzona do używania w
 innych programach.
 
-Z użyciem Cargo dodawanie zewnętrznych paczek jest bajecznie proste. Aby móc używać `rand` w naszym kodzie,
+Z użyciem Cargo dodawanie zewnętrznych pakietów jest bajecznie proste. Aby móc używać `rand` w naszym kodzie,
 wystarczy zmodyfikować plik *Cargo.toml* tak, aby zaciągał skrzynię `rand` jako zależność do projektu.
 Otwórz *Cargo.toml* i dodaj na końcu, pod nagłówkiem sekcji `[dependencies]`, poniższą linię.
 Upewnij się, że podałeś `rand` dokładnie tak jak poniżej, z
