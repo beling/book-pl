@@ -16,7 +16,7 @@ fn main() {
 
     let word = first_word(&s); // word otrzyma wartość 5
 
-    s.clear(); // to czyści łańcuch s, który teraz będzie równy ""
+    s.clear(); // to czyści łańcuch s, czyniąc go równym ""
 
     // tutaj word wciąż ma wartość 5, ale nie ma już łańcucha
     // dla którego 5 coś znaczy. word zupełnie straciło ważność!
