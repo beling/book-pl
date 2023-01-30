@@ -1,62 +1,39 @@
 <!-- Old heading. Do not remove or links may break. -->
 <a id="the-match-control-flow-operator"></a>
-## The `match` Control Flow Construct
+<!-- ## The `match` Control Flow Construct -->
+## Konstrukcja Przepływu Sterowania `match`
 
-Rust has an extremely powerful control flow construct called `match` that
-allows you to compare a value against a series of patterns and then execute
-code based on which pattern matches. Patterns can be made up of literal values,
-variable names, wildcards, and many other things; [Chapter
-18][ch18-00-patterns]<!-- ignore --> covers all the different kinds of patterns
-and what they do. The power of `match` comes from the expressiveness of the
-patterns and the fact that the compiler confirms that all possible cases are
-handled.
+Rust posiada niezwykle potężną konstrukcję przepływu sterowania `match`, która pozwala na porównanie wartości z serią wzorców, a następnie wykonanie kodu przypisanego do pasującego wzorca.
+Wzorce mogą składać się z literałów, nazw zmiennych, wieloznaczników (ang. woldcards) i wielu innych rzeczy;
+[rozdział 18][ch18-00-patterns]<!-- ignore --> objaśnia działanie wszystkich rodzajów wzorców.
+Siła `match` wynika z ekspresyjności wzorców i faktu, że kompilator sprawdza, czy wszystkie możliwe przypadki są obsługiwane.
 
-Think of a `match` expression as being like a coin-sorting machine: coins slide
-down a track with variously sized holes along it, and each coin falls through
-the first hole it encounters that it fits into. In the same way, values go
-through each pattern in a `match`, and at the first pattern the value “fits,”
-the value falls into the associated code block to be used during execution.
+Na wyrażeniu `match` można spojrzeć jak na maszynę do sortowania monet:
+monety zjeżdżają po torze wzdłuż którego znajdują się różnej wielkości otwory i każda wpada w pierwszy napotkany otwór, do którego pasuje. W ten sam sposób wartości przechodzą przez każdy wzorzec w `match`, aż do napotkania pierwszego wzorca, do którego wartość "pasuje". Po jego napotkaniu, wartość wpada do powiązanego z tym wzorcem bloku kodu, który zostaje wykonany.
 
-Speaking of coins, let’s use them as an example using `match`! We can write a
-function that takes an unknown US coin and, in a similar way as the counting
-machine, determines which coin it is and returns its value in cents, as shown
-in Listing 6-3.
+Skoro mowa o monetach, to użyjmy ich jako przykładu z wykorzystaniem `match`!
+Możemy napisać funkcję, która pobiera nieznaną amerykańską monetę i tak jak maszyna licząca określa, jaka to moneta, oraz zwraca jej wartość w centach, jak pokazano na na listingu 6-3.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-3: An enum and a `match` expression that has
-the variants of the enum as its patterns</span>
+<span class="caption">Listing 6-3: Wyrażenie `match` dopasowujące warianty enuma do wzorców</span>
 
-Let’s break down the `match` in the `value_in_cents` function. First we list
-the `match` keyword followed by an expression, which in this case is the value
-`coin`. This seems very similar to a conditional expression used with `if`, but
-there’s a big difference: with `if`, the condition needs to evaluate to a
-Boolean value, but here it can be any type. The type of `coin` in this example
-is the `Coin` enum that we defined on the first line.
+Rozłóżmy `match` w funkcji `value_in_cents` na czynniki pierwsze.
+Najpierw umieszczamy słowo kluczowe `match`, po którym następuje wyrażenie, którym w tym przypadku jest wartość `coin`.
+To wyrażenie pełni podobną rolę do wyrażenia warunkowego używanego z `if`, ale jest duża różnica: w `if` warunek musi dawać wartość boolowską, zaś tutaj wyrażnie może być dowolnego typu. Typem `coin` w tym przykładzie jest enum `Coin`, który zdefiniowaliśmy w pierwszej linii.
 
-Next are the `match` arms. An arm has two parts: a pattern and some code. The
-first arm here has a pattern that is the value `Coin::Penny` and then the `=>`
-operator that separates the pattern and the code to run. The code in this case
-is just the value `1`. Each arm is separated from the next with a comma.
+Następne są odnogi `match`. Odnoga składa się z dwóch części: wzorca i kodu. Pierwsza odnoga ma wzorzec, którym jest wartość `Coin::Penny`, a następnie operator `=>`, który oddziela wzorzec i kod do uruchomienia. Kodem w tym przypadku jest po prostu wartość `1`. Każda odnoga jest oddzielone od następnej przecinkiem.
 
-When the `match` expression executes, it compares the resultant value against
-the pattern of each arm, in order. If a pattern matches the value, the code
-associated with that pattern is executed. If that pattern doesn’t match the
-value, execution continues to the next arm, much as in a coin-sorting machine.
-We can have as many arms as we need: in Listing 6-3, our `match` has four arms.
+Wykonanie wyrażenia `match` polega na porównaniu wartości wynikowej z wzorcem każdej z odnóg, w kolejności ich wystąpienia.
+Jeśli wzorzec pasuje do wartości, wykonywany jest kod związany z tym wzorcem.
+Jeśli wzorzec nie pasuje do wartości, wykonanie przechodzi do następnej odnogi, zupełnie jak w maszynie do sortowania monet.
+Możemy mieć tyle odnóg ile potrzebujemy. Na Listingu 6-3, nasz `match` ma ich cztery.
 
-The code associated with each arm is an expression, and the resultant value of
-the expression in the matching arm is the value that gets returned for the
-entire `match` expression.
+Kod związany z każdą odnogą jest wyrażeniem, a wartość wynikowa wyrażenia w pasującej odnodze jest wartością, która zostaje zwrócona z całego wyrażenia `match`.
 
-We don’t typically use curly brackets if the match arm code is short, as it is
-in Listing 6-3 where each arm just returns a value. If you want to run multiple
-lines of code in a match arm, you must use curly brackets, and the comma
-following the arm is then optional. For example, the following code prints
-“Lucky penny!” every time the method is called with a `Coin::Penny`, but still
-returns the last value of the block, `1`:
+Zazwyczaj nie używamy nawiasów klamrowych, jeśli kod ramienia odnogi jest krótki, tak jak na Listingu 6-3, gdzie każda odnoga jedynie zwraca wartość. Chcąc uruchomić wiele linii kodu w jednej odnodze należy użyć nawiasów klamrowych, a przecinek po odnodze jest wtedy opcjonalny. Na przykład poniższy kod drukuje "Lucky penny!" za każdym razem, gdy metoda jest wywoływana z `Coin::Penny`, ale wciąż zwraca ostatnią wartość bloku, `1`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
