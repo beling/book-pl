@@ -39,7 +39,7 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 > przechować go na stosie. Jednak gdy chcemy dostać się do właściwych danych,
 > musimy podążyć za wskaźnikiem.
 >
-> Pomyśl o byciu rozsadzanym(-ą) w restauracji. Przy wejściu podajesz ilość osób
+> Pomyśl o byciu rozsadzanym w restauracji. Przy wejściu podajesz ilość osób
 > w swojej grupie, a pracownik znajduje pusty stolik, przy którym wszyscy się
 > pomieszczą i prowadzi ich na miejsce. Jeśli ktoś z twojej grupy sie spóźni,
 > aby was znaleźć, może zapytać, gdzie was posadzono.
@@ -131,15 +131,15 @@ które odnoszą się do systemu własności. Te same elementy mają znaczenie dl
 innych złożonych typów, które dostarcza biblioteka standardowa oraz tych, które
 stworzysz sam. Typ `String` omawiany będzie dogłębnie w [rozdziale 8][ch8].
 
-Widzieliśmy już literały znakowe, których dane na stałe umieszczone są w treści
+Widzieliśmy już literały łańcuchowe, których dane na stałe umieszczone są w treści
 programu. Takie zmienne są wygodne w użyciu, ale nieprzydatne w wielu
 sytuacjach, w których używa się danych tekstowych. Jednym z powodów jest to, że
 są one niemodyfikowalne. Innym, że nie każda zawartość łańcucha tekstowego jest
 znana podczas pisania programu. Na przykład: co zrobić, jeśli chcemy pobrać dane
 od użytkownika i je przechować? Dla takich sytuacji Rust przewiduje drugi typ
-znakowy: `String`. Typ ten alokowany jest na stercie i z tego względu może
+łańcuchowy: `String`. Typ ten alokowany jest na stercie i z tego względu może
 przechowywać dane, których ilość jest nieznana podczas kompilacji. Można
-przekształcić niemodyfikowalny literał znakowy w zmienną typu `String` za pomocą
+przekształcić niemodyfikowalny literał łańcuchowy w zmienną typu `String` za pomocą
 funkcji `from`. Wygląda to tak:
 
 ```rust
@@ -206,13 +206,13 @@ Istnieje naturalny moment, w którym można oddać pamięć wykorzystywaną prze
 nasz `String` do alokatora - kiedy kończy się zasięg zmiennej `s`.
 Kiedy zasięg jakiejś zmiennej się kończy, Rust wywołuje za nas specjalną
 funkcję. Funkcja ta nosi nazwę [`drop`][drop]<!-- ignore --> (*porzuć, upuść*), a w jej treści autor typu
-`String` umieszcza kod zwalniający pamięć. Funkcja `drop` zostaje wywołana przez
+`String` umieścił kod zwalniający pamięć. Funkcja `drop` zostaje wywołana przez
 Rusta automatycznie, przy klamrze zamykającej.
 
 > Uwaga: W C++ schemat dealokacji zasobów przy końcu czasu życia jakiegoś
 > elementu jest czasem nazywany *Inicjowaniem Przy Pozyskaniu Zasobu* (*Resource
-> Acquisition Is Initialization (RAII)*). Funkcja `drop` z Rusta może wydać ci
-> się znajoma, jeśli miałeś(-aś) styczność ze schematami RAII.
+> Acquisition Is Initialization (RAII)*). Funkcja `drop` z Rusta może wydać
+> się znajoma osobom, które miały styczność ze schematami RAII.
 
 Schemat ten ma ogromny wpływ na sposób pisania kodu w Ruście. Na tym etapie może
 wydawać się to proste, ale program może zachować się niespodziewanie w bardziej
@@ -234,11 +234,11 @@ Spójrzmy na przykład w listingu 4-2, z wykorzystaniem liczby całkowitej:
 <span class="caption">Listing 4-2: Przypisanie całkowitej wartości zmiennej `x`
 do zmiennej `y`</span>
 
-Z całą pewnością możemy odgadnąć, co ten kod robi: „Przypisuje wartość `5` do
-`x`, a następnie robi kopię wartości przechowywanej w `x` i przypisuje ją do
+Z całą pewnością możemy odgadnąć, co ten kod robi: „przypisuje `5` do `x`,
+a następnie wykonuje kopię wartości przechowywanej w `x` i przypisuje ją do
 `y`.”. Mamy teraz dwie zmienne: `x` i `y`, obie o wartości `5`. Dzieje się
-dokładnie tak, ponieważ zmienne dla liczb całkowitych są prostymi elementami o
-znanym, ustalonym rozmiarze, więc obie wartości `5` zostają odłożone na stos.
+dokładnie tak, ponieważ liczby całkowite są prostymi wartościami o
+stałym rozmiarze, więc obie wartości `5` zostają odłożone na stos.
 
 Teraz przyjrzyjmy się wersji z typem `String`:
 
@@ -303,7 +303,7 @@ sam obszar. Jest to problematyczne: kiedy zasięg `s2` i `s1` się skończy,
 nastąpi próba dwukrotnego zwolnienia tej samej pamięci. Sytuacja ta jest znana
 jako *błąd podwójnego zwolnienia* i należy do grupy bugów bezpieczeństwa
 pamięci, o których wcześniej wspomnieliśmy. Podwójne zwalnianie pamięci może
-prowadzić do jej *zepsucia*, a w efekcie potencjalnie do luk w zabezpieczeniach.
+prowadzić do jej *zepsucia*, a w efekcie do potencjalnych luk bezpieczeństwa.
 
 Aby zapewnić bezpieczeństwo pamięci, po linii `let s2 = s1;`, zamiast próbować skopiować zaalokowaną pamięć, Rust
 traktuje zmienną `s1` jako unieważnioną i, tym samym, nie musi nic zwalniać, kiedy zasięg `s1` się kończy. Zobaczmy, co stanie się przy próbie użycia zmiennej `s1` po utworzeniu zmiennej `s2`. Próba się nie powiedzie:
@@ -318,8 +318,8 @@ Rust zwróci poniższy błąd, ponieważ nie zezwala na odnoszenie się do eleme
 {{#include ../listings/ch04-understanding-ownership/no-listing-04-cant-use-after-move/output.txt}}
 ```
 
-Jeśli zdarzyło ci się słyszeć terminy „płytka kopia” oraz „głęboka kopia” przy
-pracy z innymi językami, koncept kopiowania wskaźnika ze znacznikami długości
+Jeśli słyszałeś terminy „płytka kopia” oraz „głęboka kopia” pracując
+z innymi językami, to z pewnością wiesz, że skopiowanie wskaźnika ze znacznikami długości
 i pojemności, ale bez kopiowania danych, przypomina tworzenie płytkiej kopii.
 Ale ponieważ Rust jednocześnie unieważnia źródłową zmienną, zamiast nazywać taki
 proces płytką kopią, używa się terminu *przeniesienie*. W tym przypadku
@@ -335,8 +335,8 @@ access the heap data." src="img/trpl04-04.svg" class="center" style="width:
 <span class="caption">Rysunek 4-4: Reprezentacja w pamięci po unieważnieniu
 zmiennej `s1`</span>
 
-To rozwiązuje nasz problem! Jeśli tylko zmienna `s2` zachowuje ważność w
-momencie wyjścia z zasięgu, sama zwolni zajmowaną pamięć i po sprawie.
+To rozwiązuje nasz problem! Jeśli jedynie zmienna `s2` zachowuje ważność, to w
+momencie wyjścia z zasięgu, jako jedyna zwolni zajmowaną pamięć i po sprawie.
 
 Dodatkowo, implikuje to decyzję w budowie języka: Rust nigdy automatycznie nie
 tworzy „głębokich” kopii twoich danych. Można zatem założyć, że *automatyczny*
@@ -347,11 +347,11 @@ proces kopiowania nie będzie drogą operacją w sensie czasu jej trwania.
 
 #### Klonowanie zmiennych i danych
 
-W przypadku jeśli *chcemy* wykonać głęboką kopię danych ze sterty dla typu
+W przypadku gdy *chcemy* wykonać głęboką kopię danych ze sterty dla typu
 `String`, a nie tylko danych ze stosu, możemy skorzystać z często stosowanej
 metody o nazwie `clone` (*klonuj*). Składnia metod będzie omawiana w rozdziale
 5, ale ponieważ metody są popularnymi funkcjonalnościami wielu języków, zapewne
-już je wcześniej widziałeś(-aś).
+już je wcześniej widziałeś.
 
 Oto przykład działania metody `clone`:
 

@@ -41,7 +41,7 @@ Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją. Poni
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-08-reference-with-annotations/src/main.rs:here}}
 ```
-Zasięg, w którym zmienna `s` jest dostępna, jest taki sam jak zasięg każdego innego parametru funkcji.
+Zasięg, w którym zmienna `s` posiada ważność, jest taki sam jak zasięg każdego innego parametru funkcji.
 Jednakże, ponieważ `s` nie posiada tego, na co wskazuje, to nie jest to kasowane gdy `s` wyjdzie poza swój zasięg.
 W przeciwieństwie do argumentów przekazywanych przez wartość, te przekazywane przez referencje nie są funkcji dawane na własność.
 Dlatego też funkcja nie musi więcej zwracać ich za pomocą `return`, by je oddać.

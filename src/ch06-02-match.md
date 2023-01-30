@@ -40,6 +40,7 @@ Zazwyczaj nie używamy nawiasów klamrowych, jeśli kod ramienia odnogi jest kr�
 ```
 
 ### Patterns That Bind to Values
+<!--?? ### Wzorce Przypisujące Wartości -->
 
 Another useful feature of match arms is that they can bind to the parts of the
 values that match the pattern. This is how we can extract values out of enum
