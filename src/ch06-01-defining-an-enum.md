@@ -5,10 +5,10 @@ Podczas gdy struktury pozwalają na grupowanie powiązanych pól i danych, jak `
 Weźmy na tapetę pewną sytuację, w której wyliczenia są przydatniejsze i bardziej odpowiednie niż struktury.
 Załóżmy, że chcemy wykonywać operacje na adresach IP.
 Obecnie istnieją dwa standardy adresów IP: wersja czwarta i szósta.
-Ponieważ to jedyne możliwe typy adresów IP z jakimi napotka się nasz program:
+Ponieważ to jedyne możliwe typy adresów IP na jakie napotka się nasz program, to
 możemy wyliczyć (*ang. enumerate*) wszystkie możliwe wartości, stąd nazwa wyliczeń/enumeracji.
 
-Dany adres IP może być albo wersji czwartej albo szóstej, ale nigdy obiema naraz.
+Dany adres IP może być albo w wersji czwartej albo w szóstej, ale nigdy w obu naraz.
 Ta właściwość adresów IP sprawia, że wyliczenia będą dobrym wyborem,
 skoro mogą przyjąć tylko jedną wartość ze wszystkich swoich wariantów.
 Zarówno adresy wersji czwartej, jak i wersji szóstej to nadal adresy IP,
@@ -32,22 +32,22 @@ Możemy stworzyć instancje obu wariantów `IpAddrKind` następująco:
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:instance}}
 ```
 
-Zauważ, że warianty wyliczenia dostępne są w przestrzeni jego nazwy, a więc korzystamy z dwóch dwukropków pomiędzy nazwą enuma a jego wariantem. To okazuje się być przydatne, bo teraz zarówno wartość `IpAddrKind::V4` oraz `IpAddrKind::V6` mają ten sam typ: `IpAddrKind`. A co za tym idzie, możemy napisać funkcję przyjmującą jako argument dowolny `IpAddrKind`.
+Proszę zauważyć, że warianty wyliczenia dostępne są w przestrzeni jego nazwy, a więc korzystamy z dwóch dwukropków pomiędzy nazwą enuma a jego wariantem. To jest przydatne, bo teraz zarówno wartość `IpAddrKind::V4`, jak i `IpAddrKind::V6` mają ten sam typ: `IpAddrKind`. A co za tym idzie, możemy napisać funkcję przyjmującą jako argument dowolny `IpAddrKind`.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:fn}}
 ```
 
-tę funkcję wywołać możemy dowolnym wariantem:
+tę funkcję możemy wywołać z dowolnym wariantem:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-01-defining-enums/src/main.rs:fn_call}}
 ```
 
-Enumeracje mają jeszcze więcej zalet. Dalej wgłębiając się w nasz typ adresu IP,
-na chwilę obecną nie jesteśmy w stanie przechować samego adresu IP, czyli jego *danych*;
-a przechowujemy jedynie jego *rodzaj*. Skoro dopiero co w rozdziale 5 poznaliśmy struktury,
-moglibyśmy pokusić się by ich użyć, jak pokazano na listingu 6-1.
+Enumeracje mają jeszcze więcej zalet. Przyjrzyjmy się naszemu typowi adresu IP dokładniej.
+Na chwilę obecną nie jesteśmy w stanie przechować samego adresu IP, czyli jego *danych*;
+możemy przechować jedynie jego *rodzaj*. Skoro dopiero co w rozdziale 5 poznaliśmy struktury,
+moglibyśmy pokusić się by ich użyć, tak jak pokazano na listingu 6-1.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-01/src/main.rs:here}}
@@ -71,14 +71,8 @@ Ta nowa definicja enuma `IpAddr` zawiera zarówno w wariancie `V4` jak i `V6` no
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-02-enum-with-data/src/main.rs:here}}
 ```
 
-Bezpośrednio dołączamy dane do każdego warianta enuma, więc dodatkowa struktura
-staje się niepotrzebna.
-Here, it’s also easier to see another detail of how enums work:
-the name of each enum variant that we define also becomes a function that
-constructs an instance of the enum. That is, `IpAddr::V4()` is a function call
-that takes a `String` argument and returns an instance of the `IpAddr` type. We
-automatically get this constructor function defined as a result of defining the
-enum.
+Bezpośrednio dołączamy dane do każdego wariantu enuma, więc dodatkowa struktura staje się niepotrzebna.
+Tutaj łatwo można też dostrzec inny szczegół działania enuma: nazwa każdego jego wariantu, jest również funkcją konstruującą instancję enuma. Czyli, `IpAddr::V4()` jest wywołaniem funkcji, która przyjmuje argument `String` i zwraca instancję typu `IpAddr`. Ta funkcja konstruującą jest zdefiniowana automatycznie.
 
 Wykorzystanie enuma zamiast struktury niesie ze sobą jeszcze jedną korzyść:
 z każdym wariantem mogą być powiązane inne typy oraz ilości danych. 
@@ -96,8 +90,8 @@ adresy IP czwartej i szóstej wersji. Jak się jednak okazuje, przechowywanie ad
 wraz z rodzajem ich wersji jest tak powszechne, że [biblioteka standardowa ma gotową
 definicję czekającą tylko na to, aby jej użyc!][IpAddr]<!-- ignore -->
 Spójrzmy na definicję `IpAddr` w bibliotece standardowej: ma dokładnie taką samą nazwę
-i takie sama warianty, ale przechowuje dane o adresach w postaci dwóch różnych struktur
-umieszczonych w wyliczeniach. Każda struktura zdefiniowana jest inaczej dla każdego wariantu.
+i takie sama warianty, ale przechowuje dane o adresach za pomocą dwóch różnych struktur,
+zdefiniowanych osobno oraz umieszczonych w wariantach wyliczenia.
 
 ```rust
 struct Ipv4Addr {
@@ -114,16 +108,14 @@ enum IpAddr {
 }
 ```
 
-Jak demonstruje powyższy wycinek kodu, do wariantów enuma umieścić można
-każdy typ danych, np.: ciągi znaków (stringi), typy liczbowe, lub struktury.
-W enumie umieścić możesz nawet innego enuma!
-Ponadto, typy w standardowej bibliotece często nie są wcale bardziej skomplikowane
-od tego co wymyślisz własnoręcznie.
+Jak demonstruje powyższy wycinek kodu, w wariantach enuma można umieścić każdy typ danych, np.: ciąg znaków (string), typ liczbowy, lub strukturę.
+W enumie można umieścić nawet innego enuma!
+Ponadto, typy w standardowej bibliotece często nie są wcale bardziej skomplikowane od wymyślonych samodzielnie.
 
-Mimo że standardowa biblioteka definuje własny `IpAddr`, nadal możemy
+Mimo że standardowa biblioteka definiuje własny `IpAddr`, nadal możemy
 stworzyć i używać własnej definicji bez żadnych konfliktów, bo nie zaimportowaliśmy
 definicji z biblioteki standardowej do zasięgu (ang. scope).
-Więcej o importowaniu typów do zasięgu w rozdziale 7.
+Więcej informacji o importowaniu typów do zasięgu zawiera rozdział 7.
 
 Spójrzmy na innego enuma, na przykładzie listingu 6-2: ten w swoich wariantach zawierał będzie
 wiele różnych typów.
@@ -142,23 +134,23 @@ Ten enum definiuje cztery warianty, każdy z innymi typami:
 * `Write` zawiera w sobie jeden `String`.
 * `ChangeColor` zawiera trzy wartości o typach `i32`.
 
-Na przykładzie tego w listingu 6-2 widzimy, że definiowanie wariantów enuma, jest podobne do definiowania
-kilku struktur, z taką różnicą, że nie używamy słowa kluczowego `struct` oraz,
+Na przykładzie enuma w listingu 6-2 widzimy, że definiowanie wariantów jest podobne do definiowania
+kilku struktur, z taką różnicą, że nie używamy słowa kluczowego `struct` oraz, że
 wszystkie warianty zgrupowane są w typie `Message`.
-Poniższe struktury mogłyby zawierać te same dane co powyższe typy enuma:
+Poniższe struktury mogą zawierać te same dane co powyższe typy enuma:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-04-structs-similar-to-message-enum/src/main.rs:here}}
 ```
 
-Ale jeśli użylibyśmy różnych struktur, to każda z nich miałaby inny typ.
+Ale jeśli użylibyśmy różnych struktur, to, w przeciwieństwie do enuma, każda z nich miałaby inny typ.
 Zdefiniowanie funkcji mogącej przyjąć jako parametr
 różne rodzaje wiadomości, nie byłoby tak proste jak przy użyciu 
-enuma `Message` zdefiniowanego w listingu 6-2, który jest tylko jednym typem.
+enuma `Message` zdefiniowanego w listingu 6-2.
 
-Jest jeszcze jedno podobieństwo między wyliczeniami, a strukturami: tak samo, jak
-zdefiniować można metody na strukturach używając bloku `impl`, zdefiniować można
-metody na wyliczeniach. Spójrzmy na metodę o nazwie `call` zdefinowaną na naszym enumie `Message`:
+Jest jeszcze jedno podobieństwo między wyliczeniami, a strukturami: tak jak
+można zdefiniować metody dla struktur używając bloku `impl`, można je też zdefiniować
+dla typu wyliczeniowego. Spójrzmy na metodę o nazwie `call` zdefinowaną na naszym enumie `Message`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-05-methods-on-enums/src/main.rs:here}}
@@ -166,13 +158,13 @@ metody na wyliczeniach. Spójrzmy na metodę o nazwie `call` zdefinowaną na nas
 
 Ciało metody użyje wartości `self`, aby uzyskać wariant enuma, na którym ta metoda została wywołana.
 W tym przykładzie przypisaliśmy do zmiennej `m` wartość
-`Message::Write(String::from("witaj"))` równoważną parametrowi `self`,
-który znajduje się w ciele metody `call`, kiedy ta uruchomiona zostanie poprzez `m.call()`.
+`Message::Write(String::from("witaj"))`, która, w wywołaniu `m.call()`
+stanie się parametrem `self`, dostępnym w ciele metody `call`.
 
 Spójrzmy na kolejne wyliczenie z biblioteki standardowej,
 które jest bardzo przydatne i często używane, czyli `Option`.
 
-### Wyliczenie `Option` i jego przewagi nad wartościami *pustymi* (ang. null)
+### Wyliczenie `Option` i jego przewagi nad wartościami Null
 
 W tej sekcji znajduje się analiza typu `Option`, kolejnego enuma z biblioteki standardowej.
 Typ `Option` używany jest w wielu miejscach, ponieważ opisuje bardzo częsty scenariusz, w którym dana wartość może być zarówno czymś albo niczym.
@@ -180,30 +172,28 @@ Typ `Option` używany jest w wielu miejscach, ponieważ opisuje bardzo częsty s
 Na przykład, jeśli zażądamy pierwszego elementu niepustej listy, to otrzymamy jego wartość. Jeśli zażądamy pierwszego elementu pustej listy, nie otrzymamy nic.
 Wyrażenie tej koncepcji za pomocą systemu typów Rusta sprawia, że kompilator jest w stanie sprawdzić, czy wzięliśmy pod uwagę wszystkie przypadki, co pozwala zapobiegać błędom (bugom) pojawiającym się bardzo często w innych językach programowania.  
 
-Przez konstrukcję języka programowania często rozumie się decyzje o zamieszczeniu w nim jakichś funkcji,
-ale to jakie funkcje się w nim nie znalazły, jest również istotne.
+Przez konstrukcję języka programowania często rozumie się decyzje o zawarciu w nim jakichś funkcjonalności.
+Ale równie istotne jest to, jakie funkcjonalności się w nim nie znalazły.
 Rust nie ma wartości `null` znanej z wielu innych języków.
-*Null* to wartość oznaczająca brak wartości - jest to wartośc pusta.
-W językach z pustymi wartościami, zmienne zawsze mogą być jednym z dwóch stanów: null lub nie-null.
+*Null* to wartość oznaczająca brak wartości - jest to wartość pusta.
+W językach z pustymi wartościami, zmienne zawsze mogą być w jednym z dwóch stanów: null lub nie-null.
 
 W swojej prezentacji z 2009 roku "Puste referencje: Błąd warty miliard dolarów" 
 (oryg. „Null References: The Billion Dollar Mistake,”),
-Tony Hoare, wynalazca nulla, miał to do powiedzenia:
+Tony Hoare, wynalazca nulla, powiedział:
 
 > Ten błąd warty jest miliard dolarów. W tamtych czasach projektowałem pierwszy kompleksowy system typów
-> referencji dla języków obiektowych. Moim celem była możliwość gwarancji, że każde użycie referencji byłoby całkowicie
-> bezpieczne, co automatycznie sprawdzałby kompilator. 
+> referencji dla języków obiektowych. Moim celem było zapewnienie gwarancji, że każde użycie referencji byłoby całkowicie
+> bezpieczne, co automatycznie sprawdzałby kompilator.
 > Ale nie mogłem oprzeć się pokusie implementacji pustych referencji, z prostej przyczyny:
 > było to łatwe do zaimplementowania. Ta decyzja doprowadziła do tylu niezliczonych błędów, luk i awarii systemów,
 > że łącznie przez ostatnie czterdzieści lat pewnie spowodowała ból i szkody warte miliard dolarów.
 
-Problem z pustymi wartościami polega na tym, że kiedy spróbujesz użyć nulla,
-jak gdyby nie był nullem, spowodujesz błąd.
-Własność null i nie-null rozpowszechniła się tak szeroko, że
-popełnienie takiego błędu jest bardzo łatwe.
+Problem z pustymi wartościami polega na tym, że próba użycia nulla tak, jak gdyby nie był nullem, spowoduje błąd.
+Ponieważ ta właściwość, null lub nie-null, jest wszechobecna, niezwykle łatwo jest popełnić ten rodzaj błędu.
 
-Jednak pojęcie jakie null próbuje wyrazić jest samo w sobie przydatne:
-wartość pusta jest albo obecnie nieważna albo nieobecna.
+Jednak koncepcja, którą null próbuje wyrazić, jest przydatna:
+null oznacza że wartość jest obecnie nieważna lub nieobecna.
 
 Problemem nie jest sam pomysł, ale ta konkretna implementacja pustych wartości.
 Rust nie ma jako takich pustych wartości null, ale istnieje w Ruście wyliczenie,
@@ -219,14 +209,14 @@ enum Option<T> {
 ```
 
 Enum `Option<T>` jest tak przydatny, że znajduje się w preludzie (prelude);
-nie musisz samemu go importować.  Ponadto, to samo dotyczy jego wariantów:
-możesz użyć `Some` i `None`, bez używania prefiksu `Option::`.
+nie trzeba samemu go importować.  Ponadto, to samo dotyczy jego wariantów:
+`Some` i `None` można użyć bez prefiksu `Option::`.
 Enum `Option<T>` jest zwykłym wyliczeniem, a `Some(T)` oraz `None`
 to nadal zwykłe warianty `Option<T>`.
 
 Składnia `<T>` jest funkcjonalnością Rusta, której jeszcze nie omówiliśmy.
-Jest to tzw. parametr generyczny. Bardziej szczegółowo je omówimy w rozdziale 10.
-Póki co, wszystko co musisz o nich wiedzieć to, że `<T>` oznacza, że wariant `Some`
+Jest to tzw. parametr generyczny. Bardziej szczegółowo omówimy je w rozdziale 10.
+Póki co, wszystko co musisz o nich wiedzieć to to, że `<T>` oznacza, że wariant `Some`
 enuma `Option` może zawierać w sobie jedną wartość dowolnego typu.
 Co więcej, `Option<T>` jest różnych typów dla różnych, konkretnych typów `T`.
 Oto niektóre przykłady używania wartości `Option` do przechowywania typów liczbowych oraz łańcuchowych (stringów):
@@ -235,20 +225,15 @@ Oto niektóre przykłady używania wartości `Option` do przechowywania typów l
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-06-option-examples/src/main.rs:here}}
 ```
 
-The type of `some_number` is `Option<i32>`. The type of `some_char` is
-`Option<char>`, which is a different type. Rust can infer these types because
-we’ve specified a value inside the `Some` variant. For `absent_number`, Rust
-requires us to annotate the overall `Option` type: the compiler can’t infer the
-type that the corresponding `Some` variant will hold by looking only at a
-`None` value. Here, we tell Rust that we mean for `absent_number` to be of type
-`Option<i32>`.
+Zmienna `some_number` jest typu `Option<i32>`, zaś `some_char` jest typu `Option<char>`, który jest innym typem.
+Rust może wydedukować te typy, ponieważ określiliśmy wartość wewnątrz wariantu `Some`. W przypadku `absent_number`, Rust wymaga od nas adnotacji o całościowym type `Option`: kompilator nie może wywnioskować typu, jaki będzie posiadał wariant `Some` widząc tylko wartość `None`. Tutaj mówimy więc Rustowi, że chcemy aby `absent_number` było typu `Option<i32>`.
 
 Widząc `Some`, wiemy że wartość jest obecna oraz że znajduje się ona w `Some`. Za to `None`, w pewnym sensie oznacza to samo co null, czyli brak prawidłowej wartości. To dlaczego `Option<T>` jest lepszy od nulla?
 
-W skrócie, `Option<T>` i `T`(gdzie `T` może być dowolnym typem)
+W skrócie, `Option<T>` i `T` (gdzie `T` może być dowolnym typem)
 są różnymi typami, więc kompilator nie pozwoli nam użyć `Option<T>` tak jakby
 była to prawidłowa wartość typu `T`. Na przykład, ten kod się nie skompiluje, bo próbujemy w nim
-dodać wartość typu `i8` do typu `Option<i8>`:
+dodać do siebie wartość typu `i8` oraz `Option<i8>`:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-07-cant-use-option-directly/src/main.rs:here}}
@@ -260,42 +245,35 @@ Uruchamiając ten kod, otrzymamy następujący komunikat o błędzie:
 {{#include ../listings/ch06-enums-and-pattern-matching/no-listing-07-cant-use-option-directly/output.txt}}
 ```
 
-Bezlitośnie! Ten komunikat oznacza, że Rust nie wie jak ma dodać do siebie typ `i8`
-oraz typ `Option<i8>`, ponieważ to dwa różne typy. Kiedy w Ruście posługujemy się typem takim jak `i8`, kompilator zawsze
+Bezlitośnie! Ten komunikat oznacza, że Rust nie wie jak ma dodać do siebie typy `i8`
+oraz `Option<i8>`, ponieważ to dwa różne typy. Kiedy w Ruście posługujemy się typem takim jak `i8`, kompilator zawsze
 gwarantuje, że jest to prawidłowa wartość. Możemy być pewni swego i kontynuować kodowanie bez
-sprawdzania czy dana wartość jest pusta w środku. Jedynie kiedy posługujemy się typem `Option<i8>`
-(czy jakimkolwiek innym typem zawarym wewnątrz `Option`) musimy się upewnić, czy
-w środku znajduje się prawidłowa wartość, a kompilator sprawdzi, czy
-na pewno wzięliśmy obie sytuacje pod uwagę.
+sprawdzania czy dana wartość jest pusta. Jedynie kiedy posługujemy się typem `Option<i8>`
+(czy jakimkolwiek innym typem zawartym wewnątrz `Option`) musimy się martwić o ewentualny brak wartości,
+zaś kompilator upewni się, że uwzględniliśmy ten przypadek przed użyciem wartości.
 
-Innymi słowy, musisz przekonwertować wartość typu `Option<T>` na `T` zanim
+Innymi słowy, musimy skonwertować wartość typu `Option<T>` na `T` zanim
 przyjmie ona zachowania charakterystyczne dla typu `T`.
-W większości przypadków pozwala to na pozbycie się
-jednego z najczęstszych problemów z nullem: zakładanie, że jakaś wartość istnieje, kiedy
+W większości przypadków pozwala to na pozbycie się jednego z najczęstszych problemów z nullem: zakładanie, że jakaś wartość istnieje, kiedy
 tak na prawdę nie istnieje.
 
-Wyeliminowanie ryzyka nieprawidłowego założenia, że dana wartość nie jest pusta, daje nam większą pewność co do napisanego kodu. Aby dana wartośc mogła nie istnieć musisz wyrazić na to zgodę
-definiując daną wartość jako typ `Option<T>`.
-Następnie używając tę wartość do twoich obowiązków należeć będzie powzięcie innych kroków, 
-dla przypadków kiedy ta wartość jest pusta.
-Gdziekolwiek, gdzie dany typ wartości nie jest typem `Option<T>`, możesz
-bezpiecznie założyć, że ta wartość nie jest pusta.
-To była przemyślana decyzja w konstrukcji Rusta mająca na celu ograniczenie wszechobecności
-nulla oraz zwiększenie bezpieczeństwa kodu napisanego w Ruście.
+Wyeliminowanie ryzyka nieprawidłowego założenia, że dana wartość nie jest pusta, daje nam większą pewność co do napisanego kodu. Aby dana wartość mogła nie istnieć musimy wyrazić na to zgodę definiując daną wartość jako typ `Option<T>`.
+Następnie, używając tej wartości, musimy jawnie obsłużyć przypadek, gdy wartość jest null.
+Wszędzie, gdzie typem wartości nie jest `Option<T>`, można bezpiecznie założyć, że wartość nie jest pusta.
+To była celowa decyzja projektowa dla Rust, aby ograniczyć wszechobecność null i zwiększyć bezpieczeństwo napisanego kodu.
 
 Więc mając wartość typu `Option<T>`, jak można dostać się do wartości typu `T`
 znajdującej się w wariancie `Some`? Enum `Option<T>` ma wiele przydatnych metod odpowiednich dla różnych sytuacji;
-możesz je sprawdzić w [dokumentacji][docs]<!-- ignore -->. Zapoznanie się z metodami
-typu `Option<T>` będzie bardzo przydatne w twojej przygodzie z Rustem.
+można je znaleźć w [dokumentacji][docs]<!-- ignore -->. Zapoznanie się z metodami
+typu `Option<T>` jest bardzo przydatne w przygodzie z Rustem.
 
-Zwykle, aby użyć wartości typu `Option<T>`, musisz napisać kod sprawdzający oba warianty.
-Jedna część kodu będzie odpowiedzialna za wariant `Some(T)` - ta część będzie miała
+Zwykle, aby użyć wartości typu `Option<T>`, musimy napisać kod sprawdzający oba warianty.
+Jedna część kodu będzie odpowiedzialna za wariant `Some(T)` i będzie ona miała
 dostęp do wewnętrznej wartości typu `T`.
-Druga część będzie odpowiedzialna za wariant `None` - ten kod oczywiście nie będzie miał dostępu
-do wartości typu `T`. Wyrażenie `match` jest konstruktem umożliwiającym kontrolę przepływu (ang. control flow)
-pozwalającym na tego typu zachowanie. 
-Wyrażenie `match` uruchomi różny kod w zależności od tego,
-jakim wariantem jest dany enum. Ten kod będzie będzie miał dostęp do danych znajdujących się w danym enumie.
+Druga część będzie odpowiedzialna za wariant `None` i ona oczywiście nie będzie miała dostępu
+do wartości typu `T`. Wyrażenie `match` jest konstrukcją sterującą wykonaniem, pozwalającą na tego typu zachowanie. 
+Wyrażenie `match` uruchomi różny kod w zależności od tego, który wariant ma dany enum.
+I ten kod będzie będzie miał dostęp do danych znajdujących się w dopasowanym wariancie.
 
 [IpAddr]: ../std/net/enum.IpAddr.html
 [option]: ../std/option/enum.Option.html
