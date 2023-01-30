@@ -57,31 +57,20 @@ Podstawowym celem używania metod zamiast funkcji, oprócz używania składni me
 Umieściliśmy wszystko, co związane jest z instancją danego typu w jednym bloku `impl`.
 Dzięki temu oszczędzamy przyszłym użytkownikom kodu szukania zachowań struktury `Rectangle` po różnych zakątkach naszej biblioteki.
 
-Note that we can choose to give a method the same name as one of the struct’s
-fields. For example, we can define a method on `Rectangle` that is also named
-`width`:
+Uwaga: Możemy nadać metodzie taką samą nazwę, jak ma jedno z pól struktury.
+Na przykład w `Rectangle` możemy zdefiniować metodę `width`:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
 ```
 
-Here, we’re choosing to make the `width` method return `true` if the value in
-the instance’s `width` field is greater than `0` and `false` if the value is
-`0`: we can use a field within a method of the same name for any purpose. In
-`main`, when we follow `rect1.width` with parentheses, Rust knows we mean the
-method `width`. When we don’t use parentheses, Rust knows we mean the field
-`width`.
+Tu zdecydowaliśmy aby metoda `width` zwracała `true` jeśli wartość w polu `width` instancji jest większa niż `0` oraz `false` gdy jest równa `0`: możemy użyć pola wewnątrz metody o tej samej nazwie w dowolnym celu.
+W `main`, Rust wie, że mamy na myśli metodę `width`, gdy bezpośrednio za `rect1.width` są nawiasy,
+oraz, że mamy na myśli pole `width`, gdy nawiasów nie ma.
 
-Often, but not always, when we give a method the same name as a field we want
-it to only return the value in the field and do nothing else. Methods like this
-are called *getters*, and Rust does not implement them automatically for struct
-fields as some other languages do. Getters are useful because you can make the
-field private but the method public, and thus enable read-only access to that
-field as part of the type’s public API. We will discuss what public and private
-are and how to designate a field or method as public or private in [Chapter
-7][public]<!-- ignore -->.
+Często, ale nie zawsze, gdy nadajemy metodzie taką samą nazwę jak polu, to chcemy aby ograniczyła ona swoje działanie jedynie do zwrócenia wartość pola. Metody takie nazywane są *getterami* (ang. *getters*). Rust, w przeciwieństwie to niektórych innych języków, nie implementuje getterów automatycznie dla pól struktury. Gettery są przydatne, ponieważ można uczynić pole prywatnym, zaś metodę publiczną, i w ten sposób umożliwić dostęp tylko do odczytu do tego pola, w publicznym API typu. Publiczne i prywatne modyfikatory dostępu do pól i metod omówimy w [rozdziale 7][public]<!-- ignoruj -->.
 
 > ### Co z operatorem `->`?
 >
@@ -176,10 +165,8 @@ listingu 5-13 pokazane jest w listingu 5-15.
 <span class="caption">Listing 5-15: Implementacja metody `can_hold` na instancji
 `Rectangle`, która przyjmuje inną instancję `Rectangle` jako parametr</span>
 
-Po uruchomieniu tego kodu funkcją `main` z listingu 5-14,
-naszym oczom ukaże się oczekiwany przez nas tekst.
-Metody mogą przyjmować wiele parametrów, które dodać możemy
-do ich sygnatur po parametrze `self`.
+Po uruchomieniu tego kodu funkcją `main` z listingu 5-14, naszym oczom ukaże się oczekiwany przez nas tekst.
+Metody mogą przyjmować wiele parametrów, które dodać możemy do ich sygnatur po parametrze `self`.
 Te parametry niczym nie różnią się od parametrów funkcji.
 
 ### Funkcje powiązane
@@ -197,9 +184,7 @@ Na przykład, możemy stworzyć funkcję powiązaną `square`, która przyjmie t
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
-The `Self` keywords in the return type and in the body of the function are
-aliases for the type that appears after the `impl` keyword, which in this case
-is `Rectangle`.
+Słowa kluczowe `Self` w typie zwracanym i w ciele funkcji są aliasami do typu, który pojawia się po słowie kluczowym `impl`, czyli w tym przypadku do `Rectangle`.
 
 Aby wywołać funkcję powiązaną używamy składni `::` po nazwie struktury, np.
 `let sq = Rectangle::square(3)`. Ta funkcja znajduje się w przestrzeni nazw
