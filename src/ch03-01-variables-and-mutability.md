@@ -83,8 +83,7 @@ miejscu i ułatwia ich późniejsze uaktualnianie.
 
 ### Przesłanianie
 
-Jak widzieliśmy w poradniku do gry zgadywanki w [rozdziale 2][comparing-the-guess-to-the-secret-number]<!-- ignore -->, można zadeklarować nową zmienną o takiej samej nazwie, jak miała dawna zmienna, i ta nowa zmienna przesłania dawną zmienną. Rustowcy mówią, że pierwsza zmienna jest
-*przesłoniona* przez drugą. I właśnie tą nową zmienną użyje komiplator w miejscach wystąpienia jej nazwy, aż do czasu gdy i ona nie zostanie przesłonięta, albo nie skończy się zasięg jej życia.
+Jak widzieliśmy w poradniku do gry zgadywanki w [rozdziale 2][comparing-the-guess-to-the-secret-number]<!-- ignore -->, można zadeklarować nową zmienną o takiej samej nazwie, jak miała dawna zmienna, i ta nowa zmienna przesłania dawną zmienną. Rustowcy mówią, że pierwsza zmienna jest *przesłoniona* przez drugą. I właśnie tą nową zmienną użyje kompilator w miejscach wystąpienia jej nazwy, aż do czasu gdy i ona nie zostanie przesłonięta, albo nie skończy się zasięg jej życia.
 Możemy przesłonić zmienną poprzez wykorzystanie tej
 samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej:
 
@@ -94,8 +93,7 @@ samej nazwy zmiennej i ponowne użycie słowa kluczowego `let`, tak jak poniżej
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-03-shadowing/src/main.rs}}
 ```
 
-Ten program najpierw przypisuje zmiennej `x` wartość `5`. Następnie tworzy nową zmienną `x` powtarzając `let x =`, pobiera oryginalną wartość zmiennej i dodaje do niej `1` w wyniku czego wartość `x` to obecnie `6`. Użycie
-deklaracji `let` po raz trzeci również przesłania `x` i tworzy kolejną zmienną, której wartość ustala przemnażając poprzednią wartość przez `2` i uzyskując `12`. Gdy
+Ten program najpierw deklaruje zmienną `x` o wartość `5`. Następnie tworzy nową zmienną `x` powtarzając `let x =`, pobiera oryginalną wartość zmiennej i dodaje do niej `1` w wyniku czego wartość `x` to obecnie `6`. Użycie deklaracji `let` po raz trzeci również przesłania `x` i tworzy kolejną zmienną, której wartość jest ustalona poprzez przemnożenie poprzedniej wartość przez `2`, czyli na `12`. Gdy
 uruchomimy ten program, otrzymamy:
 
 ```console

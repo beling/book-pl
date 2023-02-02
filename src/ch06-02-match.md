@@ -39,47 +39,38 @@ Zazwyczaj nie używamy nawiasów klamrowych, jeśli kod ramienia odnogi jest kr�
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
 ```
 
-### Patterns That Bind to Values
-<!--?? ### Wzorce Przypisujące Wartości -->
+<!-- ### Patterns That Bind to Values -->
+### Wzorce Deklarujące Zmienne
 
-Another useful feature of match arms is that they can bind to the parts of the
-values that match the pattern. This is how we can extract values out of enum
-variants.
+Inną przydatną cechą odnóg match jest to, że mogą one tworzyć zmienne zainicjowane fragmentami wartości pasującej do wzorca.
+Tym samym pozwalają wyodrębnić wartości z wariantów enuma.
 
-As an example, let’s change one of our enum variants to hold data inside it.
-From 1999 through 2008, the United States minted quarters with different
-designs for each of the 50 states on one side. No other coins got state
-designs, so only quarters have this extra value. We can add this information to
-our `enum` by changing the `Quarter` variant to include a `UsState` value
-stored inside it, which we’ve done in Listing 6-4.
+By to zilustrować, zmienimy jeden z wariantów naszego wyliczenia tak, aby przechowywał on wewnątrz dane.
+Od 1999 do 2008 roku Stany Zjednoczone biły ćwierćdolarówki mające po jednej ze stron różne wzory dla każdego z 50 stanów.
+Żadna inna moneta nie miała wzorów stanowych, więc tylko ćwiartki będą miały dodatkową wartość. Możemy ją uwzględnić w naszym typie `enum` poprzez zmianę wariantu `Quarter` tak, aby zawierał wartość typu `UsState`, co zrobiliśmy na Listingu 6-4.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-4: A `Coin` enum in which the `Quarter` variant
-also holds a `UsState` value</span>
+<span class="caption">Listing 6-4: Enum `Coin` z wariantem `Quarter` trzymającym wartość typu `UsState`</span>
 
-Let’s imagine that a friend is trying to collect all 50 state quarters. While
-we sort our loose change by coin type, we’ll also call out the name of the
-state associated with each quarter so that if it’s one our friend doesn’t have,
-they can add it to their collection.
+Wyobraźmy sobie, że znajomy chce zebrać wszystkie 50 ćwiartek stanowych.
+Segregując nasze drobniaki według typów monet, będziemy podawać nazwę stanu związanego z każdą ćwiartką,
+by nasz przyjaciel mógł dodać ją do swojej kolekcji, gdy jeszcze takiej ćwiartki nie posiada.
 
-In the match expression for this code, we add a variable called `state` to the
-pattern that matches values of the variant `Coin::Quarter`. When a
-`Coin::Quarter` matches, the `state` variable will bind to the value of that
-quarter’s state. Then we can use `state` in the code for that arm, like so:
+W kodzie wyrażenia match dodajemy zmienną o nazwie `state` do wzorca dopasowującego wariant `Coin::Quarter`.
+Kiedy `Coin::Quarter` zostanie dopasowane, zmienna `state` zostanie utworzona i zainicjowana wartością wskazującą stan ćwiartki.
+Następnie `state` może zostać użyte w kodzie tej odnogi, co pokazuje przykład:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-09-variable-in-pattern/src/main.rs:here}}
 ```
 
-If we were to call `value_in_cents(Coin::Quarter(UsState::Alaska))`, `coin`
-would be `Coin::Quarter(UsState::Alaska)`. When we compare that value with each
-of the match arms, none of them match until we reach `Coin::Quarter(state)`. At
-that point, the binding for `state` will be the value `UsState::Alaska`. We can
-then use that binding in the `println!` expression, thus getting the inner
-state value out of the `Coin` enum variant for `Quarter`.
+W wywołaniu `value_in_cents(Coin::Quarter(UsState::Alaska))`, `coin` miałoby wartość `Coin::Quarter(UsState::Alaska)`.
+Próby dopasowania tej wartości do kolejnych odnóg match zakończyłyby się sukcesem dopiero po dotarciu do `Coin::Quarter(state)`.
+Wtedy zostałaby utworzona zmienna `state` o wartość `UsState::Alaska`.
+Ta zmienna zostałaby użyta w wyrażeniu `println!`, dając mu dostęp do wartości przechowywanej wewnątrz wariantu `Quarter` enuma `Coin`.
 
 ### Matching with `Option<T>`
 

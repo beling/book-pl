@@ -85,8 +85,7 @@ o wyrażenia, ważne jest, aby zrozumieć różnicę między tymi dwoma. Podobne
 * **Instrukcje** to polecenia wykonania jakichś akcji; nie zwracają one wartości.
 * **Wyrażenia** zaś rozwijają się do wartości zwracanej. Spójrzmy na przykłady. 
 
-Tworzenie zmiennej i przypisanie do niej wartości z użyciem słowa kluczowego `let` jest instrukcją. W listingu 3-1, 
-`let y = 6;` to instrukcja.
+Tworzenie zmiennej i przypisanie do niej wartości z użyciem słowa kluczowego `let` jest instrukcją. W listingu 3-1, `let y = 6;` to instrukcja.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -117,7 +116,7 @@ Po uruchomieniu tego programu dostaniesz taki błąd:
 
 Instrukcja `let y = 6` nie zwraca żadnej wartości, więc nie ma nic, co moglibyśmy przypisać do `x`.
 Tym Rust różni się od innych języków, takich jak C lub Ruby, w których operacja przypisania zwraca wartość
-tego przypisania. W tych językach możesz napisać `x = y = 6` i zarówno `x` i `y` będą miały wartość `6`;
+tego przypisania. W tych językach można napisać `x = y = 6` i zarówno `x` i `y` będą miały wartość `6`;
 w Ruście tak się jednak nie stanie.
 
 Wyrażenia rozwijają się do pewnej wartości i zaraz po instrukcjach stanowią większość kodu,
