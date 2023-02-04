@@ -72,65 +72,52 @@ Próby dopasowania tej wartości do kolejnych odnóg match zakończyłyby się s
 Wtedy zostałaby utworzona zmienna `state` o wartość `UsState::Alaska`.
 Ta zmienna zostałaby użyta w wyrażeniu `println!`, dając mu dostęp do wartości przechowywanej wewnątrz wariantu `Quarter` enuma `Coin`.
 
-### Matching with `Option<T>`
+<!-- ### Matching with `Option<T>` -->
+### Dopasowywanie do `Option<T>`
 
-In the previous section, we wanted to get the inner `T` value out of the `Some`
-case when using `Option<T>`; we can also handle `Option<T>` using `match`, as
-we did with the `Coin` enum! Instead of comparing coins, we’ll compare the
-variants of `Option<T>`, but the way the `match` expression works remains the
-same.
+W poprzedniej sekcji chcieliśmy wydobyć wewnętrzną wartość typu `T` z wariantu `Some` enuma `Option<T>`; możemy również obsłużyć `Option<T>` używając `match`, podobnie jak zrobiliśmy to z typem wyliczeniowym `Coin`!
+Zamiast porównywać monety, będziemy porównywać warianty `Option<T>`, ale sposób działania wyrażenia `match` będzie taki sam.
 
-Let’s say we want to write a function that takes an `Option<i32>` and, if
-there’s a value inside, adds 1 to that value. If there isn’t a value inside,
-the function should return the `None` value and not attempt to perform any
-operations.
+Powiedzmy, że chcemy napisać funkcję, która przyjmuje `Option<i32>` i jeśli w środku jest jakaś wartość, to dodaje do niej 1.
+Jeśli w środku nie ma żadnej wartości, funkcja powinna zwrócić wartość `None`, nie robiąc nic więcej.
 
-This function is very easy to write, thanks to `match`, and will look like
-Listing 6-5.
+Dzięki `match` taka funkcja jest bardzo łatwa do napisania i wygląda jak na Listingu 6-5.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-5: A function that uses a `match` expression on
-an `Option<i32>`</span>
+<span class="caption">Listing 6-5: Funkcja używająca wyrażenia `match` dla `Option<i32>`</span>
 
-Let’s examine the first execution of `plus_one` in more detail. When we call
-`plus_one(five)`, the variable `x` in the body of `plus_one` will have the
-value `Some(5)`. We then compare that against each match arm:
+Przeanalizujmy bardziej szczegółowo pierwsze wykonanie `plus_one`.
+W wywołaniu `plus_one(five)`, zmienna `x` ma wartość `Some(5)` i zostanie porównana z każdą odnogą `match`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
 ```
 
-The `Some(5)` value doesn’t match the pattern `None`, so we continue to the
-next arm:
+Wartość `Some(5)` nie pasuje do wzorca `None`, nastąpi więc przejęcie do kolejnej odnogi:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:second_arm}}
 ```
 
-Does `Some(5)` match `Some(i)`? It does! We have the same variant. The `i`
-binds to the value contained in `Some`, so `i` takes the value `5`. The code in
-the match arm is then executed, so we add 1 to the value of `i` and create a
-new `Some` value with our total `6` inside.
+Czy `Some(5)` pasuje do `Some(i)`? Tak! To ten sam wariant.
+Zostaje zadeklarowana zmienna `i`, zainicjowana wartością zawartą w `Some`, czyli `5`.
+Następnie wykonywany jest kod w wybranej odnodze match, który dodaje 1 do wartości `i` i tworzymy nową wartość `Some` z uzyskaną sumą `6` w środku.
 
-Now let’s consider the second call of `plus_one` in Listing 6-5, where `x` is
-`None`. We enter the `match` and compare to the first arm:
+Rozważmy teraz drugie wywołanie `plus_one` z Listingu 6-5, w którym `x` jest `None`.
+Następuje jego porównanie do pierwszej odnogi `match`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
 ```
 
-It matches! There’s no value to add to, so the program stops and returns the
-`None` value on the right side of `=>`. Because the first arm matched, no other
-arms are compared.
+Pasuje! Nie ma żadnej wartości do dodania, więc program zatrzymuje się i zwraca wartość `None` po prawej stronie `=>`.
+Ponieważ pierwsza odnoga pasowała, to pozostałe nie są już porównywane.
 
-Combining `match` and enums is useful in many situations. You’ll see this
-pattern a lot in Rust code: `match` against an enum, bind a variable to the
-data inside, and then execute code based on it. It’s a bit tricky at first, but
-once you get used to it, you’ll wish you had it in all languages. It’s
-consistently a user favorite.
+Używanie `match` z typami wyliczeniowymi jest przydatne w wielu sytuacjach.
+Często można spotkać następujący scenariusz: enum jest dopasowywany za pomocą `match`, następnie z jego wewnętrznymi danymi związywana jest zmienna, która jest używana w kodzie przewidzianym dla wybranego wariantu. Początkowo może się to wydawać nieco trudne, ale po przyzwyczajeniu, jest niezmiernie wygodne. Jest to niezmiennie ulubione narzędzie Rustowców.
 
 ### Matches Are Exhaustive
 
