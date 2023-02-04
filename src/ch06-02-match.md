@@ -117,7 +117,7 @@ Pasuje! Nie ma żadnej wartości do dodania, więc program zatrzymuje się i zwr
 Ponieważ pierwsza odnoga pasowała, to pozostałe nie są już porównywane.
 
 Używanie `match` z typami wyliczeniowymi jest przydatne w wielu sytuacjach.
-Często można spotkać następujący scenariusz: enum jest dopasowywany za pomocą `match`, następnie z jego wewnętrznymi danymi związywana jest zmienna, która jest używana w kodzie przewidzianym dla wybranego wariantu. Początkowo może się to wydawać nieco trudne, ale po przyzwyczajeniu, jest niezmiernie wygodne. Jest to niezmiennie ulubione narzędzie Rustowców.
+Często można spotkać następujący scenariusz: enum jest dopasowywany za pomocą `match`, następnie z jego wewnętrznymi danymi związywana jest zmienna, która jest używana w kodzie przewidzianym dla wybranego wariantu. Początkowo może się to wydawać nieco trudne, ale po przyzwyczajeniu, okazuje się bardzo wygodne. Jest to niezmiennie ulubione narzędzie Rustowców.
 
 ### Matches Are Exhaustive
 
