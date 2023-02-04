@@ -114,7 +114,7 @@ Następuje jego porównanie do pierwszej odnogi `match`:
 ```
 
 Pasuje! Nie ma żadnej wartości do dodania, więc program zatrzymuje się i zwraca wartość `None` po prawej stronie `=>`.
-Ponieważ pierwsza odnoga pasowała, to pozostałe nie są już porównywane.
+Ponieważ pierwsza odnoga pasowała, to pozostałe nie są już sprawdzane.
 
 Używanie `match` z typami wyliczeniowymi jest przydatne w wielu sytuacjach.
 Często można spotkać następujący scenariusz: enum jest dopasowywany za pomocą `match`, następnie z jego wewnętrznymi danymi związywana jest zmienna, która jest używana w kodzie przewidzianym dla wybranego wariantu. Początkowo może się to wydawać nieco trudne, ale po przyzwyczajeniu, okazuje się bardzo wygodne. Jest to niezmiennie ulubione narzędzie Rustowców.
