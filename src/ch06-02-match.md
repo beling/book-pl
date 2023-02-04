@@ -113,80 +113,62 @@ Następuje jego porównanie do pierwszej odnogi `match`:
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:first_arm}}
 ```
 
-Pasuje! Nie ma żadnej wartości do dodania, więc program zatrzymuje się i zwraca wartość `None` po prawej stronie `=>`.
+Pasuje! Nie ma żadnej wartości do zwiększenia, więc program zatrzymuje się i zwraca wartość `None` po prawej stronie `=>`.
 Ponieważ pierwsza odnoga pasowała, to pozostałe nie są już sprawdzane.
 
 Używanie `match` z typami wyliczeniowymi jest przydatne w wielu sytuacjach.
 Często można spotkać następujący scenariusz: enum jest dopasowywany za pomocą `match`, następnie z jego wewnętrznymi danymi związywana jest zmienna, która jest używana w kodzie przewidzianym dla wybranego wariantu. Początkowo może się to wydawać nieco trudne, ale po przyzwyczajeniu, okazuje się bardzo wygodne. Jest to niezmiennie ulubione narzędzie Rustowców.
 
-### Matches Are Exhaustive
+<!-- ### Matches Are Exhaustive -->
+### Match Jest Wyczerpujący
 
-There’s one other aspect of `match` we need to discuss: the arms’ patterns must
-cover all possibilities. Consider this version of our `plus_one` function,
-which has a bug and won’t compile:
+Jest jeszcze jeden aspekt `match`, który musimy omówić: wzorce odnóg muszą uwzględniać wszystkie możliwości.
+Rozważmy następującą, błędną wersję naszej funkcji `plus_one`, która się nie skompiluje:
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/src/main.rs:here}}
 ```
 
-We didn’t handle the `None` case, so this code will cause a bug. Luckily, it’s
-a bug Rust knows how to catch. If we try to compile this code, we’ll get this
-error:
+Ten kod spowoduje błąd, bo nie uwzględnia przypadku `None`.
+Na szczęście Rust z łatwością zauważy problem.
+Jeśli spróbujemy skompilować ten kod, otrzymamy taki błąd:
 
 ```console
 {{#include ../listings/ch06-enums-and-pattern-matching/no-listing-10-non-exhaustive-match/output.txt}}
 ```
 
-Rust knows that we didn’t cover every possible case, and even knows which
-pattern we forgot! Matches in Rust are *exhaustive*: we must exhaust every last
-possibility in order for the code to be valid. Especially in the case of
-`Option<T>`, when Rust prevents us from forgetting to explicitly handle the
-`None` case, it protects us from assuming that we have a value when we might
-have null, thus making the billion-dollar mistake discussed earlier impossible.
+Rust wie, że nie uwzględniliśmy wszystkich możliwych przypadków, a nawet wie, o którym wzorcu zapomnieliśmy!
+Dopasowania w Rustowym `match` są *wyczerpujące*: musimy wyczerpać wszelkie możliwości, aby kod był poprawny.
+Szczególnie w przypadku `Option<T>`, gdy Rust pilnuje byśmy jawnie obsłużyli przypadek `None`, chroni nas przed błędnym założeniem, że wartość zawsze jest dostępna, uniemożliwiając tym samym omawiany wcześniej błąd wart miliarda dolarów.
 
-### Catch-all Patterns and the `_` Placeholder
+### Wzorce Pasujące do Wszystkiego i Placeholder `_`
 
-Using enums, we can also take special actions for a few particular values, but
-for all other values take one default action. Imagine we’re implementing a game
-where, if you roll a 3 on a dice roll, your player doesn’t move, but instead
-gets a new fancy hat. If you roll a 7, your player loses a fancy hat. For all
-other values, your player moves that number of spaces on the game board. Here’s
-a `match` that implements that logic, with the result of the dice roll
-hardcoded rather than a random value, and all other logic represented by
-functions without bodies because actually implementing them is out of scope for
-this example:
+Możemy też podjąć specjalne czynności jedynie dla kilku konkretnych wartości enuma, zaś dla wszystkich pozostałych wykonać jedno domyślne działanie.
+Wyobraźmy sobie, że implementujemy grę, w której, jeśli wyrzucimy 3 na kostce, nasz gracz nie porusza się, ale za to dostaje nowy kapelusz. Jeśli wyrzucimy 7, nasz gracz traci kapelusz. Dla wszystkich innych wartości, nasz gracz przesuwa się po planszy o wyrzuconą liczbę oczek. Oto `match`, który implementuje tę logikę, z wynikiem rzutu kostką zakodowanym na sztywno zamiast wylosowanym, oraz całą pozostałą logiką reprezentowaną przez funkcje, których ciał nie podano, ponieważ ich implementacja wykracza poza zakres omawianego przykładu:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-15-binding-catchall/src/main.rs:here}}
 ```
 
-For the first two arms, the patterns are the literal values `3` and `7`. For
-the last arm that covers every other possible value, the pattern is the
-variable we’ve chosen to name `other`. The code that runs for the `other` arm
-uses the variable by passing it to the `move_player` function.
+Dla dwóch pierwszych odnóg wzorcami są literały `3` i `7`.
+Dla ostatniej odnogi, która obejmuje każdą inną możliwą wartość, wzorcem jest zmienna, którą nazwaliśmy `other`.
+Kod uruchomiony dla tej odnogi przekazuje wartość `other` do funkcji `move_player`.
 
-This code compiles, even though we haven’t listed all the possible values a
-`u8` can have, because the last pattern will match all values not specifically
-listed. This catch-all pattern meets the requirement that `match` must be
-exhaustive. Note that we have to put the catch-all arm last because the
-patterns are evaluated in order. If we put the catch-all arm earlier, the other
-arms would never run, so Rust will warn us if we add arms after a catch-all!
+Ten kod kompiluje się, pomimo że nie wymieniliśmy wszystkich możliwych wartości, jakie może przyjąć `u8`, ponieważ ostatni wzorzec dopasuje wszystkie wartości, które nie zostały wymienione. Dzięki temu pasującemu do wszystkiego wzorcowi spełniony jest wymóg, że `match` musi być wyczerpujący.
+Proszę zauważyć, że odnoga pasująca do wszystkiego powinna być ostatnia, ponieważ wzorce są analizowane po kolei.
+Jeśli umieścilibyśmy ją wcześniej, dalsze odnogi nigdy by nie zostały wybrane.
+Dlatego Rust ostrzega, gdy dodamy odnogi po takiej, która pasuje do wszystkiego.
 
-Rust also has a pattern we can use when we want a catch-all but don’t want to
-*use* the value in the catch-all pattern: `_` is a special pattern that matches
-any value and does not bind to that value. This tells Rust we aren’t going to
-use the value, so Rust won’t warn us about an unused variable.
+Rust posiada również wzorzec, którego możemy użyć, gdy chcemy dopasować wszystko, ale nie chcemy *używać* dopasowanej wartości: `_` jest specjalnym wzorcem, który pasuje do dowolnej wartości i równocześnie nie przypisuje sobie wartością. Jego użycie mówi Rustowi, że nie zamierzamy używać wartości, więc Rust nie będzie ostrzegał o nieużywanej zmiennej.
 
-Let’s change the rules of the game: now, if you roll anything other than a 3 or
-a 7, you must roll again. We no longer need to use the catch-all value, so we
-can change our code to use `_` instead of the variable named `other`:
+Zmieńmy zasady gry: teraz po wyrzuceniu czegokolwiek innego niż 3 lub 7, należy rzucić ponownie.
+I wtedy nie ma znaczenia co wypadło, więc zmienna `other` nie jest dalej potrzebna i możemy ją zastąpić symbolem `_`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-16-underscore-catchall/src/main.rs:here}}
 ```
 
-This example also meets the exhaustiveness requirement because we’re explicitly
-ignoring all other values in the last arm; we haven’t forgotten anything.
+Ten przykład również spełnia wymóg wyczerpywalności, ponieważ wszystkie pozostałe wartości są w ostatniej odnodze ignorowane jawnie; nie zapomnieliśmy o niczym.
 
 Finally, we’ll change the rules of the game one more time so that nothing else
 happens on your turn if you roll anything other than a 3 or a 7. We can express
