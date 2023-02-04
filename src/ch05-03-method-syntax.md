@@ -70,7 +70,7 @@ Tu zdecydowaliśmy aby metoda `width` zwracała `true` jeśli wartość w polu `
 W `main`, Rust wie, że mamy na myśli metodę `width`, gdy bezpośrednio za `rect1.width` są nawiasy,
 oraz, że mamy na myśli pole `width`, gdy nawiasów nie ma.
 
-Często, ale nie zawsze, gdy nadajemy metodzie taką samą nazwę jak polu, to chcemy aby ograniczyła ona swoje działanie jedynie do zwrócenia wartość pola. Metody takie nazywane są *getterami* (ang. *getters*). Rust, w przeciwieństwie to niektórych innych języków, nie implementuje getterów automatycznie dla pól struktury. Gettery są przydatne, ponieważ można uczynić pole prywatnym, zaś metodę publiczną, i w ten sposób umożliwić dostęp tylko do odczytu do tego pola, w publicznym API typu. Publiczne i prywatne modyfikatory dostępu do pól i metod omówimy w [rozdziale 7][public]<!-- ignoruj -->.
+Często, ale nie zawsze, gdy nadajemy metodzie taką samą nazwę jak polu, to chcemy aby ograniczyła ona swoje działanie jedynie do zwrócenia wartość pola. Metody takie nazywane są *getterami* (ang. *getters*). Rust, w przeciwieństwie to niektórych innych języków, nie implementuje getterów automatycznie dla pól struktury. Gettery są przydatne, ponieważ można uczynić pole prywatnym, zaś metodę publiczną, i w ten sposób umożliwić dostęp tylko do odczytu do tego pola, w publicznym API typu. Publiczne i prywatne modyfikatory dostępu do pól i metod omówimy w [rozdziale 7][public]<!-- ignore -->.
 
 > ### Co z operatorem `->`?
 >

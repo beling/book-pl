@@ -1,3 +1,4 @@
+<!-- ## Data Types -->
 ## Typy danych
 
 Każda wartość w Ruście ma pewien *typ danych*, dzięki czemu Rust wie, z jakim
@@ -25,11 +26,13 @@ Jeżeli w powyższym kodzie nie dodalibyśmy adnotacji typu danych `: u32`, Rust
 
 Można napotkać różne zapisy poszczególnych typów danych.
 
+<!-- ### Scalar Types -->
 ### Typy skalarne
 
 Typ *skalarny* reprezentuje pojedynczą wartość. Rust posiada 4 główne,
 skalarne typy danych: całkowity (ang. integer), zmiennoprzecinkowy (ang. floating-point numbers), logiczny (ang. Boolean) i znakowy (ang. characters). Możesz kojarzyć je z innych języków programowania. Zobaczmy jak działają w Ruście.
 
+<!-- #### Integer Types -->
 #### Typy całkowite
 
 *Liczba całkowita* to liczba nieposiadająca części ułamkowej.
@@ -78,6 +81,7 @@ Literały numeryczne dopuszczają też wizualny separator `_` poprawiający czyt
 W takim razie skąd masz wiedzieć, którego typu całkowitego użyć? Jeżeli nie masz pewności, to zazwyczaj dobrze jest zacząć od typów domyślnych wykorzystywanych przez Rusta. Dla liczb całkowitych to `i32`. Z typów `isize` i `usize`
 korzystamy głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 
+<!-- ##### Integer Overflow -->
 > ##### Przekroczenie zakresu liczb całkowitych
 >
 > Załóżmy, że mamy zmienną typy `u8`, która może przechowywać wartości
@@ -111,6 +115,7 @@ korzystamy głównie przy indeksowaniu różnego rodzaju kolekcji danych.
 > * zwracanie wartość liczbowej wraz z wartością logiczną (boolean) wskazującą, czy wystąpiło przepełnienie za pomocą metod `overflowing_*`;
 > * nasycenie do minimalnych lub maksymalnych wartości za pomocą metod `saturating_*`.
 
+<!-- #### Floating-Point Types -->
 #### Typy zmiennoprzecinkowe
 
 Rust posiada też dwa prymitywne typy danych dla *liczb zmiennoprzecinkowych*, czyli liczb posiadających część ułamkową. Typy zmiennoprzecinkowe w Ruście to: `f32` i `f64`, o rozmiarach, odpowiednio, 32 i 64 bity. Domyślnie Rust
@@ -127,6 +132,7 @@ Oto przykład pokazujący liczby zmiennoprzecinkowe w akcji:
 Liczby zmiennoprzecinkowe są reprezentowane zgodnie ze standardem IEEE-754.
 Typ `f32` to liczba zmiennoprzecinkowa zapisana w wyżej wymienionym standardzie z pojedynczą precyzją, a `f64` -- z podwójną.
 
+<!-- #### Numeric Operations -->
 #### Operacje arytmetyczne
 
 Rust wspiera podstawowe operacje arytmetyczne na wszystkich numerycznych typach danych: dodawanie, odejmowanie, mnożenie, dzielenia i resztę z dzielenia.
@@ -142,6 +148,7 @@ Poniższy kod przedstawia przykładowe użycie każdej z wymienionych operacji w
 Każde z wyrażeń w tych instrukcjach korzysta z operatora matematycznego i jest wyliczane do pojedynczej wartości, która następnie jest przypisywana do zmiennej. Listę wszystkich operatorów obsługiwanych
 przez Rusta znajdziesz w [Dodatku B][appendix_b]<!-- ignore -->.
 
+<!-- #### The Boolean Type -->
 #### Typ logiczny (Boolean)
 
 W Ruście, podobnie jak w wielu innych językach programowania, typ Boolean może
@@ -157,6 +164,7 @@ Typ logiczny w Ruście jest deklarowany z pomocą `bool`. Na przykład:
 Jednym z głównych zastosowań typu Boolean są wyrażenia logiczne, takie jak `if`.
 Działanie wyrażenia `if` w Ruście omówimy w sekcji `Kontrola przepływu`.
 
+<!-- #### The Character Type -->
 #### Typ znakowy
 
 Do tej pory pracowaliśmy tylko z liczbami, ale Rust wspiera też litery. Najprostszym typ znakowym jest `char`. Oto przykłady jego deklaracji:
@@ -173,11 +181,13 @@ Litery akcentowane; chińskie, japońskie i koreańskie symbole; emoji; pola o z
 Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do `U+10FFFF` włącznie. Jednak „znak” nie jest naprawdę ideą w Unikodzie, więc twój intuicyjny sposób postrzegania tego, czym jest „znak” może nie
 być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
 
+<!-- ### Compound Types -->
 ### Typy złożone
 
 *Typy złożone* mogą grupować wiele wartości w jeden typ danych. Rust posiada
 dwa prymitywne typy złożone: krotki i tablice.
 
+<!-- #### The Tuple Type -->
 #### Krotki
 
 Krotka pozwala na zgrupowanie pewnej liczby wartości o różnych typach danych w jeden złożony typ danych.
@@ -217,6 +227,7 @@ Powyższy program tworzy krotkę `x`, a następnie uzyskuje dostęp do jej eleme
 
 The tuple without any values has a special name, *unit*. This value and its corresponding type are both written `()` and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value.
 
+<!-- #### The Array Type -->
 #### Tablice
 
 Innym sposobem na stworzenie kolekcji wartości jest użycie *tablicy*.
@@ -260,7 +271,8 @@ let a = [3; 5];
 Tablica `a` będzie zawierać `5` elementów, a każdy z nich początkowo przyjmie wartość `3`.
 Taki sam rezultat osiągnąłby taki zapis: `let a = [3, 3, 3, 3, 3];`, ale ten pierwszy jest krótszy.
 
-##### Uzyskiwanie dostępu do elementów tablicy
+<!-- ##### Accessing Array Elements -->
+##### Uzyskiwanie Dostępu do Elementów Tablicy
 
 Tablica to obszar pamięci ulokowany na stosie. Możesz uzyskać dostęp do elementów tablicy, korzystając z indeksowania, tak jak poniżej:
 
@@ -272,7 +284,8 @@ Tablica to obszar pamięci ulokowany na stosie. Możesz uzyskać dostęp do elem
 
 W tym przykładzie, zmienna o nazwie `first` otrzyma wartość `1`, ponieważ taka wartość znajduje się w tablicy na miejscu o indeksie `[0]`. Zmienna o nazwie `second` otrzyma wartość `2` od pozycji w tablicy o indeksie `[1]`.
 
-##### Próba uzyskania dostępu do niepoprawnego elementu tablicy
+<!-- ##### Invalid Array Element Access -->
+##### Próba Uzyskania Dostępu do Niepoprawnego Elementu Tablicy
 
 Co się stanie, gdy spróbujemy uzyskać dostęp do elementu, który jest poza tablicą? Zmienimy wcześniejszy przykład na poniższy kod, który pobiera indeks tablicy od użytkownika, używając kodu podobnego do tego z gry zgadywanki z rozdziału 2:
 

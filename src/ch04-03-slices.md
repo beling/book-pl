@@ -142,7 +142,7 @@ let slice = &s[..];
 > We wprowadzeniu do wycinków łańcuchów zawartym w niniejszym rozdziale
 > ograniczamy się jedynie do znaków ASCII,
 > zaś bardziej szczegółowe omówienie obsługi UTF-8 znajduje się w sekcji
-> ["Storing UTF-8 Encoded Text with Strings"][strings]<!-- ignoruj -->rozdziału 8.
+> ["Storing UTF-8 Encoded Text with Strings"][strings]<!-- ignore -->rozdziału 8.
 
 Mając na uwadze powyższe informacje, przepiszmy `first_word` tak, aby zwracał wycinek.
 Typ oznaczający "wycinek łańcucha" zapisujemy jako `&str`:

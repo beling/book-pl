@@ -170,23 +170,17 @@ I wtedy nie ma znaczenia co wypadło, więc zmienna `other` nie jest dalej potrz
 
 Ten przykład również spełnia wymóg wyczerpywalności, ponieważ wszystkie pozostałe wartości są w ostatniej odnodze ignorowane jawnie; nie zapomnieliśmy o niczym.
 
-Finally, we’ll change the rules of the game one more time so that nothing else
-happens on your turn if you roll anything other than a 3 or a 7. We can express
-that by using the unit value (the empty tuple type we mentioned in [“The Tuple
-Type”][tuples]<!-- ignore --> section) as the code that goes with the `_` arm:
+Na koniec zmienimy jeszcze raz zasady gry tak, aby wyrzucenie czegokolwiek innego niż 3 lub 7, nie miało żadnych następstw.
+Możemy to wyrazić używając jako kodu w odnodze `_` wartości jednostkowej (czyli pustej krotki, o czym wspominaliśmy w sekcji [„Krotki“][tuples]<!-- ignore -->):
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-17-underscore-unit/src/main.rs:here}}
 ```
 
-Here, we’re telling Rust explicitly that we aren’t going to use any other value
-that doesn’t match a pattern in an earlier arm, and we don’t want to run any
-code in this case.
+Tutaj mówimy Rustowi wprost, że nie będziemy używać żadnej wartości, która nie pasuje do wzorców poprzenich odnóg, i nie chcemy uruchamiać żadnego kodu w tym przypadku.
 
-There’s more about patterns and matching that we’ll cover in [Chapter
-18][ch18-00-patterns]<!-- ignore -->. For now, we’re going to move on to the
-`if let` syntax, which can be useful in situations where the `match` expression
-is a bit wordy.
+Więcej o wzorcach i dopasowywaniu powiemy w [rozdziale 18][ch18-00-wzorce]<!-- ignore -->.
+Na razie jednak przejdziemy do składni `if let`, która może być przydatna w sytuacjach, w których wyrażenie `match` jest zbyt rozwlekłe.
 
-[tuples]: ch03-02-data-types.html#the-tuple-type
+[tuples]: ch03-02-data-types.html#krotki
 [ch18-00-patterns]: ch18-00-patterns.html
