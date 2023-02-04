@@ -1,26 +1,20 @@
-## Concise Control Flow with `if let`
+<!-- ## Concise Control Flow with `if let` -->
+## Zwięzła Kontrola Przepływu z `if let`.
 
-The `if let` syntax lets you combine `if` and `let` into a less verbose way to
-handle values that match one pattern while ignoring the rest. Consider the
-program in Listing 6-6 that matches on an `Option<u8>` value in the
-`config_max` variable but only wants to execute code if the value is the `Some`
-variant.
+Składnia `if let` łączy `if` i `let`, by obsłużyć wartości pasujące do wzorca. Składnia ta jest zwięzła, ale pozwala podać tylko jeden wzorzec.
+Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_max` typu `Option<u8>`, ale chce wykonać kod tylko jeśli ta wartość jest wariantem `Some`.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 6-6: A `match` that only cares about executing
-code when the value is `Some`</span>
+<span class="caption">Listing 6-6: `match` wykonujący kod jedynie gdy wartość jest `Some`</span>
 
-If the value is `Some`, we print out the value in the `Some` variant by binding
-the value to the variable `max` in the pattern. We don’t want to do anything
-with the `None` value. To satisfy the `match` expression, we have to add `_ =>
-()` after processing just one variant, which is annoying boilerplate code to
-add.
+Jeśli wariantem jest `Some`, to wypisujemy zawartą w nim wartość przypisując ją uprzednio do zmiennej `max` we wzorcu.
+Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
 
-Instead, we could write this in a shorter way using `if let`. The following
-code behaves the same as the `match` in Listing 6-6:
+W zamian możemy napisać to samo krócej używając `if let`.
+Następujący kod zachowuje się tak samo jak `match` z Listingu 6-6:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
