@@ -60,7 +60,7 @@ Segregując nasze drobniaki według typów monet, będziemy podawać nazwę stan
 by nasz przyjaciel mógł dodać ją do swojej kolekcji, gdy jeszcze takiej ćwiartki nie posiada.
 
 W kodzie wyrażenia match dodajemy zmienną o nazwie `state` do wzorca dopasowującego wariant `Coin::Quarter`.
-Kiedy `Coin::Quarter` zostanie dopasowane, zmienna `state` zostanie utworzona i zainicjowana wartością wskazującą stan ćwiartki.
+Kiedy `Coin::Quarter` zostanie dopasowane, zmienna `state` zostanie utworzona i zainicjowana wartością wskazującą stan, z którego pochodzi ćwiartka.
 Następnie `state` może zostać użyte w kodzie tej odnogi, co pokazuje przykład:
 
 ```rust

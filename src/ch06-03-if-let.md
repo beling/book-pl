@@ -1,7 +1,7 @@
 <!-- ## Concise Control Flow with `if let` -->
 ## Zwięzła Kontrola Przepływu z `if let`.
 
-Składnia `if let` łączy `if` i `let`, by obsłużyć wartości pasujące do wzorca. Składnia ta jest zwięzła, ale pozwala podać tylko jeden wzorzec.
+Składnia `if let` łączy `if` i `let`, by obsłużyć wartości pasujące do wzorca. Składnia ta jest zwięzła, ale (bez powtarzania `if let`) pozwala podać tylko jeden wzorzec.
 Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_max` typu `Option<u8>`, ale chce wykonać kod tylko jeśli ta wartość jest wariantem `Some`.
 
 ```rust
@@ -11,7 +11,7 @@ Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_m
 <span class="caption">Listing 6-6: `match` wykonujący kod jedynie gdy wartość jest `Some`</span>
 
 Jeśli wariantem jest `Some`, to wypisujemy zawartą w nim wartość przypisując ją uprzednio do zmiennej `max` we wzorcu.
-Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
+Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać niewiele znaczące `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
 
 W zamian możemy napisać to samo krócej używając `if let`.
 Następujący kod zachowuje się tak samo jak `match` z Listingu 6-6:
@@ -20,58 +20,43 @@ Następujący kod zachowuje się tak samo jak `match` z Listingu 6-6:
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 ```
 
-The syntax `if let` takes a pattern and an expression separated by an equal
-sign. It works the same way as a `match`, where the expression is given to the
-`match` and the pattern is its first arm. In this case, the pattern is
-`Some(max)`, and the `max` binds to the value inside the `Some`. We can then
-use `max` in the body of the `if let` block in the same way we used `max` in
-the corresponding `match` arm. The code in the `if let` block isn’t run if the
-value doesn’t match the pattern.
+Składnia `if let` przyjmuje wzorzec i wyrażenie oddzielone znakiem równości.
+Działa tak samo jak `match`, gdzie wyrażenie jest podane do `match`, a wzorzec jest jego pierwszą odnogą.
+W tym przypadku wzorzec to `Some(max)`, a `max` zostaje zainicjowane wartością z wnętrza `Some`.
+Możemy wtedy użyć `max` w ciele bloku `if let` w taki sam sposób, w jaki użyliśmy `max` w odpowiedniej odnodze `match`.
+Kod w bloku `if let` nie jest uruchamiany, jeśli wartość nie pasuje do wzorca.
 
-Using `if let` means less typing, less indentation, and less boilerplate code.
-However, you lose the exhaustive checking that `match` enforces. Choosing
-between `match` and `if let` depends on what you’re doing in your particular
-situation and whether gaining conciseness is an appropriate trade-off for
-losing exhaustive checking.
+Używanie `if let` oznacza mniej pisania, mniej wcięć i mniej niewiele znaczącego kodu.
+Jednakże, w stosunku do `match`, tracimy sprawdzanie wyczerpywalności.
+Wybór pomiędzy `match` a `if let` zależy tego, co jest dla nas w danej sytuacji ważniejsze, uzyskanie zwięzłości czy sprawdzanie wyczerpywalności.
 
-In other words, you can think of `if let` as syntax sugar for a `match` that
-runs code when the value matches one pattern and then ignores all other values.
+Innymi słowy, można myśleć o `if let` jako o składniowym lukrze dla `match`, który uruchamia kod tylko gdy wartość pasuje do podanego wzorca, równocześnie nie robiąc nic gdy nie pasuje.
 
-We can include an `else` with an `if let`. The block of code that goes with the
-`else` is the same as the block of code that would go with the `_` case in the
-`match` expression that is equivalent to the `if let` and `else`. Recall the
-`Coin` enum definition in Listing 6-4, where the `Quarter` variant also held a
-`UsState` value. If we wanted to count all non-quarter coins we see while also
-announcing the state of the quarters, we could do that with a `match`
-expression, like this:
+Można także do `if let` dołączyć `else`.
+Blok kodu stojący za `else` pełni taką samą rolę, jak blok dla odnogi `_` w wyrażeniu `match` równoważnym do danego `if let` z `else`.
+Proszę sobie przypomnieć definicję typu wyliczeniowego `Coin` z Listingu 6-4, w którym wariant `Quarter` posiada wartość `UsState`.
+Za pomocą następującego wyrażenia `match` możemy policzyć wszystkie widziane monety niebędące ćwiartkami, jednocześnie informując o stanie, z którego pochodzą ćwiartki:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
 ```
 
-Or we could use an `if let` and `else` expression, like this:
+To samo możemy też uzyskać za pomocą wyrażenia `if let` z `else`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-14-count-and-announce-if-let-else/src/main.rs:here}}
 ```
 
-If you have a situation in which your program has logic that is too verbose to
-express using a `match`, remember that `if let` is in your Rust toolbox as well.
+O `if let` warto pamiętać w sytuacji, w której wyrażenie logiki za pomocą `match` jest zbyt rozwlekłe.
 
-## Summary
+<!-- ## Summary -->
+## Podsumowanie
 
-We’ve now covered how to use enums to create custom types that can be one of a
-set of enumerated values. We’ve shown how the standard library’s `Option<T>`
-type helps you use the type system to prevent errors. When enum values have
-data inside them, you can use `match` or `if let` to extract and use those
-values, depending on how many cases you need to handle.
+Pokazaliśmy, jak używać enumeracji do tworzenia typów, których zmienne mogą być jedną z zestawu wyliczonych wartości.
+Wskazaliśmy też, jak typ `Option<T>` biblioteki standardowej wykorzystuje systemu typów, aby uniknąć błędów.
+W zależności od tego, ile przypadków trzeba obsłużyć, można użyć `match` lub `if let` do wyodrębnienia i użycia wartości zawartych wewnątrz wariantów enuma.
 
-Your Rust programs can now express concepts in your domain using structs and
-enums. Creating custom types to use in your API ensures type safety: the
-compiler will make certain your functions only get values of the type each
-function expects.
+Programy Rusta mogą teraz wyrażać koncepcje w danej domenie za pomocą struktur i enumów.
+Utworzenie niestandardowych typów i użycie ich w API zapewnia bezpieczeństwo: kompilator dba o to, aby funkcje otrzymywały tylko wartości oczekiwanego typu.
 
-In order to provide a well-organized API to your users that is straightforward
-to use and only exposes exactly what your users will need, let’s now turn to
-Rust’s modules.
-
+Przejdźmy teraz do omówienia modułów Rusta, które pozwalają wyrazić API, które jest dobrze zorganizowane, proste w użyciu i eksponuje tylko to, czego potrzebują użytkownicy.
