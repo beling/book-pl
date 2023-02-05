@@ -2,24 +2,20 @@
 # Zarządzanie Rozrastającymi Się Projektami Za Pomocą Pakietów, Skrzyń i Modułów
 
 W miarę pisania dużych programów, coraz ważniejsza staje się organizacja kodu.
-Dzięki pogrupowaniu powiązanych funkcjonalności i porozdzielaniu kodu, ułatwiamy odnalezienie w nim miejsc odpowiedzialnych za daną funkcjonalność, a zatem i ewentualne dokonanie zmian sposobu jej działania.
+Dzięki pogrupowaniu powiązanych funkcjonalności i porozdzielaniu kodu,
+ułatwiamy odnalezienie w nim miejsc odpowiedzialnych za daną funkcjonalność,
+a zatem i ewentualne dokonanie zmian sposobu jej działania.
 
-The programs we’ve written so far have been in one module in one file. As a
-project grows, you should organize code by splitting it into multiple modules
-and then multiple files. A package can contain multiple binary crates and
-optionally one library crate. As a package grows, you can extract parts into
-separate crates that become external dependencies. This chapter covers all
-these techniques. For very large projects comprising a set of interrelated
-packages that evolve together, Cargo provides *workspaces*, which we’ll cover
-in the [“Cargo Workspaces”][workspaces]<!-- ignore --> section in Chapter 14.
+Programy, które dotychczas napisaliśmy, mieściły się w jednym module, w jednym pliku.
+Gdy projekt się rozrasta, warto uporządkować kod, dzieląc go na wiele modułów, a następnie wiele plików.
+Pakiet może zawierać wiele skrzyń binarnych i opcjonalnie jedną skrzynię biblioteczną.
+W miarę jak pakiet rośnie, można wyodrębnić jego części do oddzielnych skrzyń, które stają się zewnętrznymi zależnościami.
+Ten rozdział omawia wszystkie te techniki.
+Dla bardzo dużych projektów składających się z zestawu powiązanych ze sobą pakietów, które są rozwijane wspólnie, Cargo udostępnia *przestrzenie robocze*, które omówimy w sekcji [„Przestrzenie Robocze Cargo“][workspaces]<!-- ignore --> rozdziału 14.
 
-We’ll also discuss encapsulating implementation details, which lets you reuse
-code at a higher level: once you’ve implemented an operation, other code can
-call your code via its public interface without having to know how the
-implementation works. The way you write code defines which parts are public for
-other code to use and which parts are private implementation details that you
-reserve the right to change. This is another way to limit the amount of detail
-you have to keep in your head.
+Omówimy również enkapsulację szczegółów implementacji, która pozwala na ponowne użycie kodu na wyższym poziomie: po zaimplementowaniu operacji, inny kod może wywołać nasz kod poprzez jego publiczny interfejs, bez konieczności znajomości szczegółów implementacji.
+Sposób, w jaki piszemy kod określa, które części są publiczne do wykorzystania przez inny kod, a które są prywatnymi szczegółami implementacji i, w związku z tym, zastrzegamy sobie prawo do ich swobodnej zmiany.
+Jest to kolejny sposób na ograniczenie liczby szczegółów, nad którymi musimy zapanować.
 
 A related concept is scope: the nested context in which code is written has a
 set of names that are defined as “in scope.” When reading, writing, and
