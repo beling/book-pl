@@ -1,9 +1,8 @@
-# Managing Growing Projects with Packages, Crates, and Modules
+<!-- # Managing Growing Projects with Packages, Crates, and Modules -->
+# Zarządzanie Rozrastającymi Się Projektami Za Pomocą Pakietów, Skrzyń i Modułów
 
-As you write large programs, organizing your code will become increasingly
-important. By grouping related functionality and separating code with distinct
-features, you’ll clarify where to find code that implements a particular
-feature and where to go to change how a feature works.
+W miarę pisania dużych programów, coraz ważniejsza staje się organizacja kodu.
+Dzięki pogrupowaniu powiązanych funkcjonalności i porozdzielaniu kodu, ułatwiamy odnalezienie w nim miejsc odpowiedzialnych za daną funkcjonalność, a zatem i ewentualne dokonanie zmian sposobu jej działania.
 
 The programs we’ve written so far have been in one module in one file. As a
 project grows, you should organize code by splitting it into multiple modules
