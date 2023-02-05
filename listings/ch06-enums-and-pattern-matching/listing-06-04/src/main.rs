@@ -1,5 +1,5 @@
 // ANCHOR: here
-#[derive(Debug)] // so we can inspect the state in a minute
+#[derive(Debug)] // byśmy mogli za chwilę zobaczyć stan
 enum UsState {
     Alabama,
     Alaska,
