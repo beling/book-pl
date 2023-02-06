@@ -4,7 +4,7 @@
 W tym rozdziale porozmawiamy o modułach i innych częściach systemu modułów, mianowicie o *ścieżkach*, które pozwalają na nazywanie elementów; słowie kluczowym `use`, które włącza ścieżkę w zasięg; oraz słowie kluczowym `pub`, które upublicznia elementy.
 Omówimy również słowo kluczowe `as`, pakiety zewnętrzne i operator glob.
 
-Zaczniemy od podania listy reguł, będącej przydatną w trakcie organizowania własnego kodu ściągą.
+Zaczniemy od podania listy reguł, będącej swoistą ściągą, przydatną podczas organizowania własnego kodu.
 Następnie szczegółowo wyjaśnimy poszczególne reguły.
 
 ### Ściąga z Modułów
@@ -15,23 +15,14 @@ Zaś przykłady każdej z podanych reguł będziemy omawiać w dalszej części 
 
 - **Start z korzenia skrzyni**: Podczas kompilowania skrzyni, kompilator najpierw zagląda do pliku głównego skrzyni (zazwyczaj *src/lib.rs* dla skrzyni bibliotecznej lub *src/main.rs* dla skrzyni binarnej) w poszukiwaniu kodu do skompilowania.
 - **Deklarowanie modułów**: W pliku głównym skrzyni, można deklarować nowe moduły; powiedzmy, że zadeklarujemy moduł „garden“ (z ang. ogród) za pomocą `mod garden;`. Kompilator będzie szukał kodu tego modułu w następujących miejscach:
-  - Inline, within curly brackets that replace the semicolon following `mod
-    garden`
-  - In the file *src/garden.rs*
-  - In the file *src/garden/mod.rs*
-- **Declaring submodules**: In any file other than the crate root, you can
-  declare submodules. For example, you might declare `mod vegetables;` in
-  *src/garden.rs*. The compiler will look for the submodule’s code within the
-  directory named for the parent module in these places:
-  - Inline, directly following `mod vegetables`, within curly brackets instead
-    of the semicolon
-  - In the file *src/garden/vegetables.rs*
-  - In the file *src/garden/vegetables/mod.rs*
-- **Paths to code in modules**: Once a module is part of your crate, you can
-  refer to code in that module from anywhere else in that same crate, as long
-  as the privacy rules allow, using the path to the code. For example, an
-  `Asparagus` type in the garden vegetables module would be found at
-  `crate::garden::vegetables::Asparagus`.
+  - Zaraz za `mod garden`, w nawiasach klamrowych, które zastępują średnik po `mod garden`
+  - W pliku *src/garden.rs*
+  - W pliku *src/garden/mod.rs*
+- **Deklarowanie podmodułów**: W każdym pliku innym niż główny plik skrzyni, można zadeklarować podmoduły. Na przykład, można zadeklarować `mod vegetables;` (z ang. warzywa) w *src/garden.rs*. Kompilator będzie szukał kodu podmodułu w katalogu o nazwie zgodnej z modułem nadrzędnym, w następujących miejscach:
+  - Zaraz za `mod vegetables`, w nawiasach klamrowych, które zastępują średnik po `mod vegetables`
+  - W pliku *src/garden/vegetables.rs*
+  - W pliku *src/garden/vegetables/mod.rs*
+- **Ścieżki do kodu w modułach**: Gdy moduł jest częścią skrzyni, można odwołać się do kodu w tym module z dowolnego innego miejsca tej skrzyni, gdy tylko pozwalają na to zasady prywatności, używając ścieżki do kodu. Na przykład, do typu `Asparagus` (z ang. szparag) w podmodule `vegetables` modułu `garden` można odwołać się za pomocą `crate::garden::vegetables::Asparagus`.
 - **Private vs public**: Code within a module is private from its parent
   modules by default. To make a module public, declare it with `pub mod`
   instead of `mod`. To make items within a public module public as well, use
