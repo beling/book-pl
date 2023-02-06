@@ -1,28 +1,20 @@
-## Defining Modules to Control Scope and Privacy
+<!-- ## Defining Modules to Control Scope and Privacy -->
+## Definiowanie Modułów by Kontrolować Zasięg i Prywatności
 
-In this section, we’ll talk about modules and other parts of the module system,
-namely *paths* that allow you to name items; the `use` keyword that brings a
-path into scope; and the `pub` keyword to make items public. We’ll also discuss
-the `as` keyword, external packages, and the glob operator.
+W tym rozdziale porozmawiamy o modułach i innych częściach systemu modułów, mianowicie o *ścieżkach*, które pozwalają na nazywanie elementów; słowie kluczowym `use`, które włącza ścieżkę w zasięg; oraz słowie kluczowym `pub`, które upublicznia elementy.
+Omówimy również słowo kluczowe `as`, pakiety zewnętrzne i operator glob.
 
-First, we’re going to start with a list of rules for easy reference when you’re
-organizing your code in the future. Then we’ll explain each of the rules in
-detail.
+Zaczniemy od podania listy reguł, będącej przydatną w trakcie organizowania własnego kodu ściągą.
+Następnie szczegółowo wyjaśnimy poszczególne reguły.
 
-### Modules Cheat Sheet
+### Ściąga z Modułów
 
-Here we provide a quick reference on how modules, paths, the `use` keyword, and
-the `pub` keyword work in the compiler, and how most developers organize their
-code. We’ll be going through examples of each of these rules throughout this
-chapter, but this is a great place to refer to as a reminder of how modules
-work.
+Przedstawiamy tutaj krótkie kompendium omawiające jak moduły, ścieżki, słowo kluczowe `use` i słowo kluczowe `pub` działają w kompilatorze i jak większość programistów organizuje swój kod.
+Jest to świetne miejsce, do którego można sięgnąć, aby przypomnieć sobie, jak działają moduły.
+Zaś przykłady każdej z podanych reguł będziemy omawiać w dalszej części rozdziału.
 
-- **Start from the crate root**: When compiling a crate, the compiler first
-  looks in the crate root file (usually *src/lib.rs* for a library crate or
-  *src/main.rs* for a binary crate) for code to compile.
-- **Declaring modules**: In the crate root file, you can declare new modules;
-say, you declare a “garden” module with `mod garden;`. The compiler will look
-for the module’s code in these places:
+- **Start z korzenia skrzyni**: Podczas kompilowania skrzyni, kompilator najpierw zagląda do pliku głównego skrzyni (zazwyczaj *src/lib.rs* dla skrzyni bibliotecznej lub *src/main.rs* dla skrzyni binarnej) w poszukiwaniu kodu do skompilowania.
+- **Deklarowanie modułów**: W pliku głównym skrzyni, można deklarować nowe moduły; powiedzmy, że zadeklarujemy moduł „garden“ (z ang. ogród) za pomocą `mod garden;`. Kompilator będzie szukał kodu tego modułu w następujących miejscach:
   - Inline, within curly brackets that replace the semicolon following `mod
     garden`
   - In the file *src/garden.rs*
