@@ -11,7 +11,7 @@ Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_m
 <span class="caption">Listing 6-6: `match` wykonujący kod jedynie gdy wartość jest `Some`</span>
 
 Jeśli wariantem jest `Some`, to wypisujemy zawartą w nim wartość przypisując ją uprzednio do zmiennej `max` we wzorcu.
-Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać niewiele znaczące `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
+Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać niewiele znaczące, szablonowe `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
 
 W zamian możemy napisać to samo krócej używając `if let`.
 Następujący kod zachowuje się tak samo jak `match` z Listingu 6-6:
@@ -26,7 +26,7 @@ W tym przypadku wzorzec to `Some(max)`, a `max` zostaje zainicjowane wartością
 Możemy wtedy użyć `max` w ciele bloku `if let` w taki sam sposób, w jaki użyliśmy `max` w odpowiedniej odnodze `match`.
 Kod w bloku `if let` nie jest uruchamiany, jeśli wartość nie pasuje do wzorca.
 
-Używanie `if let` oznacza mniej pisania, mniej wcięć i mniej niewiele znaczącego kodu.
+Używanie `if let` oznacza mniej pisania, mniej wcięć i mniej niewiele znaczącego, szablonowego kodu.
 Jednakże, w stosunku do `match`, tracimy sprawdzanie wyczerpywalności.
 Wybór pomiędzy `match` a `if let` zależy tego, co jest dla nas w danej sytuacji ważniejsze, uzyskanie zwięzłości czy sprawdzanie wyczerpywalności.
 

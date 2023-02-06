@@ -15,20 +15,12 @@ Dla bardzo dużych projektów składających się z zestawu powiązanych ze sob�
 
 Omówimy również enkapsulację szczegółów implementacji, która pozwala na ponowne użycie kodu na wyższym poziomie: po zaimplementowaniu operacji, inny kod może wywołać nasz kod poprzez jego publiczny interfejs, bez konieczności znajomości szczegółów implementacji.
 Sposób, w jaki piszemy kod określa, które części są publiczne do wykorzystania przez inny kod, a które są prywatnymi szczegółami implementacji i, w związku z tym, zastrzegamy sobie prawo do ich swobodnej zmiany.
-Jest to kolejny sposób na ograniczenie liczby szczegółów, nad którymi musimy zapanować.
+Wszystko to jest kolejnym sposobem na ograniczenie liczby szczegółów, które musimy mieć w głowie.
 
-A related concept is scope: the nested context in which code is written has a
-set of names that are defined as “in scope.” When reading, writing, and
-compiling code, programmers and compilers need to know whether a particular
-name at a particular spot refers to a variable, function, struct, enum, module,
-constant, or other item and what that item means. You can create scopes and
-change which names are in or out of scope. You can’t have two items with the
-same name in the same scope; tools are available to resolve name conflicts.
+Powiązanym pojęciem jest zasięg: osadzony kontekst, w którym pisany jest kod i który zawiera zestaw nazw, o których mówimy, że są „w zasięgu“. Czytając, pisząc i kompilując kod, programiści i kompilatory muszą wiedzieć, czy dana nazwa w danym miejscu odnosi się do zmiennej, funkcji, struktury, enumeracji, modułu, stałej lub innego elementu i co ten element oznacza.
+Można tworzyć zasięgi i decydować, które nazwy są w zasięgu a które poza nim. Nie można mieć jednak dwóch elementów o tej samej nazwie w tym samym zasięgu; ale dostępne są narzędzia do rozwiązywania konfliktów nazw.
 
-Rust has a number of features that allow you to manage your code’s
-organization, including which details are exposed, which details are private,
-and what names are in each scope in your programs. These features, sometimes
-collectively referred to as the *module system*, include:
+Rust posiada szereg rozwiązań, które pozwalają zarządzać organizacją kodu. W szczególności pozwalają one decydować które szczegóły są eksponowane, które są prywatne, oraz jakie nazwy znajdują się w poszczególnych zasięgach. Te rozwiązania czasami nazywane są zbiorczo *systemem modułów* i obejmują:
 
 * **Packages:** A Cargo feature that lets you build, test, and share crates
 * **Crates:** A tree of modules that produces a library or executable
