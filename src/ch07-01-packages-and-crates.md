@@ -1,6 +1,7 @@
-## Packages and Crates
+<!-- ## Packages and Crates -->
+## Pakiety i Skrzynie
 
-The first parts of the module system we’ll cover are packages and crates.
+Pierwszymi elementami systemu modułów, które omówimy są pakiety i skrzynie.
 
 A *crate* is the smallest amount of code that the Rust compiler considers at a
 time. Even if you run `rustc` rather than `cargo` and pass a single source code
