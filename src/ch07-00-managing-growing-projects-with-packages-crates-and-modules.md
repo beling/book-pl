@@ -27,8 +27,7 @@ Rust posiada szereg rozwiązań, które pozwalają zarządzać organizacją kodu
 * **Moduły** (ang. *modules*) i **użycia** (ang. *use*)**:** Pozwala kontrolować organizację, zasięg i prywatność ścieżek
 * **Ścieżki** (ang. *paths*)**:** Sposób nazywania elementu, takiego jak struktura, funkcja lub moduł
 
-In this chapter, we’ll cover all these features, discuss how they interact, and
-explain how to use them to manage scope. By the end, you should have a solid
-understanding of the module system and be able to work with scopes like a pro!
+W tym rozdziale omówimy wszystkie te rozwiązania i interakcje między nimi. Wyjaśnimy też jak używać ich do zarządzania zasięgiem.
+Na koniec powinieneś dogłębnie zrozumieć system modułów i być w stanie pracować z zasięgami jak zawodowiec!
 
 [workspaces]: ch14-03-cargo-workspaces.html
