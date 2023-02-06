@@ -22,11 +22,10 @@ Można tworzyć zasięgi i decydować, które nazwy są w zasięgu a które poza
 
 Rust posiada szereg rozwiązań, które pozwalają zarządzać organizacją kodu. W szczególności pozwalają one decydować które szczegóły są eksponowane, które są prywatne, oraz jakie nazwy znajdują się w poszczególnych zasięgach. Te rozwiązania czasami nazywane są zbiorczo *systemem modułów* i obejmują:
 
-* **Packages:** A Cargo feature that lets you build, test, and share crates
-* **Crates:** A tree of modules that produces a library or executable
-* **Modules** and **use:** Let you control the organization, scope, and
-  privacy of paths
-* **Paths:** A way of naming an item, such as a struct, function, or module
+* **Pakiety** (ang. *packages*)**:** Funkcjonalność Cargo umożliwiająca budowanie, testowanie i udostępnianie skrzyń
+* **Skrzynie** (ang. *crates*)**:** Drzewo modułów tworzących bibliotekę lub plik wykonywalny
+* **Moduły** (ang. *modules*) i **użycia** (ang. *use*)**:** Pozwala kontrolować organizację, zasięg i prywatność ścieżek
+* **Ścieżki** (ang. *paths*)**:** Sposób nazywania elementu, takiego jak struktura, funkcja lub moduł
 
 In this chapter, we’ll cover all these features, discuss how they interact, and
 explain how to use them to manage scope. By the end, you should have a solid
