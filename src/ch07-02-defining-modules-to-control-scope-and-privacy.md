@@ -23,18 +23,10 @@ Zaś przykłady każdej z podanych reguł będziemy omawiać w dalszej części 
   - W pliku *src/garden/vegetables.rs*
   - W pliku *src/garden/vegetables/mod.rs*
 - **Ścieżki do kodu w modułach**: Gdy moduł jest częścią skrzyni, można odwołać się do kodu w tym module z dowolnego innego miejsca tej skrzyni, gdy tylko pozwalają na to zasady prywatności, używając ścieżki do kodu. Na przykład, do typu `Asparagus` (z ang. szparag) w podmodule `vegetables` modułu `garden` można odwołać się za pomocą `crate::garden::vegetables::Asparagus`.
-- **Private vs public**: Code within a module is private from its parent
-  modules by default. To make a module public, declare it with `pub mod`
-  instead of `mod`. To make items within a public module public as well, use
-  `pub` before their declarations.
-- **The `use` keyword**: Within a scope, the `use` keyword creates shortcuts to
-  items to reduce repetition of long paths. In any scope that can refer to
-  `crate::garden::vegetables::Asparagus`, you can create a shortcut with `use
-  crate::garden::vegetables::Asparagus;` and from then on you only need to
-  write `Asparagus` to make use of that type in the scope.
+- **Prywatne a publiczne**: Kod zawarty w module domyślnie jest prywatny i niedostępny dla modułów nadrzędnych. Aby upublicznić moduł, trzeba go zadeklarować za pomocą `pub mod` zamiast `mod`. By publicznymi uczynić elementy wewnątrz modułu, należy postawić `pub` przed ich deklaracjami.
+- **Słowo kluczowe `use`**: Słowo kluczowe `use` tworzy skróty do elementów, ograniczając tym samym powtarzanie długich ścieżek. W dowolnym zasięgu, w którym typ `crate::garden::vegetables::Asparagus` jest dostępny, można z pomocą `use crate::garden::vegetables::Asparagus;` utworzyć do niego skrót i, od tego momentu, pisać `Asparagus`, aby ten typ wykorzystać.
 
-Here we create a binary crate named `backyard` that illustrates these rules. The
-crate’s directory, also named `backyard`, contains these files and directories:
+Powyższe zasady zilustrujemy na przykładzie skrzyni binarnej o nazwie `backyard` (z ang. podwórko). Katalog tej skrzyni, również nazwany `backyard`, zawiera następujące pliki i katalogi:
 
 ```text
 backyard
@@ -47,16 +39,15 @@ backyard
     └── main.rs
 ```
 
-The crate root file in this case is *src/main.rs*, and it contains:
+Plikiem głównym tej skrzyni jest *src/main.rs* o następującej zawartości:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
 ```
 
-The `pub mod garden;` line tells the compiler to include the code it finds in
-*src/garden.rs*, which is:
+Linia `pub mod garden;` mówi kompilatorowi, aby uwzględnił kod, który znajdzie w *src/garden.rs*, czyli:
 
 <span class="filename">Filename: src/garden.rs</span>
 

@@ -22,10 +22,10 @@ Można tworzyć zasięgi i decydować, które nazwy są w zasięgu a które poza
 
 Rust posiada szereg rozwiązań, które pozwalają zarządzać organizacją kodu. W szczególności pozwalają one decydować które szczegóły są eksponowane, które są prywatne, oraz jakie nazwy znajdują się w poszczególnych zasięgach. Te rozwiązania czasami nazywane są zbiorczo *systemem modułów* i obejmują:
 
-* **Pakiety** (ang. *packages*)**:** Funkcjonalność Cargo umożliwiająca budowanie, testowanie i udostępnianie skrzyń
-* **Skrzynie** (ang. *crates*)**:** Drzewo modułów tworzących bibliotekę lub plik wykonywalny
-* **Moduły** (ang. *modules*) i **użycia** (ang. *use*)**:** Pozwala kontrolować organizację, zasięg i prywatność ścieżek
-* **Ścieżki** (ang. *paths*)**:** Sposób nazywania elementu, takiego jak struktura, funkcja lub moduł
+* **Pakiety** (ang. *packages*): Funkcjonalność Cargo umożliwiająca budowanie, testowanie i udostępnianie skrzyń
+* **Skrzynie** (ang. *crates*): Drzewo modułów tworzących bibliotekę lub plik wykonywalny
+* **Moduły** (ang. *modules*) i **użycia** (ang. *use*): Pozwala kontrolować organizację, zasięg i prywatność ścieżek
+* **Ścieżki** (ang. *paths*): Sposób nazywania elementu, takiego jak struktura, funkcja lub moduł
 
 W tym rozdziale omówimy wszystkie te rozwiązania i interakcje między nimi. Wyjaśnimy też jak używać ich do zarządzania zasięgiem.
 Na koniec powinieneś dogłębnie zrozumieć system modułów i być w stanie pracować z zasięgami jak zawodowiec!
