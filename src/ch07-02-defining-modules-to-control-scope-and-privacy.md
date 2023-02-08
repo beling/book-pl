@@ -23,7 +23,7 @@ Zaś przykłady każdej z podanych reguł będziemy omawiać w dalszej części 
   - W pliku *src/garden/vegetables.rs*
   - W pliku *src/garden/vegetables/mod.rs*
 - **Ścieżki do kodu w modułach**: Gdy moduł jest częścią skrzyni, można odwołać się do kodu w tym module z dowolnego innego miejsca tej skrzyni, gdy tylko pozwalają na to zasady prywatności, używając ścieżki do kodu. Na przykład, do typu `Asparagus` (z ang. szparag) w podmodule `vegetables` modułu `garden` można odwołać się za pomocą `crate::garden::vegetables::Asparagus`.
-- **Prywatne a publiczne**: Kod zawarty w module domyślnie jest prywatny i niedostępny dla modułów nadrzędnych. Aby upublicznić moduł, trzeba go zadeklarować za pomocą `pub mod` zamiast `mod`. By publicznymi uczynić elementy wewnątrz modułu, należy postawić `pub` przed ich deklaracjami.
+- **Prywatne a publiczne**: Kod zawarty w module domyślnie jest prywatny i niedostępny dla modułów nadrzędnych. Aby upublicznić moduł, trzeba go zadeklarować za pomocą `pub mod` zamiast `mod`. By upublicznić zawarte w module elementy, należy umieścić `pub` przed ich deklaracjami.
 - **Słowo kluczowe `use`**: Słowo kluczowe `use` tworzy skróty do elementów, ograniczając tym samym powtarzanie długich ścieżek. W dowolnym zasięgu, w którym typ `crate::garden::vegetables::Asparagus` jest dostępny, można z pomocą `use crate::garden::vegetables::Asparagus;` utworzyć do niego skrót i, od tego momentu, pisać `Asparagus`, aby ten typ wykorzystać.
 
 Powyższe zasady zilustrujemy na przykładzie skrzyni binarnej o nazwie `backyard` (z ang. podwórko). Katalog tej skrzyni, również nazwany `backyard`, zawiera następujące pliki i katalogi:
@@ -86,21 +86,13 @@ Utworzymy nową bibliotekę o nazwie `restaurant`, uruchamiając `cargo new rest
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-1: A `front_of_house` module containing other
-modules that then contain functions</span>
+<span class="caption">Listing 7-1: Moduł `front_of_house` zawierający inne moduły, które zawierają funkcje</span>
 
-We define a module with the `mod` keyword followed by the name of the module
-(in this case, `front_of_house`). The body of the module then goes inside curly
-brackets. Inside modules, we can place other modules, as in this case with the
-modules `hosting` and `serving`. Modules can also hold definitions for other
-items, such as structs, enums, constants, traits, and—as in Listing
-7-1—functions.
+Moduł definiujemy za pomocą słowa kluczowego `mod`, po którym następuje nazwa modułu (w tym przypadku `front_of_house`). Następnie umieszczamy ciało modułu w nawiasach klamrowych. Wewnątrz modułów możemy umieszczać inne moduły, co w tym przypadku uczyniliśmy z modułami `hosting` i `serving`. Moduły mogą również zawierać definicje innych elementów, takich jak strukty, enumy, stałe, cechy i—jak na listingu 7-1—funkcje.
 
-By using modules, we can group related definitions together and name why
-they’re related. Programmers using this code can navigate the code based on the
-groups rather than having to read through all the definitions, making it easier
-to find the definitions relevant to them. Programmers adding new functionality
-to this code would know where to place the code to keep the program organized.
+Moduły pozwalają na pogrupowanie powiązanych ze sobą definicji i nazwanie relacji pomiędzy nimi.
+Dzięki pogrupowaniu, programiści mogą łatwiej poruszać się po kodzie i nie muszą czytać wszystkiego by odnaleźć interesujące ich definicje.
+Zaś dodający nową funkcjonalność wiedzą, gdzie umieścić swój kod.
 
 Earlier, we mentioned that *src/main.rs* and *src/lib.rs* are called crate
 roots. The reason for their name is that the contents of either of these two
