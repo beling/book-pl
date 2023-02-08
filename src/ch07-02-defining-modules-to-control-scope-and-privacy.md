@@ -47,7 +47,7 @@ Plikiem głównym tej skrzyni jest *src/main.rs* o następującej zawartości:
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
 ```
 
-Linia `pub mod garden;` mówi kompilatorowi, aby uwzględnił kod, który znajdzie w *src/garden.rs*, czyli:
+Linia `pub mod garden;` mówi kompilatorowi, aby uwzględnił kod, który znajduje się w *src/garden.rs*, czyli:
 
 <span class="filename">Filename: src/garden.rs</span>
 
@@ -55,42 +55,32 @@ Linia `pub mod garden;` mówi kompilatorowi, aby uwzględnił kod, który znajdz
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
 ```
 
-Here, `pub mod vegetables;` means the code in *src/garden/vegetables.rs* is
-included too. That code is:
+Tutaj, `pub mod vegetables;` oznacza uwzględnienie także kodu z *src/garden/vegetables.rs*. Oto ten kod:
 
 ```rust,noplayground,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
 ```
 
-Now let’s get into the details of these rules and demonstrate them in action!
+Teraz dogłębniej omówmy powyższe reguły i zademonstrujmy je w działaniu!
 
-### Grouping Related Code in Modules
+<!-- ### Grouping Related Code in Modules -->
+### Grupowanie Spokrewnionego Kodu w Modułach
 
-*Modules* let us organize code within a crate for readability and easy reuse.
-Modules also allow us to control the *privacy* of items, because code within a
-module is private by default. Private items are internal implementation details
-not available for outside use. We can choose to make modules and the items
-within them public, which exposes them to allow external code to use and depend
-on them.
+*Moduły* pozwalają nam tak zorganizować kod w obrębie skrzyni, by był czytelny i łatwy do wielokrotnego wykorzystania.
+Moduły pozwalają nam również kontrolować *prywatność* elementów, ponieważ kod wewnątrz modułu jest domyślnie prywatny. Elementy prywatne stanowią wewnętrzne szczegóły implementacji, niedostępne z zewnątrz.
+Możemy zdecydować się na upublicznienie modułów i zawartych w nich elementów, aby zewnętrzny kod mógł je wykorzystywać i być od nich zależny.
 
-As an example, let’s write a library crate that provides the functionality of a
-restaurant. We’ll define the signatures of functions but leave their bodies
-empty to concentrate on the organization of the code, rather than the
-implementation of a restaurant.
+Jako przykład napiszmy skrzynię biblioteczną, dostarczającą funkcjonalność restauracji.
+Zdefiniujemy sygnatury funkcji, ale pozostawimy ich ciała puste, aby skupić się na organizacji kodu, a nie na implementacji restauracji.
 
-In the restaurant industry, some parts of a restaurant are referred to as
-*front of house* and others as *back of house*. Front of house is where
-customers are; this encompasses where the hosts seat customers, servers take
-orders and payment, and bartenders make drinks. Back of house is where the
-chefs and cooks work in the kitchen, dishwashers clean up, and managers do
-administrative work.
+W branży restauracyjnej niektóre części restauracji określane są jako *front of house*, a inne jako *back of house*.
+Front of house to obszar, w którym przebywają klienci; w nim gospodarze sadzają gości, kelnerzy przyjmują zamówienia i płatności, a barmani przygotowują drinki.
+Back of house to miejsca, w których pracują kucharze przygotowujący posiłki, zmywacze myjący naczynia, oraz kierownicy wykonujący prace administracyjne.
 
-To structure our crate in this way, we can organize its functions into nested
-modules. Create a new library named `restaurant` by running `cargo new
-restaurant --lib`; then enter the code in Listing 7-1 into *src/lib.rs* to
-define some modules and function signatures. Here’s the front of house section:
+Aby zorganizować naszą skrzynię zgodnie z powyższym podziałem, uporządkujemy jej funkcjonalności w zagnieżdżonych modułach. 
+Utworzymy nową bibliotekę o nazwie `restaurant`, uruchamiając `cargo new restaurant --lib`; następnie wpiszemy kod z Listingu 7-1 do *src/lib.rs*, aby zdefiniować niektóre moduły i sygnatury funkcji. Oto sekcja frontowa:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
