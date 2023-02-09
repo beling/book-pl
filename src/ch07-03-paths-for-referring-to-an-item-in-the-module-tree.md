@@ -15,7 +15,7 @@ By to uczynić, musimy wpierw odpowiedzieć na pytanie: jaka jest ścieżka do f
 Listing 7-3 obejmuje skrót Listingu 7-1, pozbawiony niektórych modułów i funkcji.
 
 Prezentujemy dwa sposoby wywołania funkcji `add_to_waitlist` z nowej funkcji `eat_at_restaurant` zdefiniowanej w korzeniu skrzyni.
-Ścieżki podane w przykładzie są poprawne, ale mimo to jego skompilowanie nie jest możliwe, ze względu na inny problem.
+Pomimo że ścieżki podane w przykładzie są poprawne, to jego skompilowanie nie jest możliwe, ze względu na inny problem.
 Za chwilę wyjaśnimy jaki.
 
 The `eat_at_restaurant` function is part of our library crate’s public API, so
