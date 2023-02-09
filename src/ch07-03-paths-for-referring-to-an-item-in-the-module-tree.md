@@ -1,29 +1,22 @@
-## Paths for Referring to an Item in the Module Tree
+<!-- ## Paths for Referring to an Item in the Module Tree -->
+## Ścieżki Do Elementów W Drzewie Modułów
 
-To show Rust where to find an item in a module tree, we use a path in the same
-way we use a path when navigating a filesystem. To call a function, we need to
-know its path.
+Podobnie jak podczas nawigowania po systemie plików, elementy w drzewie modułów wskazujemy za pomocą ścieżek. Aby wywołać funkcję, musimy znać do niej ścieżkę.
 
-A path can take two forms:
+Każda ścieżka jest jednego z następujących dwóch rodzajów:
 
-* An *absolute path* is the full path starting from a crate root; for code
-  from an external crate, the absolute path begins with the crate name, and for
-  code from the current crate, it starts with the literal `crate`.
-* A *relative path* starts from the current module and uses `self`, `super`, or
-  an identifier in the current module.
+* *Ścieżka bezwzględna* jest pełną ścieżką startującą od korzenia skrzyni; dla kodu z zewnętrznej skrzyni, notacja ścieżki bezwzględnej zaczyna się od nazwy skrzyni, a dla kodu z bieżącej skrzyni, od słowa `crate`.
+* *Ścieżka względna* startuje z bieżącego modułu i jej zapis zaczyna się od `self`, `super`, lub identyfikatora w bieżącym module.
 
-Both absolute and relative paths are followed by one or more identifiers
-separated by double colons (`::`).
+Zarówno ścieżki bezwzględne jak i względne notujemy za pomocą jednego lub więcej identyfikatorów oddzielonych podwójnymi dwukropkami (`::`).
 
-Returning to Listing 7-1, say we want to call the `add_to_waitlist` function.
-This is the same as asking: what’s the path of the `add_to_waitlist` function?
-Listing 7-3 contains Listing 7-1 with some of the modules and functions
-removed.
+Powróćmy do Listingu 7-1 i załóżmy, że chcemy wywołać funkcję `add_to_waitlist`.
+By to uczynić, musimy wpierw odpowiedzieć na pytanie: jaka jest ścieżka do funkcji `add_to_waitlist`?
+Listing 7-3 obejmuje skrót Listingu 7-1, pozbawiony niektórych modułów i funkcji.
 
-We’ll show two ways to call the `add_to_waitlist` function from a new function
-`eat_at_restaurant` defined in the crate root. These paths are correct, but
-there’s another problem remaining that will prevent this example from compiling
-as-is. We’ll explain why in a bit.
+Prezentujemy dwa sposoby wywołania funkcji `add_to_waitlist` z nowej funkcji `eat_at_restaurant` zdefiniowanej w korzeniu skrzyni.
+Ścieżki podane w przykładzie są poprawne, ale mimo to jego skompilowanie nie jest możliwe, ze względu na inny problem.
+Za chwilę wyjaśnimy jaki.
 
 The `eat_at_restaurant` function is part of our library crate’s public API, so
 we mark it with the `pub` keyword. In the [“Exposing Paths with the `pub`

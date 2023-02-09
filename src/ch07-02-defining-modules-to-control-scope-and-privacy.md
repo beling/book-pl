@@ -92,14 +92,11 @@ Moduł definiujemy za pomocą słowa kluczowego `mod`, po którym następuje naz
 
 Moduły pozwalają na pogrupowanie powiązanych ze sobą definicji i nazwanie relacji pomiędzy nimi.
 Dzięki pogrupowaniu, programiści mogą łatwiej poruszać się po kodzie i nie muszą czytać wszystkiego by odnaleźć interesujące ich definicje.
-Zaś dodający nową funkcjonalność wiedzą, gdzie umieścić swój kod.
+Zaś dodając nową funkcjonalność wiedzą, gdzie umieścić kod.
 
-Earlier, we mentioned that *src/main.rs* and *src/lib.rs* are called crate
-roots. The reason for their name is that the contents of either of these two
-files form a module named `crate` at the root of the crate’s module structure,
-known as the *module tree*.
+Wcześniej wspomnieliśmy, że *src/main.rs* i *src/lib.rs* nazywane są korzeniami skrzyni. Przyczyną nadania im takiej nazwy jest fakt, że zawartość każdego z tych plików konstytuuje moduł o nazwie `crate`, będący korzeniem struktury złożonej z modułów skrzyni, zwanej *drzewem modułów*.
 
-Listing 7-2 shows the module tree for the structure in Listing 7-1.
+Listing 7-2 pokazuje drzewo modułów dla struktury z Listingu 7-1.
 
 ```text
 crate
@@ -113,18 +110,10 @@ crate
          └── take_payment
 ```
 
-<span class="caption">Listing 7-2: The module tree for the code in Listing
-7-1</span>
+<span class="caption">Listing 7-2: Drzewo modułów dla kodu pokazanego na Listingu 7-1</span>
 
-This tree shows how some of the modules nest inside one another; for example,
-`hosting` nests inside `front_of_house`. The tree also shows that some modules
-are *siblings* to each other, meaning they’re defined in the same module;
-`hosting` and `serving` are siblings defined within `front_of_house`. If module
-A is contained inside module B, we say that module A is the *child* of module B
-and that module B is the *parent* of module A. Notice that the entire module
-tree is rooted under the implicit module named `crate`.
+Drzewo to pokazuje w jaki sposób moduły zagnieżdżone są w innych; na przykład, `hosting` jest zagnieżdżony w `front_of_house`. Drzewo ukazuje również, że niektóre moduły są swoim *rodzeństwem*, co oznacza, że są zdefiniowane w tym samym module; `hosting` i `serving` są rodzeństwem zdefiniowanym w `front_of_house`.
+Jeśli moduł A jest zawarty wewnątrz modułu B, mówimy, że moduł A jest *dzieckiem* modułu B oraz, że moduł B jest *rodzicem* modułu A.
+Proszę zauważyć, że korzeniem drzewa modułów jest zdefiniowany domyślnie i niejawnie moduł o nazwie `crate`.
 
-The module tree might remind you of the filesystem’s directory tree on your
-computer; this is a very apt comparison! Just like directories in a filesystem,
-you use modules to organize your code. And just like files in a directory, we
-need a way to find our modules.
+Drzewo modułów przypomina drzewo katalogów w systemie plików na komputerze. Podobnie do katalogów w systemie plików, moduły służą organizacji (w ich przypadku, chodzi o organizację kodu). I analogicznie do plików w katalogach, potrzebujemy sposobu na odnajdywanie naszych modułów.
