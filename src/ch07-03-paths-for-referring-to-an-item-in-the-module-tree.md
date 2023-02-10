@@ -18,34 +18,26 @@ Prezentujemy dwa sposoby wywołania funkcji `add_to_waitlist` z nowej funkcji `e
 Pomimo że ścieżki podane w przykładzie są poprawne, to jego skompilowanie nie jest możliwe, ze względu na inny problem.
 Za chwilę wyjaśnimy jaki.
 
-The `eat_at_restaurant` function is part of our library crate’s public API, so
-we mark it with the `pub` keyword. In the [“Exposing Paths with the `pub`
-Keyword”][pub]<!-- ignore --> section, we’ll go into more detail about `pub`.
+Funkcja `eat_at_restaurant` jest częścią publicznego API naszej skrzyni bibliotecznej, więc oznaczyliśmy ją słowem kluczowym `pub`.
+Bardziej szczegółowo omawiamy to słowo w sekcji ["Exposing Paths with the `pub` Keyword"][pub]<!-- ignore -->.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-03/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-3: Calling the `add_to_waitlist` function using
-absolute and relative paths</span>
+<span class="caption">Listing 7-3: Wywołanie funkcji `add_to_waitlist` przy wykorzystaniu bezwzględnej oraz względnej ścieżki</span>
 
-The first time we call the `add_to_waitlist` function in `eat_at_restaurant`,
-we use an absolute path. The `add_to_waitlist` function is defined in the same
-crate as `eat_at_restaurant`, which means we can use the `crate` keyword to
-start an absolute path. We then include each of the successive modules until we
-make our way to `add_to_waitlist`. You can imagine a filesystem with the same
-structure: we’d specify the path `/front_of_house/hosting/add_to_waitlist` to
-run the `add_to_waitlist` program; using the `crate` name to start from the
-crate root is like using `/` to start from the filesystem root in your shell.
+W pierwszym wywołaniu funkcji `add_to_waitlist` w `eat_at_restaurant`, używamy ścieżki bezwzględnej.
+Ponieważ funkcja `add_to_waitlist` jest zdefiniowana w tej samej skrzyni co `eat_at_restaurant`, to zapis tej ścieżki zaczynamy słowem `crate`.
+Po tym słowie wymieniamy kolejne moduły, aż dotrzemy do `add_to_waitlist`.
+Można sobie wyobrazić system plików o takiej samej strukturze: aby uruchomić program `add_to_waitlist`, podalibyśmy ścieżkę `/front_of_house/hosting/add_to_waitlist`; użycie nazwy `crate` by zacząć od korzenia skrzyni jest jak użycie `/` by zacząć od korzenia systemu plików.
 
-The second time we call `add_to_waitlist` in `eat_at_restaurant`, we use a
-relative path. The path starts with `front_of_house`, the name of the module
-defined at the same level of the module tree as `eat_at_restaurant`. Here the
-filesystem equivalent would be using the path
-`front_of_house/hosting/add_to_waitlist`. Starting with a module name means
-that the path is relative.
+W drugim wywołaniu funkcji `add_to_waitlist` w `eat_at_restaurant`, używamy ścieżki względnej.
+Ścieżka ta zaczyna się od `front_of_house`, czyli nazwy modułu zdefiniowanego na tym samym poziomie drzewa modułów co `eat_at_restaurant`.
+W tym przypadku odpowiednikiem systemu plików byłoby użycie ścieżki `front_of_house/hosting/add_to_waitlist`.
+Rozpoczęcie od nazwy modułu oznacza, że ścieżka jest względna.
 
 Choosing whether to use a relative or absolute path is a decision you’ll make
 based on your project, and depends on whether you’re more likely to move item
