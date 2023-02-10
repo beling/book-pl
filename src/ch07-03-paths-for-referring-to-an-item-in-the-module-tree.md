@@ -36,51 +36,36 @@ Można sobie wyobrazić system plików o takiej samej strukturze: aby uruchomić
 
 W drugim wywołaniu funkcji `add_to_waitlist` w `eat_at_restaurant`, używamy ścieżki względnej.
 Ścieżka ta zaczyna się od `front_of_house`, czyli nazwy modułu zdefiniowanego na tym samym poziomie drzewa modułów co `eat_at_restaurant`.
-W tym przypadku odpowiednikiem systemu plików byłoby użycie ścieżki `front_of_house/hosting/add_to_waitlist`.
+Jej odpowiednikiem w systemie plików byłoba ścieżka `front_of_house/hosting/add_to_waitlist`.
 Rozpoczęcie od nazwy modułu oznacza, że ścieżka jest względna.
 
-Choosing whether to use a relative or absolute path is a decision you’ll make
-based on your project, and depends on whether you’re more likely to move item
-definition code separately from or together with the code that uses the item.
-For example, if we move the `front_of_house` module and the `eat_at_restaurant`
-function into a module named `customer_experience`, we’d need to update the
-absolute path to `add_to_waitlist`, but the relative path would still be valid.
-However, if we moved the `eat_at_restaurant` function separately into a module
-named `dining`, the absolute path to the `add_to_waitlist` call would stay the
-same, but the relative path would need to be updated. Our preference in general
-is to specify absolute paths because it’s more likely we’ll want to move code
-definitions and item calls independently of each other.
+Decyzja czy użyć ścieżki względnej czy bezwzględnej zależy od projektu.
+Od tego, czy bardziej prawdopodobne jest przeniesienie kodu definiującego element osobno czy razem z kodem, który go używa.
+Na przykład, jeśli przeniesiemy moduł `front_of_house` i funkcję `eat_at_restaurant` do modułu o nazwie `customer_experience`, będziemy musieli zaktualizować bezwzględną ścieżkę do `add_to_waitlist`, ale ścieżka względna nadal będzie poprawna.
+Jeśli jednak przeniesiemy samą funkcję `eat_at_restaurant` do modułu o nazwie `dining`, bezwzględna ścieżka do wywołania `add_to_waitlist` pozostanie taka sama, zaś względna ścieżka będzie wymagała uaktualnienia.
+Ogólnie powinniśmy preferować podawanie ścieżek bezwzględnych, ponieważ jest bardziej prawdopodobne, że będziemy chcieli przenieść definicje kodu i wywołania elementów niezależnie od siebie.
 
-Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The
-error we get is shown in Listing 7-4.
+Spróbujmy skompilować Listing 7-3 i dowiedzmy się, dlaczego nie jest to jeszcze możliwe.
+Otrzymany błąd jest pokazany na Listingu 7-4.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
 ```
 
-<span class="caption">Listing 7-4: Compiler errors from building the code in
-Listing 7-3</span>
+<span class="caption">Listing 7-4: Błędy kompilatora otrzymane podczas próby zbudowania kodu z Listing 7-3</span>
 
-The error messages say that module `hosting` is private. In other words, we
-have the correct paths for the `hosting` module and the `add_to_waitlist`
-function, but Rust won’t let us use them because it doesn’t have access to the
-private sections. In Rust, all items (functions, methods, structs, enums,
-modules, and constants) are private to parent modules by default. If you want
-to make an item like a function or struct private, you put it in a module.
+Komunikaty błędów mówią, że moduł `hosting` jest prywatny.
+Innymi słowy, mamy poprawne ścieżki do modułu `hosting` i funkcji `add_to_waitlist`, ale Rust nie pozwoli nam ich użyć, ponieważ nie ma dostępu do prywatnych sekcji.
+W Ruście wszystkie elementy (funkcje, metody, strukty, enumy, moduły i stałe) są domyślnie prywatne, niedostępne dla modułów nadrzędnych.
+Dlatego by uczynić element taki jak funkcja lub struktura prywatnym, wystarczy umieścić go w module.
 
-Items in a parent module can’t use the private items inside child modules, but
-items in child modules can use the items in their ancestor modules. This is
-because child modules wrap and hide their implementation details, but the child
-modules can see the context in which they’re defined. To continue with our
-metaphor, think of the privacy rules as being like the back office of a
-restaurant: what goes on in there is private to restaurant customers, but
-office managers can see and do everything in the restaurant they operate.
+Elementy w module nadrzędnym nie mogą używać prywatnych elementów wewnątrz modułów podrzędnych, ale elementy w modułach podrzędnych mogą używać elementów w swoich modułach nadrzędnych.
+Dzieje się tak dlatego, że moduły podrzędne opakowują i ukrywają swoje szczegóły implementacji, ale moduły podrzędne widzą kontekst, w którym są zdefiniowane.
+Kontynuując naszą metaforę, pomyślmy o zasadach prywatności jak o zapleczu restauracji: to, co się tam dzieje, jest prywatne, niedostępne dla klientów restauracji. Ale menedżerowie biura mogą zobaczyć i zrobić wszystko w restauracji, którą prowadzą.
 
-Rust chose to have the module system function this way so that hiding inner
-implementation details is the default. That way, you know which parts of the
-inner code you can change without breaking outer code. However, Rust does give
-you the option to expose inner parts of child modules’ code to outer ancestor
-modules by using the `pub` keyword to make an item public.
+System modułów w Ruście ukrywa domyślnie wewnętrzne szczegóły implementacji.
+Dzięki temu wiadomo, które części wewnętrznego kodu można bezpiecznie zmienić, nie psując przy tym kodu zewnętrznego.
+Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element i tym samym udostępnić nadrzędnym modułom część wewnętrznego kodu zawartego w module podrzędnym.
 
 ### Exposing Paths with the `pub` Keyword
 
