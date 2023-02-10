@@ -65,49 +65,41 @@ Kontynuując naszą metaforę, pomyślmy o zasadach prywatności jak o zapleczu 
 
 System modułów w Ruście ukrywa domyślnie wewnętrzne szczegóły implementacji.
 Dzięki temu wiadomo, które części wewnętrznego kodu można bezpiecznie zmienić, nie psując przy tym kodu zewnętrznego.
-Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element, tym samym udostępniając nadrzędnym modułom część wewnętrznego kodu zawartego w module podrzędnym.
+Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element, tym samym udostępniając nadrzędnym modułom część wewnętrznego kodu z modułu podrzędnego.
 
-### Exposing Paths with the `pub` Keyword
+<!-- ### Exposing Paths with the `pub` Keyword -->
+### Eksponowanie Ścieżek Za Pomocą Słowa Kluczowego `pub`.
 
-Let’s return to the error in Listing 7-4 that told us the `hosting` module is
-private. We want the `eat_at_restaurant` function in the parent module to have
-access to the `add_to_waitlist` function in the child module, so we mark the
-`hosting` module with the `pub` keyword, as shown in Listing 7-5.
+Wróćmy do błędu z Listingu 7-4, który mówił, że moduł `hosting` jest prywatny.
+Chcemy, aby funkcja `eat_at_restaurant` w module nadrzędnym miała dostęp do funkcji `add_to_waitlist` w module podrzędnym.
+Dlatego oznaczamy moduł `hosting` słowem kluczowym `pub`, co pokazano na listingu 7-5.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-5: Declaring the `hosting` module as `pub` to
-use it from `eat_at_restaurant`</span>
+<span class="caption">Listing 7-5: Deklarowanie modułu `hosting` jako `pub` by użyć go z `eat_at_restaurant`</span>
 
-Unfortunately, the code in Listing 7-5 still results in an error, as shown in
-Listing 7-6.
+Niestety, próba skompilowania kodu z Listingu 7-5 nadal kończy się błędem, co pokazano na Listingu 7-6.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
 ```
 
-<span class="caption">Listing 7-6: Compiler errors from building the code in
-Listing 7-5</span>
+<span class="caption">Listing 7-6: Błędy kompilatora przy budowaniu kodu z Listing 7-5</span>
 
-What happened? Adding the `pub` keyword in front of `mod hosting` makes the
-module public. With this change, if we can access `front_of_house`, we can
-access `hosting`. But the *contents* of `hosting` are still private; making the
-module public doesn’t make its contents public. The `pub` keyword on a module
-only lets code in its ancestor modules refer to it, not access its inner code.
-Because modules are containers, there’s not much we can do by only making the
-module public; we need to go further and choose to make one or more of the
-items within the module public as well.
+Co się stało? Dodanie słowa kluczowego `pub` przed `mod hosting` upublicznia moduł.
+Dzięki tej zmianie, jeśli mamy dostęp do `front_of_house`, to mamy też dostęp do `hosting`.
+Ale *zawartość* `hosting` nadal jest prywatna; upublicznienie modułu nie upublicznia jego zawartości.
+Słowo kluczowe `pub` dla modułu pozwala jedynie na odwołanie się do niego przez kod w modułach nadrzędnych, a nie na dostęp do jego wewnętrznego kodu.
+Ponieważ moduły są kontenerami, nie wystarczy upublicznić jedynie modułu; należy pójść dalej i zdecydować się na upublicznienie jednego lub więcej elementów z jego wnętrza.
 
-The errors in Listing 7-6 say that the `add_to_waitlist` function is private.
-The privacy rules apply to structs, enums, functions, and methods as well as
-modules.
+Błędy na listingu 7-6 mówią, że funkcja `add_to_waitlist` jest prywatna.
+Tak samo jak modułów, zasady prywatności dotyczą również struktur, typów wyliczeniowych, funkcji i metod.
 
-Let’s also make the `add_to_waitlist` function public by adding the `pub`
-keyword before its definition, as in Listing 7-7.
+Upublicznijmy również funkcję `add_to_waitlist`, dodając przed jej definicją słowo kluczowe `pub`, jak na listingu 7-7.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -115,38 +107,24 @@ keyword before its definition, as in Listing 7-7.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-7: Adding the `pub` keyword to `mod hosting`
-and `fn add_to_waitlist` lets us call the function from
-`eat_at_restaurant`</span>
+<span class="caption">Listing 7-7: Dodanie słowa kluczowego `pub` do `mod hosting` i `fn add_to_waitlist` pozwala nam wywołać tę funkcję z `eat_at_restaurant`</span>
 
-Now the code will compile! To see why adding the `pub` keyword lets us use
-these paths in `add_to_waitlist` with respect to the privacy rules, let’s look
-at the absolute and the relative paths.
+Teraz kod się kompiluje! Aby zobaczyć dlaczego dodanie słowa kluczowego `pub` spowodowało, że można użyć ścieżek zawartych w `eat_at_restaurant` z poszanowaniem reguł prywatności, przeanalizujmy ścieżki bezwzględne i względne.
 
-In the absolute path, we start with `crate`, the root of our crate’s module
-tree. The `front_of_house` module is defined in the crate root. While
-`front_of_house` isn’t public, because the `eat_at_restaurant` function is
-defined in the same module as `front_of_house` (that is, `eat_at_restaurant`
-and `front_of_house` are siblings), we can refer to `front_of_house` from
-`eat_at_restaurant`. Next is the `hosting` module marked with `pub`. We can
-access the parent module of `hosting`, so we can access `hosting`. Finally, the
-`add_to_waitlist` function is marked with `pub` and we can access its parent
-module, so this function call works!
+Nasza ścieżka bezwzględna zaczyna się od `crate`, czyli korzenia drzewa modułów naszej skrzyni.
+Moduł `front_of_house` jest zdefiniowany w korzeniu skrzyni.
+Mimo że `front_of_house` nie jest publiczny, to ponieważ funkcja `eat_at_restaurant` jest zdefiniowana w tym samym module co `front_of_house` (czyli `eat_at_restaurant` i `front_of_house` są rodzeństwem), możemy odwoływać się do `front_of_house` z `eat_at_restaurant`.
+Następny jest moduł `hosting` oznaczony symbolem `pub`.
+A ponieważ możemy uzyskać dostęp do modułu nadrzędnego w stosunku do `hosting`, to możemy też uzyskać dostęp do `hosting`.
+Ostatecznie, ponieważ funkcja `add_to_waitlist` jest oznaczona jako `pub` i możemy uzyskać dostęp do jej modułu nadrzędnego, to mamy prawo ją wywołać!
 
-In the relative path, the logic is the same as the absolute path except for the
-first step: rather than starting from the crate root, the path starts from
-`front_of_house`. The `front_of_house` module is defined within the same module
-as `eat_at_restaurant`, so the relative path starting from the module in which
-`eat_at_restaurant` is defined works. Then, because `hosting` and
-`add_to_waitlist` are marked with `pub`, the rest of the path works, and this
-function call is valid!
+W przypadku ścieżki względnej, logika jest taka sama jak w przypadku ścieżki bezwzględnej, z wyjątkiem pierwszego kroku: zamiast zaczynać od korzenia skrzyni, ścieżka zaczyna się od `front_of_house`.
+Rozpoczęcie ścieżki względnej od modułu, w którym zdefiniowany jest `eat_at_restaurant` (a tak jest w przypadku `front_of_house`) oczywiście zadziała.
+Następnie, ponieważ `hosting` i `add_to_waitlist` są oznaczone jako `pub`, to reszta ścieżki również zadziała, tak jak i samo wywołanie funkcji!
 
-If you plan on sharing your library crate so other projects can use your code,
-your public API is your contract with users of your crate that determines how
-they can interact with your code. There are many considerations around managing
-changes to your public API to make it easier for people to depend on your
-crate. These considerations are out of the scope of this book; if you’re
-interested in this topic, see [The Rust API Guidelines][api-guidelines].
+Jeśli planujesz udostępnić swoją skrzynię biblioteczną, aby inne projekty mogły korzystać z twojego kodu, twoje publiczne API jest umową z użytkownikami skrzyni, która określa, w jaki sposób mogą oni korzystać z twojego kodu.
+Jest wiele aspektów dotyczących zarządzania zmianami w publicznym API tak, by ułatwić utrzymanie od niego zależności.
+Rozważania na ich temat wykraczają jednak poza zakres tej książki; zainteresowanych tym tematem odsyłamy do [The Rust API Guidelines][api-guidelines].
 
 > #### Best Practices for Packages with a Binary and a Library
 >
