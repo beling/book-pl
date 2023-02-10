@@ -65,7 +65,7 @@ Kontynuując naszą metaforę, pomyślmy o zasadach prywatności jak o zapleczu 
 
 System modułów w Ruście ukrywa domyślnie wewnętrzne szczegóły implementacji.
 Dzięki temu wiadomo, które części wewnętrznego kodu można bezpiecznie zmienić, nie psując przy tym kodu zewnętrznego.
-Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element i tym samym udostępnić nadrzędnym modułom część wewnętrznego kodu zawartego w module podrzędnym.
+Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element, tym samym udostępniając nadrzędnym modułom część wewnętrznego kodu zawartego w module podrzędnym.
 
 ### Exposing Paths with the `pub` Keyword
 
