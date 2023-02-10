@@ -126,51 +126,36 @@ Jeśli planujesz udostępnić swoją skrzynię biblioteczną, aby inne projekty 
 Jest wiele aspektów dotyczących zarządzania zmianami w publicznym API tak, by ułatwić utrzymanie od niego zależności.
 Rozważania na ich temat wykraczają jednak poza zakres tej książki; zainteresowanych tym tematem odsyłamy do [The Rust API Guidelines][api-guidelines].
 
-> #### Best Practices for Packages with a Binary and a Library
+> #### Pakiety z Programami i Bibliotekami - Najlepsze Praktyki
 >
-> We mentioned a package can contain both a *src/main.rs* binary crate root as
-> well as a *src/lib.rs* library crate root, and both crates will have the
-> package name by default. Typically, packages with this pattern of containing
-> both a library and a binary crate will have just enough code in the binary
-> crate to start an executable that calls code with the library crate. This
-> lets other projects benefit from the most functionality that the package
-> provides, because the library crate’s code can be shared.
+> Wspomnieliśmy, że pakiet może równocześnie zawierać zarówno korzeń skrzyni binarnej *src/main.rs* jak i korzeń skrzyni bibliotecznej *src/lib.rs*, i obie skrzynie będą miały domyślnie nazwę pakietu.
+> Zazwyczaj takie pakiety w skrzyni binarnej będą miały jedynie kod niezbędny do uruchomienia programu wykonywalnego i wywołania kodu ze skrzyni bibliotecznej.
+> Dzięki temu inne projekty będą mogły wykorzystać prawie całą funkcjonalność zapewnianą przez pakiet, ponieważ kod skrzyni bibliotecznej może być współdzielony.
 >
-> The module tree should be defined in *src/lib.rs*. Then, any public items can
-> be used in the binary crate by starting paths with the name of the package.
-> The binary crate becomes a user of the library crate just like a completely
-> external crate would use the library crate: it can only use the public API.
-> This helps you design a good API; not only are you the author, you’re also a
-> client!
+> Drzewo modułów powinno być zdefiniowane w *src/lib.rs*.
+> Wtedy skrzynia binarna będzie miała dostęp do wszystkich jego publiczne elementów, rozpoczynając ich ścieżki od nazwy pakietu.
+> Skrzynia binarna może użytkować skrzynię biblioteczną na takich samych zasadach jak skrzynia całkowicie zewnętrzna, tj. może korzystać tylko z publicznego interfejsu API.
+> To pomaga zaprojektować dobry interfejs API; jesteś nie tylko jego autorem, ale także użytkownikiem!
 >
-> In [Chapter 12][ch12]<!-- ignore -->, we’ll demonstrate this organizational
-> practice with a command-line program that will contain both a binary crate
-> and a library crate.
+> W [rozdziale 12][ch12]<!-- ignore --> zademonstrujemy taką organizację na przykładzie programu wiersza poleceń.
 
-### Starting Relative Paths with `super`
+<!-- ### Starting Relative Paths with `super` -->
+### Rozpoczynanie Ścieżek Względnych Od `super`
 
-We can construct relative paths that begin in the parent module, rather than
-the current module or the crate root, by using `super` at the start of the
-path. This is like starting a filesystem path with the `..` syntax. Using
-`super` allows us to reference an item that we know is in the parent module,
-which can make rearranging the module tree easier when the module is closely
-related to the parent, but the parent might be moved elsewhere in the module
-tree someday.
+Możemy skonstruować względne ścieżki, które zaczynają się w module nadrzędnym, a nie w bieżącym lub korzeniu skrzyni, poprzez użycie `super` na początku ścieżki.
+To tak jakby rozpocząć ścieżkę systemu plików od `..`.
+Użycie `super` pozwala odwołać się do elementu znajdującego się w module nadrzędnym i ułatwia modyfikację drzewa modułów, gdy moduł jest ściśle związany z rodzicem, którego chcemy przenieść w inne miejsce drzewa.
 
-Consider the code in Listing 7-8 that models the situation in which a chef
-fixes an incorrect order and personally brings it out to the customer. The
-function `fix_incorrect_order` defined in the `back_of_house` module calls the
-function `deliver_order` defined in the parent module by specifying the path to
-`deliver_order` starting with `super`:
+Rozważmy kod z Listingu 7-8, który modeluje sytuację, w której szef kuchni naprawia błędne zamówienie i osobiście przynosi je klientowi.
+Funkcja `fix_incorrect_order` zdefiniowana w module `back_of_house` wywołuje funkcję `deliver_order` zdefiniowaną w module nadrzędnym, rozpoczynając ścieżkę do `deliver_order` od `super`:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-08/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-8: Calling a function using a relative path
-starting with `super`</span>
+<span class="caption">Listing 7-8: Wywołanie funkcji przy użyciu ścieżki względnej zaczynającej się od `super`</span>
 
 The `fix_incorrect_order` function is in the `back_of_house` module, so we can
 use `super` to go to the parent module of `back_of_house`, which in this case
