@@ -52,13 +52,11 @@ Patrząc na Listing 7-11, można się zastanawiać, dlaczego zdefiniowaliśmy `u
 
 <span class="caption">Listing 7-13: Nieidiomatyczne włączenie w zasięg funkcji `add_to_waitlist` za pomocą `use`</span>
 
-Although both Listing 7-11 and 7-13 accomplish the same task, Listing 7-11 is
-the idiomatic way to bring a function into scope with `use`. Bringing the
-function’s parent module into scope with `use` means we have to specify the
-parent module when calling the function. Specifying the parent module when
-calling the function makes it clear that the function isn’t locally defined
-while still minimizing repetition of the full path. The code in Listing 7-13 is
-unclear as to where `add_to_waitlist` is defined.
+Działanie kodu na obu listingach, 7-11 i 7-13, jest takie samo.
+Jednakże tylko listing 7-11 pokazuje idiomatyczne wykorzystanie `use` do włączenia funkcji w zasięg.
+Włączenie do zasięgu jej modułu nadrzędnego sprawia, że wywołując tę funkcję musimy podać nazwę jej modułu.
+To zaś jasno mówi, iż funkcja ta nie jest zdefiniowana lokalnie, a jednocześnie ogranicza konieczność podawania pełnej ścieżki.
+Dla odmiany kod na listingu 7-13 jest niejasny co do miejsca, w którym zdefiniowano `add_to_waitlist`.
 
 On the other hand, when bringing in structs, enums, and other items with `use`,
 it’s idiomatic to specify the full path. Listing 7-14 shows the idiomatic way
