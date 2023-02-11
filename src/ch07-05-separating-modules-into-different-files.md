@@ -31,14 +31,9 @@ Kompilator wie, że ma szukać kodu w tym pliku, ponieważ natrafił w korzeniu 
 
 <span class="caption">Listing 7-22: Definicje wewnątrz modułu `front_of_house` w *src/front_of_house.rs*</span>
 
-Note that you only need to load a file using a `mod` declaration *once* in your
-module tree. Once the compiler knows the file is part of the project (and knows
-where in the module tree the code resides because of where you’ve put the `mod`
-statement), other files in your project should refer to the loaded file’s code
-using a path to where it was declared, as covered in the [“Paths for Referring
-to an Item in the Module Tree”][paths]<!-- ignore --> section. In other words,
-`mod` is *not* an “include” operation that you may have seen in other
-programming languages.
+Warto zauważyć, że plik za pomocą deklaracji `mod` wystarczy załadować w *jednym miejscu* drzewa modułów.
+Kiedy kompilator wie, że plik jest częścią projektu (i wie gdzie w drzewie modułów rezyduje kod, ponieważ umieszczono tam deklarację `mod`), inne pliki w projekcie powinny odwoływać się do kodu załadowanego z pliku używając ścieżki do miejsca, w którym został zadeklarowany, tak jak to zostało opisane w sekcji [„Paths for Referring to an Item in the Module Tree“][paths]<!-- ignore -->.
+Innymi słowy, `mod` *nie* jest operacją „include“, którą można spotkać w innych językach programowania.
 
 Next, we’ll extract the `hosting` module to its own file. The process is a bit
 different because `hosting` is a child module of `front_of_house`, not of the
