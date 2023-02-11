@@ -106,15 +106,11 @@ Więc w takim przypadku wybór zależy jedynie od naszych osobistych preferencji
 <!-- ### Re-exporting Names with `pub use` -->
 ### Re-eksportowanie Nazw Za Pomocą `pub use`
 
-When we bring a name into scope with the `use` keyword, the name available in
-the new scope is private. To enable the code that calls our code to refer to
-that name as if it had been defined in that code’s scope, we can combine `pub`
-and `use`. This technique is called *re-exporting* because we’re bringing
-an item into scope but also making that item available for others to bring into
-their scope.
+Kiedy za pomocą słowa kluczowego `use` włączamy nazwę w zasięg, to w nowym zasięgu jest ona prywatna.
+Aby kodowi wywołującemu nasz kod umożliwić odwołanie się do tej nazwy tak, jakby była zdefiniowana w jego zasięgu, możemy połączyć `pub` i `use`. 
+Technika ta nazywana jest *reeksportem*, ponieważ wprowadzamy element w zasięg, ale również udostępniamy ten element innym, by mogli go włączyć w swój zasięg.
 
-Listing 7-17 shows the code in Listing 7-11 with `use` in the root module
-changed to `pub use`.
+Listing 7-17 pokazuje kod z Listingu 7-11 z zmienionym `use` w module głównym na `pub use`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -122,32 +118,23 @@ changed to `pub use`.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-17: Making a name available for any code to use
-from a new scope with `pub use`</span>
+<span class="caption">Listing 7-17: Wykorzystanie `pub use` by udostępnić nazwę do użycia przez dowolny kod z nowego zasięgu</span>
 
-Before this change, external code would have to call the `add_to_waitlist`
-function by using the path
-`restaurant::front_of_house::hosting::add_to_waitlist()`. Now that this `pub
-use` has re-exported the `hosting` module from the root module, external code
-can now use the path `restaurant::hosting::add_to_waitlist()` instead.
+Przed zmianą, zewnętrzny kod, by wywołać funkcję `add_to_waitlist`, musiałby użyć ścieżki
+`restaurant::front_of_house::hosting::add_to_waitlist()`.
+Po zmianie, gdy `pub use` reeksportował moduł `hosting` z modułu głównego, zewnętrzny kod może w zamian użyć ścieżki `restaurant::hosting::add_to_waitlist()`.
 
-Re-exporting is useful when the internal structure of your code is different
-from how programmers calling your code would think about the domain. For
-example, in this restaurant metaphor, the people running the restaurant think
-about “front of house” and “back of house.” But customers visiting a restaurant
-probably won’t think about the parts of the restaurant in those terms. With
-`pub use`, we can write our code with one structure but expose a different
-structure. Doing so makes our library well organized for programmers working on
-the library and programmers calling the library. We’ll look at another example
-of `pub use` and how it affects your crate’s documentation in the [“Exporting a
-Convenient Public API with `pub use`”][ch14-pub-use]<!-- ignore --> section of
-Chapter 14.
+Reeksportowanie jest przydatne, gdy wewnętrzna struktura twojego kodu różni się od tego, jak wywołujący go programiści postrzegają jego domenę.
+Na przykład w naszej metaforze restauracyjnej, ludzie prowadzący restaurację dzielą ją na "front of house" i "back of house".
+Ale klienci odwiedzający restaurację prawdopodobnie nie będą myśleć o częściach restauracji w ten sam sposób.
+Dzięki `pub use`, możemy napisać nasz kod korzystając z innej struktury, od tej, którą ujawnimy.
+Czynimy to, by nasza biblioteka była dobrze zorganizowana zarówno dla programistów pracujących nad nią, jak i tych ją wywołujących.
+Przyjrzymy się innemu przykładowi `pub use` i temu, jak wpływa on na dokumentację skrzyni w sekcji ["Eksportowanie Wygodnego Publicznego API Za Pomocą `pub use`"][ch14-pub-use]<!-- ignore --> rozdziału 14.
 
-### Using External Packages
+<!-- ### Using External Packages -->
+### Używanie Pakietów Zewnętrznych
 
-In Chapter 2, we programmed a guessing game project that used an external
-package called `rand` to get random numbers. To use `rand` in our project, we
-added this line to *Cargo.toml*:
+W rozdziale 2 zaprogramowaliśmy grę w zgadywanie, która wykorzystywała zewnętrzny pakiet o nazwie `rand` do uzyskiwania liczb losowych. Aby użyć `rand` w naszym projekcie, dodaliśmy następującą linię do *Cargo.toml*:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -155,15 +142,13 @@ added this line to *Cargo.toml*:
 * ch14-03-cargo-workspaces.md
 -->
 
-<span class="filename">Filename: Cargo.toml</span>
+<span class="filename">Plik: Cargo.toml</span>
 
 ```toml
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Adding `rand` as a dependency in *Cargo.toml* tells Cargo to download the
-`rand` package and any dependencies from [crates.io](https://crates.io/) and
-make `rand` available to our project.
+Dodanie `rand` jako zależności w *Cargo.toml* spowoduje, że Cargo pobierze pakiet `rand` wraz ze wszystkimi jego zależnościami z [crates.io](https://crates.io/) i udostępni `rand` naszemu projektowi.
 
 Then, to bring `rand` definitions into the scope of our package, we added a
 `use` line starting with the name of the crate, `rand`, and listed the items
