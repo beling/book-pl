@@ -157,74 +157,56 @@ Funkcja `fix_incorrect_order` zdefiniowana w module `back_of_house` wywołuje fu
 
 <span class="caption">Listing 7-8: Wywołanie funkcji przy użyciu ścieżki względnej zaczynającej się od `super`</span>
 
-The `fix_incorrect_order` function is in the `back_of_house` module, so we can
-use `super` to go to the parent module of `back_of_house`, which in this case
-is `crate`, the root. From there, we look for `deliver_order` and find it.
-Success! We think the `back_of_house` module and the `deliver_order` function
-are likely to stay in the same relationship to each other and get moved
-together should we decide to reorganize the crate’s module tree. Therefore, we
-used `super` so we’ll have fewer places to update code in the future if this
-code gets moved to a different module.
+Funkcja `fix_incorrect_order` znajduje się w module `back_of_house`.
+Za pomocą `super` osiągamy jego modułu nadrzędny, którym w tym przypadku jest `crate`, czyli korzeń.
+W nim zaś odnajdujemy `deliver_order`.
+Sukces!!! Zakładamy, że podczas ewentualnej reorganizację drzewa modułów skrzyni, moduł `back_of_house` i funkcja `deliver_order` prawdopodobnie zachowają względem siebie tę samą relację i zostaną przeniesione razem.
+Dlatego użyliśmy `super`, abyśmy mieli mniej miejsc do zaktualizowania, jeśli ten kod zostanie przeniesiony w przyszłości do innego modułu.
 
-### Making Structs and Enums Public
+### Upublicznianie Struktur i Typów Wyliczeniowych
 
-We can also use `pub` to designate structs and enums as public, but there are a
-few details extra to the usage of `pub` with structs and enums. If we use `pub`
-before a struct definition, we make the struct public, but the struct’s fields
-will still be private. We can make each field public or not on a case-by-case
-basis. In Listing 7-9, we’ve defined a public `back_of_house::Breakfast` struct
-with a public `toast` field but a private `seasonal_fruit` field. This models
-the case in a restaurant where the customer can pick the type of bread that
-comes with a meal, but the chef decides which fruit accompanies the meal based
-on what’s in season and in stock. The available fruit changes quickly, so
-customers can’t choose the fruit or even see which fruit they’ll get.
+Możemy również użyć `pub` by oznaczyć struktury i enumy jako publiczne.
+Wiążą się z tym jednak pewne dodatkowe szczegóły.
+Jeśli użyjemy `pub` przed definicją struktury, uczynimy ją publiczną, ale jej pola pozostaną prywatne.
+W zależności od potrzeb, możemy uczynić każde z pól publicznym lub nie.
+Na listingu 7-9 zdefiniowano publiczną strukturę `back_of_house::Breakfast`, której pole `toast` jest publiczne, zaś `seasonal_fruit` prywatne.
+To modeluje restaurację, w której klient może wybrać rodzaj dołączonego do posiłku chleba, ale szef kuchni decyduje o tym, jakie owoce towarzyszą posiłkowi na podstawie tego, co akurat jest w sezonie i na stanie.
+Dostępne owoce często się zmieniają, więc klienci nie mogą ich wybrać, ani nawet zobaczyć, jakie owoce dostaną.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-09/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-9: A struct with some public fields and some
-private fields</span>
+<span class="caption">Listing 7-9: Struktura, której część pól jest publiczna, zaś część prywatna</span>
 
-Because the `toast` field in the `back_of_house::Breakfast` struct is public,
-in `eat_at_restaurant` we can write and read to the `toast` field using dot
-notation. Notice that we can’t use the `seasonal_fruit` field in
-`eat_at_restaurant` because `seasonal_fruit` is private. Try uncommenting the
-line modifying the `seasonal_fruit` field value to see what error you get!
+Ponieważ w strukturze `back_of_house::Breakfast`, pole `toast` jest publiczne, to w `eat_at_restaurant` jest ono dostępne do zapisu i odczyt przy użyciu notacji kropkowej.
+Równocześnie nie możemy użyć pola `seasonal_fruit` w `eat_at_restaurant`, ponieważ jest ono prywatne.
+Proszę spróbować odkomentować linię modyfikującą wartość pola `seasonal_fruit` i zobaczyć do jakiego błędu to doprowadzi!
 
-Also, note that because `back_of_house::Breakfast` has a private field, the
-struct needs to provide a public associated function that constructs an
-instance of `Breakfast` (we’ve named it `summer` here). If `Breakfast` didn’t
-have such a function, we couldn’t create an instance of `Breakfast` in
-`eat_at_restaurant` because we couldn’t set the value of the private
-`seasonal_fruit` field in `eat_at_restaurant`.
+Inaczej jest w przypadku typów wyliczeniowych.
+Jeśli uczynimy enum publicznym, to wszystkie jego warianty także staną się publiczne.
+Wystarczy postawić `pub` przed słowem kluczowym `enum`, tak jak pokazano na Listingu 7-10.
 
-In contrast, if we make an enum public, all of its variants are then public. We
-only need the `pub` before the `enum` keyword, as shown in Listing 7-10.
-
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-10: Designating an enum as public makes all its
-variants public</span>
+<span class="caption">Listing 7-10: Oznaczenie enum jako publicznego, upublicznia też wszystkie jego warianty</span>
 
-Because we made the `Appetizer` enum public, we can use the `Soup` and `Salad`
-variants in `eat_at_restaurant`.
+Ponieważ upubliczniliśmy enum `Appetizer`, to możemy używać wariantów `Soup` i `Salad` w `eat_at_restaurant`.
 
-Enums aren’t very useful unless their variants are public; it would be annoying
-to have to annotate all enum variants with `pub` in every case, so the default
-for enum variants is to be public. Structs are often useful without their
-fields being public, so struct fields follow the general rule of everything
-being private by default unless annotated with `pub`.
+Typ wyliczeniowy, którego nie wszystkie warianty byłyby publiczne, nie byłyby zbyt użyteczny.
+Równocześnie byłoby denerwujące, gdybyśmy musieli za każdym razem opatrywać wszystkie warianty enuma adnotacją `pub`.
+Dlatego domyślnie warianty enuma są publiczne.
+Inaczej jest ze strukturami, które często są użyteczne, pomimo że ich pola nie są publiczne.
+Dlatego pola struktury podążają za ogólną zasadą, że wszystko jest domyślnie prywatne, chyba że opatrzone jest adnotacją `pub`.
 
-There’s one more situation involving `pub` that we haven’t covered, and that is
-our last module system feature: the `use` keyword. We’ll cover `use` by itself
-first, and then we’ll show how to combine `pub` and `use`.
+Jest jeszcze jedna nieomówiona kwestia związana z `pub`, która związana jest z ostatnią funkcjonalnością systemu modułów pozostałą do opisania, czyli ze słowem kluczowym `use`.
+Najpierw omówimy `use` samo w sobie, a następnie pokażemy jak połączyć `pub` i `use`.
 
 [pub]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
 [api-guidelines]: https://rust-lang.github.io/api-guidelines/
