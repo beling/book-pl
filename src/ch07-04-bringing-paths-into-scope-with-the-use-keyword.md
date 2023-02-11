@@ -84,30 +84,27 @@ Listing 7-15 pokazuje, jak włączyć w zasięg i odwoływać się do dwóch typ
 <span class="caption">Listing 7-15: Wprowadzenie w ten sam zasięg dwóch typów o tej samej nazwie wymaga określania ich przy użyciu ich modułów nadrzędnych.</span>
 
 Jak widać, używanie modułów nadrzędnych pozwala rozróżnić dwa typy `Result`.
-Gdybyśmy zamiast tego określili `use std::fmt::Result` i `use std::io::Result`, mielibyśmy w tym samym zasięgu dwa różne typy `Result` i Rust nie wiedziałby, który z nich mamy na myśli, gdy piszemy `Result`.
+Gdybyśmy zamiast tego napisali `use std::fmt::Result` i `use std::io::Result`, mielibyśmy w tym samym zasięgu dwa różne typy `Result` i Rust nie wiedziałby, który z nich mamy na myśli, gdy piszemy `Result`.
 
-### Providing New Names with the `as` Keyword
+<!-- ### Providing New Names with the `as` Keyword -->
+### Nadawanie Nowych Nazw Za Pomocą Słowa Kluczowego `as`
 
-There’s another solution to the problem of bringing two types of the same name
-into the same scope with `use`: after the path, we can specify `as` and a new
-local name, or *alias*, for the type. Listing 7-16 shows another way to write
-the code in Listing 7-15 by renaming one of the two `Result` types using `as`.
+Istnieje też inne rozwiązanie problemu wprowadzania dwóch typów o tej samej nazwie w ten sam zasięg za pomocą `use`: po ścieżce możemy podać `as` i nową nazwę lokalną, *alias* dla typu. Listing 7-16 pokazuje kod równoważny temu z Listingu 7-15, ale wykorzystujący zmianę nazwy jednego z dwóch typów `Result` przy użyciu `as`.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-16/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 7-16: Renaming a type when it’s brought into
-scope with the `as` keyword</span>
+<span class="caption">Listing 7-16: Zmiana nazwy typu za pomocą słowa kluczowego `as`, gdy jest on włączany w zasięg</span>
 
-In the second `use` statement, we chose the new name `IoResult` for the
-`std::io::Result` type, which won’t conflict with the `Result` from `std::fmt`
-that we’ve also brought into scope. Listing 7-15 and Listing 7-16 are
-considered idiomatic, so the choice is up to you!
+W drugiej deklaracji `use` typowi `std::io::Result` nadajemy nową nazwę `IoResult`, niekolidującą z nazwą `Result` z `std::fmt`, którą również włączamy w ten sam zasięg.
+Kod pokazany na obu listingach, 7-15 i 7-16, uważany jest za idiomatyczny.
+Więc w takim przypadku wybór zależy jedynie od naszych osobistych preferencji!
 
-### Re-exporting Names with `pub use`
+<!-- ### Re-exporting Names with `pub use` -->
+### Re-eksportowanie Nazw Za Pomocą `pub use`
 
 When we bring a name into scope with the `use` keyword, the name available in
 the new scope is private. To enable the code that calls our code to refer to
