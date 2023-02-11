@@ -1,5 +1,5 @@
 <!-- ## Concise Control Flow with `if let` -->
-## Zwięzła Kontrola Przepływu z `if let`.
+## Zwięzła Kontrola Przepływu z `if let`
 
 Składnia `if let` łączy `if` i `let`, by obsłużyć wartości pasujące do wzorca. Składnia ta jest zwięzła, ale (bez powtarzania `if let`) pozwala podać tylko jeden wzorzec.
 Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_max` typu `Option<u8>`, ale chce wykonać kod tylko jeśli ta wartość jest wariantem `Some`.

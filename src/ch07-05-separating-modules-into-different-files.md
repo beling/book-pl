@@ -1,4 +1,4 @@
-## Separating Modules into Different Files
+## Umieszczanie Modułów w Osobnych Plikach
 
 So far, all the examples in this chapter defined multiple modules in one file.
 When modules get large, you might want to move their definitions to a separate

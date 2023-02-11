@@ -32,17 +32,17 @@
 
 - [Wyliczenia i dopasowywanie wzorców](ch06-00-enums.md)
     - [Definiowanie wyliczeń](ch06-01-defining-an-enum.md)
-    - [The `match` Control Flow Construct](ch06-02-match.md)
-    - [Concise Control Flow with `if let`](ch06-03-if-let.md)
+    - [Konstrukcja Przepływu Sterowania `match`](ch06-02-match.md)
+    - [Zwięzła Kontrola Przepływu z `if let`](ch06-03-if-let.md)
 
 ## Podstawowe umiejętności w Ruście
 
-- [Managing Growing Projects with Packages, Crates, and Modules](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
-    - [Packages and Crates](ch07-01-packages-and-crates.md)
-    - [Defining Modules to Control Scope and Privacy](ch07-02-defining-modules-to-control-scope-and-privacy.md)
-    - [Paths for Referring to an Item in the Module Tree](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
-    - [Bringing Paths Into Scope with the `use` Keyword](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
-    - [Separating Modules into Different Files](ch07-05-separating-modules-into-different-files.md)
+- [Zarządzanie Rozrastającymi Się Projektami Za Pomocą Pakietów, Skrzyń i Modułów](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+    - [Pakiety i Skrzynie](ch07-01-packages-and-crates.md)
+    - [Definiowanie Modułów by Kontrolować Zasięg i Prywatności](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+    - [Ścieżki Do Elementów W Drzewie Modułów](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
+    - [Włączanie Ścieżek do Zasięgu za Pomocą Słowa Kluczowego `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
+    - [Umieszczanie Modułów w Osobnych Plikach](ch07-05-separating-modules-into-different-files.md)
 
 - [Common Collections](ch08-00-common-collections.md)
     - [Storing Lists of Values with Vectors](ch08-01-vectors.md)
