@@ -1,74 +1,56 @@
 <!-- ## Bringing Paths Into Scope with the `use` Keyword -->
 ## Włączanie Ścieżek do Zasięgu za Pomocą Słowa Kluczowego `use`
 
-Having to write out the paths to call functions can feel inconvenient and
-repetitive. In Listing 7-7, whether we chose the absolute or relative path to
-the `add_to_waitlist` function, every time we wanted to call `add_to_waitlist`
-we had to specify `front_of_house` and `hosting` too. Fortunately, there’s a
-way to simplify this process: we can create a shortcut to a path with the `use`
-keyword once, and then use the shorter name everywhere else in the scope.
+Konieczność ciągłego wypisywania ścieżek, by wywołyć funkcję może być uciążliwa.
+Na listingu 7-7, niezależnie od tego, czy wybraliśmy bezwzględną czy względną ścieżkę do funkcji `add_to_waitlist`, za każdym razem, wywołując ją, musieliśmy napisać także `front_of_house` i `hosting`.
+Na szczęście istnieje sposób na uproszczenie tego procesu: możemy raz utworzyć skrót do ścieżki za pomocą słowa kluczowego `use` i używać go wielokrotnie w obrębie zasięgu.
 
-In Listing 7-11, we bring the `crate::front_of_house::hosting` module into the
-scope of the `eat_at_restaurant` function so we only have to specify
-`hosting::add_to_waitlist` to call the `add_to_waitlist` function in
-`eat_at_restaurant`.
+Na listingu 7-11 włączamy moduł `crate::front_of_house::hosting` w zasięg funkcji `eat_at_restaurant`, więc musimy podać jedynie `hosting::add_to_waitlist`, aby wywołać funkcję `add_to_waitlist` z `eat_at_restaurant`.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-11: Bringing a module into scope with
-`use`</span>
+<span class="caption">Listing 7-11: Włączanie modułu w zasięg za pomocą `use`</span>
 
-Adding `use` and a path in a scope is similar to creating a symbolic link in
-the filesystem. By adding `use crate::front_of_house::hosting` in the crate
-root, `hosting` is now a valid name in that scope, just as though the `hosting`
-module had been defined in the crate root. Paths brought into scope with `use`
-also check privacy, like any other paths.
+Dodanie do zasięgu `use` i ścieżki jest podobne do tworzenia dowiązania symbolicznego w systemie plików.
+Dodanie `use crate::front_of_house::hosting` w korzeniu skrzyni sprawia, że `hosting` staje się poprawną nazwą w tym zasięgu, tak jakby moduł `hosting` był zdefiniowany w korzeniu skrzyni.
+Ścieżki wprowadzone do zasięgu za pomocą `use` podlegają takim samym zasadą prywatność, jak wszystkie inne ścieżki.
 
-Note that `use` only creates the shortcut for the particular scope in which the
-`use` occurs. Listing 7-12 moves the `eat_at_restaurant` function into a new
-child module named `customer`, which is then a different scope than the `use`
-statement, so the function body won’t compile:
+Warto podkreślić, że `use` tworzy skrót tylko w zasięgu, w którym występuje.
+Na listingu 7-12 przeniesiono funkcję `eat_at_restaurant` do nowego modułu podrzędnego o nazwie `customer`, który tworzy zasięg odrębny od tego, w którym użyto `use`. Dlatego ciało funkcji nie skompiluje się:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground,test_harness,does_not_compile,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-12: A `use` statement only applies in the scope
-it’s in</span>
+<span class="caption">Listing 7-12: `use` obowiązuje jedynie w zasięgu, w którym się znajduje</span>
 
-The compiler error shows that the shortcut no longer applies within the
-`customer` module:
+Błąd kompilatora pokazuje, że skrót nie ma zastosowania w obrębie modułu `customer`:
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-12/output.txt}}
 ```
 
-Notice there’s also a warning that the `use` is no longer used in its scope! To
-fix this problem, move the `use` within the `customer` module too, or reference
-the shortcut in the parent module with `super::hosting` within the child
-`customer` module.
+Proszę zauważyć, że pojawiło się również ostrzeżenie, że `use` nie jest używany w swoim zasięgu!
+Aby rozwiązać ten problem, należy przenieść `use` do modułu `customer`, lub z modułu `customer` odwołać się do skrótu w module nadrzędnym za pomocą `super::hosting`.
 
-### Creating Idiomatic `use` Paths
+<!-- ### Creating Idiomatic `use` Paths -->
+### Tworzenie Idiomatycznych Ścieżek `use`
 
-In Listing 7-11, you might have wondered why we specified `use
-crate::front_of_house::hosting` and then called `hosting::add_to_waitlist` in
-`eat_at_restaurant` rather than specifying the `use` path all the way out to
-the `add_to_waitlist` function to achieve the same result, as in Listing 7-13.
+Patrząc na Listing 7-11, można się zastanawiać, dlaczego zdefiniowaliśmy `use crate::front_of_house::hosting`, a następnie w `eat_at_restaurant` wywołaliśmy `hosting::add_to_waitlist`, zamiast od razu podać w `use` całą ścieżkę do `add_to_waitlist`, tak jak na Listingu 7-13.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground,test_harness
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-13: Bringing the `add_to_waitlist` function
-into scope with `use`, which is unidiomatic</span>
+<span class="caption">Listing 7-13: Nieidiomatyczne włączenie w zasięg funkcji `add_to_waitlist` za pomocą `use`</span>
 
 Although both Listing 7-11 and 7-13 accomplish the same task, Listing 7-11 is
 the idiomatic way to bring a function into scope with `use`. Bringing the
