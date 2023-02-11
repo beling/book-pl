@@ -438,7 +438,8 @@ Można by jeszcze wiele mówić o [Cargo][doccargo]<!-- ignore --> i [jego ekosy
 Wrócimy do tego w rozdziale 14. Na razie wiesz wszystko, co w tej chwili potrzebujesz.
 Dzięki Cargo ponowne używanie bibliotek jest bardzo łatwe, więc Rustowcy mogą pisać mniejsze projekty, składające się z wielu skrzyń.
 
-### Generowanie losowej liczby
+<!-- Generating a Random Number -->
+### Generowanie Losowej Liczby
 
 A teraz użyjmy w końcu skrzyni `rand` by wygerować liczbę do zgadnięcia.
 Zmodyfikujmy plik *src/main.rs*, tak jak pokazano na listingu 2-3:

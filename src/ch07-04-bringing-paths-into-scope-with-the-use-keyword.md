@@ -125,11 +125,11 @@ Przed zmianą, zewnętrzny kod, by wywołać funkcję `add_to_waitlist`, musiał
 Po zmianie, gdy `pub use` reeksportował moduł `hosting` z modułu głównego, zewnętrzny kod może w zamian użyć ścieżki `restaurant::hosting::add_to_waitlist()`.
 
 Reeksportowanie jest przydatne, gdy wewnętrzna struktura twojego kodu różni się od tego, jak wywołujący go programiści postrzegają jego domenę.
-Na przykład w naszej metaforze restauracyjnej, ludzie prowadzący restaurację dzielą ją na "front of house" i "back of house".
+Na przykład w naszej metaforze restauracyjnej, ludzie prowadzący restaurację dzielą ją na „front of house“ i „back of house“.
 Ale klienci odwiedzający restaurację prawdopodobnie nie będą myśleć o częściach restauracji w ten sam sposób.
 Dzięki `pub use`, możemy napisać nasz kod korzystając z innej struktury, od tej, którą ujawnimy.
 Czynimy to, by nasza biblioteka była dobrze zorganizowana zarówno dla programistów pracujących nad nią, jak i tych ją wywołujących.
-Przyjrzymy się innemu przykładowi `pub use` i temu, jak wpływa on na dokumentację skrzyni w sekcji ["Eksportowanie Wygodnego Publicznego API Za Pomocą `pub use`"][ch14-pub-use]<!-- ignore --> rozdziału 14.
+Przyjrzymy się innemu przykładowi `pub use` i temu, jak wpływa on na dokumentację skrzyni w sekcji [„Eksportowanie Wygodnego Publicznego API Za Pomocą `pub use`“][ch14-pub-use]<!-- ignore --> rozdziału 14.
 
 <!-- ### Using External Packages -->
 ### Używanie Pakietów Zewnętrznych
@@ -150,69 +150,52 @@ W rozdziale 2 zaprogramowaliśmy grę w zgadywanie, która wykorzystywała zewn�
 
 Dodanie `rand` jako zależności w *Cargo.toml* powoduje, że Cargo pobiera pakiet `rand` wraz ze wszystkimi jego zależnościami z [crates.io](https://crates.io/) i udostępnia `rand` naszemu projektowi.
 
-Then, to bring `rand` definitions into the scope of our package, we added a
-`use` line starting with the name of the crate, `rand`, and listed the items
-we wanted to bring into scope. Recall that in the [“Generating a Random
-Number”][rand]<!-- ignore --> section in Chapter 2, we brought the `Rng` trait
-into scope and called the `rand::thread_rng` function:
+Następnie, aby włączyć definicje z `rand` w zasięg naszego pakietu, dodaliśmy linię `use` ze ścieżką rozpoczynającą się od nazwy skrzyni, czyli `rand`, i wymieniliśmy elementy, które chcemy włączyć w zasięg.
+Przypomnijmy, że w sekcji [„Generowanie Losowej Liczby“][rand]<!-- ignore --> rozdziału 2, włączyliśmy w zasięg cechę `Rng` i wywołaliśmy funkcję `rand::thread_rng`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
 ```
 
-Members of the Rust community have made many packages available at
-[crates.io](https://crates.io/), and pulling any of them into your package
-involves these same steps: listing them in your package’s *Cargo.toml* file and
-using `use` to bring items from their crates into scope.
+Członkowie społeczności Rusta udostępnili na stronie [crates.io](https://crates.io/) wiele pakietów, a użycie dowolnego z nich we własnym pakiecie wymaga wykonania tych samych kroków: dodania go do pliku *Cargo.toml* i włączenia w zasięg jego wybranych elementów za pomocą `use`.
 
-Note that the standard `std` library is also a crate that’s external to our
-package. Because the standard library is shipped with the Rust language, we
-don’t need to change *Cargo.toml* to include `std`. But we do need to refer to
-it with `use` to bring items from there into our package’s scope. For example,
-with `HashMap` we would use this line:
+Proszę zauważyć, że standardowa biblioteka `std` również jest skrzynią, która jest zewnętrzna względem naszego pakietu.
+Ponieważ standardowa biblioteka jest dostarczana z językiem Rust, nie musimy dodawać `std` do *Cargo.toml*.
+Musimy jednak odwoływać się do niej za pomocą `use`, aby wprowadzić jej elementy w zasięg naszego pakietu.
+Na przykład, możemy skorzystać z `HashMap` za pomocą następującej linii:
 
 ```rust
 use std::collections::HashMap;
 ```
 
-This is an absolute path starting with `std`, the name of the standard library
-crate.
+Jest to ścieżka bezwzględna rozpoczynająca się od `std`, czyli nazwy skrzyni biblioteki standardowej.
 
-### Using Nested Paths to Clean Up Large `use` Lists
+<!-- ### Using Nested Paths to Clean Up Large `use` Lists -->
+### Porządkowania Długich List `use` za Pomocą Zagnieżdżonych Ścieżek
 
-If we’re using multiple items defined in the same crate or same module,
-listing each item on its own line can take up a lot of vertical space in our
-files. For example, these two `use` statements we had in the Guessing Game in
-Listing 2-4 bring items from `std` into scope:
+Gdy używamy wielu elementów zdefiniowanych w tej samej skrzyni lub w tym samym module, wymienienie każdego elementu w osobnej linii pochłania sporo miejsca. Na przykład, te dwie deklaracje `use`, które mieliśmy w grze zgadywance na Listingu 2-4, włączają w zasięg elementy z `std`:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-01-use-std-unnested/src/main.rs:here}}
 ```
 
-Instead, we can use nested paths to bring the same items into scope in one
-line. We do this by specifying the common part of the path, followed by two
-colons, and then curly brackets around a list of the parts of the paths that
-differ, as shown in Listing 7-18.
+Zamiast nich, możemy użyć zagnieżdżonych ścieżek, aby włączyć te same elementy w jednym wierszu.
+Robimy to, podając wspólną część ścieżki, po której następują dwa dwukropki, a następnie nawiasy klamrowe obejmujące listę różniących się fragmentów ścieżek, co pokazano na listingu 7-18.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-18/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 7-18: Specifying a nested path to bring multiple
-items with the same prefix into scope</span>
+<span class="caption">Listing 7-18: Podanie ścieżki zagnieżdżonej w celu włączenia w zasięg wielu elementów z tym samym prefiksem</span>
 
-In bigger programs, bringing many items into scope from the same crate or
-module using nested paths can reduce the number of separate `use` statements
-needed by a lot!
+W większych programach, wprowadzenie wielu elementów tej samej skrzyni lub modułu w zasięg przy użyciu zagnieżdżonych ścieżek może znacznie zmniejszyć liczbę napisanych linii `use`!
 
-We can use a nested path at any level in a path, which is useful when combining
-two `use` statements that share a subpath. For example, Listing 7-19 shows two
-`use` statements: one that brings `std::io` into scope and one that brings
-`std::io::Write` into scope.
+Ścieżki można zagnieżdżać na dowolnym poziomie, co jest przydatne przy łączeniu dwóch deklaracji `use` dzielących podścieżkę.
+Na przykład, Listing 7-19 pokazuje dwie instrukcje `use`: pierwsza włącza w zasięg `std::io`, zaś druga `std::io::Write`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -260,5 +243,5 @@ library documentation](../std/prelude/index.html#other-preludes)<!-- ignore -->
 for more information on that pattern.
 
 [ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exporting-a-convenient-public-api-with-pub-use
-[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
+[rand]: ch02-00-guessing-game-tutorial.html#generowanie-losowej-liczby
 [writing-tests]: ch11-01-writing-tests.html#how-to-write-tests
