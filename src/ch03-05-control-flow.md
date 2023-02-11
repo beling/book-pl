@@ -88,7 +88,7 @@ Użycie zbyt wielu wyrażeń `else if` może zagmatwać kod. Więc jeśli jest i
 <!-- #### Using `if` in a `let` Statement -->
 #### `if` w składni `let`
 
-Ponieważ `if` jest wyrażeniem, to możemy go użyć po prawej stronie instrukcji `let`, aby przypisać jego wynik do zmiennej, co pokazano na Listingu 3-2.
+Ponieważ `if` jest wyrażeniem, to możemy go użyć po prawej stronie instrukcji `let`, aby przypisać jego wynik do zmiennej, co pokazano na listingu 3-2.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -105,7 +105,7 @@ Zmiennej `number` zostanie nadana wartość będąca wynikiem wyrażenia `if`. U
 ```
 
 Należy pamiętać, że wartościami bloków kodu są ostatnie wyrażenie w nich zawarte, a liczby same w sobie są również wyrażeniami. W tym przypadku, wartość całego wyrażenia `if` zależy od tego, który blok kodu zostanie wykonany.
-Oznacza to, że wartości, które potencjalnie mogą być wynikami poszczególnych odnóg `if` muszą być tego samego typu. W Listingu 3-2, wynikami zarówno ramienia `if` jak i ramienia `else` były liczby całkowite `i32`. Jeśli typy są niezgodne, jak w poniższym przykładzie, to otrzymamy błąd:
+Oznacza to, że wartości, które potencjalnie mogą być wynikami poszczególnych odnóg `if` muszą być tego samego typu. Na listingu 3-2, wynikami zarówno ramienia `if` jak i ramienia `else` były liczby całkowite `i32`. Jeśli typy są niezgodne, jak w poniższym przykładzie, to otrzymamy błąd:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -221,7 +221,7 @@ Pętla się wykonuje tak długo jak warunek daje `true`.
 <!-- #### Looping Through a Collection with `for` -->
 #### Przechodzenie Po Kolekcji Za Pomocą `for`
 
-Do przejścia po kolekcji, takiej jak tablica, można użyć pętli `while`. Na przykład, pętla na Listingu 3-4 wypisuje każdy element tablicy `a`.
+Do przejścia po kolekcji, takiej jak tablica, można użyć pętli `while`. Na przykład, pętla na listingu 3-4 wypisuje każdy element tablicy `a`.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -253,11 +253,11 @@ Zwięźlejszą alternatywą jest pętla `for` wykonująca jakiś kod dla każdeg
 
 <span class="caption">Listing 3-5: Przechodzenie po każdym elemencie kolekcji za pomocą pętli `for`</span>
 
-Ten kod daje takie same wyjście jak ten na Listingu 3-4. Co ważne, zwiększyliśmy bezpieczeństwo kodu i wyeliminowaliśmy zagrożenie wystąpienie błędów związanych z przekroczeniem końca tablicy albo niedojściem do niego i w konsekwencji nieosiągnięciem niektórych elementów.
+Ten kod daje takie same wyjście jak ten na listingu 3-4. Co ważne, zwiększyliśmy bezpieczeństwo kodu i wyeliminowaliśmy zagrożenie wystąpienie błędów związanych z przekroczeniem końca tablicy albo niedojściem do niego i w konsekwencji nieosiągnięciem niektórych elementów.
 
 W przeciwieństwie do metody użytej na listingu 3-4, korzystając z pętli `for` nie musimy martwić się poprawianiem innego kodu gdy zmieniamy liczbę elementów w tablicy.
 
-Bezpieczeństwo i zwięzłość pętli `for` sprawiają, że jest ona najczęściej wykorzystywaną pętlą w Rust. Nawet gdy istnieje potrzeba wykonania jakiegoś kod określoną liczbę razy, jak w przykładzie odliczania, który na Listingu 3-3 używał pętli `while`, większość rustowców użyłaby pętli `for` wraz z zawartym w bibliotece standardowej `Range` (z ang. zakres), który generuje wszystkie liczby w kolejności, zaczynając od jednej liczby i kończąc przed inną liczbą.
+Bezpieczeństwo i zwięzłość pętli `for` sprawiają, że jest ona najczęściej wykorzystywaną pętlą w Rust. Nawet gdy istnieje potrzeba wykonania jakiegoś kod określoną liczbę razy, jak w przykładzie odliczania, który na listingu 3-3 używał pętli `while`, większość rustowców użyłaby pętli `for` wraz z zawartym w bibliotece standardowej `Range` (z ang. zakres), który generuje wszystkie liczby w kolejności, zaczynając od jednej liczby i kończąc przed inną liczbą.
 
 Oto jak wyglądałoby odliczanie przy użyciu pętli `for` i metody `rev` (o której jeszcze nie mówiliśmy) odwracającej zakres:
 

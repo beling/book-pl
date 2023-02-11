@@ -11,7 +11,7 @@ Pomyślmy nad sygnaturą tej funkcji (na razie bez użycia wycinków, by zrozumi
 fn first_word(s: &String) -> ?
 ```
 
-Funkcja `first_word` przyjmuje parametr typu `&String`, co jest w porządku, bo funkcja ta nie potrzebuje tego łańcucha na własność. Ale jakiego typu wynik powinna zwrócić? Naprawdę brakuje nam sposobu na mówienie o *części* łańcucha. Możemy jednak zwrócić indeks końca słowa wskazanego przez spację. Próbujmy tego dokonać na Listingu 4-7.
+Funkcja `first_word` przyjmuje parametr typu `&String`, co jest w porządku, bo funkcja ta nie potrzebuje tego łańcucha na własność. Ale jakiego typu wynik powinna zwrócić? Naprawdę brakuje nam sposobu na mówienie o *części* łańcucha. Możemy jednak zwrócić indeks końca słowa wskazanego przez spację. Próbujmy tego dokonać na listingu 4-7.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -52,7 +52,7 @@ W przeciwnym razie zwracamy długość łańcucha otrzymaną za pomocą `s.len()
 
 Mamy teraz wprawdzie sposób na znalezienie indeksu końca pierwszego słowa, ale nie jest on wolny od wad.
 Zwracamy osobną liczbę typu `usize`, która ma jednak znaczenie jedynie w kontekście `&String`.
-Innymi słowy, ponieważ jest to wartość niezależna od naszego `String`a, to nie ma gwarancji, że w przyszłości zachowa ona ważność. Rozważmy program z Listingu 4-8, który używa funkcji `first_word` z Listingu 4-7.
+Innymi słowy, ponieważ jest to wartość niezależna od naszego `String`a, to nie ma gwarancji, że w przyszłości zachowa ona ważność. Rozważmy program z listingu 4-8, który używa funkcji `first_word` z listingu 4-7.
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -153,7 +153,7 @@ Typ oznaczający "wycinek łańcucha" zapisujemy jako `&str`:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
 
-Indeks końca słowa otrzymujemy w taki sam sposób, jak na Listingu 4-7, czyli odnajdując pierwsze wystąpienie spacji.
+Indeks końca słowa otrzymujemy w taki sam sposób, jak na listingu 4-7, czyli odnajdując pierwsze wystąpienie spacji.
 Gdy znajdziemy spację, zwracamy wycinek łańcucha używając początku łańcucha i indeksu spacji jako odpowiednio indeksu początkowego i końcowego.
 
 Teraz, gdy wywołujemy `first_word`, otrzymujemy w wyniku pojedynczą wartość, związaną z danymi wejściowymi. Wartość ta składa się z referencji do punktu początkowego wycinka i liczby elementów w wycinku.
@@ -165,7 +165,7 @@ fn second_word(s: &String) -> &str {
 ```
 
 Mamy teraz proste API, które jest znacznie odporniejsze na błędy, ponieważ kompilator zapewni, że referencje do `String`a pozostaną ważne.
-Proszę przypomnieć sobie błąd w programie z Listingu 4-8, kiedy uzyskaliśmy indeks do końca pierwszego słowa, ale potem wyczyściliśmy łańcuch i nasz indeks utracił ważność. Tamten kod był logicznie niepoprawny, ale jego błędy początkowo się nie ujawniały. Problemy ujawniłyby się dopiero gdybyśmy spróbowali użyć indeksu pierwszego słowa z wyczyszczonym łańcuchem. Wycinki zapobiegają podobnym błędom i dają nam znać, że mamy problem z naszym kodem znacznie wcześniej. Funkcja `first_word` używająca wycinków obnaża wspomniane błędy już podczas kompilacji:
+Proszę przypomnieć sobie błąd w programie z listingu 4-8, kiedy uzyskaliśmy indeks do końca pierwszego słowa, ale potem wyczyściliśmy łańcuch i nasz indeks utracił ważność. Tamten kod był logicznie niepoprawny, ale jego błędy początkowo się nie ujawniały. Problemy ujawniłyby się dopiero gdybyśmy spróbowali użyć indeksu pierwszego słowa z wyczyszczonym łańcuchem. Wycinki zapobiegają podobnym błędom i dają nam znać, że mamy problem z naszym kodem znacznie wcześniej. Funkcja `first_word` używająca wycinków obnaża wspomniane błędy już podczas kompilacji:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -205,7 +205,7 @@ Wiedza, że wycinki można uzyskać zarówno z literałów jak i wartości `Stri
 fn first_word(s: &String) -> &str {
 ```
 
-Jednak bardziej doświadczony Rustowiec dokonałby kolejnej zmiany i w zamian napisałby sygnaturę pokazaną na Listingu 4-9, która może być używana zarówno z parametrem typu `&String`, jak i `&str`.
+Jednak bardziej doświadczony Rustowiec dokonałby kolejnej zmiany i w zamian napisałby sygnaturę pokazaną na listingu 4-9, która może być używana zarówno z parametrem typu `&String`, jak i `&str`.
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}

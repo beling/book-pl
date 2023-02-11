@@ -10,9 +10,9 @@ Każda ścieżka jest jednego z następujących dwóch rodzajów:
 
 Zarówno ścieżki bezwzględne jak i względne notujemy za pomocą jednego lub więcej identyfikatorów oddzielonych podwójnymi dwukropkami (`::`).
 
-Powróćmy do Listingu 7-1 i załóżmy, że chcemy wywołać funkcję `add_to_waitlist`.
+Powróćmy do listingu 7-1 i załóżmy, że chcemy wywołać funkcję `add_to_waitlist`.
 By to uczynić, musimy wpierw odpowiedzieć na pytanie: jaka jest ścieżka do funkcji `add_to_waitlist`?
-Listing 7-3 obejmuje skrót Listingu 7-1, pozbawiony niektórych modułów i funkcji.
+Listing 7-3 obejmuje skrót listingu 7-1, pozbawiony niektórych modułów i funkcji.
 
 Prezentujemy dwa sposoby wywołania funkcji `add_to_waitlist` z nowej funkcji `eat_at_restaurant` zdefiniowanej w korzeniu skrzyni.
 Pomimo że ścieżki podane w przykładzie są poprawne, to jego skompilowanie nie jest możliwe, ze względu na inny problem.
@@ -45,14 +45,14 @@ Na przykład, jeśli przeniesiemy moduł `front_of_house` i funkcję `eat_at_res
 Jeśli jednak przeniesiemy samą funkcję `eat_at_restaurant` do modułu o nazwie `dining`, bezwzględna ścieżka do wywołania `add_to_waitlist` pozostanie taka sama, zaś względna ścieżka będzie wymagała uaktualnienia.
 Ogólnie powinniśmy preferować podawanie ścieżek bezwzględnych, ponieważ jest bardziej prawdopodobne, że będziemy chcieli przenieść definicje kodu i wywołania elementów niezależnie od siebie.
 
-Spróbujmy skompilować Listing 7-3 i dowiedzmy się, dlaczego nie jest to jeszcze możliwe.
-Otrzymany błąd jest pokazany na Listingu 7-4.
+Spróbujmy skompilować listing 7-3 i dowiedzmy się, dlaczego nie jest to jeszcze możliwe.
+Otrzymany błąd jest pokazany na listingu 7-4.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
 ```
 
-<span class="caption">Listing 7-4: Błędy kompilatora otrzymane podczas próby zbudowania kodu z Listing 7-3</span>
+<span class="caption">Listing 7-4: Błędy kompilatora otrzymane podczas próby zbudowania kodu z listing 7-3</span>
 
 Komunikaty błędów mówią, że moduł `hosting` jest prywatny.
 Innymi słowy, mamy poprawne ścieżki do modułu `hosting` i funkcji `add_to_waitlist`, ale Rust nie pozwoli nam ich użyć, ponieważ nie ma dostępu do prywatnych sekcji.
@@ -70,7 +70,7 @@ Równocześnie, za pomocą słowa kluczowego `pub` można upublicznić element, 
 <!-- ### Exposing Paths with the `pub` Keyword -->
 ### Eksponowanie Ścieżek Za Pomocą Słowa Kluczowego `pub`.
 
-Wróćmy do błędu z Listingu 7-4, który mówił, że moduł `hosting` jest prywatny.
+Wróćmy do błędu z listingu 7-4, który mówił, że moduł `hosting` jest prywatny.
 Chcemy, aby funkcja `eat_at_restaurant` w module nadrzędnym miała dostęp do funkcji `add_to_waitlist` w module podrzędnym.
 Dlatego oznaczamy moduł `hosting` słowem kluczowym `pub`, co pokazano na listingu 7-5.
 
@@ -82,13 +82,13 @@ Dlatego oznaczamy moduł `hosting` słowem kluczowym `pub`, co pokazano na listi
 
 <span class="caption">Listing 7-5: Deklarowanie modułu `hosting` jako `pub` by użyć go z `eat_at_restaurant`</span>
 
-Niestety, próba skompilowania kodu z Listingu 7-5 nadal kończy się błędem, co pokazano na Listingu 7-6.
+Niestety, próba skompilowania kodu z listingu 7-5 nadal kończy się błędem, co pokazano na listingu 7-6.
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
 ```
 
-<span class="caption">Listing 7-6: Błędy kompilatora przy budowaniu kodu z Listing 7-5</span>
+<span class="caption">Listing 7-6: Błędy kompilatora przy budowaniu kodu z listing 7-5</span>
 
 Co się stało? Dodanie słowa kluczowego `pub` przed `mod hosting` upublicznia moduł.
 Dzięki tej zmianie, jeśli mamy dostęp do `front_of_house`, to mamy też dostęp do `hosting`.
@@ -146,7 +146,7 @@ Możemy skonstruować względne ścieżki, które zaczynają się w module nadrz
 To tak jakby rozpocząć ścieżkę systemu plików od `..`.
 Użycie `super` pozwala odwołać się do elementu znajdującego się w module nadrzędnym i ułatwia modyfikację drzewa modułów, gdy moduł jest ściśle związany z rodzicem, którego chcemy przenieść w inne miejsce drzewa.
 
-Rozważmy kod z Listingu 7-8, który modeluje sytuację, w której szef kuchni naprawia błędne zamówienie i osobiście przynosi je klientowi.
+Rozważmy kod z listingu 7-8, który modeluje sytuację, w której szef kuchni naprawia błędne zamówienie i osobiście przynosi je klientowi.
 Funkcja `fix_incorrect_order` zdefiniowana w module `back_of_house` wywołuje funkcję `deliver_order` zdefiniowaną w module nadrzędnym, rozpoczynając ścieżkę do `deliver_order` od `super`:
 
 <span class="filename">Plik: src/lib.rs</span>
@@ -187,7 +187,7 @@ Proszę spróbować odkomentować linię modyfikującą wartość pola `seasonal
 
 Inaczej jest w przypadku typów wyliczeniowych.
 Jeśli uczynimy enum publicznym, to wszystkie jego warianty także staną się publiczne.
-Wystarczy postawić `pub` przed słowem kluczowym `enum`, tak jak pokazano na Listingu 7-10.
+Wystarczy postawić `pub` przed słowem kluczowym `enum`, tak jak pokazano na listingu 7-10.
 
 <span class="filename">Plik: src/lib.rs</span>
 

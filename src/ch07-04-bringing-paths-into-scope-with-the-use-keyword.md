@@ -42,7 +42,7 @@ Aby rozwiązać ten problem, należy przenieść `use` do modułu `customer`, lu
 <!-- ### Creating Idiomatic `use` Paths -->
 ### Tworzenie Idiomatycznych Ścieżek `use`
 
-Patrząc na Listing 7-11, można się zastanawiać, dlaczego zdefiniowaliśmy `use crate::front_of_house::hosting`, a następnie w `eat_at_restaurant` wywołaliśmy `hosting::add_to_waitlist`, zamiast od razu podać w `use` całą ścieżkę do `add_to_waitlist`, tak jak na Listingu 7-13.
+Patrząc na listing 7-11, można się zastanawiać, dlaczego zdefiniowaliśmy `use crate::front_of_house::hosting`, a następnie w `eat_at_restaurant` wywołaliśmy `hosting::add_to_waitlist`, zamiast od razu podać w `use` całą ścieżkę do `add_to_waitlist`, tak jak na listingu 7-13.
 
 <span class="filename">Plik: src/lib.rs</span>
 
@@ -89,7 +89,7 @@ Gdybyśmy zamiast tego napisali `use std::fmt::Result` i `use std::io::Result`, 
 <!-- ### Providing New Names with the `as` Keyword -->
 ### Nadawanie Nowych Nazw Za Pomocą Słowa Kluczowego `as`
 
-Istnieje też inne rozwiązanie problemu wprowadzania dwóch typów o tej samej nazwie w ten sam zasięg za pomocą `use`: po ścieżce możemy podać `as` i nową nazwę lokalną, *alias* dla typu. Listing 7-16 pokazuje kod równoważny temu z Listingu 7-15, ale wykorzystujący zmianę nazwy jednego z dwóch typów `Result` przy użyciu `as`.
+Istnieje też inne rozwiązanie problemu wprowadzania dwóch typów o tej samej nazwie w ten sam zasięg za pomocą `use`: po ścieżce możemy podać `as` i nową nazwę lokalną, *alias* dla typu. Listing 7-16 pokazuje kod równoważny temu z listingu 7-15, ale wykorzystujący zmianę nazwy jednego z dwóch typów `Result` przy użyciu `as`.
 
 <span class="filename">Plik: src/lib.rs</span>
 
@@ -110,7 +110,7 @@ Kiedy za pomocą słowa kluczowego `use` włączamy nazwę w zasięg, to w nowym
 Aby kodowi wywołującemu nasz kod umożliwić odwołanie się do tej nazwy tak, jakby była zdefiniowana w jego zasięgu, możemy połączyć `pub` i `use`. 
 Technika ta nazywana jest *reeksportem*, ponieważ wprowadzamy element w zasięg, ale również udostępniamy ten element innym, by mogli go włączyć w swój zasięg.
 
-Listing 7-17 pokazuje kod z Listingu 7-11 z zmienionym `use` w module głównym na `pub use`.
+Listing 7-17 pokazuje kod z listingu 7-11 z zmienionym `use` w module głównym na `pub use`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -173,7 +173,7 @@ Jest to ścieżka bezwzględna rozpoczynająca się od `std`, czyli nazwy skrzyn
 <!-- ### Using Nested Paths to Clean Up Large `use` Lists -->
 ### Porządkowania Długich List `use` za Pomocą Zagnieżdżonych Ścieżek
 
-Gdy używamy wielu elementów zdefiniowanych w tej samej skrzyni lub w tym samym module, wymienienie każdego elementu w osobnej linii pochłania sporo miejsca. Na przykład, te dwie deklaracje `use`, które mieliśmy w grze zgadywance na Listingu 2-4, włączają w zasięg elementy z `std`:
+Gdy używamy wielu elementów zdefiniowanych w tej samej skrzyni lub w tym samym module, wymienienie każdego elementu w osobnej linii pochłania sporo miejsca. Na przykład, te dwie deklaracje `use`, które mieliśmy w grze zgadywance na listingu 2-4, włączają w zasięg elementy z `std`:
 
 <span class="filename">Plik: src/main.rs</span>
 
@@ -195,7 +195,7 @@ Robimy to, podając wspólną część ścieżki, po której następują dwa dwu
 W większych programach, wprowadzenie wielu elementów tej samej skrzyni lub modułu w zasięg przy użyciu zagnieżdżonych ścieżek może znacznie zmniejszyć liczbę napisanych linii `use`!
 
 Ścieżki można zagnieżdżać na dowolnym poziomie, co jest przydatne przy łączeniu dwóch deklaracji `use` dzielących podścieżkę.
-Na przykład, Listing 7-19 pokazuje dwie instrukcje `use`: pierwsza włącza w zasięg `std::io`, zaś druga `std::io::Write`.
+Na przykład, listing 7-19 pokazuje dwie instrukcje `use`: pierwsza włącza w zasięg `std::io`, zaś druga `std::io::Write`.
 
 <span class="filename">Plik: src/lib.rs</span>
 
@@ -206,7 +206,7 @@ Na przykład, Listing 7-19 pokazuje dwie instrukcje `use`: pierwsza włącza w z
 <span class="caption">Listing 7-19: Dwie deklaracje `use`, z których jedna włącza podścieżkę drugiej</span>
 
 Częścią wspólną tych dwóch ścieżek jest `std::io`, co daje całą pierwszą ścieżkę.
-Aby zawrzeć te dwie ścieżki w jednej deklaracji `use`, można użyć `self` w zagnieżdżonej ścieżce, tak jak pokazano na Listingu 7-20.
+Aby zawrzeć te dwie ścieżki w jednej deklaracji `use`, można użyć `self` w zagnieżdżonej ścieżce, tak jak pokazano na listingu 7-20.
 
 <span class="filename">Plik: src/lib.rs</span>
 
@@ -214,8 +214,7 @@ Aby zawrzeć te dwie ścieżki w jednej deklaracji `use`, można użyć `self` w
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-20: Combining the paths in Listing 7-19 into
-one `use` statement</span>
+<span class="caption">Listing 7-20: Zawarcie ścieżek z listingu 7-19 w jednej deklaracji `use`</span>
 
 Ta linia włącza `std::io` i `std::io::Write` w zasięg.
 

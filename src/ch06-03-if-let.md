@@ -2,7 +2,7 @@
 ## Zwięzła Kontrola Przepływu z `if let`
 
 Składnia `if let` łączy `if` i `let`, by obsłużyć wartości pasujące do wzorca. Składnia ta jest zwięzła, ale (bez powtarzania `if let`) pozwala podać tylko jeden wzorzec.
-Rozważmy program z Listingu 6-6, który dopasowuje wartość zmiennej `config_max` typu `Option<u8>`, ale chce wykonać kod tylko jeśli ta wartość jest wariantem `Some`.
+Rozważmy program z listingu 6-6, który dopasowuje wartość zmiennej `config_max` typu `Option<u8>`, ale chce wykonać kod tylko jeśli ta wartość jest wariantem `Some`.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
@@ -14,7 +14,7 @@ Jeśli wariantem jest `Some`, to wypisujemy zawartą w nim wartość przypisują
 Z wariantem `None` nie chcemy nic robić. Aby spełnić jednak wymóg wyczerpywalności wyrażenia `match`, musimy dodać niewiele znaczące, szablonowe `_ => ()` po przetworzeniu tylko jednego wariantu, co jest irytuje.
 
 W zamian możemy napisać to samo krócej używając `if let`.
-Następujący kod zachowuje się tak samo jak `match` z Listingu 6-6:
+Następujący kod zachowuje się tak samo jak `match` z listingu 6-6:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
@@ -34,7 +34,7 @@ Innymi słowy, można myśleć o `if let` jako o składniowym lukrze dla `match`
 
 Można także do `if let` dołączyć `else`.
 Blok kodu stojący za `else` pełni taką samą rolę, jak blok dla odnogi `_` w wyrażeniu `match` równoważnym do danego `if let` z `else`.
-Proszę sobie przypomnieć definicję typu wyliczeniowego `Coin` z Listingu 6-4, w którym wariant `Quarter` posiada wartość `UsState`.
+Proszę sobie przypomnieć definicję typu wyliczeniowego `Coin` z listingu 6-4, w którym wariant `Quarter` posiada wartość `UsState`.
 Za pomocą następującego wyrażenia `match` możemy policzyć wszystkie widziane monety niebędące ćwiartkami, jednocześnie informując o stanie, z którego pochodzą ćwiartki:
 
 ```rust

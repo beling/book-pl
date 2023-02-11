@@ -78,7 +78,7 @@ Front of house to obszar, w którym przebywają klienci; w nim gospodarze sadzaj
 Back of house to miejsca, w których pracują kucharze przygotowujący posiłki, zmywacze myjący naczynia, oraz kierownicy wykonujący prace administracyjne.
 
 Aby zorganizować naszą skrzynię zgodnie z powyższym podziałem, uporządkujemy jej funkcjonalności w zagnieżdżonych modułach. 
-Utworzymy nową bibliotekę o nazwie `restaurant`, uruchamiając `cargo new restaurant --lib`; następnie wpiszemy kod z Listingu 7-1 do *src/lib.rs*, aby zdefiniować niektóre moduły i sygnatury funkcji. Oto sekcja frontowa:
+Utworzymy nową bibliotekę o nazwie `restaurant`, uruchamiając `cargo new restaurant --lib`; następnie wpiszemy kod z listingu 7-1 do *src/lib.rs*, aby zdefiniować niektóre moduły i sygnatury funkcji. Oto sekcja frontowa:
 
 <span class="filename">Plik: src/lib.rs</span>
 
@@ -96,7 +96,7 @@ Zaś dodając nową funkcjonalność wiedzą, gdzie umieścić kod.
 
 Wcześniej wspomnieliśmy, że *src/main.rs* i *src/lib.rs* nazywane są korzeniami skrzyni. Przyczyną nadania im takiej nazwy jest fakt, że zawartość każdego z tych plików konstytuuje moduł o nazwie `crate`, będący korzeniem struktury złożonej z modułów skrzyni, zwanej *drzewem modułów*.
 
-Listing 7-2 pokazuje drzewo modułów dla struktury z Listingu 7-1.
+Listing 7-2 pokazuje drzewo modułów dla struktury z listingu 7-1.
 
 ```text
 crate
@@ -110,7 +110,7 @@ crate
          └── take_payment
 ```
 
-<span class="caption">Listing 7-2: Drzewo modułów dla kodu pokazanego na Listingu 7-1</span>
+<span class="caption">Listing 7-2: Drzewo modułów dla kodu pokazanego na listingu 7-1</span>
 
 Drzewo to pokazuje w jaki sposób moduły zagnieżdżone są w innych; na przykład, `hosting` jest zagnieżdżony w `front_of_house`. Drzewo ukazuje również, że niektóre moduły są swoim *rodzeństwem*, co oznacza, że są zdefiniowane w tym samym module; `hosting` i `serving` są rodzeństwem zdefiniowanym w `front_of_house`.
 Jeśli moduł A jest zawarty wewnątrz modułu B, mówimy, że moduł A jest *dzieckiem* modułu B oraz, że moduł B jest *rodzicem* modułu A.

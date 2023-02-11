@@ -1,44 +1,35 @@
 <!-- ## Separating Modules into Different Files -->
 ## Umieszczanie Modułów w Osobnych Plikach
 
-So far, all the examples in this chapter defined multiple modules in one file.
-When modules get large, you might want to move their definitions to a separate
-file to make the code easier to navigate.
+Jak dotąd, wszystkie przykłady w tym rozdziale definiowały wiele modułów w pojedynczym pliku.
+Kiedy moduły stają się duże, warto przenieść ich definicje do osobnych plików, aby ułatwić poruszanie się po kodzie.
 
-For example, let’s start from the code in Listing 7-17 that had multiple
-restaurant modules. We’ll extract modules into files instead of having all the
-modules defined in the crate root file. In this case, the crate root file is
-*src/lib.rs*, but this procedure also works with binary crates whose crate root
-file is *src/main.rs*.
+Na przykład, zacznijmy od kodu z listingu 7-17, który zawiera wiele modułów restauracji.
+Zamiast trzymać wszystkie moduły w pliku głównym skrzyni, przeniesiemy je do plików.
+W tym przypadku plikiem głównym skrzyni jest *src/lib.rs*, ale ta procedura działa również w przypadku skrzyń binarnych, których plikiem głównym jest *src/main.rs*.
 
-First, we’ll extract the `front_of_house` module to its own file. Remove the
-code inside the curly brackets for the `front_of_house` module, leaving only
-the `mod front_of_house;` declaration, so that *src/lib.rs* contains the code
-shown in Listing 7-21. Note that this won’t compile until we create the
-*src/front_of_house.rs* file in Listing 7-22.
+Najpierw przeniesiemy moduł `front_of_house` do jego własnego pliku.
+Usuwamy kod modułu `front_of_house` zawarty w nawiasach klamrowych, pozostawiając tylko deklarację `mod front_of_house;`, tak że *src/lib.rs* zawiera kod pokazany na listingu 7-21.
+Ten kod nie się skompiluje, dopóki nie utworzymy *src/front_of_house.rs*, o zawartości pokazanej na listingu 7-22.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-21: Declaring the `front_of_house` module whose
-body will be in *src/front_of_house.rs*</span>
+<span class="caption">Listing 7-21: Deklaracja modułu `front_of_house`, którego ciało znajdzie się w *src/front_of_house.rs*</span>
 
-Next, place the code that was in the curly brackets into a new file named
-*src/front_of_house.rs*, as shown in Listing 7-22. The compiler knows to look
-in this file because it came across the module declaration in the crate root
-with the name `front_of_house`.
+Następnie umieszczamy kod, który znajdował się w nawiasach klamrowych, w nowym pliku o nazwie *src/front_of_house.rs*, jak pokazano na Listingu 7-22.
+Kompilator wie, że ma szukać kodu w tym pliku, ponieważ natrafił w korzeniu skrzyni na deklarację modułu o nazwie `front_of_house`.
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 ```
 
-<span class="caption">Listing 7-22: Definitions inside the `front_of_house`
-module in *src/front_of_house.rs*</span>
+<span class="caption">Listing 7-22: Definicje wewnątrz modułu `front_of_house` w *src/front_of_house.rs*</span>
 
 Note that you only need to load a file using a `mod` declaration *once* in your
 module tree. Once the compiler knows the file is part of the project (and knows

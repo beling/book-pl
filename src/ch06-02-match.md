@@ -29,11 +29,11 @@ Następne są odnogi `match`. Odnoga składa się z dwóch części: wzorca i ko
 Wykonanie wyrażenia `match` polega na porównaniu wartości wynikowej z wzorcem każdej z odnóg, w kolejności ich wystąpienia.
 Jeśli wzorzec pasuje do wartości, wykonywany jest kod związany z tym wzorcem.
 Jeśli wzorzec nie pasuje do wartości, wykonanie przechodzi do następnej odnogi, zupełnie jak w maszynie do sortowania monet.
-Możemy mieć tyle odnóg ile potrzebujemy. Na Listingu 6-3, nasz `match` ma ich cztery.
+Możemy mieć tyle odnóg ile potrzebujemy. Na listingu 6-3, nasz `match` ma ich cztery.
 
 Kod związany z każdą odnogą jest wyrażeniem, a wartość wynikowa wyrażenia w pasującej odnodze jest wartością, która zostaje zwrócona z całego wyrażenia `match`.
 
-Zazwyczaj nie używamy nawiasów klamrowych, jeśli kod ramienia odnogi jest krótki, tak jak na Listingu 6-3, gdzie każda odnoga jedynie zwraca wartość. Chcąc uruchomić wiele linii kodu w jednej odnodze należy użyć nawiasów klamrowych, a przecinek po odnodze jest wtedy opcjonalny. Na przykład poniższy kod drukuje „Szczęśliwy pens!“ za każdym razem, gdy metoda jest wywoływana z `Coin::Penny`, ale wciąż zwraca ostatnią wartość bloku, `1`:
+Zazwyczaj nie używamy nawiasów klamrowych, jeśli kod ramienia odnogi jest krótki, tak jak na listingu 6-3, gdzie każda odnoga jedynie zwraca wartość. Chcąc uruchomić wiele linii kodu w jednej odnodze należy użyć nawiasów klamrowych, a przecinek po odnodze jest wtedy opcjonalny. Na przykład poniższy kod drukuje „Szczęśliwy pens!“ za każdym razem, gdy metoda jest wywoływana z `Coin::Penny`, ale wciąż zwraca ostatnią wartość bloku, `1`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-08-match-arm-multiple-lines/src/main.rs:here}}
@@ -47,7 +47,7 @@ Tym samym pozwalają wyodrębnić wartości z wariantów enuma.
 
 By to zilustrować, zmienimy jeden z wariantów naszego wyliczenia tak, aby przechowywał on wewnątrz dane.
 Od 1999 do 2008 roku Stany Zjednoczone biły ćwierćdolarówki mające po jednej ze stron różne wzory dla każdego z 50 stanów.
-Żadna inna moneta nie miała wzorów stanowych, więc tylko ćwiartki będą miały dodatkową wartość. Możemy ją uwzględnić w naszym typie `enum` poprzez zmianę wariantu `Quarter` tak, aby zawierał wartość typu `UsState`, co zrobiliśmy na Listingu 6-4.
+Żadna inna moneta nie miała wzorów stanowych, więc tylko ćwiartki będą miały dodatkową wartość. Możemy ją uwzględnić w naszym typie `enum` poprzez zmianę wariantu `Quarter` tak, aby zawierał wartość typu `UsState`, co zrobiliśmy na listingu 6-4.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-04/src/main.rs:here}}
@@ -81,7 +81,7 @@ Zamiast porównywać monety, będziemy porównywać warianty `Option<T>`, ale sp
 Powiedzmy, że chcemy napisać funkcję, która przyjmuje `Option<i32>` i jeśli w środku jest jakaś wartość, to dodaje do niej 1.
 Jeśli w środku nie ma żadnej wartości, funkcja powinna zwrócić wartość `None`, nie robiąc nic więcej.
 
-Dzięki `match` taka funkcja jest bardzo łatwa do napisania i wygląda jak na Listingu 6-5.
+Dzięki `match` taka funkcja jest bardzo łatwa do napisania i wygląda jak na listingu 6-5.
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-05/src/main.rs:here}}
@@ -106,7 +106,7 @@ Czy `Some(5)` pasuje do `Some(i)`? Tak! To ten sam wariant.
 Zostaje zadeklarowana zmienna `i`, zainicjowana wartością zawartą w `Some`, czyli `5`.
 Następnie wykonywany jest kod w wybranej odnodze match, który dodaje 1 do wartości `i` i tworzymy nową wartość `Some` z uzyskaną sumą `6` w środku.
 
-Rozważmy teraz drugie wywołanie `plus_one` z Listingu 6-5, w którym `x` jest `None`.
+Rozważmy teraz drugie wywołanie `plus_one` z listingu 6-5, w którym `x` jest `None`.
 Następuje jego porównanie do pierwszej odnogi `match`:
 
 ```rust,ignore
