@@ -1,8 +1,8 @@
 # Język Programowania Rust
 
-- [Język Programowania Rust](title-page.md)
-- [Przedmowa](foreword.md)
-- [Wstęp](ch00-00-introduction.md)
+[Język Programowania Rust](title-page.md)
+[Przedmowa](foreword.md)
+[Wstęp](ch00-00-introduction.md)
 
 ## Na początek
 

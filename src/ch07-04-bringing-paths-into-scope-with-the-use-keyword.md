@@ -148,7 +148,7 @@ W rozdziale 2 zaprogramowaliśmy grę w zgadywanie, która wykorzystywała zewn�
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Dodanie `rand` jako zależności w *Cargo.toml* spowoduje, że Cargo pobierze pakiet `rand` wraz ze wszystkimi jego zależnościami z [crates.io](https://crates.io/) i udostępni `rand` naszemu projektowi.
+Dodanie `rand` jako zależności w *Cargo.toml* powoduje, że Cargo pobiera pakiet `rand` wraz ze wszystkimi jego zależnościami z [crates.io](https://crates.io/) i udostępnia `rand` naszemu projektowi.
 
 Then, to bring `rand` definitions into the scope of our package, we added a
 `use` line starting with the name of the crate, `rand`, and listed the items
