@@ -37,17 +37,17 @@
 
 ## Podstawowe umiejętności w Ruście
 
-- [Packages, Crates, and Modules](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
-    - [Packages and crates for making libraries and executables](ch07-01-packages-and-crates.md)
-    - [Modules and `use` to control scope and privacy](ch07-02-defining-modules-to-control-scope-and-privacy.md)
-    - [07-03](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
-    - [07-04](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
-    - [07-05](ch07-05-separating-modules-into-different-files.md)
+- [Managing Growing Projects with Packages, Crates, and Modules](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+    - [Packages and Crates](ch07-01-packages-and-crates.md)
+    - [Defining Modules to Control Scope and Privacy](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+    - [Paths for Referring to an Item in the Module Tree](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
+    - [Bringing Paths Into Scope with the `use` Keyword](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
+    - [Separating Modules into Different Files](ch07-05-separating-modules-into-different-files.md)
 
 - [Common Collections](ch08-00-common-collections.md)
-    - [Vectors](ch08-01-vectors.md)
-    - [Strings](ch08-02-strings.md)
-    - [Hash Maps](ch08-03-hash-maps.md)
+    - [Storing Lists of Values with Vectors](ch08-01-vectors.md)
+    - [Storing UTF-8 Encoded Text with Strings](ch08-02-strings.md)
+    - [Storing Keys with Associated Values in Hash Maps](ch08-03-hash-maps.md)
 
 - [Error Handling](ch09-00-error-handling.md)
     - [Unrecoverable Errors with `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
@@ -59,9 +59,9 @@
     - [Traits: Defining Shared Behavior](ch10-02-traits.md)
     - [Validating References with Lifetimes](ch10-03-lifetime-syntax.md)
 
-- [Testing](ch11-00-testing.md)
-    - [Writing tests](ch11-01-writing-tests.md)
-    - [Running tests](ch11-02-running-tests.md)
+- [Writing Automated Tests](ch11-00-testing.md)
+    - [How to Write Tests](ch11-01-writing-tests.md)
+    - [Controlling How Tests Are Run](ch11-02-running-tests.md)
     - [Test Organization](ch11-03-test-organization.md)
 
 - [An I/O Project: Building a Command Line Program](ch12-00-an-io-project.md)
@@ -88,42 +88,41 @@
     - [Extending Cargo with Custom Commands](ch14-05-extending-cargo.md)
 
 - [Smart Pointers](ch15-00-smart-pointers.md)
-    - [`Box<T>` Points to Data on the Heap and Has a Known Size](ch15-01-box.md)
-    - [The `Deref` Trait Allows Access to the Data Through a Reference](ch15-02-deref.md)
-    - [The `Drop` Trait Runs Code on Cleanup](ch15-03-drop.md)
+    - [Using `Box<T>` to Point to Data on the Heap](ch15-01-box.md)
+    - [Treating Smart Pointers Like Regular References with the `Deref` Trait](ch15-02-deref.md)
+    - [Running Code on Cleanup with the `Drop` Trait](ch15-03-drop.md)
     - [`Rc<T>`, the Reference Counted Smart Pointer](ch15-04-rc.md)
     - [`RefCell<T>` and the Interior Mutability Pattern](ch15-05-interior-mutability.md)
-    - [Creating Reference Cycles and Leaking Memory is Safe](ch15-06-reference-cycles.md)
+    - [Reference Cycles Can Leak Memory](ch15-06-reference-cycles.md)
 
 - [Fearless Concurrency](ch16-00-concurrency.md)
-    - [Threads](ch16-01-threads.md)
-    - [Message Passing](ch16-02-message-passing.md)
-    - [Shared State](ch16-03-shared-state.md)
-    - [Extensible Concurrency: `Sync` and `Send`](ch16-04-extensible-concurrency-sync-and-send.md)
+    - [Using Threads to Run Code Simultaneously](ch16-01-threads.md)
+    - [Using Message Passing to Transfer Data Between Threads](ch16-02-message-passing.md)
+    - [Shared-State Concurrency](ch16-03-shared-state.md)
+    - [Extensible Concurrency with the `Sync` and `Send` Traits](ch16-04-extensible-concurrency-sync-and-send.md)
 
 - [Object Oriented Programming Features of Rust](ch17-00-oop.md)
     - [Characteristics of Object-Oriented Languages](ch17-01-what-is-oo.md)
-    - [Using Trait Objects that Allow for Values of Different Types](ch17-02-trait-objects.md)
+    - [Using Trait Objects That Allow for Values of Different Types](ch17-02-trait-objects.md)
     - [Implementing an Object-Oriented Design Pattern](ch17-03-oo-design-patterns.md)
 
 ## Zaawansowane tematy
 
-- [Patterns Match the Structure of Values](ch18-00-patterns.md)
-    - [All the Places Patterns May be Used](ch18-01-all-the-places-for-patterns.md)
+- [Patterns and Matching](ch18-00-patterns.md)
+    - [All the Places Patterns Can Be Used](ch18-01-all-the-places-for-patterns.md)
     - [Refutability: Whether a Pattern Might Fail to Match](ch18-02-refutability.md)
-    - [All the Pattern Syntax](ch18-03-pattern-syntax.md)
+    - [Pattern Syntax](ch18-03-pattern-syntax.md)
 
 - [Advanced Features](ch19-00-advanced-features.md)
     - [Unsafe Rust](ch19-01-unsafe-rust.md)
-    - [Advanced Lifetimes](ch19-02-advanced-lifetimes.md)
     - [Advanced Traits](ch19-03-advanced-traits.md)
     - [Advanced Types](ch19-04-advanced-types.md)
-    - [Advanced Functions & Closures](ch19-05-advanced-functions-and-closures.md)
+    - [Advanced Functions and Closures](ch19-05-advanced-functions-and-closures.md)
     - [Macros](ch19-06-macros.md)
 
 - [Final Project: Building a Multithreaded Web Server](ch20-00-final-project-a-web-server.md)
-    - [A Single Threaded Web Server](ch20-01-single-threaded.md)
-    - [Turning our Single Threaded Server into a Multithreaded Server](ch20-02-multithreaded.md)
+    - [Building a Single-Threaded Web Server](ch20-01-single-threaded.md)
+    - [Turning Our Single-Threaded Server into a Multithreaded Server](ch20-02-multithreaded.md)
     - [Graceful Shutdown and Cleanup](ch20-03-graceful-shutdown-and-cleanup.md)
 
 - [Dodatki](appendix-00.md)
