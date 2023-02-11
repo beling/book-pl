@@ -208,7 +208,7 @@ enum Option<T> {
 }
 ```
 
-Enum `Option<T>` jest tak przydatny, że znajduje się w preludzie (prelude);
+Enum `Option<T>` jest tak przydatny, że znajduje się w prelude;
 nie trzeba samemu go importować.  Ponadto, to samo dotyczy jego wariantów:
 `Some` i `None` można użyć bez prefiksu `Option::`.
 Enum `Option<T>` jest zwykłym wyliczeniem, a `Some(T)` oraz `None`

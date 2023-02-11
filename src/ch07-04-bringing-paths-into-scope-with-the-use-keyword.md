@@ -197,20 +197,18 @@ W większych programach, wprowadzenie wielu elementów tej samej skrzyni lub mod
 Ścieżki można zagnieżdżać na dowolnym poziomie, co jest przydatne przy łączeniu dwóch deklaracji `use` dzielących podścieżkę.
 Na przykład, Listing 7-19 pokazuje dwie instrukcje `use`: pierwsza włącza w zasięg `std::io`, zaś druga `std::io::Write`.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-19: Two `use` statements where one is a subpath
-of the other</span>
+<span class="caption">Listing 7-19: Dwie deklaracje `use`, z których jedna włącza podścieżkę drugiej</span>
 
-The common part of these two paths is `std::io`, and that’s the complete first
-path. To merge these two paths into one `use` statement, we can use `self` in
-the nested path, as shown in Listing 7-20.
+Częścią wspólną tych dwóch ścieżek jest `std::io`, co daje całą pierwszą ścieżkę.
+Aby zawrzeć te dwie ścieżki w jednej deklaracji `use`, można użyć `self` w zagnieżdżonej ścieżce, tak jak pokazano na Listingu 7-20.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
@@ -219,28 +217,24 @@ the nested path, as shown in Listing 7-20.
 <span class="caption">Listing 7-20: Combining the paths in Listing 7-19 into
 one `use` statement</span>
 
-This line brings `std::io` and `std::io::Write` into scope.
+Ta linia włącza `std::io` i `std::io::Write` w zasięg.
 
-### The Glob Operator
+<!-- ### The Glob Operator -->
+### Operator Glob
 
-If we want to bring *all* public items defined in a path into scope, we can
-specify that path followed by the `*` glob operator:
+Jeśli chcemy włączyć w zasięg *wszystkie* elementy publiczne zdefiniowane w ścieżce, możemy podać tę ścieżkę, a za nią `*` zwaną operatorem glob:
 
 ```rust
 use std::collections::*;
 ```
 
-This `use` statement brings all public items defined in `std::collections` into
-the current scope. Be careful when using the glob operator! Glob can make it
-harder to tell what names are in scope and where a name used in your program
-was defined.
+Ta deklaracja `use` wprowadza do bieżącego zasięgu wszystkie publiczne elementy zdefiniowane w `std::collections`.
+Operatora glob należy używać z rozwagą!
+Glob może utrudnić ustalenie, które nazwy są w zasięgu i gdzie zostały zdefiniowane.
 
-The glob operator is often used when testing to bring everything under test
-into the `tests` module; we’ll talk about that in the [“How to Write
-Tests”][writing-tests]<!-- ignore --> section in Chapter 11. The glob operator
-is also sometimes used as part of the prelude pattern: see [the standard
-library documentation](../std/prelude/index.html#other-preludes)<!-- ignore -->
-for more information on that pattern.
+Operator globy jest często używany podczas testowania, aby wprowadzić wszystko, co jest testowane, do modułu `tests`;
+o czym będziemy mówić w sekcji ["How to Write Tests"][writing-tests]<!-- ignore --> rozdziału 11.
+Operator glob jest też czasami używany jako część wzorca prelude, opisanego w [dokumentacji biblioteki standardowej](../std/prelude/index.html#other-preludes)<!-- ignore -->.
 
 [ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exporting-a-convenient-public-api-with-pub-use
 [rand]: ch02-00-guessing-game-tutorial.html#generowanie-losowej-liczby
