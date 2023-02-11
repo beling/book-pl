@@ -2,7 +2,7 @@
 
 *autorstwa Steve Klabnik i Carol Nichols, ze wsparciem społeczności Rusta*
 
-Bieżąca wersja tekstu zakłada, że używasz Rusta w wersji 1.65 (wydanego 2022-11-03)
+Bieżąca wersja tekstu zakłada, że używasz Rusta w wersji 1.67.1 (wydanego 2023-02-09)
 lub nowszego. Zajrzyj do [sekcji "Instalacja" w rozdziale 1][install]<!-- ignore --> celem uzyskania informacji o sposobach instalacji lub aktualizacji Rusta.
 
 Oryginalna, anglojęzyczna wersja książki w wersji HTML dostępna jest na stronie
