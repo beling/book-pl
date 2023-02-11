@@ -17,7 +17,7 @@ Na listingu 7-11 włączamy moduł `crate::front_of_house::hosting` w zasięg fu
 
 Dodanie do zasięgu `use` i ścieżki jest podobne do tworzenia dowiązania symbolicznego w systemie plików.
 Dodanie `use crate::front_of_house::hosting` w korzeniu skrzyni sprawia, że `hosting` staje się poprawną nazwą w tym zasięgu, tak jakby moduł `hosting` był zdefiniowany w korzeniu skrzyni.
-Ścieżki wprowadzone do zasięgu za pomocą `use` podlegają takim samym zasadą prywatność, jak wszystkie inne ścieżki.
+Ścieżki wprowadzone w zasięg za pomocą `use` podlegają takim samym zasadą prywatność, jak wszystkie inne ścieżki.
 
 Warto podkreślić, że `use` tworzy skrót tylko w zasięgu, w którym występuje.
 Na listingu 7-12 przeniesiono funkcję `eat_at_restaurant` do nowego modułu podrzędnego o nazwie `customer`, który tworzy zasięg odrębny od tego, w którym użyto `use`. Dlatego ciało funkcji nie skompiluje się:
@@ -58,41 +58,33 @@ Włączenie do zasięgu jej modułu nadrzędnego sprawia, że wywołując tę fu
 To zaś jasno mówi, iż funkcja ta nie jest zdefiniowana lokalnie, a jednocześnie ogranicza konieczność podawania pełnej ścieżki.
 Dla odmiany kod na listingu 7-13 jest niejasny co do miejsca, w którym zdefiniowano `add_to_waitlist`.
 
-On the other hand, when bringing in structs, enums, and other items with `use`,
-it’s idiomatic to specify the full path. Listing 7-14 shows the idiomatic way
-to bring the standard library’s `HashMap` struct into the scope of a binary
-crate.
+Z drugiej strony, gdy za pomocą `use` wskazujemy struktury, enumy i inne elementy, idiomatycznie jest podać pełną ścieżkę.
+Listing 7-14 pokazuje idiomatyczny sposób włączania w zasięg skrzyni binarnej struktury `HashMap` z biblioteki standardowej.
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Plik: src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-14/src/main.rs}}
 ```
 
-<span class="caption">Listing 7-14: Bringing `HashMap` into scope in an
-idiomatic way</span>
+<span class="caption">Listing 7-14: Idiomatyczne włączenie `HashMap` w zasięg</span>
 
-There’s no strong reason behind this idiom: it’s just the convention that has
-emerged, and folks have gotten used to reading and writing Rust code this way.
+Za tym idiomem nie stoi żaden mocny argument: jest to po prostu przyjęta konwencja, zaś ludzie przyzwyczaili się do czytania i pisania zgodnego z nią kodu.
 
-The exception to this idiom is if we’re bringing two items with the same name
-into scope with `use` statements, because Rust doesn’t allow that. Listing 7-15
-shows how to bring two `Result` types into scope that have the same name but
-different parent modules and how to refer to them.
+Jednakże nie możemy podążyć za tą konwencją, gdy za pomocą `use` chcemy wprowadzić w zasięg dwa elementy o tej samej nazwie.
+Rust nam na to nie pozwoli.
+Listing 7-15 pokazuje, jak włączyć w zasięg i odwoływać się do dwóch typów `Result`, które mają tę samą nazwę, ale pochodzą z różnych modułów.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Plik: src/lib.rs</span>
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-15/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 7-15: Bringing two types with the same name into
-the same scope requires using their parent modules.</span>
+<span class="caption">Listing 7-15: Wprowadzenie w ten sam zasięg dwóch typów o tej samej nazwie wymaga określania ich przy użyciu ich modułów nadrzędnych.</span>
 
-As you can see, using the parent modules distinguishes the two `Result` types.
-If instead we specified `use std::fmt::Result` and `use std::io::Result`, we’d
-have two `Result` types in the same scope and Rust wouldn’t know which one we
-meant when we used `Result`.
+Jak widać, używanie modułów nadrzędnych pozwala rozróżnić dwa typy `Result`.
+Gdybyśmy zamiast tego określili `use std::fmt::Result` i `use std::io::Result`, mielibyśmy w tym samym zasięgu dwa różne typy `Result` i Rust nie wiedziałby, który z nich mamy na myśli, gdy piszemy `Result`.
 
 ### Providing New Names with the `as` Keyword
 
