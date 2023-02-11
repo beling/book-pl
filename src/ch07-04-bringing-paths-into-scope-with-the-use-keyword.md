@@ -1,3 +1,4 @@
+<!-- ## Bringing Paths Into Scope with the `use` Keyword -->
 ## Włączanie Ścieżek do Zasięgu za Pomocą Słowa Kluczowego `use`
 
 Having to write out the paths to call functions can feel inconvenient and
