@@ -33,82 +33,65 @@ Kompilator wie, że ma szukać kodu w tym pliku, ponieważ natrafił w korzeniu 
 
 Warto zauważyć, że plik za pomocą deklaracji `mod` wystarczy załadować w *jednym miejscu* drzewa modułów.
 Kiedy kompilator wie, że plik jest częścią projektu (i wie gdzie w drzewie modułów rezyduje kod, ponieważ umieszczono tam deklarację `mod`), inne pliki w projekcie powinny odwoływać się do kodu załadowanego z pliku używając ścieżki do miejsca, w którym został zadeklarowany, tak jak to zostało opisane w sekcji [„Paths for Referring to an Item in the Module Tree“][paths]<!-- ignore -->.
-Innymi słowy, `mod` *nie* jest operacją „include“, którą można spotkać w innych językach programowania.
+Innymi słowy, `mod` *nie* jest znaną z niektórych języków programowania operacją „include“.
 
-Next, we’ll extract the `hosting` module to its own file. The process is a bit
-different because `hosting` is a child module of `front_of_house`, not of the
-root module. We’ll place the file for `hosting` in a new directory that will be
-named for its ancestors in the module tree, in this case *src/front_of_house/*.
+Następnie przeniesiemy moduł `hosting` do jego własnego pliku.
+Proces będzie nieco inny, bo `hosting` jest modułem podrzędnym w stosunku do `front_of_house`, a nie modułem głównym.
+Umieścimy plik dla `hosting` w nowym katalogu, nazwanym zgodnie z jego przodkami w drzewie modułów, czyli w *src/front_of_house/*.
 
-To start moving `hosting`, we change *src/front_of_house.rs* to contain only the
-declaration of the `hosting` module:
+Przenoszenie `hosting` rozpoczynamy od zmieniamy *src/front_of_house.rs* tak, aby zawierał tylko deklarację modułu `hosting`:
 
-<span class="filename">Filename: src/front_of_house.rs</span>
+<span class="filename">Plik: src/front_of_house.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
 
-Then we create a *src/front_of_house* directory and a file *hosting.rs* to
-contain the definitions made in the `hosting` module:
+Następnie tworzymy katalog *src/front_of_house*, a w nim plik *hosting.rs* zawierający definicje z modułu `hosting`:
 
-<span class="filename">Filename: src/front_of_house/hosting.rs</span>
+<span class="filename">Plik: src/front_of_house/hosting.rs</span>
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
 ```
 
-If we instead put *hosting.rs* in the *src* directory, the compiler would
-expect the *hosting.rs* code to be in a `hosting` module declared in the crate
-root, and not declared as a child of the `front_of_house` module. The
-compiler’s rules for which files to check for which modules’ code means the
-directories and files more closely match the module tree.
+Jeśli zamiast tego umieścilibyśmy *hosting.rs* w katalogu *src*, to kompilator oczekiwałby, że kod *hosting.rs* zostanie zadeklarowany w module `hosting` znajdującym się w korzeniu skrzyni, a nie w module `front_of_house`.
+Reguły kompilatora dotyczące tego, które pliki sprawdzać pod kątem kodu poszczególnych modułów, sprawiają, że drzewo modułów jest odzwierciedlone przez katalogi i pliki.
 
-> ### Alternate File Paths
+> ### Alternatywne Ścieżki do Plików
 >
-> So far we’ve covered the most idiomatic file paths the Rust compiler uses,
-> but Rust also supports an older style of file path. For a module named
-> `front_of_house` declared in the crate root, the compiler will look for the
-> module’s code in:
+> Dotychczas omówiliśmy najbardziej idiomatyczne nazewnictwo ścieżek do plików, które używa kompilator Rusta.
+> Ale Rust obsługuje również nazewnictwo w starszym stylu.
+> Kompilator będzie szukał kodu dla modułu `front_of_house` zadeklarowanego w korzeniu skrzyni, w:
 >
-> * *src/front_of_house.rs* (what we covered)
-> * *src/front_of_house/mod.rs* (older style, still supported path)
+> * *src/front_of_house.rs* (co omówiliśmy)
+> * *src/front_of_house/mod.rs* (starszy styl, nadal obsługiwany)
 >
-> For a module named `hosting` that is a submodule of `front_of_house`, the
-> compiler will look for the module’s code in:
+> Kompilator będzie szukał kodu dla modułu `hosting` zadeklarowanego w module `front_of_house`, w:
 >
-> * *src/front_of_house/hosting.rs* (what we covered)
-> * *src/front_of_house/hosting/mod.rs* (older style, still supported path)
+> * *src/front_of_house/hosting.rs* (co omówiliśmy)
+> * *src/front_of_house/hosting/mod.rs* (starszy styl, nadal obsługiwany)
 >
-> If you use both styles for the same module, you’ll get a compiler error. Using
-> a mix of both styles for different modules in the same project is allowed, but
-> might be confusing for people navigating your project.
+> Próba użycia obu stylów dla tego samego modułu poskutkuje błędem kompilatora.
+> Używanie mieszanki obu stylów dla różnych modułów w tym samym projekcie jest dozwolone, ale może być mylące dla osób nawigujących po projekcie.
 >
-> The main downside to the style that uses files named *mod.rs* is that your
-> project can end up with many files named *mod.rs*, which can get confusing
-> when you have them open in your editor at the same time.
+> Głównym minusem używania plików o nazwie *mod.rs* jest to, że może być ich w projekcie wiele.
+> To zaś może prowadzić do pomyłek, gdy kilka z nich będzie równocześnie otwartych w edytorze.
 
-We’ve moved each module’s code to a separate file, and the module tree remains
-the same. The function calls in `eat_at_restaurant` will work without any
-modification, even though the definitions live in different files. This
-technique lets you move modules to new files as they grow in size.
+Przenieśliśmy kod każdego modułu do osobnego pliku, ale drzewo modułów nie zmieniło się.
+Wywołania funkcji w `eat_at_restaurant` będą działać bez żadnych modyfikacji, mimo że ich definicje znajdują się w różnych plikach.
+Dzięki tej technice można przenosić moduły do nowych plików w miarę jak rosną ich rozmiary.
 
-Note that the `pub use crate::front_of_house::hosting` statement in
-*src/lib.rs* also hasn’t changed, nor does `use` have any impact on what files
-are compiled as part of the crate. The `mod` keyword declares modules, and Rust
-looks in a file with the same name as the module for the code that goes into
-that module.
+Proszę zauważyć, że deklaracja `pub use crate::front_of_house::hosting` w *src/lib.rs* również nie uległa zmianie, oraz że `use` nie ma wpływu na to, które pliki są kompilowane jako część skrzyni.
+Słowo kluczowe `mod` deklaruje moduły, a Rust szuka kodu wchodzącego w skład każdego z nich w pliku nazwanym tak jak moduł.
 
-## Summary
+## Podsumowanie
 
-Rust lets you split a package into multiple crates and a crate into modules
-so you can refer to items defined in one module from another module. You can do
-this by specifying absolute or relative paths. These paths can be brought into
-scope with a `use` statement so you can use a shorter path for multiple uses of
-the item in that scope. Module code is private by default, but you can make
-definitions public by adding the `pub` keyword.
+Rust pozwala podzielić pakiet na wiele skrzyń, a każdą ze skrzyń na moduły, tak aby można było odwoływać się do elementów zdefiniowanych w jednym module z innego modułu.
+Pozwalają na to ścieżki bezwzględne i względne.
+Ścieżki te mogą być włączone w zasięg za pomocą deklaracji `use`, dzięki czemu można w nim używać krótszej ścieżki, co jest przydatne gdy elementy są używane w nim wielokrotnie.
+Kod modułu jest domyślnie prywatny, ale można upublicznić jego definicje za pomocą słowa kluczowego `pub`.
 
-In the next chapter, we’ll look at some collection data structures in the
-standard library that you can use in your neatly organized code.
+W następnym rozdziale przyjrzymy się niektórym, zawartym w bibliotece standardowej, strukturom danych dla kolekcji, które można wykorzystać w swoim starannie zorganizowanym kodzie.
 
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html

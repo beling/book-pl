@@ -113,7 +113,7 @@ Teraz kod się kompiluje! Aby zobaczyć dlaczego dodanie słowa kluczowego `pub`
 
 Nasza ścieżka bezwzględna zaczyna się od `crate`, czyli korzenia drzewa modułów naszej skrzyni.
 Moduł `front_of_house` jest zdefiniowany w korzeniu skrzyni.
-Mimo że `front_of_house` nie jest publiczny, to ponieważ funkcja `eat_at_restaurant` jest zdefiniowana w tym samym module co `front_of_house` (czyli `eat_at_restaurant` i `front_of_house` są rodzeństwem), możemy odwoływać się do `front_of_house` z `eat_at_restaurant`.
+Mimo że `front_of_house` nie jest publiczny, to ponieważ funkcja `eat_at_restaurant` jest zdefiniowana w tym samym module co `front_of_house` (czyli `eat_at_restaurant` i `front_of_house` są równorzędne), możemy odwoływać się do `front_of_house` z `eat_at_restaurant`.
 Następny jest moduł `hosting` oznaczony symbolem `pub`.
 A ponieważ możemy uzyskać dostęp do modułu nadrzędnego w stosunku do `hosting`, to możemy też uzyskać dostęp do `hosting`.
 Ostatecznie, ponieważ funkcja `add_to_waitlist` jest oznaczona jako `pub` i możemy uzyskać dostęp do jej modułu nadrzędnego, to mamy prawo ją wywołać!
@@ -144,7 +144,7 @@ Rozważania na ich temat wykraczają jednak poza zakres tej książki; zainteres
 
 Możemy skonstruować względne ścieżki, które zaczynają się w module nadrzędnym, a nie w bieżącym lub korzeniu skrzyni, poprzez użycie `super` na początku ścieżki.
 To tak jakby rozpocząć ścieżkę systemu plików od `..`.
-Użycie `super` pozwala odwołać się do elementu znajdującego się w module nadrzędnym i ułatwia modyfikację drzewa modułów, gdy moduł jest ściśle związany z rodzicem, którego chcemy przenieść w inne miejsce drzewa.
+Użycie `super` pozwala odwołać się do elementu znajdującego się w module nadrzędnym i ułatwia modyfikację drzewa modułów, gdy moduł jest ściśle związany ze swoim modułem nadrzędnym, który chcemy przenieść w inne miejsce drzewa.
 
 Rozważmy kod z listingu 7-8, który modeluje sytuację, w której szef kuchni naprawia błędne zamówienie i osobiście przynosi je klientowi.
 Funkcja `fix_incorrect_order` zdefiniowana w module `back_of_house` wywołuje funkcję `deliver_order` zdefiniowaną w module nadrzędnym, rozpoczynając ścieżkę do `deliver_order` od `super`:

@@ -15,13 +15,14 @@ mod back_of_house {
 }
 
 pub fn eat_at_restaurant() {
-    // Order a breakfast in the summer with Rye toast
+    // Zamów śniadanie w lecie z tostem żytnim
     let mut meal = back_of_house::Breakfast::summer("Rye");
-    // Change our mind about what bread we'd like
+    // Zmiana zdania na temat tego, jaki chleb chcemy
     meal.toast = String::from("Wheat");
     println!("I'd like {} toast please", meal.toast);
 
-    // The next line won't compile if we uncomment it; we're not allowed
-    // to see or modify the seasonal fruit that comes with the meal
+    // Następna linia nie skompiluje się, jeśli ją odkomentujemy;
+    // nie możemy bowiem przeglądać ani modyfikować sezonowych owoców,
+    // które są dołączone do posiłku
     // meal.seasonal_fruit = String::from("blueberries");
 }

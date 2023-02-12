@@ -112,8 +112,8 @@ crate
 
 <span class="caption">Listing 7-2: Drzewo modułów dla kodu pokazanego na listingu 7-1</span>
 
-Drzewo to pokazuje w jaki sposób moduły zagnieżdżone są w innych; na przykład, `hosting` jest zagnieżdżony w `front_of_house`. Drzewo ukazuje również, że niektóre moduły są swoim *rodzeństwem*, co oznacza, że są zdefiniowane w tym samym module; `hosting` i `serving` są rodzeństwem zdefiniowanym w `front_of_house`.
-Jeśli moduł A jest zawarty wewnątrz modułu B, mówimy, że moduł A jest *dzieckiem* modułu B oraz, że moduł B jest *rodzicem* modułu A.
+Drzewo to pokazuje w jaki sposób moduły zagnieżdżone są w innych; na przykład, `hosting` jest zagnieżdżony w `front_of_house`. Drzewo ukazuje również, że niektóre moduły są *równorzędne*, co oznacza, że są zdefiniowane w tym samym module; `hosting` i `serving` są równorzędne, bo oba są zdefiniowanym w `front_of_house`.
+Jeśli moduł A jest zawarty wewnątrz modułu B, mówimy, że moduł A jest *podrzędny* w stosunku do modułu B oraz, że moduł B jest *nadrzędny* w stosunku do modułu A.
 Proszę zauważyć, że korzeniem drzewa modułów jest zdefiniowany domyślnie i niejawnie moduł o nazwie `crate`.
 
 Drzewo modułów przypomina drzewo katalogów w systemie plików na komputerze. Podobnie do katalogów w systemie plików, moduły służą organizacji (w ich przypadku, chodzi o organizację kodu). I analogicznie do plików w katalogach, potrzebujemy sposobu na odnajdywanie naszych modułów.
