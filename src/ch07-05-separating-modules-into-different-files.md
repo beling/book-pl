@@ -92,6 +92,6 @@ Pozwalają na to ścieżki bezwzględne i względne.
 Ścieżki te mogą być włączone w zasięg za pomocą deklaracji `use`, dzięki czemu można w nim używać krótszej ścieżki, co jest przydatne gdy elementy są używane w nim wielokrotnie.
 Kod modułu jest domyślnie prywatny, ale można upublicznić jego definicje za pomocą słowa kluczowego `pub`.
 
-W następnym rozdziale przyjrzymy się niektórym, zawartym w bibliotece standardowej, strukturom danych dla kolekcji, które można wykorzystać w swoim starannie zorganizowanym kodzie.
+W następnym rozdziale przyjrzymy się niektórym, zawartym w bibliotece standardowej, strukturom danych realizującym kolekcje, które można wykorzystać w swoim starannie zorganizowanym kodzie.
 
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
