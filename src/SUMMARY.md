@@ -44,8 +44,8 @@
     - [Włączanie Ścieżek do Zasięgu za Pomocą Słowa Kluczowego `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
     - [Umieszczanie Modułów w Osobnych Plikach](ch07-05-separating-modules-into-different-files.md)
 
-- [Common Collections](ch08-00-common-collections.md)
-    - [Storing Lists of Values with Vectors](ch08-01-vectors.md)
+- [Często Wykorzystywane Kolekcje](ch08-00-common-collections.md)
+    - [Przechowywanie List Wartości w Wektorach](ch08-01-vectors.md)
     - [Storing UTF-8 Encoded Text with Strings](ch08-02-strings.md)
     - [Storing Keys with Associated Values in Hash Maps](ch08-03-hash-maps.md)
 
