@@ -19,7 +19,7 @@ Aby utworzyć nowy pusty wektor, wywołujemy funkcję `Vec::new`, tak jak pokaza
 
 Proszę zauważyć, że dodaliśmy w kodzie adnotację typu.
 Ponieważ nie wstawiamy do tego wektora żadnych wartości, Rust nie wie, jakiego rodzaju elementy zamierzamy przechowywać.
-Wektory zaś są zaimplementowane przy użyciu typów generycznych (uogólnionych); o tym, jak uogólniać własne typy, opowiemy w rozdziale 10. Na razie wystarczy zapamiętać, że typ `Vec<T>` z biblioteki standardowej może przechowywać elementy dowolnego, zadanego typu.
+Co zaś istotne, wektory zaimplementowano przy użyciu typów generycznych (uogólnionych); o tym, jak uogólniać własne typy, opowiemy w rozdziale 10. Na razie wystarczy wiedzieć, że typ `Vec<T>` z biblioteki standardowej może przechowywać elementy dowolnego, zadanego typu.
 Ten typ możemy wskazać w nawiasach kątowych podczas tworzenia wektora.
 Na listingu 8-1 powiedzieliśmy Rustowi, że `Vec<T>` w `v` będzie przechowywał elementy typu `i32`.
 
