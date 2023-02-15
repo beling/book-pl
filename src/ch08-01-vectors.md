@@ -1,31 +1,27 @@
-## Storing Lists of Values with Vectors
+<!-- ## Storing Lists of Values with Vectors -->
+## Przechowywanie List Wartości w Wektorach
 
-The first collection type we’ll look at is `Vec<T>`, also known as a *vector*.
-Vectors allow you to store more than one value in a single data structure that
-puts all the values next to each other in memory. Vectors can only store values
-of the same type. They are useful when you have a list of items, such as the
-lines of text in a file or the prices of items in a shopping cart.
+Pierwszym typem kolekcji, któremu się przyjrzymy jest `Vec<T>`, znany również jako *wektor*.
+Wektory pozwalają przechować pewną liczbę wartości, umieszczając je w pamięci jedna obok drugiej.
+Wektory mogą zawierać tylko wartości tego samego typu.
+Są one przydatne, gdy mamy listę elementów, takich jak linie tekstu z pliku lub ceny towarów w koszyku zakupowym.
 
-### Creating a New Vector
+<!-- ### Creating a New Vector -->
+## Tworzenie Nowego Wektora
 
-To create a new empty vector, we call the `Vec::new` function, as shown in
-Listing 8-1.
+Aby utworzyć nowy pusty wektor, wywołujemy funkcję `Vec::new`, tak jak pokazano na Listingu 8-1.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-1: Creating a new, empty vector to hold values
-of type `i32`</span>
+<span class="caption">Listing 8-1: Utworzenie nowego, pustego wektora do przechowywania wartości typu `i32`</span>
 
-Note that we added a type annotation here. Because we aren’t inserting any
-values into this vector, Rust doesn’t know what kind of elements we intend to
-store. This is an important point. Vectors are implemented using generics;
-we’ll cover how to use generics with your own types in Chapter 10. For now,
-know that the `Vec<T>` type provided by the standard library can hold any type.
-When we create a vector to hold a specific type, we can specify the type within
-angle brackets. In Listing 8-1, we’ve told Rust that the `Vec<T>` in `v` will
-hold elements of the `i32` type.
+Proszę zauważyć, że dodaliśmy w kodzie adnotację typu.
+Ponieważ nie wstawiamy do tego wektora żadnych wartości, Rust nie wie, jakiego rodzaju elementy zamierzamy przechowywać.
+Wektory zaś są zaimplementowane przy użyciu typów generycznych (uogólnionych); o tym, jak uogólniać własne typy, opowiemy w rozdziale 10. Na razie wystarczy zapamiętać, że typ `Vec<T>` z biblioteki standardowej może przechowywać elementy dowolnego, zadanego typu.
+Ten typ możemy wskazać w nawiasach kątowych podczas tworzenia wektora.
+Na listingu 8-1 powiedzieliśmy Rustowi, że `Vec<T>` w `v` będzie przechowywał elementy typu `i32`.
 
 More often, you’ll create a `Vec<T>` with initial values and Rust will infer
 the type of value you want to store, so you rarely need to do this type
