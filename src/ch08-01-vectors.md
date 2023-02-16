@@ -72,23 +72,17 @@ Ponieważ wektory są indeksowane od zera, to by uzyskać trzeci element, używa
 Użycie `&` i `[]` daje referencję do elementu znajdującego się pod zadanym indeksem.
 Metoda `get`, której argumentem jest żądany indeks, zwraca `Option<&T>`, który możemy użyć z `match`.
 
-The reason Rust provides these two ways to reference an element is so you can
-choose how the program behaves when you try to use an index value outside the
-range of existing elements. As an example, let’s see what happens when we have
-a vector of five elements and then we try to access an element at index 100
-with each technique, as shown in Listing 8-5.
+Powodem, dla którego Rust udostępnia dwa sposoby odwoływania się do elementu, jest danie możliwość wyboru, jak ma zachować się program, podczas próby użycia indeksu spoza zakresu indeksów istniejących elementów.
+Na przykład zobaczmy co się stanie, gdy za pomocą każdej z tych technik spróbujemy uzyskać dostęp do elementu o indeksie 100 z wektora o pięciu elementach, jak pokazano na listingu 8-5.
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-5: Attempting to access the element at index
-100 in a vector containing five elements</span>
+<span class="caption">Listing 8-5: Próba uzyskania dostęp do elementu o indeksie 100 z wektora o pięciu elementach</span>
 
-When we run this code, the first `[]` method will cause the program to panic
-because it references a nonexistent element. This method is best used when you
-want your program to crash if there’s an attempt to access an element past the
-end of the vector.
+Kiedy uruchomimy ten kod, odwołanie się do nieistniejącego elementu pierwszą metodą `[]` spowoduje, że program spanikuje.
+Tej metody najlepiej więc użyć, gdy chcemy, aby podczas próby dostępu do elementu poza końcem wektora, program został zakończony.
 
 When the `get` method is passed an index that is outside the vector, it returns
 `None` without panicking. You would use this method if accessing an element
