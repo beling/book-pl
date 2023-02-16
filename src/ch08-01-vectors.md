@@ -19,67 +19,58 @@ Aby utworzyć nowy pusty wektor, wywołujemy funkcję `Vec::new`, tak jak pokaza
 
 Proszę zauważyć, że dodaliśmy w kodzie adnotację typu.
 Ponieważ nie wstawiamy do tego wektora żadnych wartości, Rust nie wie, jakiego rodzaju elementy zamierzamy przechowywać.
-Co zaś istotne, wektory zaimplementowano wykorzystując generyczność (uogólnianie); o tym, jak uogólniać własne typy, opowiemy w rozdziale 10. Na razie wystarczy wiedzieć, że typ `Vec<T>` z biblioteki standardowej może przechowywać elementy dowolnego, zadanego typu.
+Co zaś istotne, wektory są implementowane z wykorzystaniem generyczności; w rozdziale 10 opowiem jak jej użyć we własnych typach.
+Na razie wystarczy wiedzieć, że typ `Vec<T>` z biblioteki standardowej może przechowywać elementy dowolnego, zadanego typu.
 Ten typ możemy wskazać w nawiasach kątowych podczas tworzenia wektora.
 Na listingu 8-1 powiedzieliśmy Rustowi, że `Vec<T>` w `v` będzie przechowywał elementy typu `i32`.
 
-More often, you’ll create a `Vec<T>` with initial values and Rust will infer
-the type of value you want to store, so you rarely need to do this type
-annotation. Rust conveniently provides the `vec!` macro, which will create a
-new vector that holds the values you give it. Listing 8-2 creates a new
-`Vec<i32>` that holds the values `1`, `2`, and `3`. The integer type is `i32`
-because that’s the default integer type, as we discussed in the [“Data
-Types”][data-types]<!-- ignore --> section of Chapter 3.
+Zazwyczaj jednak `Vec<T>` będzie tworzony z wartościami początkowymi i Rust wywnioskuje typ przechowywanej wartości.
+Adnotacja typu nie będzie wtedy wymagana.
+Rust dostarcza wygodne makro `vec!`, tworzące nowy wektor z podanymi wartościami.
+Przykładowo, na listing 8-2 tworzony jest `Vec<i32>` zawierający `1`, `2`, i `3`.
+Typem wartości jest tam `i32`, ponieważ jest to domyślny typ dla liczb całkowitych, co omówiliśmy w sekcji [„Typy danych“][data-types]<!-- ignore --> rozdziału 3.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-02/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-2: Creating a new vector containing
-values</span>
+<span class="caption">Listing 8-2: Tworzenie nowego wektora zawierającego wartości</span>
 
-Because we’ve given initial `i32` values, Rust can infer that the type of `v`
-is `Vec<i32>`, and the type annotation isn’t necessary. Next, we’ll look at how
-to modify a vector.
+Ponieważ podano początkowe wartości typu `i32`, to Rust może wywnioskować, że typem `v` jest `Vec<i32>`, nawet bez adnotacji typu.
+Za chwilę omówimy, jak modyfikować wektor.
 
-### Updating a Vector
+<!-- ### Updating a Vector -->
+### Uaktualnianie Wektora
 
-To create a vector and then add elements to it, we can use the `push` method,
-as shown in Listing 8-3.
+Listing 8-3 pokazuje jak utworzyć wektor, a następnie dodać do niego elementy za pomocą metody `push`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-3: Using the `push` method to add values to a
-vector</span>
+<span class="caption">Listing 8-3: Dodawanie elementów do wektora za pomocą metody `push`</span>
 
-As with any variable, if we want to be able to change its value, we need to
-make it mutable using the `mut` keyword, as discussed in Chapter 3. The numbers
-we place inside are all of type `i32`, and Rust infers this from the data, so
-we don’t need the `Vec<i32>` annotation.
+Jak w przypadku każdej zmiennej, jeśli chcemy mieć możliwość zmiany jej wartości, musimy uczynić ją mutowalną za pomocą słowa kluczowego `mut`, tak jak zostało to omówione w rozdziale 3.
+Ponieważ wszystkie dodawane liczby są typu `i32`, to Rust wywnioskuje odpowiedni typ wektora, nawet bez adnotacji `Vec<i32>`.
 
-### Reading Elements of Vectors
+<!-- Reading Elements of Vectors -->
+### Czytanie Elementów Wektora
 
-There are two ways to reference a value stored in a vector: via indexing or
-using the `get` method. In the following examples, we’ve annotated the types of
-the values that are returned from these functions for extra clarity.
+Istnieją dwa sposoby odwołania się do wartości przechowywanej w wektorze: poprzez indeksowanie lub użycie metody `get`.
+W poniższych przykładach, dla przejrzystości, opatrzyliśmy adnotacjami typy wartości zwracanych przez te funkcje.
 
-Listing 8-4 shows both methods of accessing a value in a vector, with indexing
-syntax and the `get` method.
+Listing 8-4 pokazuje obie metody dostępu do wartości w wektorze. Pierwsza wykorzystuje składnie indeksowania, druga zaś metodę `get`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-4: Using indexing syntax or the `get` method to
-access an item in a vector</span>
+<span class="caption">Listing 8-4: Użycie indeksowania lub metody `get` by uzyskać dostęp do elementu w wektorze</span>
 
-Note a few details here. We use the index value of `2` to get the third element
-because vectors are indexed by number, starting at zero. Using `&` and `[]`
-gives us a reference to the element at the index value. When we use the `get`
-method with the index passed as an argument, we get an `Option<&T>` that we can
-use with `match`.
+W tym miejscu warto zwrócić uwagę na kilka szczegółów.
+Ponieważ wektory są indeksowane od zera, to by uzyskać trzeci element, używamy indeksu `2`.
+Użycie `&` i `[]` daje referencję do elementu znajdującego się pod zadanym indeksem.
+Metoda `get`, której argumentem jest żądany indeks, zwraca `Option<&T>`, który możemy użyć z `match`.
 
 The reason Rust provides these two ways to reference an element is so you can
 choose how the program behaves when you try to use an index value outside the
