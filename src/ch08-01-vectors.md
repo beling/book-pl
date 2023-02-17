@@ -84,35 +84,26 @@ Na przykład zobaczmy co się stanie, gdy za pomocą każdej z tych technik spr�
 Kiedy uruchomimy ten kod, odwołanie się do nieistniejącego elementu pierwszą metodą `[]` spowoduje, że program spanikuje.
 Tej metody najlepiej więc użyć, gdy chcemy, aby podczas próby dostępu do elementu poza końcem wektora, program został zakończony.
 
-When the `get` method is passed an index that is outside the vector, it returns
-`None` without panicking. You would use this method if accessing an element
-beyond the range of the vector may happen occasionally under normal
-circumstances. Your code will then have logic to handle having either
-`Some(&element)` or `None`, as discussed in Chapter 6. For example, the index
-could be coming from a person entering a number. If they accidentally enter a
-number that’s too large and the program gets a `None` value, you could tell the
-user how many items are in the current vector and give them another chance to
-enter a valid value. That would be more user-friendly than crashing the program
-due to a typo!
+Dla odmiany metoda `get` wywołana z nieistniejącym indeksem nie panikuje, tylko zwraca `None`.
+To przydaje się, gdy sporadyczny dostęp do elementu poza zakresem wektora jest spodziewany.
+Należy wtedy wyposażyć kod w logikę obsługującą oba możliwe rezultaty tej metody, zarówno `Some(&element)` jak i `None`, tak jak to omówiono w rozdziale 6.
+Na przykład, indeks może pochodzić od osoby wprowadzającej numer.
+Jeśli przypadkowo wprowadzi ona zbyt dużą liczbę i program otrzyma wartość `None`, można zakomunikować ile elementów znajduje się w bieżącym wektorze i dać użytkownikowi kolejną szansę na wprowadzenie poprawnej wartości.
+Będzie to dla niego bardziej przyjazne niż zakończenie programu z powodu literówki!
 
-When the program has a valid reference, the borrow checker enforces the
-ownership and borrowing rules (covered in Chapter 4) to ensure this reference
-and any other references to the contents of the vector remain valid. Recall the
-rule that states you can’t have mutable and immutable references in the same
-scope. That rule applies in Listing 8-6, where we hold an immutable reference
-to the first element in a vector and try to add an element to the end. This
-program won’t work if we also try to refer to that element later in the
-function:
+Nadzorca pożyczania, egzekwując zasady własności i reguły pożyczania (omówione w rozdziale 4), zapewni że wszelkie reference do zawartości wektora, będą poprawne.
+Proszę przypomnieć sobie regułę mówiącą, że nie można mieć mutowalnych i niemutowalnych referencji w tym samym zasięgu.
+Ta zasada ujawnia się na listingu 8-6, gdzie trzymając niemutowalną referencję do pierwszego elementu wektora, próbujemy dodać element na jego koniec.
+Jeśli dodatkowo spróbujemy odwołać się do tego elementu w dalszej części funkcji, to ten program się nie skompiluje:
 
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-6: Attempting to add an element to a vector
-while holding a reference to an item</span>
+<span class="caption">Listing 8-6: Próba dodania do wektora, do którego elementu trzymamy referencję</span>
 
-Compiling this code will result in this error:
+Próba skompilowania tego kodu daje następujący błąd:
 
 
 ```console
