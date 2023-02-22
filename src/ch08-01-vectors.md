@@ -110,17 +110,12 @@ Próba skompilowania tego kodu daje następujący błąd:
 {{#include ../listings/ch08-common-collections/listing-08-06/output.txt}}
 ```
 
-The code in Listing 8-6 might look like it should work: why should a reference
-to the first element care about changes at the end of the vector? This error is
-due to the way vectors work: because vectors put the values next to each other
-in memory, adding a new element onto the end of the vector might require
-allocating new memory and copying the old elements to the new space, if there
-isn’t enough room to put all the elements next to each other where the vector
-is currently stored. In that case, the reference to the first element would be
-pointing to deallocated memory. The borrowing rules prevent programs from
-ending up in that situation.
+Wydaje się, że kod na listingu 8-6 powinien działać: dlaczego referencja do pierwszego elementu miałaby się przejmować zmianami na końcu wektora?
+Błąd wynika ze sposobu działania wektorów: ponieważ wektory umieszczają wartości w pamięci obok siebie, to dodanie nowego elementu na końcu wektora może wymagać przydzielenia nowej pamięci i skopiowania do niej uprzednio dodanych elementów, gdy zabraknie miejsca tam, gdzie są one obecnie przechowywane.
+W takim przypadku referencja do pierwszego elementu wskazywałaby na zdeallokowaną pamięć.
+Zaś reguły pożyczania uniemożliwiają doprowadzenie programu do takiej sytuacji.
 
-> Note: For more on the implementation details of the `Vec<T>` type, see [“The
+> Uwaga: Więcej o implementacji typu `Vec<T>` można znaleźć w [“The
 > Rustonomicon”][nomicon].
 
 <!-- ### Iterating over the Values in a Vector -->
