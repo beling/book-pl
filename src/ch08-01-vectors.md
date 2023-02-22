@@ -123,7 +123,8 @@ ending up in that situation.
 > Note: For more on the implementation details of the `Vec<T>` type, see [“The
 > Rustonomicon”][nomicon].
 
-### Iterating over the Values in a Vector
+<!-- ### Iterating over the Values in a Vector -->
+### Iterowanie po Zawartych w Wektorze Wartościach
 
 To access each element in a vector in turn, we would iterate through all of the
 elements rather than use indices to access one at a time. Listing 8-7 shows how
