@@ -112,7 +112,7 @@ Próba skompilowania tego kodu daje następujący błąd:
 
 Wydaje się, że kod na listingu 8-6 powinien działać: dlaczego referencja do pierwszego elementu miałaby się przejmować zmianami na końcu wektora?
 Błąd wynika ze sposobu działania wektorów: ponieważ wektory umieszczają wartości w pamięci obok siebie, to dodanie nowego elementu na końcu wektora może wymagać przydzielenia nowej pamięci i skopiowania do niej uprzednio dodanych elementów, gdy zabraknie miejsca tam, gdzie są one obecnie przechowywane.
-W takim przypadku referencja do pierwszego elementu wskazywałaby na zdeallokowaną pamięć.
+W takim przypadku referencja do pierwszego elementu wskazywałaby na zwolniony obszar pamięci.
 Zaś reguły pożyczania uniemożliwiają doprowadzenie programu do takiej sytuacji.
 
 > Uwaga: Więcej o implementacji typu `Vec<T>` można znaleźć w [“The
@@ -121,43 +121,32 @@ Zaś reguły pożyczania uniemożliwiają doprowadzenie programu do takiej sytua
 <!-- ### Iterating over the Values in a Vector -->
 ### Iterowanie po Zawartych w Wektorze Wartościach
 
-To access each element in a vector in turn, we would iterate through all of the
-elements rather than use indices to access one at a time. Listing 8-7 shows how
-to use a `for` loop to get immutable references to each element in a vector of
-`i32` values and print them.
+Aby uzyskać dostęp kolejno do wszystkich elementów wektora, to zamiast używać ich indeksów, lepiej go przeiterować.
+Listing 8-7 pokazuje, jak za pomocą pętli `for` uzyskać niemutowalne referencje do wszystkich liczb (typu `i32`) zawartych w wektorze i te liczby wypisać.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-7: Printing each element in a vector by
-iterating over the elements using a `for` loop</span>
+<span class="caption">Listing 8-7: Wypisanie zawartości wektora za pomocą pętli `for` iterującej po jego elementach</span>
 
-We can also iterate over mutable references to each element in a mutable vector
-in order to make changes to all the elements. The `for` loop in Listing 8-8
-will add `50` to each element.
+Iterując po mutowalnych referencjach do elementów, możemy również zmodyfikować wszystkie elementy mutowalnego wektora. Pętla `for` na Listingu 8-8 dodaje do każdego `50`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-8: Iterating over mutable references to
-elements in a vector</span>
+<span class="caption">Listing 8-8: Iterowanie po mutowalnych referencjach do elementów wektora</span>
 
-To change the value that the mutable reference refers to, we have to use the
-`*` dereference operator to get to the value in `i` before we can use the `+=`
-operator. We’ll talk more about the dereference operator in the [“Following the
-Pointer to the Value with the Dereference Operator”][deref]<!-- ignore -->
-section of Chapter 15.
+Aby za pomocą operatora `+=` zmienić wartość, do której odnosi się mutowalna referencja `i`, wpierw musimy się do tej wartości dostać za pomocą operatora dereferencji `*`.
+Więcej o operatorze dereferencji powiemy w sekcji ["Following the Pointer to the Value with the Dereference Operator"][deref]<!-- ignore --> rozdziału 15.
 
-Iterating over a vector, whether immutably or mutably, is safe because of the
-borrow checker's rules. If we attempted to insert or remove items in the `for`
-loop bodies in Listing 8-7 and Listing 8-8, we would get a compiler error
-similar to the one we got with the code in Listing 8-6. The reference to the
-vector that the `for` loop holds prevents simultaneous modification of the
-whole vector.
+Dzięki regułom nadzorcy pożyczania, zarówno niemutowalne jak i mutowalne iterowanie po wektorze, jest bezpieczne.
+Gdybyśmy na Listingu 8-7 lub 8-8 spróbowali w ciałach pętli `for` wstawiać do wektora elementy lub je usuwać, otrzymalibyśmy błąd kompilatora podobny do tego, który powodował kod na Listingu 8-6.
+Ponieważ pętla `for` posiada referencję do wektora, to nie można go równocześnie modyfikować inaczej, niż poprzez tę referencję.
 
-### Using an Enum to Store Multiple Types
+<!-- ### Using an Enum to Store Multiple Types -->
+### Przechowywanie Wartości Różnych Typów za Pomocą Typu Wyliczeniowego
 
 Vectors can only store values that are the same type. This can be inconvenient;
 there are definitely use cases for needing to store a list of items of
