@@ -163,13 +163,10 @@ Takie działanie ilustruje listing 8-9.
 
 <span class="caption">Listing 8-9: Zdefiniowanie `enum` do przechowywania wartości różnych typów w jednym wektorze</span>
 
-Rust needs to know what types will be in the vector at compile time so it knows
-exactly how much memory on the heap will be needed to store each element. We
-must also be explicit about what types are allowed in this vector. If Rust
-allowed a vector to hold any type, there would be a chance that one or more of
-the types would cause errors with the operations performed on the elements of
-the vector. Using an enum plus a `match` expression means that Rust will ensure
-at compile time that every possible case is handled, as discussed in Chapter 6.
+Rust już w czasie kompilacji musi wiedzieć, jakiego typu elementy są dozwolone w wektorze, aby dokładnie przewidzieć, ile pamięci na stercie będzie potrzebne do ich przechowania.
+Dlatego musimy jednoznacznie te typy określić.
+Gdyby Rust pozwolił wektorowi przechowywać elementy dowolnych typów, istniałoby zagrożenie, że jeden lub więcej typów spowodowałoby błędy w operacjach wykonywanych na elementach wektora.
+Użycie enum plus wyrażenia `match` oznacza, że Rust zapewni w czasie kompilacji, że każdy możliwy przypadek zostanie obsłużony, jak omówiono w rozdziale 6.
 
 If you don’t know the exhaustive set of types a program will get at runtime to
 store in a vector, the enum technique won’t work. Instead, you can use a trait
