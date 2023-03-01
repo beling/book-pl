@@ -34,7 +34,7 @@ Przyjrzyjmy się nieco bliżej temu wywołaniu funkcji:
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-07-reference/src/main.rs:here}}
 ```
 Składnia `&s1` tworzy referencję, która co prawda *referuje* do `s1`, ale nie posiada go na własność.
-Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie usunięta wraz z końcem zasięgu życia samej referencji.
+Skoro zaś go nie posiada, to wskazywana przez nią wartość nie zostanie zwolniona wraz z końcem zasięgu życia samej referencji.
 
 Sygnatura funkcji także używa `&` do wskazania, że `s` jest referencją. Poniżej dodano kilka komentarzy z wyjaśnieniami:
 

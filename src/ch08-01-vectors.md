@@ -130,7 +130,7 @@ Listing 8-7 pokazuje, jak za pomocą pętli `for` uzyskać niemutowalne referenc
 
 <span class="caption">Listing 8-7: Wypisanie zawartości wektora za pomocą pętli `for` iterującej po jego elementach</span>
 
-Iterując po mutowalnych referencjach do elementów, możemy również zmodyfikować wszystkie elementy mutowalnego wektora. Pętla `for` na Listingu 8-8 dodaje do każdego `50`.
+Iterując po mutowalnych referencjach do elementów, możemy również zmodyfikować wszystkie elementy mutowalnego wektora. Pętla `for` na listingu 8-8 dodaje do każdego `50`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
@@ -142,7 +142,7 @@ Aby za pomocą operatora `+=` zmienić wartość, do której odnosi się mutowal
 Więcej o operatorze dereferencji powiemy w sekcji ["Following the Pointer to the Value with the Dereference Operator"][deref]<!-- ignore --> rozdziału 15.
 
 Dzięki regułom nadzorcy pożyczania, zarówno niemutowalne jak i mutowalne iterowanie po wektorze, jest bezpieczne.
-Gdybyśmy na Listingu 8-7 lub 8-8 spróbowali w ciałach pętli `for` wstawiać do wektora elementy lub je usuwać, otrzymalibyśmy błąd kompilatora podobny do tego, który powodował kod na Listingu 8-6.
+Gdybyśmy na listingu 8-7 lub 8-8 spróbowali w ciałach pętli `for` wstawiać do wektora elementy lub je usuwać, otrzymalibyśmy błąd kompilatora podobny do tego, który powodował kod na listingu 8-6.
 Ponieważ pętla `for` posiada referencję do wektora, to nie można go równocześnie modyfikować inaczej, niż poprzez tę referencję.
 
 <!-- ### Using an Enum to Store Multiple Types -->
@@ -171,22 +171,19 @@ Użycie enum plus wyrażenia `match` oznacza, że Rust zapewni w czasie kompilac
 Gdybyśmy nie znali wyczerpującego zestawu typów, których wartości w czasie wykonywania programu będą dodawane do wektora, to nie moglibyśmy użyć omówionej techniki wykorzystującej enum.
 Instead, you can use a trait object, which we’ll cover in Chapter 17.
 
-Now that we’ve discussed some of the most common ways to use vectors, be sure
-to review [the API documentation][vec-api]<!-- ignore --> for all the many
-useful methods defined on `Vec<T>` by the standard library. For example, in
-addition to `push`, a `pop` method removes and returns the last element.
+Teraz, gdy omówiliśmy wybrane, częste sposoby używania wektorów, warto przejrzeć [dokumentację API][vec-api]<!-- ignore -->, gdyż zawarty w bibliotece standardowej `Vec<T>` posiada znacznie więcej użytecznych metod.
+Na przykład jego metoda `pop` usuwa i zwraca ostatni element.
 
-### Dropping a Vector Drops Its Elements
+<!-- ### Dropping a Vector Drops Its Elements -->
+### Zwolnienie Wektora Powoduje Zwolnienie Jego Elementów
 
-Like any other `struct`, a vector is freed when it goes out of scope, as
-annotated in Listing 8-10.
+Jak każda inna struktura, wektor jest zwalniany gdy wychodzi poza zasięg, jak to zostało zaznaczone na listingu 8-10.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-10: Showing where the vector and its elements
-are dropped</span>
+<span class="caption">Listing 8-10: Pokazanie, gdzie jest zwalniany wektor i jego elementy</span>
 
 When the vector gets dropped, all of its contents are also dropped, meaning the
 integers it holds will be cleaned up. The borrow checker ensures that any

@@ -81,13 +81,12 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 
 ### Zasady systemu własności
 
-W pierwszej kolejności przyjrzyjmy się zasadom systemu własności. Miej je na
+W pierwszej kolejności przyjrzyjmy się zasadom systemu własności. Proszę mieć je na
 uwadze, kiedy będziemy omawiać ilustrujące je przykłady:
 
 * Każda wartość w Ruście ma *właściciela*.
 * W danym momencie może istnieć tylko jeden właściciel.
-* Kiedy program wychodzi poza zasięg właściciela, przechowywana wartość
-zostaje usunięta.
+* Kiedy sterowanie wychodzi poza zasięg właściciela, wartość zostaje zwolniona.
 
 ### Zasięg zmiennych
 
@@ -121,10 +120,10 @@ nowy typ danych: `String` (*łańcuch znaków*).
 
 Aby zilustrować zasady systemu własności, potrzebujemy typu danych, który jest
 bardziej złożony od tych, które omawiane były w sekcji
-[„Typy danych”][data-types]<!-- ignore --> w rozdziale 3. Wszystkie opisane tam
+[„Typy danych”][data-types]<!-- ignore --> rozdziału 3. Wszystkie opisane tam
 typy przechowywane są na stosie i są z niego zdejmowane, kiedy skończy się ich
 zasięg. Potrzebny jest nam natomiast typ przechowujący zawarte w nim dane na
-stercie . Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
+stercie. Dowiemy się wówczas, skąd Rust wie, kiedy te dane usunąć.
 
 W przykładzie użyjemy typu `String`, koncentrując się na tych jego elementach,
 które odnoszą się do systemu własności. Te same elementy mają znaczenie dla
@@ -448,7 +447,7 @@ zwracanych</span>
 
 Własność zmiennej zachowuje się zawsze w ten sam sposób: przypisanie wartości do
 innej zmiennej przenosi tę wartość. Kiedy kończy się zasięg zmiennej
-zawierającej dane ze sterty, dane te zostaną usunięte przez `drop`, chyba że
+zawierającej dane ze sterty, dane te zostaną zwolnione przez `drop`, chyba że
 przekażemy je na własność innej zmiennej.
 
 Przyjmowanie własności, a następnie oddawanie jej przy wywołaniu każdej funkcji

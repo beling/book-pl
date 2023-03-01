@@ -7,9 +7,9 @@ fn main() {
     let s3 = bierze_i_oddaje(s2);   // s2 zostaje przeniesiona do
                                     // bierze_i_oddaje, która jednocześnie
                                     // przenosi swoją wartość zwracaną do s3.
-} // Tutaj kończy się zasięg s3 i jej dane zostają usunięte. Zasięg s2 też, ale
+} // Tutaj kończy się zasięg s3 i jej dane zostają zwolnione. Zasięg s2 też, ale
   // ponieważ jej dane przeniesiono, nic się nie dziejej. Zasięg s1 kończy się,
-  // a jej dane zostają usunięte.
+  // a jej dane zostają zwolnione.
 
 fn daje_wlasnosc() -> String {                // daje_wlasnosc przenosi jej
                                               // wartość zwracaną do funkcji,
