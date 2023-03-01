@@ -168,9 +168,8 @@ Dlatego musimy jednoznacznie te typy określić.
 Gdyby Rust pozwolił wektorowi przechowywać elementy dowolnych typów, istniałoby zagrożenie, że jeden lub więcej typów spowodowałoby błędy w operacjach wykonywanych na elementach wektora.
 Użycie enum plus wyrażenia `match` oznacza, że Rust zapewni w czasie kompilacji, że każdy możliwy przypadek zostanie obsłużony, jak omówiono w rozdziale 6.
 
-If you don’t know the exhaustive set of types a program will get at runtime to
-store in a vector, the enum technique won’t work. Instead, you can use a trait
-object, which we’ll cover in Chapter 17.
+Gdybyśmy nie znali wyczerpującego zestawu typów, których wartości w czasie wykonywania programu będą dodawane do wektora, to nie moglibyśmy użyć omówionej techniki wykorzystującej enum.
+Instead, you can use a trait object, which we’ll cover in Chapter 17.
 
 Now that we’ve discussed some of the most common ways to use vectors, be sure
 to review [the API documentation][vec-api]<!-- ignore --> for all the many
