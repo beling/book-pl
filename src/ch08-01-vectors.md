@@ -148,25 +148,20 @@ Ponieważ pętla `for` posiada referencję do wektora, to nie można go równocz
 <!-- ### Using an Enum to Store Multiple Types -->
 ### Przechowywanie Wartości Różnych Typów za Pomocą Typu Wyliczeniowego
 
-Vectors can only store values that are the same type. This can be inconvenient;
-there are definitely use cases for needing to store a list of items of
-different types. Fortunately, the variants of an enum are defined under the
-same enum type, so when we need one type to represent elements of different
-types, we can define and use an enum!
+Wektory mogą przechowywać tylko wartości tego samego typu, co może być uciążliwe;
+nierzadko zdarza się potrzeba przechowani listy elementów różnych typów.
+Na szczęście warianty wyliczenia są zdefiniowane w ramach tego samego typu enum, więc kiedy potrzebujemy jednego typu do reprezentowania elementów różnych typów, możemy zdefiniować i użyć enuma!
 
-For example, say we want to get values from a row in a spreadsheet in which
-some of the columns in the row contain integers, some floating-point numbers,
-and some strings. We can define an enum whose variants will hold the different
-value types, and all the enum variants will be considered the same type: that
-of the enum. Then we can create a vector to hold that enum and so, ultimately,
-holds different types. We’ve demonstrated this in Listing 8-9.
+Na przykład, załóżmy, że chcemy uzyskać wartości z wiersza arkusza kalkulacyjnego, w którym niektóre kolumny w wierszu zawierają liczby całkowite, niektóre liczby zmiennoprzecinkowe, zaś niektóre łańcuchy.
+Możemy zdefiniować typ wyliczeniowy, którego warianty będą trzymać wartości różnych typów, a jednocześnie wszystkie te warianty będą traktowane jako ten sam typ.
+Następnie możemy utworzyć wektor takich enumów, efektywnie przechowujący wartości różnych typów.
+Takie działanie ilustruje listing 8-9.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-9: Defining an `enum` to store values of
-different types in one vector</span>
+<span class="caption">Listing 8-9: Zdefiniowanie `enum` do przechowywania wartości różnych typów w jednym wektorze</span>
 
 Rust needs to know what types will be in the vector at compile time so it knows
 exactly how much memory on the heap will be needed to store each element. We
