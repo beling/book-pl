@@ -175,7 +175,7 @@ Teraz, gdy omówiliśmy wybrane, częste sposoby używania wektorów, warto prze
 Na przykład jego metoda `pop` usuwa i zwraca ostatni element.
 
 <!-- ### Dropping a Vector Drops Its Elements -->
-### Zwolnienie Wektora Powoduje Zwolnienie Jego Elementów
+### Wraz z Wektorem Zwalniane Są Jego Elementy
 
 Jak każda inna struktura, wektor jest zwalniany gdy wychodzi poza zasięg, jak to zostało zaznaczone na listingu 8-10.
 
@@ -185,14 +185,12 @@ Jak każda inna struktura, wektor jest zwalniany gdy wychodzi poza zasięg, jak 
 
 <span class="caption">Listing 8-10: Pokazanie, gdzie jest zwalniany wektor i jego elementy</span>
 
-When the vector gets dropped, all of its contents are also dropped, meaning the
-integers it holds will be cleaned up. The borrow checker ensures that any
-references to contents of a vector are only used while the vector itself is
-valid.
+Gdy wektor jest zwalniany, cała jego zawartość również jest zwalniana, co oznacza usunięcie z pamięci przechowywanych w nim liczb.
+Nadzorca pożyczania nie pozwoli używać żadnych referencji do zawartości wektora, który utracił ważność.
 
-Let’s move on to the next collection type: `String`!
+Przejdźmy do kolejnego typu kolekcji: `String`a!
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html#typy-danych
 [nomicon]: ../nomicon/vec/vec.html
 [vec-api]: ../std/vec/struct.Vec.html
 [deref]: ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator
