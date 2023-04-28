@@ -3,6 +3,7 @@
 set -eu
 
 aspell --version
+LANG=pl_PL.UTF-8
 
 # Checks project Markdown files for spelling mistakes.
 
@@ -60,7 +61,7 @@ if [[ ! -f "$dict_filename" ]]; then
     echo "Scanning files to generate dictionary file '$dict_filename'."
     echo "Please check that it doesn't contain any misspellings."
 
-    echo "personal_ws-1.1 en 0 utf-8" > "$dict_filename"
+    echo "personal_ws-1.1 pl 0 utf-8" > "$dict_filename"
     cat "${markdown_sources[@]}" | aspell --ignore 3 list | sort -u >> "$dict_filename"
 elif [[ "$mode" == "list" ]]; then
     # List (default) mode: scan all files, report errors.

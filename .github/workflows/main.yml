@@ -43,8 +43,12 @@ jobs:
         mkdir bin
         curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.21/mdbook-v0.4.21-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
         echo "$(pwd)/bin" >> ${GITHUB_PATH}
+    - name: Generate locale
+      run: |
+        sudo locale-gen pl_PL.UTF-8
+        sudo update-locale LANG=pl_PL.UTF-8
     - name: Install aspell
-      run: sudo apt-get install aspell
+      run: sudo apt-get install aspell-pl
     - name: Install shellcheck
       run: sudo apt-get install shellcheck
     - name: Report versions
