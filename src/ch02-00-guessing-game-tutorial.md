@@ -287,7 +287,7 @@ W bibliotece standardowej Rusta nie ma jeszcze obsługi liczb losowych, dlatego 
 
 ### Więcej funkcjonalności z użyciem skrzyń
 
-Zapamiętaj: skrzynia (ang. *crate*) to kolejkcja plików źródłowych Rusta.
+Zapamiętaj: skrzynia (ang. *crate*) to kolekcja plików źródłowych Rusta.
 Projekt, który budujemy, to skrzynia binarna
 (*binary crate*), czyli plik wykonywalny. Skrzynia `rand` to *library crate*, czyli biblioteka stworzona do używania w
 innych programach.
@@ -387,7 +387,7 @@ Zależności nie zmieniły się, więc Cargo wie, że może użyć ponownie te, 
 
 Cargo posiada mechanizm, który zapewnia że za każdym razem, gdy ty lub ktokolwiek inny będziecie przebudowywać projekt, 
 kompilowane będą te same artefakty: Cargo użyje zależności w konkretnych wersjach, chyba że wskażesz inaczej.
-Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `rand` 0.8.6, która zawierałaby poprawkę istotnego błedu,
+Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `rand` 0.8.6, która zawierałaby poprawkę istotnego błędu,
 ale jednocześnie wprowadza regresję, która zepsuje twój kod?
 Odpowiedzią na ten problem jest plik *Cargo.lock*, który został stworzony w momencie,
 gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *guessing_game*.
@@ -441,7 +441,7 @@ Dzięki Cargo ponowne używanie bibliotek jest bardzo łatwe, więc Rustowcy mog
 <!-- Generating a Random Number -->
 ### Generowanie Losowej Liczby
 
-A teraz użyjmy w końcu skrzyni `rand` by wygerować liczbę do zgadnięcia.
+A teraz użyjmy w końcu skrzyni `rand` by wygenerować liczbę do zgadnięcia.
 Zmodyfikujmy plik *src/main.rs*, tak jak pokazano na listingu 2-3:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -797,7 +797,7 @@ Ten projekt w praktyczny sposób zapoznał cię z wieloma konceptami Rusta:
 i innymi. W najbliższych rozdziałach koncepty te będą omówione bardziej szczegółowo.
 Rozdział 3 omawia koncepty obecne w większości języków programowania, takie jak zmienne,
 typy danych czy funkcje, i prezentuje jak należy w nich korzystać w Ruście.
-Rozdział 4 odkrywa system własności, mechanizm który wyróżna Rusta spośród innych języków.
+Rozdział 4 odkrywa system własności, mechanizm który wyróżnia Rusta spośród innych języków.
 Rozdział 5 omawia składnię struktur i metod, a rozdział 6 wyjaśnia, jak działają typy numeryczne.
 
 

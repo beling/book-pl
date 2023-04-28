@@ -58,7 +58,7 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 > analogię, załóżmy, że kelner w restauracji zbiera zamówienia z wielu stolików.
 > Bardziej wydajne jest zebranie wszystkich zamówień z jednego stolika, zanim
 > przejdzie się do kolejnego. Zebranie pojedynczego zamówienia ze stolika A,
-> następnie jednego ze stolika B, kolejnrgo znów ze stolika A i powtórnie ze
+> następnie jednego ze stolika B, kolejnego znów ze stolika A i powtórnie ze
 > stolika B, byłoby zdecydowanie wolniejszym procesem. Z tego samego względu,
 > procesor wykonuje swoje zadanie lepiej, operując na danych sąsiadujących z
 > innymi danymi (jak ma to miejsce na stosie), niż gdyby operował na danych
@@ -75,7 +75,7 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 > duplikowania się danych na stercie, a także pozbywanie się ze sterty
 > nieużywanych danych, celem uniknięcia wyczerpania się pamięci.
 > Po zrozumieniu pojęcia własności, nie będziesz juz musiał zbyt często myśleć o
-> stosie czy o stercie. Jednak świadomość tego, że zawiadowanie danymi na
+> stosie czy o stercie. Jednak świadomość tego, że zarządzanie danymi na
 > stercie jest istotą istnienia systemu własności, pomaga wyjaśnić, dlaczego
 > działa on tak, jak działa.
 

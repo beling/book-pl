@@ -22,7 +22,7 @@ Możemy napisać funkcję, która pobiera nieznaną amerykańską monetę i tak 
 
 Rozłóżmy `match` w funkcji `value_in_cents` na czynniki pierwsze.
 Najpierw umieszczamy słowo kluczowe `match`, po którym następuje wyrażenie, którym w tym przypadku jest wartość `coin`.
-To wyrażenie pełni podobną rolę do wyrażenia warunkowego używanego z `if`, ale jest duża różnica: w `if` warunek musi dawać wartość boolowską, zaś tutaj wyrażnie może być dowolnego typu. Typem `coin` w tym przykładzie jest enum `Coin`, który zdefiniowaliśmy w pierwszej linii.
+To wyrażenie pełni podobną rolę do wyrażenia warunkowego używanego z `if`, ale jest duża różnica: w `if` warunek musi dawać wartość boolowską, zaś tutaj wyraźnie może być dowolnego typu. Typem `coin` w tym przykładzie jest enum `Coin`, który zdefiniowaliśmy w pierwszej linii.
 
 Następne są odnogi `match`. Odnoga składa się z dwóch części: wzorca i kodu. Pierwsza odnoga ma wzorzec, którym jest wartość `Coin::Penny`, a następnie operator `=>`, który oddziela wzorzec i kod do uruchomienia. Kodem w tym przypadku jest po prostu wartość `1`. Każda odnoga jest oddzielone od następnej przecinkiem.
 
@@ -177,7 +177,7 @@ Możemy to wyrazić używając jako kodu w odnodze `_` wartości jednostkowej (c
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-17-underscore-unit/src/main.rs:here}}
 ```
 
-Tutaj mówimy Rustowi wprost, że nie będziemy używać żadnej wartości, która nie pasuje do wzorców poprzenich odnóg, i nie chcemy uruchamiać żadnego kodu w tym przypadku.
+Tutaj mówimy Rustowi wprost, że nie będziemy używać żadnej wartości, która nie pasuje do wzorców poprzednich odnóg, i nie chcemy uruchamiać żadnego kodu w tym przypadku.
 
 Więcej o wzorcach i dopasowywaniu powiemy w [rozdziale 18][ch18-00-wzorce]<!-- ignore -->.
 Na razie jednak przejdziemy do składni `if let`, która może być przydatna w sytuacjach, w których wyrażenie `match` jest zbyt rozwlekłe.
