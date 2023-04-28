@@ -179,7 +179,7 @@ Możemy to wyrazić używając jako kodu w odnodze `_` wartości jednostkowej (c
 
 Tutaj mówimy Rustowi wprost, że nie będziemy używać żadnej wartości, która nie pasuje do wzorców poprzednich odnóg, i nie chcemy uruchamiać żadnego kodu w tym przypadku.
 
-Więcej o wzorcach i dopasowywaniu powiemy w [rozdziale 18][ch18-00-wzorce]<!-- ignore -->.
+Więcej o wzorcach i dopasowywaniu powiemy w [rozdziale 18][ch18-00-patterns]<!-- ignore -->.
 Na razie jednak przejdziemy do składni `if let`, która może być przydatna w sytuacjach, w których wyrażenie `match` jest zbyt rozwlekłe.
 
 [tuples]: ch03-02-data-types.html#krotki

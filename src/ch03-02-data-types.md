@@ -243,7 +243,7 @@ W Ruście, aby umieścić wartości w tablicy, zapisujemy je jako lista rozdziel
 ```
 
 Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie (Stos i stertę omówimy w [rozdziale 4][stack-and-heap]<!-- ignore -->) lub gdy chcesz mieć pewność, że ilość elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna, jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
-Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie powinieneś użyć wektora. [Rozdział 8][][vectors]<!-- ignore --> szczegółowo opisuje wektory i ich działanie.
+Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie powinieneś użyć wektora. [Rozdział 8][vectors]<!-- ignore --> szczegółowo opisuje wektory i ich działanie.
 
 Jednak tablice są bardziej przydatne, gdy wiadomo, że liczba elementów nie zmieni się.
 Przykładowo gdy w programie chcemy używać nazw miesięcy, lepiej przechowywać je w tablicy niż w wektorze, ponieważ wiemy, że potrzebujemy dokładnie 12 elementów:

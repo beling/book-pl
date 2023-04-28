@@ -10,7 +10,7 @@ Oryginalna, anglojęzyczna wersja książki w wersji HTML dostępna jest na stro
 oraz w trybie offline, instalowana wraz z Rustem przy użyciu `rustup`. Użyj
 polecenia `rustup docs --book`, żeby ją otworzyć.
 
-Istnieje kilka społecznościowych [tłumaczeń] tej książki. Niniejsze tłumaczenie jest zaś dostępna na stronie [http://rust.w8.pl/book/](http://rust.w8.pl/book/).
+Istnieje kilka społecznościowych [tłumaczeń][translations] tej książki. Niniejsze tłumaczenie jest zaś dostępna na stronie [http://rust.w8.pl/book/](http://rust.w8.pl/book/).
 
 Anglojęzyczna wersja dostępna jest też w wersji [papierowej oraz ebooka za sprawą wydawnictwa
 No Starch Press][nsprust].
