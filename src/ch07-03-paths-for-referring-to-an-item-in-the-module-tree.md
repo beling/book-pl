@@ -208,6 +208,6 @@ Dlatego pola struktury podążają za ogólną zasadą, że wszystko jest domyś
 Jest jeszcze jedna nieomówiona kwestia związana z `pub`, która związana jest z ostatnią funkcjonalnością systemu modułów pozostałą do opisania, czyli ze słowem kluczowym `use`.
 Najpierw omówimy `use` samo w sobie, a następnie pokażemy jak połączyć `pub` i `use`.
 
-[pub]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
+[pub]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#eksponowanie-Ścieżek-za-pomocą-słowa-kluczowego-pub
 [api-guidelines]: https://rust-lang.github.io/api-guidelines/
 [ch12]: ch12-00-an-io-project.html

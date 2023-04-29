@@ -266,4 +266,4 @@ chapters to work on a project!
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [separating-modules-into-files]:
 ch07-05-separating-modules-into-different-files.html
-[alt-paths]: ch07-05-separating-modules-into-different-files.html#alternate-file-paths
+[alt-paths]: ch07-05-separating-modules-into-different-files.html#alternatywne-Ścieżki-do-plików

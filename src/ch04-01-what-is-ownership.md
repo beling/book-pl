@@ -470,10 +470,10 @@ ten przypadek.
 
 Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest powszechnie. Na szczęście dla nas, Rust wyposażony jest w *referencje*, które świetnie obsługują takie przypadki.
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html#typy-danych
 [ch8]: ch08-02-strings.html
 [traits]: ch10-02-traits.html
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#method-syntax
+[method-syntax]: ch05-03-method-syntax.html#składnia-metod
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [drop]: ../std/ops/trait.Drop.html#tymethod.drop

@@ -216,6 +216,6 @@ poznamy kolejną funkcjonalność Rusta - enumeracje, czyli kolejne niezbędne n
 
 [enums]: ch06-00-enums.html
 [trait-objects]: ch17-02-trait-objects.md
-[public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
+[public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#eksponowanie-Ścieżek-za-pomocą-słowa-kluczowego-pub
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 

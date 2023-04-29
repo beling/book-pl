@@ -465,4 +465,4 @@ ch10-02-traits.html#implementing-a-trait-on-a-type
 [traits-defining-shared-behavior]:
 ch10-02-traits.html#traits-defining-shared-behavior
 [smart-pointer-deref]: ch15-02-deref.html#treating-smart-pointers-like-regular-references-with-the-deref-trait
-[tuple-structs]: ch05-01-defining-structs.html#using-tuple-structs-without-named-fields-to-create-different-types
+[tuple-structs]: ch05-01-defining-structs.html#wykorzystanie-braku-nazywania-pól-w-struktorach-krotkowych-do-tworzenia-nowych-typów

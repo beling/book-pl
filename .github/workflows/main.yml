@@ -73,4 +73,5 @@ jobs:
         curl -sSLo linkcheck.sh \
           https://raw.githubusercontent.com/rust-lang/rust/master/src/tools/linkchecker/linkcheck.sh
         # Cannot use --all here because of the generated redirect pages aren't available.
+        patch linkcheck.sh < linkcheck_patch
         sh linkcheck.sh book

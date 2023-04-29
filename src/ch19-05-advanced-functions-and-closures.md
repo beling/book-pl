@@ -125,6 +125,6 @@ Next, let’s look at macros!
 
 [advanced-traits]:
 ch19-03-advanced-traits.html#advanced-traits
-[enum-values]: ch06-01-defining-an-enum.html#enum-values
+[enum-values]: ch06-01-defining-an-enum.html#wartości-wyliczeń
 [using-trait-objects-that-allow-for-values-of-different-types]:
 ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types

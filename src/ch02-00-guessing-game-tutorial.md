@@ -601,7 +601,7 @@ porównanie zachodzi pomiędzy dwiema wartościami tego samego typu!
 Wywołanie `parse` często może zakończyć się niepowodzeniem. Jeśli, na przykład, string będzie zawierał
 `A👍%`, to jego konwersja do liczby nie może się udać. Z tego względu metoda `parse` zwraca
 typ `Result`, podobnie jak metoda `read_line` (wspominaliśmy o tym wcześniej w sekcji
-[„Obsługa potencjalnych błędów z użyciem `Result`”](#handling-potential-failure-with-the-result-type)<!-- ignore
+[„Obsługa potencjalnych błędów z użyciem `Result`”](#obsługa-potencjalnych-błędów-z-użyciem-result)<!-- ignore
 -->). Potraktujemy ten `Result` w ten sam sposób, używając ponownie metody `expect`. Jeśli `parse` zwróci wariant `Err`
 (ponieważ nie udało się stworzyć liczby ze stringa), wywołanie `expect` spowoduje zawieszenie się gry i wypisanie na ekran
 podanego przez nas tekstu. Gdy zaś `parse` powiedzie się i poprawnie skonwertuje stringa do liczby, zwrócony `Result`
@@ -652,7 +652,7 @@ Niestety teraz program pyta o wprowadzenie odgadniętej liczby w nieskończonoś
 
 Użytkownik może zawsze zatrzymać program używając skrótu klawiszowego <span class="keystroke">ctrl-c</span>. Lecz
 jest jeszcze inny sposób, żeby uciec temu nienasyconemu potworowi, jak wspomnieliśmy w dyskusji o `parse`
-w [„Porównywanie odpowiedzi gracza z sekretnym numerem”](#comparing-the-guess-to-the-secret-number)<!--
+w [„Porównywanie odpowiedzi gracza z sekretnym numerem”](#porównywanie-odpowiedzi-z-sekretnym-numerem)<!--
 ignore -->: wprowadzenie znaku, który nie jest liczbą, spowoduje zawieszenie się programu. Można z tego skorzystać,
 aby wyjść z programu, tak jak pokazujemy poniżej:
 
@@ -810,7 +810,7 @@ ownership, a feature that makes Rust different from other languages. Chapter 5
 discusses structs and method syntax, and Chapter 6 explains how enums work.
 
 [prelude]: ../std/prelude/index.html
-[variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability
+[variables-and-mutability]: ch03-01-variables-and-mutability.html#zmienne-i-ich-modyfikowalność
 [comments]: ch03-04-comments.html
 [string]: ../std/string/struct.String.html
 [iostdin]: ../std/io/struct.Stdin.html

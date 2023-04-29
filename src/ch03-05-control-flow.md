@@ -281,6 +281,6 @@ Udało się! To był długi rozdział: poznaliśmy zmienne, skalarne i złożone
 Kiedy będziesz gotowy aby przejść dalej, porozmawiamy o koncepcji Rusta, która *nie* jest powszechna w innych językach programowania, o własności.
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
+ch02-00-guessing-game-tutorial.html#porównywanie-odpowiedzi-z-sekretnym-numerem
 [quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.md#wychodzenie-z-programu-po-poprawnym-odgadniciu-liczby
+ch02-00-guessing-game-tutorial.md#wychodzenie-z-programu-po-poprawnym-odgadnięciu

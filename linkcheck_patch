@@ -1,0 +1,38 @@
+--- linkcheck.sh	2023-04-29 09:12:50.000000000 +0000
++++ l2.sh	2023-04-29 09:30:39.000000000 +0000
+@@ -100,6 +100,35 @@
+     mkdir linkchecker
+     curl -o linkchecker/Cargo.toml ${url}/${nightly_hash}/src/tools/linkchecker/Cargo.toml
+     curl -o linkchecker/main.rs ${url}/${nightly_hash}/src/tools/linkchecker/main.rs
++    patch linkchecker/main.rs <<EOF
++--- linkchecker/main.rs	2023-04-29 09:28:20.067673522 +0000
+++++ main.rs	2023-04-29 09:28:13.897707379 +0000
++@@ -151,6 +151,24 @@
++         .replace("[", "%5B")
++         .replace("]", "%5D")
++         .replace("\"", "%22")
+++        .replace("Ą", "%C4%84")
+++        .replace("Ć", "%C4%86")
+++        .replace("Ę", "%C4%98")
+++        .replace("Ł", "%C5%81")
+++        .replace("Ń", "%C5%83")
+++        .replace("Ó", "%C3%93")
+++        .replace("Ś", "%C5%9A")
+++        .replace("Ź", "%C5%B9")
+++        .replace("Ż", "%C5%BB")
+++        .replace("ą", "%C4%85")
+++        .replace("ć", "%C4%87")
+++        .replace("ę", "%C4%99")
+++        .replace("ł", "%C5%82")
+++        .replace("ń", "%C5%84")
+++        .replace("ó", "%C3%B3")
+++        .replace("ś", "%C5%9B")
+++        .replace("ź", "%C5%BA")
+++        .replace("ż", "%C5%BC")
++ }
++
++ impl Checker {
++EOF
+ fi
+ 
+ echo "Building book \"$book_name\"..."

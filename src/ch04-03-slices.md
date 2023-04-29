@@ -262,6 +262,6 @@ Będziemy więc mówić o tych koncepcjach dalej przez resztę książki.
 Przejdźmy teraz do rozdziału 5, który omawia grupowanie danych w strukturach (`struct`).
 
 [ch13]: ch13-02-iterators.html
-[ch6]: ch06-02-match.html#patterns-that-bind-to-values
+[ch6]: ch06-02-match.html#wzorce-deklarujące-zmienne
 [strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
 [deref-coercions]: ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods

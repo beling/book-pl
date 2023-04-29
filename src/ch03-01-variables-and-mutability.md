@@ -126,7 +126,7 @@ Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom danych, jakich mogą być zmienne.
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[data-types]: ch03-02-data-types.html#data-types
-[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#storing-values-with-variables
+ch02-00-guessing-game-tutorial.html#porównywanie-odpowiedzi-z-sekretnym-numerem
+[data-types]: ch03-02-data-types.html#typy-danych
+[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#zapisywanie-wartości-w-zmiennych
 [const-eval]: ../reference/const_eval.html
