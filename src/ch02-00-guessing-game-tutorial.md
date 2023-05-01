@@ -287,7 +287,7 @@ W bibliotece standardowej Rusta nie ma jeszcze obsługi liczb losowych, dlatego 
 
 ### Więcej funkcjonalności z użyciem skrzyń
 
-Zapamiętaj: skrzynia (ang. *crate*) to kolejkcja plików źródłowych Rusta.
+Zapamiętaj: skrzynia (ang. *crate*) to kolekcja plików źródłowych Rusta.
 Projekt, który budujemy, to skrzynia binarna
 (*binary crate*), czyli plik wykonywalny. Skrzynia `rand` to *library crate*, czyli biblioteka stworzona do używania w
 innych programach.
@@ -387,7 +387,7 @@ Zależności nie zmieniły się, więc Cargo wie, że może użyć ponownie te, 
 
 Cargo posiada mechanizm, który zapewnia że za każdym razem, gdy ty lub ktokolwiek inny będziecie przebudowywać projekt, 
 kompilowane będą te same artefakty: Cargo użyje zależności w konkretnych wersjach, chyba że wskażesz inaczej.
-Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `rand` 0.8.6, która zawierałaby poprawkę istotnego błedu,
+Na przykład, co by się stało, gdyby za tydzień wyszła nowa wersja skrzyni `rand` 0.8.6, która zawierałaby poprawkę istotnego błędu,
 ale jednocześnie wprowadza regresję, która zepsuje twój kod?
 Odpowiedzią na ten problem jest plik *Cargo.lock*, który został stworzony w momencie,
 gdy po raz pierwszy wywołałeś `cargo build`. Znajduje się on teraz w twoim folderze *guessing_game*.
@@ -441,7 +441,7 @@ Dzięki Cargo ponowne używanie bibliotek jest bardzo łatwe, więc Rustowcy mog
 <!-- Generating a Random Number -->
 ### Generowanie Losowej Liczby
 
-A teraz użyjmy w końcu skrzyni `rand` by wygerować liczbę do zgadnięcia.
+A teraz użyjmy w końcu skrzyni `rand` by wygenerować liczbę do zgadnięcia.
 Zmodyfikujmy plik *src/main.rs*, tak jak pokazano na listingu 2-3:
 
 <span class="filename">Plik: src/main.rs</span>
@@ -601,7 +601,7 @@ porównanie zachodzi pomiędzy dwiema wartościami tego samego typu!
 Wywołanie `parse` często może zakończyć się niepowodzeniem. Jeśli, na przykład, string będzie zawierał
 `A👍%`, to jego konwersja do liczby nie może się udać. Z tego względu metoda `parse` zwraca
 typ `Result`, podobnie jak metoda `read_line` (wspominaliśmy o tym wcześniej w sekcji
-[„Obsługa potencjalnych błędów z użyciem `Result`”](#handling-potential-failure-with-the-result-type)<!-- ignore
+[„Obsługa potencjalnych błędów z użyciem `Result`”](#obsługa-potencjalnych-błędów-z-użyciem-result)<!-- ignore
 -->). Potraktujemy ten `Result` w ten sam sposób, używając ponownie metody `expect`. Jeśli `parse` zwróci wariant `Err`
 (ponieważ nie udało się stworzyć liczby ze stringa), wywołanie `expect` spowoduje zawieszenie się gry i wypisanie na ekran
 podanego przez nas tekstu. Gdy zaś `parse` powiedzie się i poprawnie skonwertuje stringa do liczby, zwrócony `Result`
@@ -652,7 +652,7 @@ Niestety teraz program pyta o wprowadzenie odgadniętej liczby w nieskończonoś
 
 Użytkownik może zawsze zatrzymać program używając skrótu klawiszowego <span class="keystroke">ctrl-c</span>. Lecz
 jest jeszcze inny sposób, żeby uciec temu nienasyconemu potworowi, jak wspomnieliśmy w dyskusji o `parse`
-w [„Porównywanie odpowiedzi gracza z sekretnym numerem”](#comparing-the-guess-to-the-secret-number)<!--
+w [„Porównywanie odpowiedzi gracza z sekretnym numerem”](#porównywanie-odpowiedzi-z-sekretnym-numerem)<!--
 ignore -->: wprowadzenie znaku, który nie jest liczbą, spowoduje zawieszenie się programu. Można z tego skorzystać,
 aby wyjść z programu, tak jak pokazujemy poniżej:
 
@@ -797,7 +797,7 @@ Ten projekt w praktyczny sposób zapoznał cię z wieloma konceptami Rusta:
 i innymi. W najbliższych rozdziałach koncepty te będą omówione bardziej szczegółowo.
 Rozdział 3 omawia koncepty obecne w większości języków programowania, takie jak zmienne,
 typy danych czy funkcje, i prezentuje jak należy w nich korzystać w Ruście.
-Rozdział 4 odkrywa system własności, mechanizm który wyróżna Rusta spośród innych języków.
+Rozdział 4 odkrywa system własności, mechanizm który wyróżnia Rusta spośród innych języków.
 Rozdział 5 omawia składnię struktur i metod, a rozdział 6 wyjaśnia, jak działają typy numeryczne.
 
 
@@ -810,7 +810,7 @@ ownership, a feature that makes Rust different from other languages. Chapter 5
 discusses structs and method syntax, and Chapter 6 explains how enums work.
 
 [prelude]: ../std/prelude/index.html
-[variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability
+[variables-and-mutability]: ch03-01-variables-and-mutability.html#zmienne-i-ich-modyfikowalność
 [comments]: ch03-04-comments.html
 [string]: ../std/string/struct.String.html
 [iostdin]: ../std/io/struct.Stdin.html

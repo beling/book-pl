@@ -88,7 +88,7 @@ W przypadku wyliczeń jest to proste:
 Pokazaliśmy kilka różnych sposobów definiowania struktur danych przechowujących
 adresy IP czwartej i szóstej wersji. Jak się jednak okazuje, przechowywanie adresów IP
 wraz z rodzajem ich wersji jest tak powszechne, że [biblioteka standardowa ma gotową
-definicję czekającą tylko na to, aby jej użyc!][IpAddr]<!-- ignore -->
+definicję czekającą tylko na to, aby jej użyć!][IpAddr]<!-- ignore -->
 Spójrzmy na definicję `IpAddr` w bibliotece standardowej: ma dokładnie taką samą nazwę
 i takie sama warianty, ale przechowuje dane o adresach za pomocą dwóch różnych struktur,
 zdefiniowanych osobno oraz umieszczonych w wariantach wyliczenia.
@@ -150,7 +150,7 @@ enuma `Message` zdefiniowanego w listingu 6-2.
 
 Jest jeszcze jedno podobieństwo między wyliczeniami, a strukturami: tak jak
 można zdefiniować metody dla struktur używając bloku `impl`, można je też zdefiniować
-dla typu wyliczeniowego. Spójrzmy na metodę o nazwie `call` zdefinowaną na naszym enumie `Message`:
+dla typu wyliczeniowego. Spójrzmy na metodę o nazwie `call` zdefiniowaną na naszym enumie `Message`:
 
 ```rust
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-05-methods-on-enums/src/main.rs:here}}

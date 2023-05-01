@@ -7,7 +7,7 @@
 [nsprust]: https://nostarch.com/rust-programming-language-2nd-edition
 [nsp]: https://nostarch.com/
 
-Witaj na łamach *Języka Programowania Rust* - wprowadzającej ksiażki o Ruście.
+Witaj na łamach *Języka Programowania Rust* - wprowadzającej książki o Ruście.
 Język programowania Rust pomaga w tworzeniu szybszego, bardziej niezawodnego
 oprogramowania. Konstrukcja języków stawia często wysokopoziomową ergonomię w
 bezpośrednim konflikcie z niskopoziomowym stopniem kontroli. Rust rzuca wyzwanie
@@ -29,7 +29,7 @@ Niskopoziomowy kod jest podatny na rozmaite, subtelne błędy (*bugi*), które w
 większości innych języków programowania da się wyłapać jedynie poprzez rozległe
 testy i ostrożne sprawdzanie kodu przez doświadczonych programistów. W Ruście
 kompilator pełni rolę bramkarza, który nie dopuszcza do skompilowania kodu
-zawiarającego tego typu błędy. Dotyczy to również błędów w programach
+zawierającego tego typu błędy. Dotyczy to również błędów w programach
 współbieżnych (*wielowątkowych*). Współpraca z kompilatorem pozwala zespołowi
 spędzić więcej czasu na dopracowywaniu logiki programu niż na polowaniu na bugi.
 
@@ -174,7 +174,7 @@ deweloperskich, a Dodatek E wyjaśnia koncepcję edycji Rusta. W dodatku F możn
 znaleźć tłumaczenia książki, a w dodatku G zajmiemy się tym, jak powstaje Rust
 i czym jest Rust Nightly.
 
-Nie ma złego sposobu na czytanie tej ksiażki - jeśli masz ochotę skakać w przód,
+Nie ma złego sposobu na czytanie tej książki - jeśli masz ochotę skakać w przód,
 proszę bardzo! Powrót do wcześniejszych rozdziałów może okazać się konieczny,
 jeżeli doświadczysz uczucia zagubienia. Rób wszystko, co ci pomaga.
 

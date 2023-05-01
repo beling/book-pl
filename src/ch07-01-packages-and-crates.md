@@ -42,4 +42,4 @@ Po uruchomieniu `cargo new`, użyliśmy `ls` aby zobaczyć co Cargo utworzyło. 
 Tutaj mamy pakiet, który zawiera tylko *src/main.rs*, co oznacza, że zawiera tylko skrzynię binarną o nazwie `my-project`. Jeśli pakiet zawiera *src/main.rs* i *src/lib.rs*, to ma dwie skrzynie: binarną i biblioteczną, obie o tej samej nazwie co pakiet. Pakiet może mieć wiele skrzyń binarnych poprzez umieszczenie plików w katalogu *src/bin*: każdy plik będzie oddzielną skrzynią binarną.
 
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
-[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
+[rand]: ch02-00-guessing-game-tutorial.html#generowanie-losowej-liczby

@@ -243,7 +243,7 @@ W Ruście, aby umieścić wartości w tablicy, zapisujemy je jako lista rozdziel
 ```
 
 Tablice są przydatne, gdy chcesz umieścić dane na stosie, a nie na stercie (Stos i stertę omówimy w [rozdziale 4][stack-and-heap]<!-- ignore -->) lub gdy chcesz mieć pewność, że ilość elementów nigdy się nie zmieni. Jednak tablica nie jest tak elastyczna, jak typ wektorowy. Wektor jest podobnym typem kolekcji, dostarczanym przez bibliotekę standardową, ale *może* zwiększać i zmniejszać swój rozmiar.
-Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie powinieneś użyć wektora. [Rozdział 8][][vectors]<!-- ignore --> szczegółowo opisuje wektory i ich działanie.
+Jeżeli nie jesteś pewien, czy użyć wektora, czy tablicy, prawdopodobnie powinieneś użyć wektora. [Rozdział 8][vectors]<!-- ignore --> szczegółowo opisuje wektory i ich działanie.
 
 Jednak tablice są bardziej przydatne, gdy wiadomo, że liczba elementów nie zmieni się.
 Przykładowo gdy w programie chcemy używać nazw miesięcy, lepiej przechowywać je w tablicy niż w wektorze, ponieważ wiemy, że potrzebujemy dokładnie 12 elementów:
@@ -316,11 +316,11 @@ niż długość tablicy. Jeżeli ten indeks jest większy lub równy długości 
 Oto pierwszy przykład zasad bezpieczeństwa Rusta w akcji. W wielu niskopoziomowych językach programowania tego rodzaju test nie jest wykonywany, a skorzystanie z niepoprawnego indeksu może skutkować uzyskaniem dostępu do
 niewłaściwego bloku pamięci. Rust chroni przed takimi błędami. Zamiast pozwolić na uzyskanie dostępu do pamięci i kontynuację działania, zamyka program. Obsługę błędów w Ruście dokładniej omówimy w rozdziale 9. Tam też pokażemy jak pisać czytelny i bezpieczny kod, który nigdy nie panikuje i nie dopuszcza do nieprawidłowych dostępów do pamięci.
 
-[comparing-the-guess-to-the-secret-number]:ch02-00-guessing-game-tutorial.html#porwnywanie-odpowiedzi-gracza-z-sekretnym-numerem
-[twos-complement]: https://en.wikipedia.org/wiki/Two%27s_complement
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#porównywanie-odpowiedzi-z-sekretnym-numerem
+[twos-complement]: https://pl.wikipedia.org/wiki/Kod_uzupe%C5%82nie%C5%84_do_dw%C3%B3ch
 [control-flow]: ch03-05-control-flow.html#control-flow
 [strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
-[stack-and-heap]: ch04-01-what-is-ownership.html#the-stack-and-the-heap
+[stack-and-heap]: ch04-01-what-is-ownership.html#stos-i-sterta
 [vectors]: ch08-01-vectors.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
 [appendix_b]: appendix-02-operators.md

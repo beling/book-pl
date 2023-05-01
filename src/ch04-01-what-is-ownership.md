@@ -58,7 +58,7 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 > analogię, załóżmy, że kelner w restauracji zbiera zamówienia z wielu stolików.
 > Bardziej wydajne jest zebranie wszystkich zamówień z jednego stolika, zanim
 > przejdzie się do kolejnego. Zebranie pojedynczego zamówienia ze stolika A,
-> następnie jednego ze stolika B, kolejnrgo znów ze stolika A i powtórnie ze
+> następnie jednego ze stolika B, kolejnego znów ze stolika A i powtórnie ze
 > stolika B, byłoby zdecydowanie wolniejszym procesem. Z tego samego względu,
 > procesor wykonuje swoje zadanie lepiej, operując na danych sąsiadujących z
 > innymi danymi (jak ma to miejsce na stosie), niż gdyby operował na danych
@@ -75,7 +75,7 @@ Kiedy zrozumiesz system własności, będziesz mieć solidną podstawę ku zrozu
 > duplikowania się danych na stercie, a także pozbywanie się ze sterty
 > nieużywanych danych, celem uniknięcia wyczerpania się pamięci.
 > Po zrozumieniu pojęcia własności, nie będziesz juz musiał zbyt często myśleć o
-> stosie czy o stercie. Jednak świadomość tego, że zawiadowanie danymi na
+> stosie czy o stercie. Jednak świadomość tego, że zarządzanie danymi na
 > stercie jest istotą istnienia systemu własności, pomaga wyjaśnić, dlaczego
 > działa on tak, jak działa.
 
@@ -470,10 +470,10 @@ ten przypadek.
 
 Wymaga to dużo niepotrzebnej pracy, podczas gdy koncept ten spotykany jest powszechnie. Na szczęście dla nas, Rust wyposażony jest w *referencje*, które świetnie obsługują takie przypadki.
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html#typy-danych
 [ch8]: ch08-02-strings.html
 [traits]: ch10-02-traits.html
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#method-syntax
+[method-syntax]: ch05-03-method-syntax.html#składnia-metod
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [drop]: ../std/ops/trait.Drop.html#tymethod.drop

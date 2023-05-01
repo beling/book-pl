@@ -1,7 +1,7 @@
 <!-- ## Bringing Paths Into Scope with the `use` Keyword -->
 ## Włączanie Ścieżek do Zasięgu za Pomocą Słowa Kluczowego `use`
 
-Konieczność ciągłego wypisywania ścieżek, by wywołyć funkcję może być uciążliwa.
+Konieczność ciągłego wypisywania ścieżek, by wywołać funkcję może być uciążliwa.
 Na listingu 7-7, niezależnie od tego, czy wybraliśmy bezwzględną czy względną ścieżkę do funkcji `add_to_waitlist`, za każdym razem, wywołując ją, musieliśmy napisać także `front_of_house` i `hosting`.
 Na szczęście istnieje sposób na uproszczenie tego procesu: możemy raz utworzyć skrót do ścieżki za pomocą słowa kluczowego `use` i używać go wielokrotnie w obrębie zasięgu.
 

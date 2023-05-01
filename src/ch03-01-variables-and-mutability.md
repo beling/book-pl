@@ -2,7 +2,7 @@
 
 Tak jak wspomniano w rozdziale [„Storing Values with
 Variables”][storing-values-with-variables]<!-- ignore --> , zmienne są domyślnie niemodyfikowalne (niemutowalne, ang. *immutable*). To jeden z wielu prztyczków, którymi Rust zachęca cię do tworzenia kodu w pełni wykorzystującego mechanizmy bezpieczeństwa i prostoty współbieżności, które oferuje ten język programowania. Jednakże nadal możesz
-uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu czasem możesz chcieć zrezygnować z tej własciwości.
+uczynić zmienne modyfikowalnymi. Przyjrzyjmy się bliżej temu, jak i dlaczego Rust zachęca cię do preferowania niemodyfikowalności zmiennych oraz czemu czasem możesz chcieć zrezygnować z tej właściwości.
 
 Gdy zmienna jest niemodyfikowalna, po przypisaniu wartości do danej nazwy, nie można później zmienić tej wartości. Aby to zobrazować, utworzymy nowy projekt o nazwie *variables* w folderze *projects* korzystając z komendy
 `cargo new --bin variables`.
@@ -23,7 +23,7 @@ Zapiszmy zmiany i uruchommy program, używając `cargo run`. Powinniśmy otrzyma
 
 Ten przykład pokazuje, jak kompilator pomaga ci odnajdywać błędy w twoich programach. Mimo że błędy kompilacji mogą być denerwujące, świadczą jedynie o tym, że twój program jeszcze nie działa prawidłowo. Nie wykonuje w bezpieczny sposób tego, co chcesz, by robił. Tw błędy *nie* oznaczają jednak, że nie jesteś dobrym programistą! Nawet doświadczeni Rustowcy nadal napotykają błędy podczas kompilacji.
 
-Otrzymany komunikat błedu `` cannot assign twice to immutable variable `x``` oznacza, że nie można dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej `x`.
+Otrzymany komunikat błędu `` cannot assign twice to immutable variable `x``` oznacza, że nie można dwukrotnie przypisać wartości do niemodyfikowalnej zmiennej `x`.
 Pierwotnie nadanej wartości nie można zmienić.
 
 To ważne, że napotykamy błędy w trakcie kompilacji, gdy próbujemy zmienić wartość, którą wcześniej określiliśmy jako niemodyfikowalną, gdyż takie działanie może prowadzić do podatności i błędów w programie. Jeżeli pierwsza część kodu opiera się na założeniu, że dana wartość nigdy nie ulegnie zmianie, a inna część kodu zmienia tę wartość, pierwsza część kodu może przestać wykonywać swoje zadanie poprawnie. Przyczyna tego rodzaju błędów może być trudna do zidentyfikowania po wystąpieniu, szczególnie gdy druga część kodu zmienia daną wartość tylko *czasami*.
@@ -126,7 +126,7 @@ Błąd mówi o tym, że nie możemy zmodyfikować typu zmiennej:
 Teraz gdy poznaliśmy już działanie zmiennych, przyjrzyjmy się bliżej typom danych, jakich mogą być zmienne.
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[data-types]: ch03-02-data-types.html#data-types
-[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#storing-values-with-variables
+ch02-00-guessing-game-tutorial.html#porównywanie-odpowiedzi-z-sekretnym-numerem
+[data-types]: ch03-02-data-types.html#typy-danych
+[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#zapisywanie-wartości-w-zmiennych
 [const-eval]: ../reference/const_eval.html

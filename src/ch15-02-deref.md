@@ -296,4 +296,4 @@ assumption that converting an immutable reference to a mutable reference is
 possible.
 
 [impl-trait]: ch10-02-traits.html#implementing-a-trait-on-a-type
-[tuple-structs]: ch05-01-defining-structs.html#using-tuple-structs-without-named-fields-to-create-different-types
+[tuple-structs]: ch05-01-defining-structs.html#wykorzystanie-braku-nazywania-pól-w-struktorach-krotkowych-do-tworzenia-nowych-typów

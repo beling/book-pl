@@ -199,7 +199,7 @@ jedna komenda wystarczy, aby jednocześnie skompilować i uruchomić program.
 Wszystko jest kompromisem w konstrukcji danego języka.
 
 Kompilacja poprzez `rustc` jest wystarczająca dla prostych programów, ale w
-miarę rozrastania się twojego projektu, odczujesz potrzebę zarzadzania
+miarę rozrastania się twojego projektu, odczujesz potrzebę zarządzania
 wszystkimi dostępnymi w nim opcjami i ułatwienia dzielenia się kodem.
 W dalszym ciągu przedstawimy narzędzie zwane Cargo, które pomoże ci w pisaniu
 *prawdziwych* programów w Ruście.
