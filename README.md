@@ -73,7 +73,7 @@ pozytywny (powiedzmy, że użyłeś słowa `BTreeMap`, które skrypt uważa za n
 musisz dodać to słowo do `ci/dictionary.txt` (zachowaj posortowaną kolejność dla
 spójności).
 
-Uwaga: metoda nie została sprawdzona z polskojęzyczną wersją książki. Skrpyt może wymagać przystosowania.
+Uwaga: metoda nie została sprawdzona z polskojęzyczną wersją książki. Skrypt może wymagać przystosowania.
 
 
 <!-- dalej jest treść oryginalnego by pozwolić git-owemu merge ją automatycznie aktualizować:
