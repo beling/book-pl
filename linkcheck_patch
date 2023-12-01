@@ -5,12 +5,12 @@
      curl -o linkchecker/Cargo.toml ${url}/${nightly_hash}/src/tools/linkchecker/Cargo.toml
      curl -o linkchecker/main.rs ${url}/${nightly_hash}/src/tools/linkchecker/main.rs
 +    patch linkchecker/main.rs <<EOF
-+--- linkchecker/main.rs	2023-04-29 09:28:20.067673522 +0000
-++++ main.rs	2023-04-29 09:28:13.897707379 +0000
++--- linkchecker/main.rs.orig    2023-12-01 17:22:04.104717143 +0100
+++++ linkchecker/main.rs 2023-12-01 17:23:44.724694097 +0100
 +@@ -151,6 +151,24 @@
-+         .replace("[", "%5B")
-+         .replace("]", "%5D")
-+         .replace("\"", "%22")
++         .replace('[', "%5B")
++         .replace(']', "%5D")
++         .replace('\"', "%22")
 ++        .replace("Ą", "%C4%84")
 ++        .replace("Ć", "%C4%86")
 ++        .replace("Ę", "%C4%98")
