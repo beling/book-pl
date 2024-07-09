@@ -1,37 +1,39 @@
-## Storing UTF-8 Encoded Text with Strings
+## Przechowywanie Danych UTF-8 za Pomocą Łańcuchów
 
-We talked about strings in Chapter 4, but we’ll look at them in more depth now.
-New Rustaceans commonly get stuck on strings for a combination of three
-reasons: Rust’s propensity for exposing possible errors, strings being a more
-complicated data structure than many programmers give them credit for, and
-UTF-8. These factors combine in a way that can seem difficult when you’re
-coming from other programming languages.
+W rozdziale 4 poświęciliśmy trochę czasu łańcuchom (*ang.* strings), 
+ale teraz zagłębimy się w ten temat. Świeżo upieczeni Rustowcy bardzo 
+często zatrzymują się na łańcuchach i nie mogą ruszyć dalej z trzech powodów: 
+Rust ma skłonność do ujawniania możliwych błędów, łańcuchy są o wiele bardziej 
+złożoną strukturą danych niż wielu programistów przyznaje, a także system 
+kodowania UTF-8. Jeśli uczyliście się wcześniej innych języków programowania, 
+taka mieszanka może wydawać się trudna.
 
-We discuss strings in the context of collections because strings are
-implemented as a collection of bytes, plus some methods to provide useful
-functionality when those bytes are interpreted as text. In this section, we’ll
-talk about the operations on `String` that every collection type has, such as
-creating, updating, and reading. We’ll also discuss the ways in which `String`
-is different from the other collections, namely how indexing into a `String` is
-complicated by the differences between how people and computers interpret
-`String` data.
+Łańcuchy znaków omówimy w kontekście kolekcji, ponieważ są one zaimplementowane 
+jako kolekcja bajtów i paru metod zapewniających przydatną funkcjonalność, 
+kiedy bajty są interpretowane jako tekst. W tej sekcji, poruszymy też kwestię 
+operacji wykonywanych na `String`, takich jak tworzenie, modyfikowanie i 
+czytanie i które są dostępne w każdej kolekcji. Określimy też różnice między 
+`String` a innymi kolekcjami, a dokładniej jak rozbieżność między interpretacją 
+danych w  `String` przez człowieka i przez komputer komplikuje indeksowanie w
+`String`.
 
-### What Is a String?
+### Czym Jest Łańcuch Znaków?
 
-We’ll first define what we mean by the term *string*. Rust has only one string
-type in the core language, which is the string slice `str` that is usually seen
-in its borrowed form `&str`. In Chapter 4, we talked about *string slices*,
-which are references to some UTF-8 encoded string data stored elsewhere. String
-literals, for example, are stored in the program’s binary and are therefore
-string slices.
+Zacznijmy od wyjaśnienia czym jest *łańcuch znaków*. W rdzeniu językowym 
+Rusta znajdziemy tylko jeden rodzaj łańcucha znaków i jest nim wycinek 
+łańcucha `str` , który zazwyczaj znaleźć można w formie zapożyczonej `&str`. 
+W rozdziale 4 wspominaliśmy o *wycinkach łańcuchów*, które są referencją do 
+pewnego łańcucha danych UTF-8 i zapisanego w innym miejscu. Na przykład, 
+literały łańcuchów są zapisane w pliku binarnym programu, a więc są wycinkami 
+łańcuchów. 
 
-The `String` type, which is provided by Rust’s standard library rather than
-coded into the core language, is a growable, mutable, owned, UTF-8 encoded
-string type. When Rustaceans refer to “strings” in Rust, they might be
-referring to either the `String` or the string slice `&str` types, not just one
-of those types. Although this section is largely about `String`, both types are
-used heavily in Rust’s standard library, and both `String` and string slices
-are UTF-8 encoded.
+Rodzaj łańcucha znaków `String` jest zapewniany przez bibliotekę standardową 
+Rusta a nie wkodowany w rdzeń języka. Przechowuje dane UTF-8, może się powiększać, 
+mutować, a także być własnością. Rozmawiając o *łańcuchach* Rustowcy nie odwołują 
+się do jednego konkretnego jego typu, mogą mieć na myśli albo`String` albo wycinek 
+łańcucha `&str`. Chociaż ta sekcja poświęcona jest w dużej mierze `String`, oba 
+typy są często wykorzystywane w bibliotece standardowej Rusta i oba przechowują 
+dane UTF-8
 
 ### Creating a New String
 
