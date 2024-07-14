@@ -1,4 +1,4 @@
-## Przechowywanie Danych UTF-8 za Pomocą Łańcuchów
+## Przechowywanie Tekstów UTF-8 za Pomocą Łańcuchów
 
 W rozdziale 4 poświęciliśmy trochę czasu łańcuchom (*ang.* strings), 
 ale teraz zagłębimy się w ten temat. Świeżo upieczeni Rustowcy bardzo 
@@ -23,121 +23,128 @@ Zacznijmy od wyjaśnienia czym jest *łańcuch znaków*. W rdzeniu językowym
 Rusta znajdziemy tylko jeden rodzaj łańcucha znaków i jest nim wycinek 
 łańcucha `str` , który zazwyczaj znaleźć można w formie zapożyczonej `&str`. 
 W rozdziale 4 wspominaliśmy o *wycinkach łańcuchów*, które są referencją do 
-pewnego łańcucha danych UTF-8 i zapisanego w innym miejscu. Na przykład, 
+pewnego łańcucha tekstu UTF-8 i zapisanego w innym miejscu. Na przykład, 
 literały łańcuchów są zapisane w pliku binarnym programu, a więc są wycinkami 
 łańcuchów. 
 
 Rodzaj łańcucha znaków `String` jest zapewniany przez bibliotekę standardową 
-Rusta a nie wkodowany w rdzeń języka. Przechowuje dane UTF-8, może się powiększać, 
+Rusta a nie wkodowany w rdzeń języka. Przechowuje tekst UTF-8, może się powiększać, 
 mutować, a także być własnością. Rozmawiając o *łańcuchach* Rustowcy nie odwołują 
 się do jednego konkretnego jego typu, mogą mieć na myśli albo`String` albo wycinek 
 łańcucha `&str`. Chociaż ta sekcja poświęcona jest w dużej mierze `String`, oba 
 typy są często wykorzystywane w bibliotece standardowej Rusta i oba przechowują 
-dane UTF-8
+tekst UTF-8
 
-### Creating a New String
+### Tworzenie Nowego Łańcucha Znaków
 
-Many of the same operations available with `Vec<T>` are available with `String`
-as well, because `String` is actually implemented as a wrapper around a vector
-of bytes with some extra guarantees, restrictions, and capabilities. An example
-of a function that works the same way with `Vec<T>` and `String` is the `new`
-function to create an instance, shown in Listing 8-11.
+Jeśli przyjrzymy się operacjom dostępnym w `Vec<T>` i w `String`,
+zauważymy, że wiele z nich się powtarza. Dzieje się tak, ponieważ `String` 
+opakowuje wektor bajtów i posiada dodatkowo pewne zabezpieczenia, 
+ograniczenia, a także możliwości. Przykładem funkcji działającej 
+tak samo na `Vec<T>` i `String` jest funkcja `new`
+za pomocą której możemy stworzyć nowe instancje i która jest 
+pokazana na listingu 8-11. 
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-11/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-11: Creating a new, empty `String`</span>
+<span class="caption">Listing 8-11: Tworzenie nowego, pustego `String`</span>
 
-This line creates a new empty string called `s`, which we can then load data
-into. Often, we’ll have some initial data that we want to start the string
-with. For that, we use the `to_string` method, which is available on any type
-that implements the `Display` trait, as string literals do. Listing 8-12 shows
-two examples.
+Powyższa linijka kodu tworzy nowy, pusty łańcuch `s`, do którego możemy 
+wprowadzić dane. Częściej jednak mamy już jakieś wstępne dane, z którymi 
+chcielibyśmy stworzyć łańcuch. By to osiągnąć, możemy posłużyć się metodą 
+`to_string`, dostępną w każdym typie, który implementuje cechę `Display` 
+tak jak robią to literały łańcuchów. Na listingu 8-12 znajdziemy dwa przykłady 
+zastosowania tej metody.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-12/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-12: Using the `to_string` method to create a
-`String` from a string literal</span>
+<span class="caption">Listing 8-12: Użycie metody `to_string` w celu stworzenia
+`String` z literału łańcuchowego</span>
 
-This code creates a string containing `initial contents`.
+Powyższy kod tworzy łańcuch zawierający `wstępna zawartość`.
 
-We can also use the function `String::from` to create a `String` from a string
-literal. The code in Listing 8-13 is equivalent to the code from Listing 8-12
-that uses `to_string`.
+By stworzyć `String` z literału łańcuchowego możemy również użyć funkcji 
+`String::from`. Kod widoczny na listingu 8-13 stanowi równowartość kodu 
+z listingu 8-12. Pierwszy utylizuje  `to_string` a drugi `String::from`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-13/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-13: Using the `String::from` function to create
-a `String` from a string literal</span>
+<span class="caption">Listing 8-13: Użycie funkcji `String::from` 
+w celu stworzenia `String` z literału łańcuchowego</span>
 
-Because strings are used for so many things, we can use many different generic
-APIs for strings, providing us with a lot of options. Some of them can seem
-redundant, but they all have their place! In this case, `String::from` and
-`to_string` do the same thing, so which you choose is a matter of style and
-readability.
+Ponieważ istnieje mnóstwo zastosowań łańcuchów, możemy do nich 
+używać wielu interfejsów generycznych. W konsekwencji, mamy przed 
+sobą cały szereg opcji i choć niektóre z nich mogą wydawać się 
+niepotrzebne, wszystkie mają swoją rolę do odegrania! W przypadku gdy 
+`String::from` i `to_string` wykonują tę samą czynność, wybór 
+między nimi sprowadza się do kwestii stylu i czytelności. 
 
-Remember that strings are UTF-8 encoded, so we can include any properly encoded
-data in them, as shown in Listing 8-14.
+Należy pamiętać, że łańcuchy są zakodowane w UTF-8 i dzięki 
+temu możemy wprowadzić do nich jakiekolwiek poprawnie zakodowane dane, 
+co pokazane jest na listingu 8-14.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-14: Storing greetings in different languages in
-strings</span>
+<span class="caption">Listing 8-14: Przechowywanie odpowiednika 
+“Dzień dobry/Cześć” w różnych językach za pomocą łańcuchów </span>
 
-All of these are valid `String` values.
+Wszystkie powyższe wartości `String` są poprawne.
 
-### Updating a String
+### Modyfikowanie Łańcucha Znaków
 
-A `String` can grow in size and its contents can change, just like the contents
-of a `Vec<T>`, if you push more data into it. In addition, you can conveniently
-use the `+` operator or the `format!` macro to concatenate `String` values.
+Podobnie do `Vec<T>`, `String` może się powiększać a jego zawartość 
+zmieniać jeśli wprowadzimy do niego więcej danych. Ponadto, możemy użyć 
+operatora `+` i makra `format!` , żeby w poręczny sposób połączyć ze sobą 
+wartości `String`. 
 
-#### Appending to a String with `push_str` and `push`
+#### Dodawanie Elementów do Łańcucha za Pomocą `push_str` i `push`
 
-We can grow a `String` by using the `push_str` method to append a string slice,
-as shown in Listing 8-15.
+Używając metody `push_str` możemy powiększyć `String` i dodać do niego 
+wycinek łańcucha tak jak jest to pokazane na listingu 8-15.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-15: Appending a string slice to a `String`
-using the `push_str` method</span>
+<span class="caption">Listing 8-15: Dodawanie wycinka łańcucha do `String`
+za pomocą metody  `push_str`</span>
 
-After these two lines, `s` will contain `foobar`. The `push_str` method takes a
-string slice because we don’t necessarily want to take ownership of the
-parameter. For example, in the code in Listing 8-16, we want to be able to use
-`s2` after appending its contents to `s1`.
+Po napisaniu powyższych dwóch linijek kodu, `s` będzie zawierać w sobie
+ `foobar`. Przy `push_str` używamy wycinka łańcucha ponieważ możemy nie 
+ chcieć, żeby metoda przejęła własność nad tym parametrem. Za przykład 
+ weźmy kod pokazany na listingu 8-16, gdzie chcemy móc ponownie użyć 
+`s2` po dołączeniu jego zawartości do `s1`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-16/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-16: Using a string slice after appending its
-contents to a `String`</span>
+<span class="caption">Listing 8-16: Użycie wycinka łańcucha po 
+dołączeniu jego zawartości do `String`</span>
 
-If the `push_str` method took ownership of `s2`, we wouldn’t be able to print
-its value on the last line. However, this code works as we’d expect!
+Gdyby metoda `push_str` przejęła własność nad `s2`, wyświetlenie 
+jego zawartości w ostatniej linijce byłoby niemożliwe. Zamiast 
+tego, kod działa tak jak tego oczekiwaliśmy!
 
-The `push` method takes a single character as a parameter and adds it to the
-`String`. Listing 8-17 adds the letter “l” to a `String` using the `push`
-method.
+Metoda `push` przyjmuje pojedynczy znak jako parametr i dodaje go do 
+`String`. Kod na listingu 8-17 dodaje literę "l" do `String` za pomocą metody `push`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-17/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-17: Adding one character to a `String` value
-using `push`</span>
+<span class="caption">Listing 8-17: Dodanie jednego znaku do wartości `String` za pomocą 
+ `push`</span>
 
-As a result, `s` will contain `lol`.
+W rezultacie, `s` będzie zawierać w sobie `lol`.
 
 #### Concatenation with the `+` Operator or the `format!` Macro
 
