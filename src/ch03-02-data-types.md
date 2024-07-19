@@ -179,7 +179,7 @@ Proszę zauważyć, że literały typu `char` są zapisywane z użyciem pojedyn
 Typ `char` w Ruście ma wielkość czterech bajtów i reprezentuje Skalarną Wartość Unikod, co oznacza, że można w nim przedstawić dużo więcej niż tylko znaki ASCII.
 Litery akcentowane; chińskie, japońskie i koreańskie symbole; emoji; pola o zerowej długości to wszystko poprawne wartości dla typu `char` w Ruście.
 Skalarne Wartości Unikod mieszczą się w zakresach od `U+0000` do `U+D7FF` i od `U+E000` do `U+10FFFF` włącznie. Jednak „znak” nie jest naprawdę ideą w Unikodzie, więc twój intuicyjny sposób postrzegania tego, czym jest „znak” może nie
-być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo omówimy ten temat w ["Ciągach znaków"][strings]<!-- ignore --> w rozdziale 8.
+być zgodny z tym, czym w rzeczywistości jest `char` w Ruście. Szczegółowo omówimy ten temat w ["Ciągach znaków"][strings] w rozdziale 8.
 
 <!-- ### Compound Types -->
 ### Typy złożone
@@ -319,7 +319,7 @@ niewłaściwego bloku pamięci. Rust chroni przed takimi błędami. Zamiast pozw
 [comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#porównywanie-odpowiedzi-z-sekretnym-numerem
 [twos-complement]: https://pl.wikipedia.org/wiki/Kod_uzupe%C5%82nie%C5%84_do_dw%C3%B3ch
 [control-flow]: ch03-05-control-flow.html#control-flow
-[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[strings]: ch08-02-strings.html#przechowywanie-tekstów-utf-8-za-pomocą-Łańcuchów
 [stack-and-heap]: ch04-01-what-is-ownership.html#stos-i-sterta
 [vectors]: ch08-01-vectors.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html

@@ -142,7 +142,7 @@ let slice = &s[..];
 > We wprowadzeniu do wycinków łańcuchów zawartym w niniejszym rozdziale
 > ograniczamy się jedynie do znaków ASCII,
 > zaś bardziej szczegółowe omówienie obsługi UTF-8 znajduje się w sekcji
-> ["Storing UTF-8 Encoded Text with Strings"][strings]<!-- ignore -->rozdziału 8.
+> ["Przechowywanie Tekstów UTF-8 za Pomocą Łańcuchów"][strings] rozdziału 8.
 
 Mając na uwadze powyższe informacje, przepiszmy `first_word` tak, aby zwracał wycinek.
 Typ oznaczający "wycinek łańcucha" zapisujemy jako `&str`:
@@ -263,5 +263,5 @@ Przejdźmy teraz do rozdziału 5, który omawia grupowanie danych w strukturach 
 
 [ch13]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#wzorce-deklarujące-zmienne
-[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[strings]: ch08-02-strings.html#przechowywanie-tekstów-utf-8-za-pomocą-Łańcuchów
 [deref-coercions]: ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods

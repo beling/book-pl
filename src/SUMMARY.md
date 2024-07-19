@@ -46,7 +46,7 @@
 
 - [Często Wykorzystywane Kolekcje](ch08-00-common-collections.md)
     - [Przechowywanie List Wartości w Wektorach](ch08-01-vectors.md)
-    - [Storing UTF-8 Encoded Text with Strings](ch08-02-strings.md)
+    - [Przechowywanie Tekstów UTF-8 za Pomocą Łańcuchów](ch08-02-strings.md)
     - [Storing Keys with Associated Values in Hash Maps](ch08-03-hash-maps.md)
 
 - [Error Handling](ch09-00-error-handling.md)
