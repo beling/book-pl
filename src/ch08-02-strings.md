@@ -150,7 +150,7 @@ W rezultacie, `s` będzie zawierać w sobie `lol`.
 
 Często wykonywaną operacją jest łączenie dwóch istniejących już łańcuchów. 
 Pierwszym sposobem by to osiągnąć jest użycie operatora `+` tak jak jest 
-to pokazane na listingu 8_18.
+to pokazane na listingu 8-18.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-18/src/main.rs:here}}
