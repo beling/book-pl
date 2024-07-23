@@ -351,7 +351,7 @@ optional arguments to the `assert!`, `assert_eq!`, and `assert_ne!` macros. Any
 arguments specified after the required arguments are passed along to the
 `format!` macro (discussed in Chapter 8 in the [“Concatenation with the `+`
 Operator or the `format!`
-Macro”][concatenation-with-the--operator-or-the-format-macro]<!-- ignore -->
+Macro”][Łączenie-za-pomocą-operatora--lub-makra-format]<!-- ignore -->
 section), so you can pass a format string that contains `{}` placeholders and
 values to go in those placeholders. Custom messages are useful for documenting
 what an assertion means; when a test fails, you’ll have a better idea of what
@@ -530,8 +530,8 @@ Now that you know several ways to write tests, let’s look at what is happening
 when we run our tests and explore the different options we can use with `cargo
 test`.
 
-[concatenation-with-the--operator-or-the-format-macro]:
-ch08-02-strings.html#concatenation-with-the--operator-or-the-format-macro
+[Łączenie-za-pomocą-operatora--lub-makra-format]:
+ch08-02-strings.html#Łączenie-za-pomocą-operatora--lub-makra-format
 [bench]: ../unstable-book/library-features/test.html
 [ignoring]: ch11-02-running-tests.html#ignoring-some-tests-unless-specifically-requested
 [subset]: ch11-02-running-tests.html#running-a-subset-of-tests-by-name

@@ -1055,6 +1055,7 @@ dereferenced
 dereferences
 dereferencing
 Dereferencing
+dereferencję
 dereferencji
 dereferowanie
 DerefMut
