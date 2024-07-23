@@ -314,7 +314,7 @@ skalarne Unicode, które są rodzajem  `char` Rusta, będą one wyglądać tak:
 Mamy tutaj sześć wartości `char`,  ale czwarta i szósta nie są 
 literami. Są znakami diakrytycznymi, które same w sobie nie 
 mają sensu. Wreszcie, jeśli spojrzymy na nie jako na zbitki 
-grafemów, otrzymamy coś co możnaby nazwać czterema literami, 
+grafemów, otrzymamy coś co można by nazwać czterema literami, 
 z których składa się słowo “नमस्ते”:
 
 
