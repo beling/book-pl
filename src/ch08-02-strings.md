@@ -285,56 +285,65 @@ Aby uniknąć zwracania niespodziewanych wartości i błędów, które nie rzuca
 oczy, Rust nie kompiluje tego kodu i zapobiega nieporozumieniom na wczesnym 
 etapie rozwoju programu.
 
-#### Bytes and Scalar Values and Grapheme Clusters! Oh My!
+#### Bajty i Wartości Skalarne i Zbitki Grafemów! O Matko!
 
-Another point about UTF-8 is that there are actually three relevant ways to
-look at strings from Rust’s perspective: as bytes, scalar values, and grapheme
-clusters (the closest thing to what we would call *letters*).
+Porozmawiajmy teraz o kolejnej ważnej kwestii związanej z UTF-8, a mianowicie 
+o sposobach patrzenia na łańcuchy przez Rusta. Spośród nich możemy wyłonić 
+trzy naprawdę istotne perspektywy: łańcuchy jako bajty, wartości skalarne i 
+jako zbitki grafemów (jednostka, której najbliżej do *litery*).
 
-If we look at the Hindi word “नमस्ते” written in the Devanagari script, it is
-stored as a vector of `u8` values that looks like this:
+
+Przykładowo, słowo hindi “नमस्ते” zapisane w piśmie dewanagari jest 
+przechowywane jako wektor wartości `u8`, który wygląda tak:
+
 
 ```text
 [224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
 224, 165, 135]
 ```
 
-That’s 18 bytes and is how computers ultimately store this data. If we look at
-them as Unicode scalar values, which are what Rust’s `char` type is, those
-bytes look like this:
+Powyżej widzimy 18 bajtów i sposób w jaki komputery koniec końców 
+przechowują te dane. Jeśli spojrzymy na te bajty jako wartości 
+skalarne Unicode, które są rodzajem  `char` Rusta, będą one wyglądać tak:
+
 
 ```text
 ['न', 'म', 'स', '्', 'त', 'े']
 ```
 
-There are six `char` values here, but the fourth and sixth are not letters:
-they’re diacritics that don’t make sense on their own. Finally, if we look at
-them as grapheme clusters, we’d get what a person would call the four letters
-that make up the Hindi word:
+Mamy tutaj sześć wartości `char`,  ale czwarta i szósta nie są 
+literami. Są znakami diakrytycznymi, które same w sobie nie 
+mają sensu. Wreszcie, jeśli spojrzymy na nie jako na zbitki 
+grafemów, otrzymamy coś co można by nazwać czterema literami, 
+z których składa się słowo “नमस्ते”:
+
 
 ```text
 ["न", "म", "स्", "ते"]
 ```
 
-Rust provides different ways of interpreting the raw string data that computers
-store so that each program can choose the interpretation it needs, no matter
-what human language the data is in.
+Rust pozwala na różne interpretacje surowych danych z łańcucha, 
+które są przechowywane przez komputer. Dzięki temu, każdy program 
+może wybrać interpretację, której potrzebuje bez względu na to w 
+jakim ludzkim języku te dane są napisane. 
 
-A final reason Rust doesn’t allow us to index into a `String` to get a
-character is that indexing operations are expected to always take constant time
-(O(1)). But it isn’t possible to guarantee that performance with a `String`,
-because Rust would have to walk through the contents from the beginning to the
-index to determine how many valid characters there were.
+Ostatnim powodem, dla którego Rust nie pozwala indeksować do `String` 
+w celu uzyskania dostępu do znaku jest wymóg by operacje indeksowania 
+(O(1)) zawsze zajmowały tyle samo czasu. W przypadku `String` nie 
+można tego zagwarantować, ponieważ Rust musiałby przejść przez zawartość 
+łańcucha od początku do indeksu by określić ilość poprawnych znaków w łańcuchu. 
 
-### Slicing Strings
 
-Indexing into a string is often a bad idea because it’s not clear what the
-return type of the string-indexing operation should be: a byte value, a
-character, a grapheme cluster, or a string slice. If you really need to use
-indices to create string slices, therefore, Rust asks you to be more specific.
+### Cięcie Łańcuchów
 
-Rather than indexing using `[]` with a single number, you can use `[]` with a
-range to create a string slice containing particular bytes:
+Indeksowanie do łańcucha często jest złym pomysłem ponieważ nie wiadomo 
+jaki powinien być rodzaj wyniku takiej operacji. Czy powinna to być wartość 
+bajtu, znak, zbitek grafemów czy wycinek łańcucha? Dlatego jeśli naprawdę 
+musisz użyć indeksów by stworzyć wycinki łańcucha, Rust prosi cię o konkrety.
+
+
+Zamiast indeksować za pomocą `[]` z pojedynczą cyfrą, możesz użyć `[]` 
+z zakresem by stworzyć wycinek łańcucha zawierający konkretne bajty:
 
 ```rust
 let hello = "Здравствуйте";
@@ -342,20 +351,21 @@ let hello = "Здравствуйте";
 let s = &hello[0..4];
 ```
 
-Here, `s` will be a `&str` that contains the first 4 bytes of the string.
-Earlier, we mentioned that each of these characters was 2 bytes, which means
-`s` will be `Зд`.
+Tutaj, `s` będzie `&str`, która zawiera pierwsze cztery bajty 
+łańcucha. Wcześniej, wspomnieliśmy, że każda z tych liter waży 
+2 bajty, co oznacza, że `s` będzie równe `Зд`.
 
-If we were to try to slice only part of a character’s bytes with something like
-`&hello[0..1]`, Rust would panic at runtime in the same way as if an invalid
-index were accessed in a vector:
+Jeśli mielibyśmy spróbować wyciąć tylko część bajtów litery za pomocą czegoś w rodzaju 
+`&hello[0..1]`, Rust spanikowałby w trakcie wykonywania programu.
+Zachowałby się tak samo gdybyś spróbował uzyskać dostęp do indeksu wykraczającego poza wektor:
+
 
 ```console
 {{#include ../listings/ch08-common-collections/output-only-01-not-char-boundary/output.txt}}
 ```
 
-You should use ranges to create string slices with caution, because doing so
-can crash your program.
+Używaj zakresów do tworzenia wycinków łańcuchów ostrożnie,
+bo może to zakończyć się błędem.
 
 ### Methods for Iterating Over Strings
 
