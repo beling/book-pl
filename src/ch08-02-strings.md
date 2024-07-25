@@ -367,12 +367,13 @@ Zachowałby się tak samo gdybyś spróbował uzyskać dostęp do indeksu wykrac
 Używaj zakresów do tworzenia wycinków łańcuchów ostrożnie,
 bo może to zakończyć się błędem.
 
-### Methods for Iterating Over Strings
+### Sposoby na Iterację po Łańcuchach
 
-The best way to operate on pieces of strings is to be explicit about whether
-you want characters or bytes. For individual Unicode scalar values, use the
-`chars` method. Calling `chars` on “Зд” separates out and returns two values
-of type `char`, and you can iterate over the result to access each element:
+Na łańcuchach najlepiej operuje się jeśli dokładnie określimy czy wynikiem operacji
+mają być bajty czy znaki. Jeśli chcesz uzyskać wartości skalarne Unicode, zastosuj metodę
+`chars`. Wywołanie `chars` na “Зд” rozdziela i zwraca dwie wartości typu `char`. 
+By uzyskać dostęp do każdego elementu, możesz iterować po wyniku:
+
 
 ```rust
 for c in "Зд".chars() {
@@ -380,15 +381,14 @@ for c in "Зд".chars() {
 }
 ```
 
-This code will print the following:
+Powyższy kod wyświetli:
 
 ```text
 З
 д
 ```
 
-Alternatively, the `bytes` method returns each raw byte, which might be
-appropriate for your domain:
+Ewentualnie, bardziej może ci odpowiadać metoda `bytes`, która wyświetla każdy surowy bajt:
 
 ```rust
 for b in "Зд".bytes() {
@@ -396,7 +396,7 @@ for b in "Зд".bytes() {
 }
 ```
 
-This code will print the four bytes that make up this string:
+Powyższy kod wyświetli cztery bajty, które znajdują się w tym łańcuchu:
 
 ```text
 208
@@ -405,29 +405,28 @@ This code will print the four bytes that make up this string:
 180
 ```
 
-But be sure to remember that valid Unicode scalar values may be made up of more
-than 1 byte.
+Nie zapomnij, że poprawne wartości skalarne Unicode mogą składać się z więcej niż jednego bajta.
 
-Getting grapheme clusters from strings as with the Devanagari script is
-complex, so this functionality is not provided by the standard library. Crates
-are available on [crates.io](https://crates.io/)<!-- ignore --> if this is the
-functionality you need.
+Proces otrzymania zbitka grafemów z łańcucha, jak przy piśmie dewanagari, jest 
+złożony więc ta funkcjonalność nie jest dostępna w bibliotece standardowej. 
+Jeżeli potrzebujesz tej funkcjonalności, na [crates.io](https://crates.io/)<!-- ignore --> 
+możesz znaleźć odpowiednie skrzynie.
 
-### Strings Are Not So Simple
+### Łańcuchy Nie Są Takie Proste
+Podsumowując, łańcuchy są skomplikowane. Różne języki programowania wybierają 
+różne sposoby na pokazanie tej złożoności programiście. Rust wybrał poprawne 
+obchodzenie się z danymi ze `String` jako domyślne zachowanie wszystkich 
+programów w nim napisanych. Oznacza to, że programiści muszą mieć z góry przemyślane 
+co zrobią z danymi w UTF-8. Ten kompromis ujawnia więcej złożoności łańcuchów niż 
+sposoby wybrane przez inne języki programowania, ale zapobiega konieczności radzenia 
+sobie z błędami obejmującymi znaki inne niż ASCII na późniejszym etapie cyklu rozwoju 
+oprogramowania. 
 
-To summarize, strings are complicated. Different programming languages make
-different choices about how to present this complexity to the programmer. Rust
-has chosen to make the correct handling of `String` data the default behavior
-for all Rust programs, which means programmers have to put more thought into
-handling UTF-8 data upfront. This trade-off exposes more of the complexity of
-strings than is apparent in other programming languages, but it prevents you
-from having to handle errors involving non-ASCII characters later in your
-development life cycle.
+Dobre wieści są takie, że biblioteka standardowa oferuje wiele funkcjonalności 
+opartych na typach `String` i `&str` by pomóc ci poprawnie zająć się takimi 
+złożonymi sytuacjami. Upewnij się, że przejrzałeś dokumentację i zapoznałeś się z
+takimi użytecznymi metodami jak `contains`, żeby przeszukać łańcuch i `replace` 
+by zastąpić części łańcucha innym łańcuchem. 
 
-The good news is that the standard library offers a lot of functionality built
-off the `String` and `&str` types to help handle these complex situations
-correctly. Be sure to check out the documentation for useful methods like
-`contains` for searching in a string and `replace` for substituting parts of a
-string with another string.
 
-Let’s switch to something a bit less complex: hash maps!
+Przejdźmy teraz do czegoś nieco łatwiejszego: mapy z haszowaniem!
