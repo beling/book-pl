@@ -55,15 +55,14 @@ ewentualną instalację kompilatora C. Wiele popularnych pakietów Rusta korzyst
 kodu C i wymaga również kompilatora C. Z tego względu jego instalacja w tym
 momencie może być zasadna.
 
-On macOS, you can get a C compiler by running:
+W systemie macOS możesz uruchomić kompilator języka C poleceniem:
 
 ```console
 $ xcode-select --install
 ```
 
-Linux users should generally install GCC or Clang, according to their
-distribution’s documentation. For example, if you use Ubuntu, you can install
-the `build-essential` package.
+Użytkownicy Linuksa powinni generalnie zainstalować GCC lub Clang, zgodnie z dokumentacją ich
+dystrybucji. Na przykład, jeśli używasz Ubuntu, możesz zainstalować pakiet `build-essential`.
 
 
 ### Instalacja `rustup` pod Windowsem
@@ -74,13 +73,13 @@ instalacji Rusta. W którymś momencie procesu otrzymasz komunikat informujący,
 będziesz również potrzebować narzędzi budowania MSVC dla Visual Studio 2013 lub
 nowszego.
 
-To acquire the build tools, you’ll need to install [Visual Studio
-2022][visualstudio]. When asked which workloads to install, include:
+Aby uzyskać narzędzia kompilacji, powinieneś zainstalować [Visual Studio
+2022][visualstudio]. Na pytanie, które składniki zainstalować, należy wybrać:
 
 * „Desktop Development with C++”
 * The Windows 10 or 11 SDK
-* The English language pack component, along with any other language pack of
-  your choosing
+* pakiet języka angielskiego, wraz z dowolnym innym pakietem językowym
+  do wyboru
 
 Dalsza część książki będzie zawierać polecenia działające zarówno w *cmd.exe*
 jak i w PowerShell. Jeżeli pojawią się jakieś różnice, zostaną one wyjaśnione.
@@ -120,27 +119,27 @@ rustc x.y.z (abcabcabc rrrr-mm-dd)
 Jeśli widzisz coś takiego, Rust zainstalował się prawidłowo! Jeśli nie, to sprawdź
 czy Rust został dodany do zmiennej środowiskowej `%PATH%`.
 
-In Windows CMD, use:
+W Windows CMD, wpisz:
 
 ```console
 > echo %PATH%
 ```
 
-In PowerShell, use:
+W PowerShellu, wpisz:
 
 ```powershell
 > echo $env:Path
 ```
 
-In Linux and macOS, use:
+W systemie Linux lub macOS, wpisz:
 
 ```console
 $ echo $PATH
 ```
 
-If that’s all correct and Rust still isn’t working, there are a number of
-places you can get help. Find out how to get in touch with other Rustaceans (a
-silly nickname we call ourselves) on [the community page][community].
+Jeśli wszystko się zgadza, a Rust nadal nie działa, istnieje kilka
+miejsc, w których możesz uzyskać pomoc. Dowiedz się, jak skontaktować się z innymi Rustafarianami (to
+takie nasze przezwisko) na [the community page][community].
 
 ### Lokalna dokumentacja
 
