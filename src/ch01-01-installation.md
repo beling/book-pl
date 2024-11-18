@@ -138,7 +138,7 @@ $ echo $PATH
 ```
 
 Jeśli wszystko się zgadza, a Rust nadal nie działa, istnieje kilka
-miejsc, w których możesz uzyskać pomoc. Dowiedz się, jak skontaktować się z innymi Rustafarianami (to
+miejsc, w których możesz uzyskać pomoc. Dowiedz się, jak skontaktować się z innymi Rustowcami (to
 takie nasze przezwisko) na [the community page][community].
 
 ### Lokalna dokumentacja
