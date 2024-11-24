@@ -47,7 +47,7 @@
 - [Często Wykorzystywane Kolekcje](ch08-00-common-collections.md)
     - [Przechowywanie List Wartości w Wektorach](ch08-01-vectors.md)
     - [Przechowywanie Tekstów UTF-8 za Pomocą Łańcuchów](ch08-02-strings.md)
-    - [Storing Keys with Associated Values in Hash Maps](ch08-03-hash-maps.md)
+    - [Przechowywanie Kluczy z Powiązanymi Wartościami w Mapach z Haszowaniem](ch08-03-hash-maps.md)
 
 - [Error Handling](ch09-00-error-handling.md)
     - [Unrecoverable Errors with `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
