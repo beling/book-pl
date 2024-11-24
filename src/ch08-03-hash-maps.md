@@ -1,242 +1,231 @@
-## Storing Keys with Associated Values in Hash Maps
+## Przechowywanie Kluczy z Powiązanymi Wartościami w Mapach z Haszowaniem
 
-The last of our common collections is the *hash map*. The type `HashMap<K, V>`
-stores a mapping of keys of type `K` to values of type `V` using a
-*hashing function*, which determines how it places these keys and values into
-memory. Many programming languages support this kind of data structure, but
-they often use a different name, such as hash, map, object, hash table,
-dictionary, or associative array, just to name a few.
+Ostatnią z naszych popularnych kolekcji jest *mapa z haszowaniem*. Typ `HashMap<K, V>` 
+przechowuje mapowanie kluczy typu `K` na wartości typu `V` przy użyciu *funkcji 
+haszującej*, która określa sposób umieszczania tych kluczy i wartości w pamięci. 
+Wiele języków programowania obsługuje tego rodzaju struktury danych, ale często 
+używają one innych nazw, takich jak *hash*, *mapa*, *obiekt*, *tablica hash*, 
+*słownik* lub *tablica asocjacyjna*, by wymienić tylko kilka.
 
-Hash maps are useful when you want to look up data not by using an index, as
-you can with vectors, but by using a key that can be of any type. For example,
-in a game, you could keep track of each team’s score in a hash map in which
-each key is a team’s name and the values are each team’s score. Given a team
-name, you can retrieve its score.
+Mapy z haszowaniem są przydatne, gdy chcesz wyszukać dane nie za pomocą indeksu, jak
+w przypadku wektorów, ale za pomocą klucza, który może być dowolnego typu. Na przykład,
+w grze można śledzić wyniki każdej drużyny w mapie z haszowaniem, w której
+każdy klucz to nazwa drużyny, a wartości to wyniki każdej drużyny. Podając nazwę drużyny,
+można pobrać jej wynik.
 
-We’ll go over the basic API of hash maps in this section, but many more goodies
-are hiding in the functions defined on `HashMap<K, V>` by the standard library.
-As always, check the standard library documentation for more information.
+W tej sekcji omówimy podstawowy interfejs API map z haszowaniem, ale wiele innych ciekawostek
+kryje się w funkcjach zdefiniowanych na `HashMap<K, V>` przez bibliotekę standardową. 
+Jak zawsze, sprawdź dokumentację biblioteki standardowej, aby uzyskać więcej informacji.
 
-### Creating a New Hash Map
+### Tworzenie Nowej Mapy z Haszowaniem
 
-One way to create an empty hash map is using `new` and adding elements with
-`insert`. In Listing 8-20, we’re keeping track of the scores of two teams whose
-names are *Blue* and *Yellow*. The Blue team starts with 10 points, and the
-Yellow team starts with 50.
+Jednym ze sposobów utworzenia pustej mapy z haszowaniem jest użycie `new` i dodanie elementów za pomocą
+`insert`. Na listingu 8-20 śledzimy wyniki dwóch drużyn o 
+nazwach *Blue* i *Yellow*. Niebieska drużyna zaczyna z 10 punktami, a żółta
+z 50.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-20: Creating a new hash map and inserting some
-keys and values</span>
+<span class="caption">Listing 8-20: Tworzenie nowej mapy z haszowaniem i wstawianie kluczy i wartości</span>
 
-Note that we need to first `use` the `HashMap` from the collections portion of
-the standard library. Of our three common collections, this one is the least
-often used, so it’s not included in the features brought into scope
-automatically in the prelude. Hash maps also have less support from the
-standard library; there’s no built-in macro to construct them, for example.
+Zauważ, że musimy najpierw zadeklarować `use` `HashMap` z części kolekcji biblioteki standardowej.
+Spośród naszych trzech popularnych kolekcji, ta jest najrzadziej używana, 
+więc nie jest uwzględniona w funkcjach automatycznie wprowadzanych do zakresu w preludium. 
+Mapy z haszowaniem mają również mniejsze wsparcie ze strony biblioteki standardowej; 
+na przykład nie ma wbudowanego makra do ich konstruowania.
 
-Just like vectors, hash maps store their data on the heap. This `HashMap` has
-keys of type `String` and values of type `i32`. Like vectors, hash maps are
-homogeneous: all of the keys must have the same type as each other, and all of
-the values must have the same type.
+Podobnie jak wektory, mapy z haszowaniem przechowują swoje dane na stercie.
+Ta `HashMap` ma klucze typu `String` i wartości typu `i32`. Podobnie jak wektory, 
+mapy z haszowaniem są jednorodne: wszystkie klucze i wartości muszą mieć ten sam typ.
 
-### Accessing Values in a Hash Map
-
-We can get a value out of the hash map by providing its key to the `get`
-method, as shown in Listing 8-21.
+### Uzyskiwanie Dostępu do Wartości w Mapie z Haszowaniem
+Możemy uzyskać wartość z mapy z haszowaniem poprzez podanie jej klucza do metody `get`, 
+jak pokazano na listingu 8-21.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-21: Accessing the score for the Blue team
-stored in the hash map</span>
+<span class="caption">Listing 8-21: Uzyskanie dostępu do wyniku drużyny niebieskiej przechowywanego w mapie z haszowaniem</span>
 
-Here, `score` will have the value that’s associated with the Blue team, and the
-result will be `10`. The `get` method returns an `Option<&V>`; if there’s no
-value for that key in the hash map, `get` will return `None`. This program
-handles the `Option` by calling `copied` to get an `Option<i32>` rather than an
-`Option<&i32>`, then `unwrap_or` to set `score` to zero if `scores` doesn't
-have an entry for the key.
+W tym przypadku `score` będzie miał wartość powiązaną z niebieską drużyną,
+a wynikiem będzie `10`. Metoda `get` zwraca `Option<&V>`; jeśli nie ma
+wartości dla tego klucza w mapie z haszowaniem, `get` zwróci `None`. Ten program
+obsługuje `Option`, wywołując `copied,` aby uzyskać `Option<i32>` zamiast `Option<&i32>`,
+a następnie `unwrap_or`, aby ustawić `score` na zero, jeśli `scores` nie ma wpisu dla klucza.
 
-We can iterate over each key/value pair in a hash map in a similar manner as we
-do with vectors, using a `for` loop:
+Możemy iterować po każdej parze klucz-wartość w mapie z haszowaniem w podobny sposób jak
+z wektorami, używając pętli `for`:
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
 ```
 
-This code will print each pair in an arbitrary order:
+Ten kod wydrukuje każdą parę w dowolnej kolejności:
 
 ```text
 Yellow: 50
 Blue: 10
 ```
 
-### Hash Maps and Ownership
+### Mapy z Haszowaniem i System Własności
 
-For types that implement the `Copy` trait, like `i32`, the values are copied
-into the hash map. For owned values like `String`, the values will be moved and
-the hash map will be the owner of those values, as demonstrated in Listing 8-22.
+Dla typów, które implementują cechę `Copy`, jak `i32`, wartości są kopiowane
+do mapy z haszowaniem. Dla wartości będących własnością, takich jak `String`, 
+wartości zostaną przeniesione i mapa z haszowaniem będzie właścicielem tych wartości,
+jak pokazano na listingu 8-22.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-22: Showing that keys and values are owned by
-the hash map once they’re inserted</span>
+<span class="caption">Listing 8-22: Pokazanie, że klucze i wartości są własnością mapy z haszowaniem po ich wstawieniu</span>
 
-We aren’t able to use the variables `field_name` and `field_value` after
-they’ve been moved into the hash map with the call to `insert`.
+Nie jesteśmy w stanie użyć zmiennych `field_name` i `field_value` po tym, jak
+zostały one przeniesione do mapy z haszowaniem za pomocą wywołania `insert`.
 
-If we insert references to values into the hash map, the values won’t be moved
-into the hash map. The values that the references point to must be valid for at
-least as long as the hash map is valid. We’ll talk more about these issues in
-the [“Validating References with
-Lifetimes”][validating-references-with-lifetimes]<!-- ignore --> section in
-Chapter 10.
+Jeśli wstawimy odniesienia do wartości w mapie z haszowaniem, wartości nie zostaną przeniesione
+do mapy z haszowaniem. Wartości, na które wskazują odniesienia, muszą być ważne przez
+co najmniej tak długo, jak ważna jest mapa z haszowaniem. Więcej o tych kwestiach powiemy w
+["Walidacja referencji za pomocą cyklu życia"][validating-references-with-lifetimes]<!-- ignore --> w rozdziale 10.
 
-### Updating a Hash Map
+### Aktualizowanie Mapy z Haszowaniem
 
-Although the number of key and value pairs is growable, each unique key can
-only have one value associated with it at a time (but not vice versa: for
-example, both the Blue team and the Yellow team could have value 10 stored in
-the `scores` hash map).
+Chociaż liczba par kluczy i wartości może rosnąć, każdy unikalny klucz może 
+mieć tylko jedną wartość powiązaną z nim w danym momencie (ale nie odwrotnie:
+na przykład zarówno drużyna Niebieska, jak i Żółta mogą mieć wartość `10`
+przechowywaną w mapie z haszowaniem `scores`).
 
-When you want to change the data in a hash map, you have to decide how to
-handle the case when a key already has a value assigned. You could replace the
-old value with the new value, completely disregarding the old value. You could
-keep the old value and ignore the new value, only adding the new value if the
-key *doesn’t* already have a value. Or you could combine the old value and the
-new value. Let’s look at how to do each of these!
+Kiedy chcesz zmienić dane w mapie z haszowaniem, musisz zdecydować, w jaki sposób
+obsłużyć przypadek, gdy klucz ma już przypisaną wartość. Można zastąpić
+starą wartość nową wartością, całkowicie ignorując starą wartość. Można
+zachować starą wartość i zignorować nową, dodając nową wartość tylko wtedy, gdy
+klucz *nie* ma jeszcze wartości. Można też połączyć starą i nową wartość.
+Przyjrzyjmy się, jak wykonać każdą z tych metod!
 
-#### Overwriting a Value
+#### Zastępowanie Wartości
 
-If we insert a key and a value into a hash map and then insert that same key
-with a different value, the value associated with that key will be replaced.
-Even though the code in Listing 8-23 calls `insert` twice, the hash map will
-only contain one key/value pair because we’re inserting the value for the Blue
-team’s key both times.
+Jeśli wstawimy klucz i wartość do mapy z haszowaniem, a następnie wstawimy ten sam klucz
+z inną wartością, wartość powiązana z tym kluczem zostanie zastąpiona.
+Mimo że kod na listingu 8-23 wywołuje `insert` dwa razy, mapa z haszowaniem
+będzie zawierała tylko jedną parę klucz-wartość, ponieważ za każdym razem wstawiamy 
+wartość klucza drużyny Blue.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-23: Replacing a value stored with a particular
-key</span>
+<span class="caption">Listing 8-23: Zastępowanie wartości przechowywanej z określonym kluczem</span>
 
-This code will print `{"Blue": 25}`. The original value of `10` has been
-overwritten.
+Ten kod wypisze `{„Blue”: 25}`. Oryginalna wartość `10` została
+nadpisana.
 
 <!-- Old headings. Do not remove or links may break. -->
 <a id="only-inserting-a-value-if-the-key-has-no-value"></a>
 
-#### Adding a Key and Value Only If a Key Isn’t Present
+#### Dodawanie Klucza i Wartości Tylko w Przypadku Braku Klucza
 
-It’s common to check whether a particular key already exists in the hash map
-with a value then take the following actions: if the key does exist in the hash
-map, the existing value should remain the way it is. If the key doesn’t exist,
-insert it and a value for it.
+Powszechne jest sprawdzanie, czy dany klucz już istnieje w mapie z haszowaniem
+z wartością, a następnie podjęcie następujących działań: jeśli klucz istnieje w
+mapie haszującej, istniejąca wartość powinna pozostać bez zmian; jeśli klucz
+nie istnieje, należy wstawić go wraz z wartością.
 
-Hash maps have a special API for this called `entry` that takes the key you
-want to check as a parameter. The return value of the `entry` method is an enum
-called `Entry` that represents a value that might or might not exist. Let’s say
-we want to check whether the key for the Yellow team has a value associated
-with it. If it doesn’t, we want to insert the value 50, and the same for the
-Blue team. Using the `entry` API, the code looks like Listing 8-24.
+Mapy z haszowaniem mają do tego specjalne API o nazwie `entry`, które przyjmuje klucz,
+który chcemy sprawdzić jako parametr. Wartością zwrotną metody `entry` jest enum
+o nazwie `Entry`, która reprezentuje wartość, która może istnieć lub nie. Powiedzmy, że
+chcemy sprawdzić, czy klucz dla drużyny Yellow ma wartość z nią powiązaną.
+Jeśli nie, chcemy wstawić wartość `50`, i to samo dla zespołu
+Blue team. Używając API `entry`, kod wygląda jak na listingu 8-24.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-24: Using the `entry` method to only insert if
-the key does not already have a value</span>
+<span class="caption">Listing 8-24: Używanie metody `entry` do wstawiania tylko wtedy, gdy klucz nie ma jeszcze wartości</span>
 
-The `or_insert` method on `Entry` is defined to return a mutable reference to
-the value for the corresponding `Entry` key if that key exists, and if not,
-inserts the parameter as the new value for this key and returns a mutable
-reference to the new value. This technique is much cleaner than writing the
-logic ourselves and, in addition, plays more nicely with the borrow checker.
+Metoda `or_insert` na `Entry` jest zdefiniowana by zwracać mutowalne odniesienie do
+wartości odpowiedniego klucza `Entry`, jeśli ten klucz istnieje, a jeśli nie, to
+wstawia parametr jako nową wartość dla tego klucza i zwraca mutowalne
+odniesienie do nowej wartości. Ta technika jest znacznie czystsza niż samodzielne pisanie
+logiki, a ponadto lepiej współgra ze sprawdzaniem zapożyczeń.
 
-Running the code in Listing 8-24 will print `{"Yellow": 50, "Blue": 10}`. The
-first call to `entry` will insert the key for the Yellow team with the value
-50 because the Yellow team doesn’t have a value already. The second call to
-`entry` will not change the hash map because the Blue team already has the
-value 10.
+Uruchomienie kodu z listingu 8-24 spowoduje wypisanie `{„Yellow”: 50, „Niebieski”: 10}`. 
+Pierwsze wywołanie `entry` wstawi klucz dla drużyny Yellow z wartością
+`50`, ponieważ żółta drużyna nie ma jeszcze wartości. Drugie wywołanie
+`entry` nie zmieni mapy z haszowaniem, ponieważ drużyna Blue ma już wartość
+wartość `10`.
 
-#### Updating a Value Based on the Old Value
+#### Aktualizacja Wartości na Podstawie Starej Wartości
 
-Another common use case for hash maps is to look up a key’s value and then
-update it based on the old value. For instance, Listing 8-25 shows code that
-counts how many times each word appears in some text. We use a hash map with
-the words as keys and increment the value to keep track of how many times we’ve
-seen that word. If it’s the first time we’ve seen a word, we’ll first insert
-the value 0.
+Innym częstym przypadkiem użycia map z haszowaniem jest wyszukiwanie wartości klucza,
+a następnie aktualizacja na podstawie starej wartości. Na przykład, listing 8-25 pokazuje kod,
+który zlicza ile razy każde słowo pojawia się w tekście. Używamy mapy z haszowaniem z
+słowami jako kluczami i zwiększamy wartość, aby śledzić, ile razy widzieliśmy to słowo.
+Jeśli widzimy dane słowo po raz pierwszy, najpierw wstawiamy wartość wartość `0`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-25: Counting occurrences of words using a hash
-map that stores words and counts</span>
+<span class="caption">Listing 8-25: Zliczanie wystąpień słów przy użyciu mapy z haszowaniem, która przechowuje słowa i liczby</span>
 
-This code will print `{"world": 2, "hello": 1, "wonderful": 1}`. You might see
-the same key/value pairs printed in a different order: recall from the
-[“Accessing Values in a Hash Map”][access]<!-- ignore --> section that
-iterating over a hash map happens in an arbitrary order.
+Ten kod wypisze `{„world”: 2, „hello”: 1, „wonderful”: 1}`. Możesz zobaczyć
+te same pary klucz-wartość wydrukowane w innej kolejności: przypomnijmy sobie z sekcji
+[„Uzyskiwanie dostępu do wartości z mapy z haszowaniem”][access]<!-- ignore -->, że
+iteracja po mapie z haszowaniem odbywa się w dowolnej kolejności.
 
-The `split_whitespace` method returns an iterator over sub-slices, separated by
-whitespace, of the value in `text`. The `or_insert` method returns a mutable
-reference (`&mut V`) to the value for the specified key. Here we store that
-mutable reference in the `count` variable, so in order to assign to that value,
-we must first dereference `count` using the asterisk (`*`). The mutable
-reference goes out of scope at the end of the `for` loop, so all of these
-changes are safe and allowed by the borrowing rules.
+Metoda `split_whitespace` zwraca iterator nad subwycinkami, oddzielonymi
+białymi znakami, wartości w `text`. Metoda `or_insert` zwraca mutowalną referencję
+(`&mut V`) do wartości dla określonego klucza. Tutaj przechowujemy
+mutowalną referencję w zmiennej `count`, więc aby przypisać ją do tej wartości,
+musimy najpierw odnieść się do `count` używając gwiazdki (`*`). Zmienna
+wychodzi poza zakres na końcu pętli `for`, więc wszystkie te
+zmiany są bezpieczne i dozwolone przez reguły pożyczania.
 
-### Hashing Functions
+### Funkcje Haszujące
 
-By default, `HashMap` uses a hashing function called *SipHash* that can provide
-resistance to Denial of Service (DoS) attacks involving hash
-tables[^siphash]<!-- ignore -->. This is not the fastest hashing algorithm
-available, but the trade-off for better security that comes with the drop in
-performance is worth it. If you profile your code and find that the default
-hash function is too slow for your purposes, you can switch to another function
-by specifying a different hasher. A *hasher* is a type that implements the
-`BuildHasher` trait. We’ll talk about traits and how to implement them in
-Chapter 10. You don’t necessarily have to implement your own hasher from
-scratch; [crates.io](https://crates.io/)<!-- ignore --> has libraries shared by
-other Rust users that provide hashers implementing many common hashing
-algorithms.
+Domyślnie, `HashMap` używa funkcji haszującej o nazwie *SipHash*, która może zapewnić
+odporność na ataki typu DoS (denial-of-service) z użyciem hash tablic
+[^siphash]<!-- ignore -->. Nie jest to najszybszy dostępny algorytm haszujący,
+ale kompromis dla lepszego bezpieczeństwa, który wiąże się ze spadkiem
+wydajności ale jest tego wart. Jeśli profilujesz swój kod i stwierdzisz, że domyślna
+funkcja haszująca jest zbyt wolna dla twoich celów, możesz przełączyć się na inną funkcję
+określając inny hasher. *hasher* jest typem, który implementuje cechę
+`BuildHasher`. Porozmawiamy o cechach i sposobach ich implementacji w
+[Rozdział 10][traits]<!-- ignore -->. Nie musisz koniecznie implementować
+własnego hashera od zera; [crates.io](https://crates.io/)<!-- ignore -->
+zawiera biblioteki współdzielone przez innych użytkowników Rusta, które dostarczają 
+hashery implementujące wiele powszechnych algorytmów haszujących.
 
 [^siphash]: [https://en.wikipedia.org/wiki/SipHash](https://en.wikipedia.org/wiki/SipHash)
 
-## Summary
+## Podsumowanie
 
-Vectors, strings, and hash maps will provide a large amount of functionality
-necessary in programs when you need to store, access, and modify data. Here are
-some exercises you should now be equipped to solve:
+Wektory, ciągi znaków i mapy z haszowaniem zapewniają dużą funkcjonalność
+niezbędną w programach do przechowywania, pobierania i modyfikowania danych. Oto
+kilka ćwiczeń, które powinieneś być teraz w stanie rozwiązać:
 
-* Given a list of integers, use a vector and return the median (when sorted,
-  the value in the middle position) and mode (the value that occurs most often;
-  a hash map will be helpful here) of the list.
-* Convert strings to pig latin. The first consonant of each word is moved to
-  the end of the word and “ay” is added, so “first” becomes “irst-fay.” Words
-  that start with a vowel have “hay” added to the end instead (“apple” becomes
-  “apple-hay”). Keep in mind the details about UTF-8 encoding!
-* Using a hash map and vectors, create a text interface to allow a user to add
-  employee names to a department in a company. For example, “Add Sally to
-  Engineering” or “Add Amir to Sales.” Then let the user retrieve a list of all
-  people in a department or all people in the company by department, sorted
-  alphabetically.
+1. Dla podanej listy liczb całkowitych, użyj wektora i zwróć medianę (po posortowaniu,
+   wartość na środkowej pozycji) i dominantę (wartość, która występuje najczęściej;
+   pomocna będzie tutaj mapa z haszowaniem) listy.
+1. Przekonwertuj ciągi znaków na łacinę świńską. Pierwsza spółgłoska każdego słowa jest przenoszona na
+   na koniec słowa i dodawane jest *ay*, więc *first* staje się *irst-fay*. Słowa
+   zaczynające się od samogłoski mają zamiast tego dodane *hay* na końcu (*apple* staje się
+   *apple-hay*). Należy pamiętać o szczegółach kodowania UTF-8!
+1. Korzystając z mapy z haszowaniem i wektorów, utwórz interfejs tekstowy, aby umożliwić użytkownikowi dodawanie
+   pracowników do działów w firmie; na przykład „Dodaj Sally do działu inżynierii” lub 
+   »Dodaj Amir do działu sprzedaży«. Następnie pozwól użytkownikowi pobrać listę wszystkich
+   osób w dziale lub wszystkich osób w firmie według działu, posortowanych alfabetycznie.
+   
+Dokumentacja API biblioteki standardowej opisuje metody wektorów, łańcuchów
+i mapy z haszowaniem, które będą pomocne w tych ćwiczeniach!
 
-The standard library API documentation describes methods that vectors, strings,
-and hash maps have that will be helpful for these exercises!
-
-We’re getting into more complex programs in which operations can fail, so, it’s
-a perfect time to discuss error handling. We’ll do that next!
+Wchodzimy w bardziej złożone programy, w których operacje mogą się nie powieść, więc jest to
+idealny czas na omówienie obsługi błędów. Zrobimy to w następnej kolejności!
 
 [validating-references-with-lifetimes]:
 ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
-[access]: #accessing-values-in-a-hash-map
+[access]: #uzyskiwanie-dostępu-do-wartości-w-mapie-z-haszowaniem
+[traits]: ch10-02-traits.html
