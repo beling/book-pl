@@ -7,7 +7,7 @@ fn main() {
 
     let mut map = HashMap::new();
     map.insert(field_name, field_value);
-    // field_name i field_value są w tym momencie nieprawidłowe, spróbuj ich użyć
+    // field_name i field_value są w tym momencie unieważnione, spróbuj ich użyć
     // i zobacz, jaki błąd kompilatora otrzymasz!
     // ANCHOR_END: here
 }
