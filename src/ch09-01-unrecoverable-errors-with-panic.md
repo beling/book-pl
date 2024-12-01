@@ -1,35 +1,34 @@
-## Unrecoverable Errors with `panic!`
+## Nienaprawialne Błędy z `panic!`
 
-Sometimes, bad things happen in your code, and there’s nothing you can do about
-it. In these cases, Rust has the `panic!` macro. There are two ways to cause a
-panic in practice: by taking an action that causes our code to panic (such as
-accessing an array past the end) or by explicitly calling the `panic!` macro.
-In both cases, we cause a panic in our program. By default, these panics will
-print a failure message, unwind, clean up the stack, and quit. Via an
-environment variable, you can also have Rust display the call stack when a
-panic occurs to make it easier to track down the source of the panic.
+Czasami w kodzie dzieją się złe rzeczy i nic nie można na to poradzić.
+W takich przypadkach Rust posiada makro `panic!`. Istnieją dwa sposoby na wywołanie go
+w praktyce: podejmując działanie, które powoduje, że nasz kod wpada w panikę (np.
+dostęp do tablicy poza jej końcem) lub poprzez jawne wywołanie makra `panic!`.
+W obu przypadkach wywołujemy panikę w naszym programie. Domyślnie, te paniki 
+wypisują komunikat o niepowodzeniu, zwalniają, czyszczą stos i kończą działanie. Poprzez
+zmienną środowiskową, można również nakazać Rustowi wyświetlanie stosu wywołań, gdy wystąpi
+panika aby ułatwić odnalezienie źródła paniki.
 
-> ### Unwinding the Stack or Aborting in Response to a Panic
+> ### Rozwijanie Stosu lub Przerwanie w Odpowiedzi na Panikę
 >
-> By default, when a panic occurs, the program starts *unwinding*, which
-> means Rust walks back up the stack and cleans up the data from each function
-> it encounters. However, this walking back and cleanup is a lot of work. Rust,
-> therefore, allows you to choose the alternative of immediately *aborting*,
-> which ends the program without cleaning up.
+> Domyślnie, gdy wystąpi panika, program rozpoczyna *zwalnianie*, co oznacza, że
+> Rust cofa się w górę stosu i czyści dane z każdej napotkanej funkcji.
+> Jednak cofanie się i czyszczenie to dużo pracy. Rust dlatego pozwala wybrać 
+> alternatywę natychmiastowego *przerwania*, co kończy program bez czyszczenia.
 >
-> Memory that the program was using will then need to be cleaned
-> up by the operating system. If in your project you need to make the resulting
-> binary as small as possible, you can switch from unwinding to aborting upon a
-> panic by adding `panic = 'abort'` to the appropriate `[profile]` sections in
-> your *Cargo.toml* file. For example, if you want to abort on panic in release
-> mode, add this:
+> Pamięć, z której korzystał program, będzie musiała zostać wyczyszczona przez
+> system operacyjny. Jeśli w swoim projekcie chcesz, aby wynikowy plik binarny był tak
+> mały jak to tylko możliwe, możesz przełączyć się z zwalniania na przerywanie w przypadku paniki poprzez
+> dodanie `panic = 'abort'` do odpowiednich sekcji `[profile]` w pliku
+> pliku *Cargo.toml*. Na przykład, jeśli chcesz przerwać po panice w trybie zwolnienia,
+> dodaj to:
 >
 > ```toml
 > [profile.release]
 > panic = 'abort'
 > ```
 
-Let’s try calling `panic!` in a simple program:
+Spróbujmy wywołać `panic!` w prostym programie:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -37,32 +36,33 @@ Let’s try calling `panic!` in a simple program:
 {{#rustdoc_include ../listings/ch09-error-handling/no-listing-01-panic/src/main.rs}}
 ```
 
-When you run the program, you’ll see something like this:
+Po uruchomieniu programu zobaczysz coś takiego:
 
 ```console
 {{#include ../listings/ch09-error-handling/no-listing-01-panic/output.txt}}
 ```
 
-The call to `panic!` causes the error message contained in the last two lines.
-The first line shows our panic message and the place in our source code where
-the panic occurred: *src/main.rs:2:5* indicates that it’s the second line,
-fifth character of our *src/main.rs* file.
+Wywołanie `panic!` powoduje wyświetlenie komunikatu o błędzie zawarty w dwóch ostatnich wierszach.
+Pierwsza linia pokazuje komunikat paniki i miejsce w naszym kodzie źródłowym, w którym
+wystąpiła panika: *src/main.rs:2:5* wskazuje, że jest to druga linia,
+piąty znak w pliku *src/main.rs*.
 
-In this case, the line indicated is part of our code, and if we go to that
-line, we see the `panic!` macro call. In other cases, the `panic!` call might
-be in code that our code calls, and the filename and line number reported by
-the error message will be someone else’s code where the `panic!` macro is
-called, not the line of our code that eventually led to the `panic!` call. We
-can use the backtrace of the functions the `panic!` call came from to figure
-out the part of our code that is causing the problem. We’ll discuss backtraces
-in more detail next.
+W tym przypadku wskazana linia jest częścią naszego kodu, a jeśli do niej przejdziemy
+zobaczymy wywołanie makra `panic!`. W innych przypadkach wywołanie `panic!` może znajdować 
+się w kodzie wywoływanym przez nasz kod, a nazwa pliku i numer linii zgłoszone przez 
+komunikat o błędzie będą kodem innej osoby, w którym wywoływane jest makro `panic!`, 
+a nie linią naszego kodu, która ostatecznie doprowadziła do wywołania `panic!`.
+Możemy użyć śladu wstecznego funkcji, z których pochodzi wywołanie `panic!`, 
+aby dowiedzieć się, która część naszego kodu powoduje problem. Ślady wsteczne omówimy
+bardziej szczegółowo w następnej części.
 
-### Using a `panic!` Backtrace
+### Używanie śladu wstecznego `panic!`
 
-Let’s look at another example to see what it’s like when a `panic!` call comes
-from a library because of a bug in our code instead of from our code calling
-the macro directly. Listing 9-1 has some code that attempts to access an
-index in a vector beyond the range of valid indexes.
+Spójrzmy na inny przykład, aby zobaczyć, jak to jest, gdy wywołanie `panic!` 
+pochodzi z biblioteki z powodu błędu w naszym kodzie, a nie z naszego kodu 
+wywołującego makro bezpośrednio. 
+Listing 9-1 zawiera kod, który próbuje uzyskać 
+dostęp do indeksu w wektorze poza zakresem prawidłowych indeksów.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -70,43 +70,43 @@ index in a vector beyond the range of valid indexes.
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-01/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-1: Attempting to access an element beyond the
-end of a vector, which will cause a call to `panic!`</span>
+<span class="caption">Listing 9-1: Próba uzyskania dostępu do elementu poza
+końcem wektora, co spowoduje wywołanie `panic!`.</span>
 
-Here, we’re attempting to access the 100th element of our vector (which is at
-index 99 because indexing starts at zero), but the vector has only 3 elements.
-In this situation, Rust will panic. Using `[]` is supposed to return an
-element, but if you pass an invalid index, there’s no element that Rust could
-return here that would be correct.
+Tutaj próbujemy uzyskać dostęp do setnego elementu naszego wektora (który 
+znajduje się w indeksie 99, ponieważ indeksowanie zaczyna się od zera),
+ale wektor ma tylko 3 elementy. W tej sytuacji Rust wpadnie w panikę. 
+Użycie `[]` powinno zwrócić element, ale jeśli podasz nieprawidłowy indeks, 
+Rust nie będzie w stanie zwrócić żadnego elementu, który byłby poprawny.
 
-In C, attempting to read beyond the end of a data structure is undefined
-behavior. You might get whatever is at the location in memory that would
-correspond to that element in the data structure, even though the memory
-doesn’t belong to that structure. This is called a *buffer overread* and can
-lead to security vulnerabilities if an attacker is able to manipulate the index
-in such a way as to read data they shouldn’t be allowed to that is stored after
-the data structure.
+W języku C próba odczytu poza końcem struktury danych jest niezdefiniowanym 
+zachowaniem. Można uzyskać to, co znajduje się w miejscu w pamięci, które
+odpowiadałoby temu elementowi w strukturze danych, nawet jeśli pamięć nie należy
+do tej struktury. Nazywa się to *przepełnieniem bufora* i może prowadzić do luk
+w zabezpieczeniach, jeśli atakujący jest w stanie manipulować indeksem 
+w taki sposób, aby odczytać dane, do których nie powinien mieć dostępu,
+a które są przechowywane za strukturą danych.
 
-To protect your program from this sort of vulnerability, if you try to read an
-element at an index that doesn’t exist, Rust will stop execution and refuse to
-continue. Let’s try it and see:
+Aby chronić swój program przed tego rodzaju lukami, jeśli spróbujesz odczytać
+element w indeksie, który nie istnieje, Rust zatrzyma wykonywanie 
+i odmówi kontynuowania. Wypróbujmy to i zobaczmy:
 
 ```console
 {{#include ../listings/ch09-error-handling/listing-09-01/output.txt}}
 ```
 
-This error points at line 4 of our `main.rs` where we attempt to access index
-99. The next note line tells us that we can set the `RUST_BACKTRACE`
-environment variable to get a backtrace of exactly what happened to cause the
-error. A *backtrace* is a list of all the functions that have been called to
-get to this point. Backtraces in Rust work as they do in other languages: the
-key to reading the backtrace is to start from the top and read until you see
-files you wrote. That’s the spot where the problem originated. The lines above
-that spot are code that your code has called; the lines below are code that
-called your code. These before-and-after lines might include core Rust code,
-standard library code, or crates that you’re using. Let’s try getting a
-backtrace by setting the `RUST_BACKTRACE` environment variable to any value
-except 0. Listing 9-2 shows output similar to what you’ll see.
+Ten błąd wskazuje na linię 4 naszego pliku `main.rs`, gdzie próbujemy uzyskać
+dostęp do indeksu 99. Następna linia notatki mówi nam, że możemy ustawić 
+zmienną środowiskową `RUST_BACKTRACE`, aby uzyskać ślad wsteczny tego, 
+co dokładnie spowodowało błąd. *Ślad wsteczny* to lista wszystkich funkcji,
+które zostały wywołane, aby dotrzeć do tego punktu. Ślad wsteczny w Ruście działa 
+podobnie jak w innych językach: kluczem do odczytania śladu wstecznego jest
+rozpoczęcie od góry i czytanie, aż zobaczysz pliki, które napisałeś. Jest to miejsce,
+w którym pojawił się problem. Linie powyżej tego miejsca to kod, który został wywołany
+przez twój kod; linie poniżej to kod, który wywołał twój kod. Te linie przed i po mogą
+zawierać kod rdzenia Rusta, kod biblioteki standardowej lub używane skrzynki.
+Spróbujmy uzyskać ślad wsteczny, ustawiając zmienną środowiskową `RUST_BACKTRACE`
+na dowolną wartość z wyjątkiem 0. Listing 9-2 pokazuje dane wyjściowe podobne do tego, co zobaczysz.
 
 <!-- manual-regeneration
 cd listings/ch09-error-handling/listing-09-01
@@ -138,28 +138,28 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
-<span class="caption">Listing 9-2: The backtrace generated by a call to
-`panic!` displayed when the environment variable `RUST_BACKTRACE` is set</span>
+<span class="caption">Listing 9-2: Ślad wsteczny wygenerowany przez wywołanie `panic!` wyświetlany,
+gdy ustawiona jest zmienna środowiskowa `RUST_BACKTRACE`.</span>
 
-That’s a lot of output! The exact output you see might be different depending
-on your operating system and Rust version. In order to get backtraces with this
-information, debug symbols must be enabled. Debug symbols are enabled by
-default when using `cargo build` or `cargo run` without the `--release` flag,
-as we have here.
+To bardzo dużo danych wyjściowych! Dokładne dane wyjściowe mogą się różnić
+w zależności od systemu operacyjnego i wersji Rusta. Aby uzyskać ślady wsteczne
+z tymi informacjami, symbole debugowania muszą być włączone. Symbole debugowania
+są domyślnie włączone podczas korzystania z `cargo build` lub `cargo run`
+bez flagi `--release`, tak jak tutaj.
 
-In the output in Listing 9-2, line 6 of the backtrace points to the line in our
-project that’s causing the problem: line 4 of *src/main.rs*. If we don’t want
-our program to panic, we should start our investigation at the location pointed
-to by the first line mentioning a file we wrote. In Listing 9-1, where we
-deliberately wrote code that would panic, the way to fix the panic is to not
-request an element beyond the range of the vector indexes. When your code
-panics in the future, you’ll need to figure out what action the code is taking
-with what values to cause the panic and what the code should do instead.
+W danych wyjściowych na listingu 9-2, linia 6 śladu wstecznego wskazuje na linię
+w naszym projekcie, która powoduje problem: linia 4 pliku *src/main.rs*. Jeśli nie chcemy, 
+aby nasz program wpadł w panikę, powinniśmy rozpocząć nasze dochodzenie w miejscu wskazywanym
+przez pierwszą linię wspominającą o napisanym przez nas pliku. Na listingu 9-1, 
+gdzie celowo napisaliśmy kod, który spowodowałby panikę, sposobem na naprawienie paniki jest
+nie żądanie elementu spoza zakresu indeksów wektora. Gdy kod będzie panikował w przyszłości, 
+trzeba będzie dowiedzieć się, jakie działania kod wykonuje z jakimi wartościami, aby wywołać panikę
+i co kod powinien zrobić zamiast tego.
 
-We’ll come back to `panic!` and when we should and should not use `panic!` to
-handle error conditions in the [“To `panic!` or Not to
-`panic!`”][to-panic-or-not-to-panic]<!-- ignore --> section later in this
-chapter. Next, we’ll look at how to recover from an error using `Result`.
+Wrócimy do `panic!` i kiedy powinniśmy, a kiedy nie powinniśmy używać `panic!` 
+do obsługi warunków błędu w sekcji ["To `panic!` or Not to`panic!`"][to-panic-or-not-to-panic]
+w dalszej części tego rozdziału. Następnie przyjrzymy się, jak odzyskać
+dane po błędzie przy użyciu `Result`.
 
 [to-panic-or-not-to-panic]:
 ch09-03-to-panic-or-not-to-panic.html#to-panic-or-not-to-panic
