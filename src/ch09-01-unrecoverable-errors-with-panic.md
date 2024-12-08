@@ -5,22 +5,22 @@ W takich przypadkach Rust posiada makro `panic!`. Istnieją dwa sposoby na wywo�
 w praktyce: podejmując działanie, które powoduje, że nasz kod wpada w panikę (np.
 dostęp do tablicy poza jej końcem) lub poprzez jawne wywołanie makra `panic!`.
 W obu przypadkach wywołujemy panikę w naszym programie. Domyślnie, te paniki 
-wypisują komunikat o niepowodzeniu, zwalniają, czyszczą stos i kończą działanie. Poprzez
+wypisują komunikat o niepowodzeniu, zwijają, czyszczą stos i kończą działanie. Poprzez
 zmienną środowiskową, można również nakazać Rustowi wyświetlanie stosu wywołań, gdy wystąpi
 panika aby ułatwić odnalezienie źródła paniki.
 
-> ### Rozwijanie Stosu lub Przerwanie w Odpowiedzi na Panikę
+> ### Zwijanie Stosu lub Przerwanie w Odpowiedzi na Panikę
 >
-> Domyślnie, gdy wystąpi panika, program rozpoczyna *zwalnianie*, co oznacza, że
-> Rust cofa się w górę stosu i czyści dane z każdej napotkanej funkcji.
+> Domyślnie, gdy wystąpi panika, program rozpoczyna *zwijanie*, co oznacza, że
+> Rust cofa się w górę stosu i czyści dane każdej napotkanej funkcji.
 > Jednak cofanie się i czyszczenie to dużo pracy. Rust dlatego pozwala wybrać 
 > alternatywę natychmiastowego *przerwania*, co kończy program bez czyszczenia.
 >
 > Pamięć, z której korzystał program, będzie musiała zostać wyczyszczona przez
 > system operacyjny. Jeśli w swoim projekcie chcesz, aby wynikowy plik binarny był tak
-> mały jak to tylko możliwe, możesz przełączyć się z zwalniania na przerywanie w przypadku paniki poprzez
+> mały jak to tylko możliwe, możesz przełączyć się ze zwijania na przerywanie w przypadku paniki poprzez
 > dodanie `panic = 'abort'` do odpowiednich sekcji `[profile]` w pliku
-> pliku *Cargo.toml*. Na przykład, jeśli chcesz przerwać po panice w trybie zwolnienia,
+> *Cargo.toml*. Na przykład, jeśli chcesz przerwać po panice w trybie zwijania,
 > dodaj to:
 >
 > ```toml
@@ -52,11 +52,11 @@ zobaczymy wywołanie makra `panic!`. W innych przypadkach wywołanie `panic!` mo
 się w kodzie wywoływanym przez nasz kod, a nazwa pliku i numer linii zgłoszone przez 
 komunikat o błędzie będą kodem innej osoby, w którym wywoływane jest makro `panic!`, 
 a nie linią naszego kodu, która ostatecznie doprowadziła do wywołania `panic!`.
-Możemy użyć śladu wstecznego funkcji, z których pochodzi wywołanie `panic!`, 
-aby dowiedzieć się, która część naszego kodu powoduje problem. Ślady wsteczne omówimy
+Możemy użyć stosu wywołań funkcji, z których pochodzi wywołanie `panic!`, 
+aby dowiedzieć się, która część naszego kodu powoduje problem. Stosy wywołań omówimy
 bardziej szczegółowo w następnej części.
 
-### Używanie śladu wstecznego `panic!`
+### Używanie Stosu Wywołań `panic!`
 
 Spójrzmy na inny przykład, aby zobaczyć, jak to jest, gdy wywołanie `panic!` 
 pochodzi z biblioteki z powodu błędu w naszym kodzie, a nie z naszego kodu 
@@ -97,15 +97,15 @@ i odmówi kontynuowania. Wypróbujmy to i zobaczmy:
 
 Ten błąd wskazuje na linię 4 naszego pliku `main.rs`, gdzie próbujemy uzyskać
 dostęp do indeksu 99. Następna linia notatki mówi nam, że możemy ustawić 
-zmienną środowiskową `RUST_BACKTRACE`, aby uzyskać ślad wsteczny tego, 
-co dokładnie spowodowało błąd. *Ślad wsteczny* to lista wszystkich funkcji,
-które zostały wywołane, aby dotrzeć do tego punktu. Ślad wsteczny w Ruście działa 
-podobnie jak w innych językach: kluczem do odczytania śladu wstecznego jest
+zmienną środowiskową `RUST_BACKTRACE`, aby uzyskać stos wysołań tego, 
+co dokładnie spowodowało błąd. *Stos wywołań* to lista wszystkich funkcji,
+które zostały wywołane, aby dotrzeć do tego punktu. Stos wywołań w Ruście działa 
+podobnie jak w innych językach: kluczem do odczytania stosu wywołań jest
 rozpoczęcie od góry i czytanie, aż zobaczysz pliki, które napisałeś. Jest to miejsce,
 w którym pojawił się problem. Linie powyżej tego miejsca to kod, który został wywołany
 przez twój kod; linie poniżej to kod, który wywołał twój kod. Te linie przed i po mogą
 zawierać kod rdzenia Rusta, kod biblioteki standardowej lub używane skrzynki.
-Spróbujmy uzyskać ślad wsteczny, ustawiając zmienną środowiskową `RUST_BACKTRACE`
+Spróbujmy uzyskać stos wywołań, ustawiając zmienną środowiskową `RUST_BACKTRACE`
 na dowolną wartość z wyjątkiem 0. Listing 9-2 pokazuje dane wyjściowe podobne do tego, co zobaczysz.
 
 <!-- manual-regeneration
@@ -138,25 +138,25 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
-<span class="caption">Listing 9-2: Ślad wsteczny wygenerowany przez wywołanie `panic!` wyświetlany,
+<span class="caption">Listing 9-2: Stos wywołań wygenerowany przez wywołanie `panic!` wyświetlany,
 gdy ustawiona jest zmienna środowiskowa `RUST_BACKTRACE`.</span>
 
 To bardzo dużo danych wyjściowych! Dokładne dane wyjściowe mogą się różnić
-w zależności od systemu operacyjnego i wersji Rusta. Aby uzyskać ślady wsteczne
+w zależności od systemu operacyjnego i wersji Rusta. Aby uzyskać stosy wywołań
 z tymi informacjami, symbole debugowania muszą być włączone. Symbole debugowania
 są domyślnie włączone podczas korzystania z `cargo build` lub `cargo run`
 bez flagi `--release`, tak jak tutaj.
 
-W danych wyjściowych na listingu 9-2, linia 6 śladu wstecznego wskazuje na linię
+W danych wyjściowych na listingu 9-2, linia 6 stosu wywołań wskazuje na linię
 w naszym projekcie, która powoduje problem: linia 4 pliku *src/main.rs*. Jeśli nie chcemy, 
 aby nasz program wpadł w panikę, powinniśmy rozpocząć nasze dochodzenie w miejscu wskazywanym
 przez pierwszą linię wspominającą o napisanym przez nas pliku. Na listingu 9-1, 
 gdzie celowo napisaliśmy kod, który spowodowałby panikę, sposobem na naprawienie paniki jest
-nie żądanie elementu spoza zakresu indeksów wektora. Gdy kod będzie panikował w przyszłości, 
+nie żądanie elementu spoza zakresu indeksów wektora. Gdy kod będzie wpadał w panikę w przyszłości, 
 trzeba będzie dowiedzieć się, jakie działania kod wykonuje z jakimi wartościami, aby wywołać panikę
 i co kod powinien zrobić zamiast tego.
 
-Wrócimy do `panic!` i kiedy powinniśmy, a kiedy nie powinniśmy używać `panic!` 
+Wrócimy do `panic!` i omówimy kiedy powinniśmy, a kiedy nie powinniśmy używać `panic!` 
 do obsługi warunków błędu w sekcji ["To `panic!` or Not to`panic!`"][to-panic-or-not-to-panic]
 w dalszej części tego rozdziału. Następnie przyjrzymy się, jak odzyskać
 dane po błędzie przy użyciu `Result`.
