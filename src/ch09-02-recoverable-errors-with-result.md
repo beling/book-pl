@@ -1,4 +1,4 @@
-## Możliwe do Odzyskania Błędy z `Result`
+## Naprawialne Błędy z `Result`
 
 Większość błędów nie jest na tyle poważna, by wymagać całkowitego zatrzymania programu. 
 Czasami, gdy funkcja zawodzi, dzieje się tak z powodu, który można łatwo 
@@ -17,7 +17,8 @@ enum Result<T, E> {
 }
 ```
 
-`T` i `E` są parametrami typów generycznych: omówimy je bardziej szczegółowo w rozdziale 10. W tym momencie należy wiedzieć, że `T` reprezentuje typ wartości, która zostanie zwrócona w przypadku sukcesu w wariancie `Ok`, a `E` reprezentuje typ błędu, który zostanie zwrócony w przypadku niepowodzenia w wariancie `Err`. Ponieważ `Result` ma te ogólne parametry typu, możemy użyć typu `Result` i funkcji zdefiniowanych na nim w wielu różnych sytuacjach, w których wartość sukcesu i wartość błędu, którą chcemy zwrócić, mogą się różnić.
+`T` i `E` są parametrami typów generycznych: omówimy je bardziej szczegółowo w rozdziale 10. W tym momencie należy wiedzieć, że `T` reprezentuje typ wartości, która zostanie zwrócona w przypadku sukcesu w wariancie `Ok`, a `E` reprezentuje typ błędu, który zostanie zwrócony w przypadku niepowodzenia w wariancie `Err`. 
+Ponieważ `Result` ma te ogólne parametry typu, możemy użyć typu `Result` i funkcji zdefiniowanych na nim w wielu różnych sytuacjach, o różnych zwracanych wartościach sukcesu i błędu.
 
 Wywołajmy funkcję, która zwraca wartość `Result`, ponieważ funkcja może się nie powieść. 
 Na listingu 9-3 próbujemy otworzyć plik.
@@ -414,8 +415,8 @@ użyć operatora `?` w `Option`, musielibyśmy zaimplementować tę logikę uży
 wywołań metod lub wyrażenia `match`.
 
 Zauważ, że możesz użyć operatora `?` na `Result` w funkcji, która zwraca `Result` i możesz
-użyć operatora `?` na `Option` w funkcji, która zwraca `Option`, ale nie możesz mieszać
-i dopasowywać. Operator `?` nie konwertuje automatycznie `Result` na `Option` lub odwrotnie;
+użyć operatora `?` na `Option` w funkcji, która zwraca `Option`, ale nie można ich dowolnie mieszać.
+Operator `?` nie konwertuje automatycznie `Result` na `Option` lub odwrotnie;
 w takich przypadkach można użyć metod takich jak `ok` na `Result` lub `ok_or` na `Option`, 
 aby dokonać konwersji w sposób jawny.
 

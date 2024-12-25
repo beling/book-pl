@@ -51,7 +51,7 @@
 
 - [Obsługa błędów](ch09-00-error-handling.md)
     - [Nienaprawialne Błędy z `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
-    - [Możliwe do Odzyskania Błędy z `Result`](ch09-02-recoverable-errors-with-result.md)
+    - [Naprawialne Błędy z `Result`](ch09-02-recoverable-errors-with-result.md)
     - [To `panic!` or Not to `panic!`](ch09-03-to-panic-or-not-to-panic.md)
 
 - [Generic Types, Traits, and Lifetimes](ch10-00-generics.md)
