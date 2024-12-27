@@ -50,7 +50,7 @@
     - [Przechowywanie Kluczy z Powiązanymi Wartościami w Mapach z Haszowaniem](ch08-03-hash-maps.md)
 
 - [Obsługa błędów](ch09-00-error-handling.md)
-    - [Nienaprawialne Błędy z `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
+    - [Nieodwracalne Błędy z `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
     - [Recoverable Errors with `Result`](ch09-02-recoverable-errors-with-result.md)
     - [To `panic!` or Not to `panic!`](ch09-03-to-panic-or-not-to-panic.md)
 

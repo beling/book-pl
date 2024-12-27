@@ -1,4 +1,4 @@
-## Nienaprawialne Błędy z `panic!`
+## Nieodwracalne Błędy z `panic!`
 
 Czasami w kodzie dzieją się złe rzeczy i nic nie można na to poradzić.
 W takich przypadkach Rust posiada makro `panic!`. Istnieją dwa sposoby na wywołanie go
