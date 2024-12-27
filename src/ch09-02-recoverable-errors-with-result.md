@@ -1,4 +1,4 @@
-## Naprawialne Błędy z `Result`
+## Odwracalne Błędy z `Result`
 
 Większość błędów nie jest na tyle poważna, by wymagać całkowitego zatrzymania programu. 
 Czasami, gdy funkcja zawodzi, dzieje się tak z powodu, który można łatwo 
