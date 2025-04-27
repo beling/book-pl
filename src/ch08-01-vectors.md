@@ -169,7 +169,7 @@ Gdyby Rust pozwolił wektorowi przechowywać elementy dowolnych typów, istniał
 Użycie enum plus wyrażenia `match` oznacza, że Rust zapewni w czasie kompilacji, że każdy możliwy przypadek zostanie obsłużony, jak omówiono w rozdziale 6.
 
 Gdybyśmy nie znali wyczerpującego zestawu typów, których wartości w czasie wykonywania programu będą dodawane do wektora, to nie moglibyśmy użyć omówionej techniki wykorzystującej enum.
-Instead, you can use a trait object, which we’ll cover in Chapter 17.
+Zamiast tego możesz użyć obiektu cechy, który omówimy w rozdziale 17.
 
 Teraz, gdy omówiliśmy wybrane, częste sposoby używania wektorów, warto przejrzeć [dokumentację API][vec-api]<!-- ignore -->, gdyż zawarty w bibliotece standardowej `Vec<T>` posiada znacznie więcej użytecznych metod.
 Na przykład jego metoda `pop` usuwa i zwraca ostatni element.
